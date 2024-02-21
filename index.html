@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Arbeitszeitrechner">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Arbeitszeitrechner</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/introjs.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery.classycountdown.css" rel="stylesheet" type="text/css">
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="">Arbeitszeitrechner</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="starter-template">
+            <div class="form-group ">
+                <div class="container-fluid">
+                    <!--<div class="alert alert-primary" role="alert">
+                        Der Arbeitszeitrechner zieht um. Bitte verwende ab sofort folgende Adresse: <a href="https://leider9.de" class="alert-link">leider9.de</a>. -->
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-center">
+                                <!-- TODO: Auswahl der Soll-Arbeitszeit über einen Slider-->
+                                <h5>Arbeitszeit</h5>
+                                <div class="btn-group introjs-relativePosition" data-step="1" data-intro="Tägliche Soll-Arbeitszeit festlegen.">
+                                    <button type="button" class="btn btn-light btn-md" id="30">6:00</button>
+                                    <button type="button" class="btn btn-light btn-md" id="35">7:00</button>
+                                    <button type="button" class="btn btn-light btn-md active" id="39">7:06</button>
+                                    <!--<button type="button" class="btn btn-light btn" id="man">man</button>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="text-center">
+                                <h5>Pausenzeit</h5>
+                                <div class="btn-group introjs-relativePosition" data-step="2" data-intro="Pausenzeit auswählen.">
+                                    <button type="button" class="btn btn-light btn-md" id="00min">0:00</button>
+									<button type="button" class="btn btn-light btn" id="10min">0:10</button>
+									<button type="button" class="btn btn-light btn" id="20min">0:20</button>
+                                    <button type="button" class="btn btn-light btn-md active" id="30min">0:30</button>
+                                    <button type="button" class="btn btn-light btn-md" id="45min">0:45</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="row">
+                    <div class="col-sm-3 col-6">
+                        <div class="text-center">
+                            <label for="start">Arbeitsbeginn</label>
+                        </div>
+                        <input type="time" id="start" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitsbeginn eintragen.">
+                    </div>
+
+                    <div class="col-sm-3 col-6">
+                        <div class="text-center">
+                            <label for="pause">Pausenzeit</label>
+                        </div>
+                        <input type="time" id="pause" class="input-lg center-block form-control input-time introjs-relativePosition" value="00:30" data-step="4" data-intro="Pausenzeit individuell anpassen (bei Bedarf).">
+                    </div>
+
+                    <div class="col-sm-3 col-6">
+                        <div class="text-center">
+                            <label for="end">Arbeitsende</label>
+                        </div>
+                        <input type="time" id="end" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-intro="Endzeit wird automatisch berechnet.">
+                    </div>
+
+                    <div class="col-sm-3 col-6">
+                        <div class="text-center">
+                            <label for="soll">Arbeitszeit</label>
+                        </div>
+                        <input type="time" id="soll" value="07:06" class="input-lg center-block form-control input-time">
+                    </div>
+                </div>
+            </div>
+            <div class="jumbotron form-worktime introjs-relativePosition" id="result" data-step="6" data-intro="Ergebnisse der Berechnung." data-tooltipclass="forLastStep">
+                <div class="text-center">
+                    <div class="row container row-adaption">
+                        <div class="col text-center">
+                            <label for="worktime">Arbeitszeit</label>
+                            <p class="display-5" id="worktime">0:00</p>
+                        </div>
+
+                        <div class="col text-center">
+                            <label for="difference">Differenz</label>
+                            <p class="display-5" id="difference">0:00
+                                <p>
+                        </div>
+
+                        <div class="col text-center">
+                            <label for="percentage">Prozentual</label>
+                            <p class="display-5" id="percentage">0.00%</p>
+                        </div>
+                    </div>
+
+                    <div id="cc-box" class="row container row-adaption" style="margin-top:0px;">
+                        <div id="countdown15" class="ClassyCountdownDemo container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="js/dzr.js" type="text/javascript" async></script>
+    <script>
+
+    </script>
+    <script src=""></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/intro.js"></script>
+    <script src="js/jquery.knob.js"></script>
+    <script src="js/jquery.throttle.js"></script>
+    <script src="js/jquery.classycountdown.js"></script>
+</body>
+
+</html>
