@@ -235,18 +235,13 @@ $(document).ready(function () {
         }
     });
 
-    $("#end").focusin(function () {
-        set_end();
-        calculate();
-        setCountdown();
-    });
-
     $("#ist").focusin(function () {
         setIstTime();
     });
 
     $("#start").change(function () {
         set_end();
+		setGleitzeit();
         calculate();
         setCountdown();
     });
@@ -257,6 +252,7 @@ $(document).ready(function () {
 
     $("#end").change(function () {
         calculate();
+		setGleitzeit();
         setCountdown();
     });
 
@@ -795,22 +791,23 @@ $(document).ready(function () {
     }
 
 
-    // Ab hier selbstgeschrieben
+// Ab hier selbstgeschrieben
 
 
 	// Arbeitsbeginn auf 10er und 5er abrunden
 	function getRoundStart() {
-        
+		
         var start_time = getStart_time();
-		var start_hours = start_time[0];
-		var start_mins = start_time[1];
-		var tens = 0;
-        
+
+        var start_hours = start_time[0];
+        var start_mins = start_time[1];
+        var tens = 0;
+			
         while(start_mins > 9){
             start_mins = start_mins - 10;
             tens++;
         }
-			
+        
         if (start_mins >= 5){
             start_mins = 5;
         }
@@ -818,7 +815,7 @@ $(document).ready(function () {
         if (start_mins <= 4){
             start_mins = 0;
         }
-			
+        
         start_mins = start_mins + (tens*10);
         
         var rounded_start_time = [start_hours, start_mins];
@@ -891,22 +888,22 @@ $(document).ready(function () {
 	}
 
 	function setIstTime(){
-        
-        var ist_start = getIstTime();
+		
+		var ist_start = getIstTime();
 		var pause_time = getPause_time();
 		
 		var ist_hours = parseInt(ist_start[0], 10);
 		var ist_mins = parseInt(ist_start[1], 10);
 	    var pause_mins = pause_time[1];
 	  
-	    var ist_mins = ist_mins - pause_mins;
-		
+        var ist_mins = ist_mins - pause_mins;
+            
         if (ist_mins < 0) {
             ist_hours--;
             ist_mins = ist_mins + 60;
         }
-            
-        $("#ist").val(ist_hours + "." + ist_mins);
+		
+		$("#ist").val(ist_hours + "." + ist_mins);
 		
 	}
 
@@ -926,14 +923,14 @@ $(document).ready(function () {
 		var gleit_hours = ist_hours - soll_hours;
 		var gleit_mins = ist_mins - soll_mins - pause_mins;
 
-	    // Bei negativer Differenz: + 60 min & -1h
+        // Bei negativer Differenz: + 60 min & -1h
         if (gleit_mins < 0) {
             gleit_hours--;
             gleit_mins = gleit_mins + 60;
         }
             
-        var gleitzeit = [gleit_hours, gleit_mins];
-        return gleitzeit;
+            var gleitzeit = [gleit_hours, gleit_mins];
+            return gleitzeit;
 	}
 
 	function setGleitzeit(){
@@ -949,14 +946,17 @@ $(document).ready(function () {
 		}
 		
 		var gleit_ausgabe = gleit_positive + gleit_hours + "." + gleit_mins;
-		
+	
 		$("#gleitzeit").html(gleit_ausgabe);
 		
 	}
 
 	$("#calc").click(function () {
+		set_end();
+        calculate();
 		setGleitzeit();
-		setCountdown();
+        setCountdown();
 	})
-	  
+
+
 });
