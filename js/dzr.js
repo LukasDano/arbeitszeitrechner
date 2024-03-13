@@ -61,22 +61,12 @@ $(document).ready(function () {
         calculate();
     })
 
-    $("#default").click(function () {
-        $("#default").addClass("active");
-        $("#winter").removeClass("active");
-    })
-
-    $("#winter").click(function () {
-        $("#winter").addClass("active");
-        $("#default").removeClass("active");
-    })
-
     // liest Dienstbeginn aus dem Input-Feld aus
     function getStart_time() {
         var start_time = $("#start").val().split(":");
 
-        var start_hours = parseInt(start_time[0], 10);
-        var start_mins = parseInt(start_time[1], 10);
+       var start_hours = parseInt(start_time[0], 10);
+       var start_mins = parseInt(start_time[1], 10);
 
         start_time = [start_hours, start_mins];
         return start_time;
@@ -251,6 +241,10 @@ $(document).ready(function () {
         setCountdown();
     });
 
+    $("#ist").focusin(function () {
+        setIstTime();
+    });
+
     $("#start").change(function () {
         set_end();
         calculate();
@@ -366,6 +360,7 @@ $(document).ready(function () {
 
     // Funktion zur Berechnung der Arbeitszeit, der Differenz zur Regeldienstzeit und des prozentualen Anteils der Arbeitszeit an der Regeldienstzeit
     function calculate() {
+		
         var diff_time = getTimeDifference();
         var work_time = getWork_time();
         var percentage = getPercentage();
@@ -799,4 +794,169 @@ $(document).ready(function () {
         $('.parallax').css('bottom', -(scrolled * 0.1) + 'px');
     }
 
+
+    // Ab hier selbstgeschrieben
+
+
+	// Arbeitsbeginn auf 10er und 5er abrunden
+	function getRoundStart() {
+        
+        var start_time = getStart_time();
+		var start_hours = start_time[0];
+		var start_mins = start_time[1];
+		var tens = 0;
+        
+        while(start_mins > 9){
+            start_mins = start_mins - 10;
+            tens++;
+        }
+			
+        if (start_mins >= 5){
+            start_mins = 5;
+        }
+        
+        if (start_mins <= 4){
+            start_mins = 0;
+        }
+			
+        start_mins = start_mins + (tens*10);
+        
+        var rounded_start_time = [start_hours, start_mins];
+        return(rounded_start_time);
+		
+	}
+
+	// Arbeitsende auf 10er und 5er abrunden
+	function getRoundEnd() {
+		
+        var end_time = getEnd_time();
+
+        var end_hours = end_time[0];
+        var end_mins = end_time[1];
+        var tens = 0;
+        
+        
+        if (end_mins >= 56){
+            end_mins = 0;
+            end_hours++;
+        
+            var rounded_end_time = [end_hours, end_mins];
+            return(rounded_end_time);
+        }
+        
+        if (end_mins >= 0 && end_mins < 9){
+            end_mins = 0;
+        
+            var rounded_end_time = [end_hours, end_mins];
+            return(rounded_end_time);
+        }
+        
+        while(end_mins > 9){
+            end_mins = end_mins - 10;
+            tens++;
+        }
+    
+        if (end_mins >= 6){
+            end_mins = 0;
+            tens++;
+        }
+        else if (end_mins <= 4){
+            end_mins = 5;
+        }
+    
+        end_mins = end_mins + (tens*10);
+
+        var rounded_end_time = [end_hours, end_mins];
+        return(rounded_end_time);
+		
+	}
+
+	// GerundeterAnfang - GerundetesEnde = Ist Arbeitszeit
+	function getIstTime() {
+		
+		var rounded_start = getRoundStart();
+		var rounded_end = getRoundEnd();
+		
+		var rounded_start_hours = parseInt(rounded_start[0], 10);
+		var rounded_start_mins = parseInt(rounded_start[1], 10);
+		var rounded_end_hours = parseInt(rounded_end[0], 10);
+		var rounded_end_mins = parseInt(rounded_end[1], 10);
+		
+		var ist_hours = rounded_end_hours - rounded_start_hours;
+		var ist_mins = rounded_end_mins - rounded_start_mins;
+		
+		var ist_time = [ist_hours, ist_mins];
+		return ist_time;
+		
+	}
+
+	function setIstTime(){
+        
+        var ist_start = getIstTime();
+		var pause_time = getPause_time();
+		
+		var ist_hours = parseInt(ist_start[0], 10);
+		var ist_mins = parseInt(ist_start[1], 10);
+	    var pause_mins = pause_time[1];
+	  
+	    var ist_mins = ist_mins - pause_mins;
+		
+        if (ist_mins < 0) {
+            ist_hours--;
+            ist_mins = ist_mins + 60;
+        }
+            
+        $("#ist").val(ist_hours + "." + ist_mins);
+		
+	}
+
+	// Ist Arbeitszeit - Soll Arbeitszeit = Gleitzeit
+	function getGleitzeit(){
+		
+		var ist_time = getIstTime();
+		var pause_time = getPause_time();
+		var soll_time = getSoll_time();
+		
+		var ist_hours = ist_time[0];
+		var ist_mins = ist_time[1];
+		var soll_hours = soll_time[0];
+		var soll_mins = soll_time[1];
+	    var pause_mins = pause_time[1];
+		
+		var gleit_hours = ist_hours - soll_hours;
+		var gleit_mins = ist_mins - soll_mins - pause_mins;
+
+	    // Bei negativer Differenz: + 60 min & -1h
+        if (gleit_mins < 0) {
+            gleit_hours--;
+            gleit_mins = gleit_mins + 60;
+        }
+            
+        var gleitzeit = [gleit_hours, gleit_mins];
+        return gleitzeit;
+	}
+
+	function setGleitzeit(){
+		
+		var gleitzeit = getGleitzeit();
+		
+		var gleit_hours = gleitzeit[0];
+		var gleit_mins = gleitzeit[1];
+		var gleit_positive = "+";
+		
+		if (gleit_mins < 0 || gleit_hours < 0){
+			gleit_positive = "";
+		}
+		
+		var gleit_ausgabe = gleit_positive + gleit_hours + "." + gleit_mins;
+		
+		$("#gleitzeit").html(gleit_ausgabe);
+		
+	}
+
+	$("#calc").click(function () {
+		setGleitzeit();
+		setCountdown();
+	})
+	  
 });

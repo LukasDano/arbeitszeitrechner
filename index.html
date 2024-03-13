@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Arbeitszeitrechner">
     <link rel="icon" href="favicon.ico">
+	
+	<meta name="Version" content="2.0">
+	<meta name="VersionName" content="Das Gleitzeit Update">
 
     <title>Arbeitszeitrechner</title>
 
@@ -71,52 +74,70 @@
                 <hr>
 
                 <div class="row">
-                    <div class="col-sm-3 col-6">
+					<div class="col-sm-4 col-8">
                         <div class="text-center">
                             <label for="start">Arbeitsbeginn</label>
                         </div>
                         <input type="time" id="start" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitsbeginn eintragen.">
                     </div>
 
-                    <div class="col-sm-3 col-6">
+					<div class="col-sm-4 col-8">
                         <div class="text-center">
                             <label for="pause">Pausenzeit</label>
                         </div>
                         <input type="time" id="pause" class="input-lg center-block form-control input-time introjs-relativePosition" value="00:30" data-step="4" data-intro="Pausenzeit individuell anpassen (bei Bedarf).">
                     </div>
 
-                    <div class="col-sm-3 col-6">
+					<div class="col-sm-4 col-8">
                         <div class="text-center">
                             <label for="end">Arbeitsende</label>
                         </div>
                         <input type="time" id="end" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-intro="Endzeit wird automatisch berechnet.">
                     </div>
-
-                    <div class="col-sm-3 col-6">
+                </div>
+				
+				<div class="row">
+				
+					<div class="col-sm-4 col-8">	
                         <div class="text-center">
-                            <label for="soll">Arbeitszeit</label>
+						<label for="soll">Soll Arbeitszeit</label>
                         </div>
                         <input type="time" id="soll" value="07:06" class="input-lg center-block form-control input-time">
-                    </div>
-                </div>
+					</div>
+					
+					<div class="col-sm-4 col-8">
+						<div class="text-center">
+						<label for="ist" style="color: white">Ist Arbeitszeit</label>
+                        </div>
+						<!--
+                        <input type="time" id="ist" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-inro="Die ist Zeit wird automatisch berechnet">
+						-->
+					</div>
+					
+					<div class="col-sm-4 col-8">	
+                        <div class="text-center">
+						<label for="calc" style="color: #fff">RUN</label>
+						</div>
+						<button type="button" class="btn btn-light btn-md" id="calc">calculate</button>
+					</div>
+					
+				</div>
             </div>
+			
             <div class="jumbotron form-worktime introjs-relativePosition" id="result" data-step="6" data-intro="Ergebnisse der Berechnung." data-tooltipclass="forLastStep">
                 <div class="text-center">
                     <div class="row container row-adaption">
                         <div class="col text-center">
-                            <label for="worktime">Arbeitszeit</label>
+                            <label for="worktime">Tatsächliche Arbeitszeit</label>
                             <p class="display-5" id="worktime">0:00</p>
                         </div>
 
                         <div class="col text-center">
-                            <label for="difference">Differenz</label>
-                            <p class="display-5" id="difference">0:00
-                                <p>
                         </div>
 
                         <div class="col text-center">
-                            <label for="percentage">Prozentual</label>
-                            <p class="display-5" id="percentage">0.00%</p>
+                            <label for="gleitzeit">Gleitzeit</label>
+                            <p class="display-5" id="gleitzeit">0.00</p>
                         </div>
                     </div>
 
