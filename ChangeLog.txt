@@ -1,0 +1,4 @@
+v2.1.01
+	Bugfix: fehler bei der Gleitzeit berechnung behoben
+	metaDaten geändert
+	neues Feld: Gewertete Arbeitszeit

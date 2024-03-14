@@ -68,7 +68,7 @@ $(document).ready(function () {
        var start_hours = parseInt(start_time[0], 10);
        var start_mins = parseInt(start_time[1], 10);
 
-        start_time = [start_hours, start_mins];
+        start_time = new Array(start_hours, start_mins);
         return start_time;
     }
 
@@ -79,7 +79,7 @@ $(document).ready(function () {
         var end_hours = parseInt(end_time[0], 10);
         var end_mins = parseInt(end_time[1], 10);
 
-        end_time = [end_hours, end_mins];
+        end_time = new Array (end_hours, end_mins);
         return end_time;
     }
 
@@ -112,7 +112,7 @@ $(document).ready(function () {
         var pause_hours = parseInt(pause_time[0], 10);
         var pause_mins = parseInt(pause_time[1], 10);
 
-        pause_time = [pause_hours, pause_mins];
+        pause_time = new Array (pause_hours, pause_mins);
         return pause_time;
     }
 
@@ -123,7 +123,7 @@ $(document).ready(function () {
         var soll_hours = parseInt(soll_time[0], 10);
         var soll_mins = parseInt(soll_time[1], 10);
 
-        soll_time = [soll_hours, soll_mins];
+        soll_time = new Array (soll_hours, soll_mins);
         return soll_time;
     }
 
@@ -235,13 +235,10 @@ $(document).ready(function () {
         }
     });
 
-    $("#ist").focusin(function () {
-        setIstTime();
-    });
-
     $("#start").change(function () {
         set_end();
 		setGleitzeit();
+		setIstTime();
         calculate();
         setCountdown();
     });
@@ -253,6 +250,7 @@ $(document).ready(function () {
     $("#end").change(function () {
         calculate();
 		setGleitzeit();
+		setIstTime();
         setCountdown();
     });
 
@@ -381,7 +379,7 @@ $(document).ready(function () {
         } else if (diff_positive == false && diff_hours < 0) {
             $("#difference").html(diff_time);
         } else if (isNaN(diff_hours) && isNaN(diff_mins)) {
-            $("#worktime").html("0:00");
+            $("#trueworktime").html("0:00");
             $("#difference").html("0:00");
             $("#percentage").html("0,00%");
         } else if (diff_positive == true) {
@@ -395,10 +393,10 @@ $(document).ready(function () {
             work_time = work_hours + ":" + work_mins;
         }
         if (isNaN(work_hours) && isNaN(work_mins)) {
-            $("#worktime").html("0:00");
+            $("#trueworktime").html("0:00");
             $("#percentage").html("0,00%");
         } else {
-            $("#worktime").html(work_time);
+            $("#trueworktime").html(work_time);
             $("#percentage").html(percentage + "%");
         }
     }
@@ -841,13 +839,6 @@ $(document).ready(function () {
             return(rounded_end_time);
         }
         
-        if (end_mins >= 0 && end_mins < 9){
-            end_mins = 0;
-        
-            var rounded_end_time = [end_hours, end_mins];
-            return(rounded_end_time);
-        }
-        
         while(end_mins > 9){
             end_mins = end_mins - 10;
             tens++;
@@ -856,8 +847,9 @@ $(document).ready(function () {
         if (end_mins >= 6){
             end_mins = 0;
             tens++;
-        }
-        else if (end_mins <= 4){
+        } else if(end_mins == 0){
+          end_mins = 0;
+        } else if (end_mins <= 4){
             end_mins = 5;
         }
     
@@ -903,7 +895,8 @@ $(document).ready(function () {
             ist_mins = ist_mins + 60;
         }
 		
-		$("#ist").val(ist_hours + "." + ist_mins);
+		var ist_ausgabe = ist_hours + "." + ist_mins
+		$("#countedworktime").html(ist_ausgabe);
 		
 	}
 
@@ -952,6 +945,7 @@ $(document).ready(function () {
 	}
 
 	$("#calc").click(function () {
+		
 		set_end();
         calculate();
 		setGleitzeit();
