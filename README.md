@@ -19,4 +19,4 @@ Hier geht es zum [Original.](https://github.com/iC0RE/arbeitszeitrechner)
 
 ## Vorschau
 
-![v2.1.01](vorschau.png)
+![v2.1.01](example.png)
