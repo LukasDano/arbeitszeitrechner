@@ -922,8 +922,8 @@ $(document).ready(function () {
             gleit_mins = gleit_mins + 60;
         }
             
-            var gleitzeit = [gleit_hours, gleit_mins];
-            return gleitzeit;
+        var gleitzeit = [gleit_hours, gleit_mins];
+        return gleitzeit;
 	}
 
 	function setGleitzeit(){
@@ -932,13 +932,20 @@ $(document).ready(function () {
 		
 		var gleit_hours = gleitzeit[0];
 		var gleit_mins = gleitzeit[1];
-		var gleit_positive = "+";
 		
-		if (gleit_mins < 0 || gleit_hours < 0){
-			gleit_positive = "";
-		}
-		
-		var gleit_ausgabe = gleit_positive + gleit_hours + "." + gleit_mins;
+		if (gleit_hours < 0 || gleit_mins < 0){
+
+            gleit_hours++;
+            gleit_mins = gleit_mins - 60;
+			
+			gleit_hours = Math.abs(gleit_hours);
+			gleit_mins = Math.abs(gleit_mins);
+
+			var gleit_ausgabe = "-" + gleit_hours + "." + gleit_mins;
+			
+			} else if (gleit_hours > 0 || gleit_mins > 0){
+				var gleit_ausgabe = "+" + gleit_hours + "." + gleit_mins;
+			}
 	
 		$("#gleitzeit").html(gleit_ausgabe);
 		
