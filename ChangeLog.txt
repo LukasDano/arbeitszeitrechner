@@ -5,3 +5,7 @@ v2.1.01
 
 v2.1.02
 	Bugfix: fehler bei der negativen Gleitzeit berechnung behoben
+
+v2.1.03
+	Bugfix: Gleitzeitberechnung ReWork
+	Darstellung der Tatsächlichen Zeit angepasst

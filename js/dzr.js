@@ -364,9 +364,9 @@ $(document).ready(function () {
         var diff_positive = diff_time[2];
 
         if (diff_mins < 10) {
-            diff_time = diff_hours + ":0" + diff_mins;
+            diff_time = diff_hours + ".0" + diff_mins;
         } else {
-            diff_time = diff_hours + ":" + diff_mins;
+            diff_time = diff_hours + "." + diff_mins;
         }
 
         // Wenn Diffenrenz negativ & Diff-Stunden = 0
@@ -388,12 +388,12 @@ $(document).ready(function () {
         var work_hours = work_time[0];
         var work_mins = work_time[1];
         if (work_mins < 10) {
-            work_time = work_hours + ":0" + work_mins;
+            work_time = work_hours + ".0" + work_mins;
         } else {
-            work_time = work_hours + ":" + work_mins;
+            work_time = work_hours + "." + work_mins;
         }
         if (isNaN(work_hours) && isNaN(work_mins)) {
-            $("#trueworktime").html("0:00");
+            $("#trueworktime").html("0.00");
             $("#percentage").html("0,00%");
         } else {
             $("#trueworktime").html(work_time);
@@ -861,93 +861,99 @@ $(document).ready(function () {
 	}
 
 	// GerundeterAnfang - GerundetesEnde = Ist Arbeitszeit
-	function getIstTime() {
-		
-		var rounded_start = getRoundStart();
-		var rounded_end = getRoundEnd();
-		
-		var rounded_start_hours = parseInt(rounded_start[0], 10);
-		var rounded_start_mins = parseInt(rounded_start[1], 10);
-		var rounded_end_hours = parseInt(rounded_end[0], 10);
-		var rounded_end_mins = parseInt(rounded_end[1], 10);
-		
-		var ist_hours = rounded_end_hours - rounded_start_hours;
-		var ist_mins = rounded_end_mins - rounded_start_mins;
-		
-		var ist_time = [ist_hours, ist_mins];
-		return ist_time;
-		
-	}
-
-	function setIstTime(){
-		
-		var ist_start = getIstTime();
-		var pause_time = getPause_time();
-		
-		var ist_hours = parseInt(ist_start[0], 10);
-		var ist_mins = parseInt(ist_start[1], 10);
-	    var pause_mins = pause_time[1];
-	  
-        var ist_mins = ist_mins - pause_mins;
-            
-        if (ist_mins < 0) {
-            ist_hours--;
-            ist_mins = ist_mins + 60;
+	function getIstTime(){
+  
+        var roundedStart = getRoundStart();
+        var roundedEnd = getRoundEnd();
+        var pauseTime = getPause_time();
+      
+        var startHours = roundedStart[0];
+        var startMins = roundedStart[1];
+        var endHours = roundedEnd[0];
+        var endMins = roundedEnd[1];
+        var pauseMins = pauseTime[1];
+        
+        var istHours = endHours - startHours;
+        var istMins = endMins - startMins - pauseMins;
+        
+        while (istMins < 0){
+          istHours--;
+          istMins = istMins + 60;
         }
-		
-		var ist_ausgabe = ist_hours + "." + ist_mins
-		$("#countedworktime").html(ist_ausgabe);
-		
-	}
+        
+        return ist = [istHours, istMins];
+      
+      }
 
 	// Ist Arbeitszeit - Soll Arbeitszeit = Gleitzeit
 	function getGleitzeit(){
-		
-		var ist_time = getIstTime();
-		var pause_time = getPause_time();
-		var soll_time = getSoll_time();
-		
-		var ist_hours = ist_time[0];
-		var ist_mins = ist_time[1];
-		var soll_hours = soll_time[0];
-		var soll_mins = soll_time[1];
-	    var pause_mins = pause_time[1];
-		
-		var gleit_hours = ist_hours - soll_hours;
-		var gleit_mins = ist_mins - soll_mins - pause_mins;
-
-        // Bei negativer Differenz: + 60 min & -1h
-        if (gleit_mins < 0) {
-            gleit_hours--;
-            gleit_mins = gleit_mins + 60;
+  
+        var istTime = getIstTime();
+        var sollTime = getSoll_time();
+        var pauseTime = getPause_time();
+        
+        var istHours = istTime[0];
+        var istMins = istTime[1];
+        var sollHours = sollTime[0];
+        var sollMins = sollTime[1];
+        
+        var gleitHours = istHours - sollHours;
+        var gleitMins = istMins - sollMins;
+        
+        
+        if (istHours < sollHours){
+          gleitHours++;
+          gleitMins = gleitMins - 60;
         }
+        if (gleitHours > 0 && gleitMins < 0){
+          gleitHours--;
+          gleitMins = gleitMins + 60;
+        }
+        if (gleitMins < -59){
+          gleitHours--;
+          gleitMins = gleitMins + 60;
+        }
+        
+        
+        return gleit = [gleitHours, gleitMins];
+      }
+
+    function setIstTime(){
+		
+		var istTime = getIstTime();
+		
+        var istHours = istTime[0];
+        var istMins = istTime[1];
             
-        var gleitzeit = [gleit_hours, gleit_mins];
-        return gleitzeit;
+        if (istMins < 0) {
+            istHours--;
+            istMins = istMins + 60;
+        }
+		
+		var istAusgabe = istHours + "." + istMins
+		$("#countedworktime").html(istAusgabe);
+		
 	}
 
 	function setGleitzeit(){
 		
 		var gleitzeit = getGleitzeit();
 		
-		var gleit_hours = gleitzeit[0];
-		var gleit_mins = gleitzeit[1];
+		var gleitHours = gleitzeit[0];
+		var gleitMins = gleitzeit[1];
 		
-		if (gleit_hours < 0 || gleit_mins < 0){
-
-            gleit_hours++;
-            gleit_mins = gleit_mins - 60;
+		if (gleitHours < 0 || gleitMins < 0){
 			
-			gleit_hours = Math.abs(gleit_hours);
-			gleit_mins = Math.abs(gleit_mins);
+			gleitHours = Math.abs(gleitHours);
+			gleitMins = Math.abs(gleitMins);
 
-			var gleit_ausgabe = "-" + gleit_hours + "." + gleit_mins;
+			var gleitAusgabe = "-" + gleitHours + "." + gleitMins;
 			
-			} else if (gleit_hours > 0 || gleit_mins > 0){
-				var gleit_ausgabe = "+" + gleit_hours + "." + gleit_mins;
+			} else if (gleitHours > 0 || gleitMins > 0){
+				var gleitAusgabe = "+" + gleitHours + "." + gleitMins;
 			}
 	
-		$("#gleitzeit").html(gleit_ausgabe);
+		$("#gleitzeit").html(gleitAusgabe);
 		
 	}
 
