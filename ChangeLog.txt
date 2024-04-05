@@ -15,3 +15,7 @@ v2.2
 		Neues Feature: berechnen der Wochenarbeitszeit
 	Update README & ChangeLog
 	Anpassungen der MetaDaten in index.html
+
+v2.2.01
+	Kleinere Optische Anpassung im Wochenarbeitszeit-Tab
+	Anpassung der der MetaDaten
