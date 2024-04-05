@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Arbeitszeitrechner">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Arbeitszeitrechner - Wochenzeit</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/introjs.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/jquery.classycountdown.css" rel="stylesheet" type="text/css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="index.html">Arbeitszeitrechner</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="weekTime.html">Wochenzeitrechner</a>
+                </li>
+		    </ul>
+        </div>
+    </nav>
+	
+	<main role="main" class="container">
+		<div class="row">
+			<div class="col-sm-2 col-4">
+				<div class="text-center">
+					<label for="monday">Montag</label>
+				</div>
+				<input type="time" id="monday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
+			</div>
+
+			<div class="col-sm-2 col-4">
+				<div class="text-center">
+					<label for="tuesday">Dienstag</label>
+				</div>
+				<input type="time" id="tuesday" value="00:00"" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
+			</div>
+			<div class="col-sm-2 col-4">
+				<div class="text-center">
+					<label for="wednesday">Mittwoch</label>
+				</div>
+				<input type="time" id="wednesday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
+			</div>
+
+			<div class="col-sm-2 col-4">
+				<div class="text-center">
+					<label for="thursday">Donnerstag</label>
+				</div>
+				<input type="time" id="thursday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
+			</div>
+
+			<div class="col-sm-2 col-4">
+				<div class="text-center">
+					<label for="friday">Freitag</label>
+				</div>
+				<input type="time" id="friday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-4 col-8">
+				<div class="text-center">
+				<label for="weekTime"></label>
+				</div>
+			</div>
+
+			<div class="col-sm-4 col-8">	
+				<div class="text-center">
+				<label for="weekTimeCalc" style= color:#fff></label>
+				</div>
+				<button type="button" class="btn btn-light btn-md" id="weekTimeCalc">Wochenzeit berechnen</button>
+			</div>
+			
+			<div class="col-sm-4 col-8">
+				<div class="text-center">
+				<label for="weekTime"></label>
+				</div>
+			</div>
+		</div>
+	</main>
+	
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="js/weekTime.js" type="text/javascript" async></script>
+</body>
+</html>

@@ -9,3 +9,9 @@ v2.1.02
 v2.1.03
 	Bugfix: Gleitzeitberechnung ReWork
 	Darstellung der Tatsächlichen Zeit angepasst
+
+v2.2
+	Neuer Tab: Wochenarbeitszeit
+		Neues Feature: berechnen der Wochenarbeitszeit
+	Update README & ChangeLog
+	Anpassungen der MetaDaten in index.html
