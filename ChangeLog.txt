@@ -19,3 +19,6 @@ v2.2
 v2.2.01
 	Kleinere Optische Anpassung im Wochenarbeitszeit-Tab
 	Anpassung der der MetaDaten
+
+v2.2.02
+	Bugfix: Beim Reset wird jetzt auch die Gewertete Zeit zurückgesetzt

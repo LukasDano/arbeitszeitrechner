@@ -962,6 +962,7 @@ $(document).ready(function () {
 		set_end();
         calculate();
 		setGleitzeit();
+        setIstTime();
         setCountdown();
 	})
 
