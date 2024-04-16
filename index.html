@@ -47,13 +47,13 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="text-center">
+                            <div class="text-center" id="workAndPause">
                                 <!-- TODO: Auswahl der Soll-Arbeitszeit über einen Slider-->
                                 <h5>Arbeitszeit</h5>
                                 <div class="btn-group introjs-relativePosition" data-step="1" data-intro="Tägliche Soll-Arbeitszeit festlegen.">
-                                    <button type="button" class="btn btn-light btn-md" id="30">6:00</button>
-                                    <button type="button" class="btn btn-light btn-md" id="35">7:00</button>
-                                    <button type="button" class="btn btn-light btn-md active" id="39">7:06</button>
+                                    <button type="button" class="btn btn-light btn-md" id="6hours">6:00</button>
+                                    <button type="button" class="btn btn-light btn-md active" id="7hours6min">7:06</button>
+                                    <button type="button" class="btn btn-light btn-md   " id="10hours">10:00</button>
                                     <!--<button type="button" class="btn btn-light btn" id="man">man</button>-->
                                 </div>
                             </div>
@@ -63,8 +63,6 @@
                                 <h5>Pausenzeit</h5>
                                 <div class="btn-group introjs-relativePosition" data-step="2" data-intro="Pausenzeit auswählen.">
                                     <button type="button" class="btn btn-light btn-md" id="00min">0:00</button>
-									<button type="button" class="btn btn-light btn" id="10min">0:10</button>
-									<button type="button" class="btn btn-light btn" id="20min">0:20</button>
                                     <button type="button" class="btn btn-light btn-md active" id="30min">0:30</button>
                                     <button type="button" class="btn btn-light btn-md" id="45min">0:45</button>
                                 </div>
@@ -102,18 +100,16 @@
 				
 					<div class="col-sm-4 col-8">	
                         <div class="text-center">
-						<label for="soll">Soll Arbeitszeit</label>
+						<label for="soll">Arbeitszeit</label>
                         </div>
                         <input type="time" id="soll" value="07:06" class="input-lg center-block form-control input-time">
 					</div>
 					
 					<div class="col-sm-4 col-8">
 						<div class="text-center">
-						<label for="ist" style="color: white">Ist Arbeitszeit</label>
+						<label for="float">Gleitzeit</label>
                         </div>
-						<!--
-                        <input type="time" id="ist" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-inro="Die ist Zeit wird automatisch berechnet">
-						-->
+                        <input type="float" id="float" value="0.00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-inro="Gleitzeit kann eingetragen werden">
 					</div>
 					
 					<div class="col-sm-4 col-8">	
