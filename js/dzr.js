@@ -1025,8 +1025,8 @@ function getRoundStart() {
         var floatTime = $("#float").val();
         var floatArray = Array.of(...floatTime);
         var vorzeichen = 1;
-        console.log(floatArray);
-        console.log(floatArray.length);
+        //console.log(floatArray);
+        //console.log(floatArray.length);
 
         if (floatArray[0] == "-"){
             vorzeichen = -1;
@@ -1074,8 +1074,8 @@ function getRoundStart() {
         var istEndMins = parseInt(istEnd[1], 10);
 
         var gleitVorzeichen = floatTime[0];
-        console.log("FloatTime: " + floatTime);
-        console.log("Vorzeichen:" + gleitVorzeichen);
+        //console.log("FloatTime: " + floatTime);
+        //console.log("Vorzeichen:" + gleitVorzeichen);
 
         if (gleitVorzeichen == 1){
             floatTimeRounded = getOptimalEndForPositive();
@@ -1083,19 +1083,20 @@ function getRoundStart() {
             floatTimeRounded = getOptimalEndForNegative();
         }
 
-        console.log("FloatTimeRounded: " + floatTimeRounded);
+        //console.log("FloatTimeRounded: " + floatTimeRounded);
 
         var gleitHours = floatTimeRounded[0];
         var gleitMins = floatTimeRounded[1];
 
         var sollEndHours = istEndHours + (gleitHours * gleitVorzeichen);
-        console.log("IstEndeHours: " + istEndHours);
-        console.log("GleitHours: " + gleitHours);
-        console.log("SollHours: " + sollEndHours);
         var sollEndMins = istEndMins + (gleitMins * gleitVorzeichen);
-        console.log("IstEndeMins: " + istEndMins);
-        console.log("GleitMins: " + gleitMins);
-        console.log("SollMins: " + sollEndMins);
+
+        //console.log("IstEndeHours: " + istEndHours);
+        //console.log("GleitHours: " + gleitHours);
+        //console.log("SollHours: " + sollEndHours);
+        //console.log("IstEndeMins: " + istEndMins);
+        //console.log("GleitMins: " + gleitMins);
+        //console.log("SollMins: " + sollEndMins);
 
         if (gleitVorzeichen == -1){
             var ausgabeVorzeichen = "-";
@@ -1103,7 +1104,7 @@ function getRoundStart() {
             var ausgabeVorzeichen = "+";
         } 
 
-        console.log(ausgabeVorzeichen, sollEndHours, sollEndMins);
+        //console.log("Minus oder Plus und Schlusszeit: " + ausgabeVorzeichen, sollEndHours, sollEndMins);
         return ausgabe = [ausgabeVorzeichen, sollEndHours, sollEndMins];
     }
 
@@ -1160,7 +1161,7 @@ function getRoundStart() {
         }
 
         gleitMins =  10*tens + gleitMins;
-        console.log("Positive Minuten: " + gleitMins);
+        //console.log("Positive Minuten: " + gleitMins);
         // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
         return gleitZeit = [gleitHours, gleitMins - 4];
 
@@ -1176,7 +1177,9 @@ function getRoundStart() {
 
         if (gleitHours != 0 && gleitMins == 0){
             gleitMins = 56;
-            return gleitZeit = [gleitHours, gleitMins];
+            gleitHours--;
+            // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
+            return gleitZeit = [gleitHours, gleitMins + 4];
         }
         
         while(gleitMins > 9){
@@ -1194,7 +1197,9 @@ function getRoundStart() {
         }
 
         gleitMins =  10*tens + gleitMins;
-        return gleitZeit = [gleitHours, gleitMins];
+        //console.log("Negative Minuten: " + gleitMins);
+        // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
+        return gleitZeit = [gleitHours, gleitMins + 4];
 
     }
 
@@ -1206,10 +1211,6 @@ function getRoundStart() {
         setIstTime();
         setCountdown();
 	});
-
-    $("#float").focusin(function () {
-        console.log(getFloatFromInput());
-    });
 
     $("#float").change(function () {
         roundAndSetTimesForFloat();
