@@ -295,7 +295,7 @@ $(document).ready(function () {
         // Berechnet verbleibende Zeit in Sekunden (für den Countdown)
         var remainingSeconds = hoursToEnd * 60 * 60 + minutesToEnd * 60 + secondsToEnd;
 
-        console.log(".now() + remaining: " + remainingSeconds);
+        // console.log(".now() + remaining: " + remainingSeconds);
 
         /*$("#clock").countdown(remainingMilliseconds, {
             elapse: true
@@ -310,16 +310,16 @@ $(document).ready(function () {
 
 
         if ($('.ClassyCountdown-wrapper').length > 0) {
-            console.log("IF");
+            //console.log("IF");
             $('#countdown15').remove();
-            console.log("Inhalt entfernt.");
+            //console.log("Inhalt entfernt.");
             $('#cc-box').html('<div id="countdown15" class="ClassyCountdownDemo container"></div>');
             $('#countdown15').ClassyCountdown({
                 theme: "flat-colors-wide",
                 end: $.now() + remainingSeconds
             });
         } else {
-            console.log("ELSE");
+           //console.log("ELSE");
             $('#countdown15').ClassyCountdown({
                 theme: "flat-colors-wide",
                 end: $.now() + remainingSeconds
@@ -1070,15 +1070,32 @@ function getRoundStart() {
         var floatTime = getFloatFromInput();
         var istEnd = calculateNormalEnd();
         
-        var istEndHours = istEnd[0];
-        var istEndMins = istEnd[1];
+        var istEndHours = parseInt(istEnd[0], 10);
+        var istEndMins = parseInt(istEnd[1], 10);
 
         var gleitVorzeichen = floatTime[0];
-        var gleitHours = floatTime[1];
-        var gleitMins = floatTime[2];
+        console.log("FloatTime: " + floatTime);
+        console.log("Vorzeichen:" + gleitVorzeichen);
+
+        if (gleitVorzeichen == 1){
+            floatTimeRounded = getOptimalEndForPositive();
+        } else if (gleitVorzeichen == -1) {
+            floatTimeRounded = getOptimalEndForNegative();
+        }
+
+        console.log("FloatTimeRounded: " + floatTimeRounded);
+
+        var gleitHours = floatTimeRounded[0];
+        var gleitMins = floatTimeRounded[1];
 
         var sollEndHours = istEndHours + (gleitHours * gleitVorzeichen);
+        console.log("IstEndeHours: " + istEndHours);
+        console.log("GleitHours: " + gleitHours);
+        console.log("SollHours: " + sollEndHours);
         var sollEndMins = istEndMins + (gleitMins * gleitVorzeichen);
+        console.log("IstEndeMins: " + istEndMins);
+        console.log("GleitMins: " + gleitMins);
+        console.log("SollMins: " + sollEndMins);
 
         if (gleitVorzeichen == -1){
             var ausgabeVorzeichen = "-";
@@ -1102,6 +1119,11 @@ function getRoundStart() {
             endMins = endMins - 60;
         }
 
+        while (endMins < 0) {
+            endHours--;
+            endMins = endMins + 60;
+        }
+
         if (endMins < 10){
         endMins = "0" + endMins;
         }
@@ -1110,6 +1132,70 @@ function getRoundStart() {
         var sollEndMins = endMins; 
 
         $("#end").val(sollEndHours +":"+ sollEndMins);
+    }
+
+    function getOptimalEndForPositive(){
+
+        var floatTime = getFloatFromInput();
+
+        var gleitHours = floatTime[1];
+        var gleitMins = floatTime[2];
+        var tens = 0;
+
+        if (gleitHours != 0 && gleitMins == 0){
+            gleitMins = 4;
+            // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
+            return gleitZeit = [gleitHours, gleitMins - 4];
+        }
+        
+        while(gleitMins > 9){
+            gleitMins = gleitMins - 10;
+            tens++;
+        }
+
+        if (gleitMins <= 4){
+            gleitMins = 4;
+        }else if (gleitMins <= 9){
+            gleitMins = 9;
+        }
+
+        gleitMins =  10*tens + gleitMins;
+        console.log("Positive Minuten: " + gleitMins);
+        // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
+        return gleitZeit = [gleitHours, gleitMins - 4];
+
+    }
+
+    function getOptimalEndForNegative(){
+
+        var floatTime = getFloatFromInput();
+
+        var gleitHours = floatTime[1];
+        var gleitMins = floatTime[2];
+        var tens = 0;
+
+        if (gleitHours != 0 && gleitMins == 0){
+            gleitMins = 56;
+            return gleitZeit = [gleitHours, gleitMins];
+        }
+        
+        while(gleitMins > 9){
+            gleitMins = gleitMins - 10;
+            tens++;
+        }
+
+        if (gleitMins == 0){
+            gleitMins = 6;
+            tens--;
+        }else if (gleitMins >= 6 ){
+            gleitMins = 6;
+        }else if (gleitMins <= 5){
+            gleitMins = 1;
+        }
+
+        gleitMins =  10*tens + gleitMins;
+        return gleitZeit = [gleitHours, gleitMins];
+
     }
 
 	$("#calc").click(function () {
