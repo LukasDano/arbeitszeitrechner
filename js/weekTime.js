@@ -42,7 +42,8 @@ $(document).ready(function () {
 		
 		var weekTimeAusgabe = weekHours + "." + weekMins + " h";
 
-		alert(weekTimeAusgabe);
+		//alert(weekTimeAusgabe);
+		$("#weekworktime").html(weekTimeAusgabe);
 	}
 	
 	$("#weekTimeCalc").click(function () {
