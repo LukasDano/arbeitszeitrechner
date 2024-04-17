@@ -1131,6 +1131,7 @@ function getRoundStart() {
 
         var sollEndHours = endHours;
         var sollEndMins = endMins; 
+        console.log("Soll" + sollEndHours + ":" + sollEndMins);
 
         $("#end").val(sollEndHours +":"+ sollEndMins);
     }
@@ -1203,13 +1204,50 @@ function getRoundStart() {
 
     }
 
+    function optimizeEnd(){
+
+        var endTimeBefore = getEnd_time();
+
+        var endHours = parseInt(endTimeBefore[0], 10);
+        var endMins = parseInt(endTimeBefore[1], 10);
+        var tens = 0;
+
+        while(endMins > 9){
+            endMins = endMins - 10;
+            tens++;
+        }
+
+        if (endMins == 0 && tens == 0){
+            endMins = 56;
+            endHours--;
+        } else if (endMins == 0){
+            endMins = 6;
+            tens--;
+        } else if (endMins >= 6 ){
+            endMins = 6;
+        } else if (endMins <= 5){
+            endMins = 1;
+        }
+
+        endMins =  10*tens + endMins;
+        //console.log("EndHours: " + endHours);
+        //console.log("EndMins: " + endMins);
+
+        if (endMins <= 9){
+            endMins = 0 + endMins.toString();
+        }
+
+        $("#end").val(endHours +":"+ endMins);
+
+    }
+
 	$("#calc").click(function () {
-		set_end();
-        calculate();
-		setGleitzeit();
-        resetPauseAndWorkTime();
+        set_end();
+        setGleitzeit();
         setIstTime();
+        calculate();
         setCountdown();
+        resetPauseAndWorkTime();
 	});
 
     $("#float").change(function () {
@@ -1218,7 +1256,11 @@ function getRoundStart() {
 		setGleitzeit();
         setIstTime();
         setCountdown();
+        optimizeEnd();
     });
 
+    $("#float").focusin(function(){
+        optimizeEnd();
+    });
 
 });
