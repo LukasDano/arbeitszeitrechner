@@ -31,3 +31,4 @@ v2.3
 	Neues Feature: Automatische Arbeitszeitenvorauswahl (Hat keinen Effekt auf die Gleizeit berechnung)
 	Neues Feature: Arbeitsende nach gewünschter Gleitzeit ausrechnen
 	Neues Feautre: Optimales Ende wird angeben (wenigste Arbeitszeit mit maximaler Gleitzeit)
+	Anpassung: Bessere Darstellung der Wochenarbeitszeit

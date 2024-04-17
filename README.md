@@ -8,11 +8,6 @@ Hier geht es zum [Original.](https://github.com/iC0RE/arbeitszeitrechner)
 Über dieses [Tool](https://raw.githack.com/) kann man die HTML-Datei direkt auf GitHub abrufen und darstellen.
 Hier gehts zum [Repository](https://github.com/neoascetic/rawgithack) des Tools.
 
-## Upcomming
-
-- Gewünschte Gleitzeit eingeben und das Arbeitsende wird berechnet
-- Bessere Darstellung der Wochenzeit
-
 ## Versions
 
 - [aktulle Version](https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html)
