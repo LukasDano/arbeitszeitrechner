@@ -22,3 +22,13 @@ v2.2.01
 
 v2.2.02
 	Bugfix: Beim Reset wird jetzt auch die Gewertete Zeit zurückgesetzt
+
+v2.3
+	Arbeitszeitenvorauswahl remake
+	Pausenzeitenauswahl remake
+	Bugfix: Fehler bei der Berechnung der Gleitzeit behoben (wird jetzt nur noch mit 7.06 als Soll berechnet)
+	Neues Feature: Automatische Pausenzeit auswahl
+	Neues Feature: Automatische Arbeitszeitenvorauswahl (Hat keinen Effekt auf die Gleizeit berechnung)
+	Neues Feature: Arbeitsende nach gewünschter Gleitzeit ausrechnen
+	Neues Feautre: Optimales Ende wird angeben (wenigste Arbeitszeit mit maximaler Gleitzeit)
+	Anpassung: Bessere Darstellung der Wochenarbeitszeit

@@ -314,6 +314,15 @@ input[type="month"] {
     /*edited*/
 }
 
+input[type="float"] {
+    -webkit-appearance: listbox;
+    width: 77px;
+    /*edited*/
+    margin: auto;
+    /*edited*/
+    text-align: center;
+}
+
 textarea {
     overflow: auto;
     resize: vertical;
