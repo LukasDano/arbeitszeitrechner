@@ -825,7 +825,7 @@ function workAndPauseTimeAutomatically(){
     var istHours = istTime[0];
     var istMins = istTime[1];
 
-    console.log(istHours);
+    //console.log(istHours);
 
     if (istHours == 6 && istMins == 0){
         setSixHoursNoBreak();
@@ -1076,7 +1076,7 @@ function getRoundStart() {
         var gleitVorzeichen = floatTime[0];
         //console.log("FloatTime: " + floatTime);
         //console.log("Vorzeichen:" + gleitVorzeichen);
-        
+
         if (gleitVorzeichen == 1){
             floatTimeRounded = getOptimalEndForPositive();
         } else if (gleitVorzeichen == -1) {
@@ -1203,7 +1203,7 @@ function getRoundStart() {
 
         gleitMins =  10*tens + gleitMins;
         //console.log("Negative Minuten: " + gleitMins);
-        // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
+        //Ausgleich, weil man normalerweise schon plus 4 Minuten macht
         return gleitZeit = [gleitHours, gleitMins + 4];
 
     }
@@ -1245,7 +1245,7 @@ function getRoundStart() {
 
     }
 
-	$("#calc").click(function () {
+	$("#reset").click(function () {
         set_end();
         setGleitzeit();
         setIstTime();
