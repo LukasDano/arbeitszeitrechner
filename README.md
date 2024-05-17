@@ -18,3 +18,15 @@ Hier gehts zum [Repository](https://github.com/neoascetic/rawgithack) des Tools.
 ## Vorschau
 
 ![v2.1.01](example.png)
+
+
+## Upcomming in v2.4
+
+- Tabbing
+    - die Eingaben im sessionStorage speichern (weekTime & index)
+    - beim neu laden dann aus dem Storage geladen werden können
+    - daten bleiben bis zum neu start der seit erhalten
+
+- In den Wochenzeit rechner integrieren wie viel man plus oder minus die woche gemacht hat
+    - die zeit aus jedem feld nehmen die mit 0 ignorieren
+    - evtl. 2. Knopf erstellen, einen mit gleittagen (wo 0 stunden gewertet werden)
