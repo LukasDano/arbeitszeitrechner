@@ -2,7 +2,7 @@ function getDaysWorkHoursAsList(){
 	
 
 		
-    let daysWorkHours = [7, 7, 7, 7, 6];
+    let daysWorkHours = [7, 7, 7, 0, 0];
     
     return daysWorkHours;
 
@@ -12,7 +12,7 @@ function getDaysWorkMinsAsList(){
 
 
     
-    let daysWorkMins = [25, 25, 25, 35, 27];
+    let daysWorkMins = [25, 25, 25, 0, 0];
     
     return daysWorkMins;
 
@@ -43,7 +43,7 @@ function getWorkedDaysForWeek(){
     
     for (let i = 0; i<5; i++){
     
-        if(daysWorkHours[i] == 0 && daysWorkMins[i]){
+        if(daysWorkHours[i] == 0 && daysWorkMins[i] == 0){
             countedDays --;
         }
         
