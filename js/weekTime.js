@@ -47,7 +47,7 @@ $(document).ready(function () {
 	}
 	
 	function getWeekWorkTime(){
-	
+
 		var daysWorkHours = getDaysWorkHoursAsList();
 		var daysWorkMins = getDaysWorkMinsAsList();
 	
@@ -58,20 +58,20 @@ $(document).ready(function () {
 		week_mins = week_mins - 60;
 		week_hours++;
 		}
-
+	
 		return week_time = [week_hours, week_mins];
 	
 	}
 	
 	function getWorkedDaysForWeek(){
-	
+
 		var daysWorkHours = getDaysWorkHoursAsList();
 		var daysWorkMins = getDaysWorkMinsAsList();
 		var countedDays = 5;
 		
 		for (let i = 0; i<5; i++){
 		
-			if(daysWorkHours[i] == 0 && daysWorkMins[i]){
+			if(daysWorkHours[i] == 0 && daysWorkMins[i] == 0){
 				countedDays --;
 			}
 			
@@ -80,43 +80,52 @@ $(document).ready(function () {
 	}
 	
     function calculateWeekOverTime() {
-        var countedDays = getWorkedDaysForWeek();
-        var weekWorkTime = getWeekWorkTime();
-
-        var shouldHours = countedDays * 7;
-        var shouldMins = countedDays * 6;
-        var istHours = weekWorkTime[0];
-        var istMins = weekWorkTime[1];
-
-        var overTimeHours = istHours - shouldHours;
-        var overTimeMins = istMins - shouldMins;
-
-        if (overTimeMins < 0) {
-            overTimeHours--;
-            overTimeMins += 60;
-        } else if (overTimeMins >= 60) {
-            overTimeHours++;
-            overTimeMins -= 60;
-        }
-
-        return [overTimeHours, overTimeMins];
-    }
+		var countedDays = getWorkedDaysForWeek();
+		var weekWorkTime = getWeekWorkTime();
+	
+		var shouldHours = countedDays * 7;
+		var shouldMins = countedDays * 6;
+		var istHours = weekWorkTime[0];
+		var istMins = weekWorkTime[1];
+	
+		var overTimeHours = istHours - shouldHours;
+		var overTimeMins = istMins - shouldMins;
+	
+		//console.log("overTimeHours: " + overTimeHours);
+		//console.log("overTimeMins: " + overTimeMins);
+	
+	
+		if (overTimeMins < 0) {
+			overTimeHours--;
+			overTimeMins += 60;
+		} else if (overTimeMins >= 60) {
+			overTimeHours++;
+			overTimeMins -= 60;
+		}
+	
+		if (overTimeHours < 0) {
+			overTimeHours++;
+			overTimeMins -= 60;
+		}
+	
+		return [overTimeHours, overTimeMins];
+	}
 	
 	function setWeekTime(){
-		
+    
 		var week_time = getWeekWorkTime();
 		
 		var weekHours = week_time[0];
 		var weekMins = week_time[1];
 		
 		var weekTimeAusgabe = weekHours + "." + weekMins + " h";
-
+	
 		//console.log(weekTimeAusgabe);
 		$("#weekworktime").html(weekTimeAusgabe);
 	}	
-	
+
 	function setWeekOverTime(){
-		
+    
 		var weekTime = calculateWeekOverTime();
 		
 		var weekHours = weekTime[0];
@@ -126,7 +135,7 @@ $(document).ready(function () {
 			
 			weekHours = Math.abs(weekHours);
 			weekMins = Math.abs(weekMins);
-
+	
 			var weekOverTimeAusgabe = "-" + weekHours + "." + weekMins + " h";
 			
 		} else if (weekHours > 0 || weekMins > 0){
@@ -134,16 +143,26 @@ $(document).ready(function () {
 		} else {
 			var weekOverTimeAusgabe = "0.0 h";
 		}
-
-		console.log(weekOverTimeAusgabe);
+	
+		//console.log(weekOverTimeAusgabe);
 		$("#weekovertime").html(weekOverTimeAusgabe);
 	}
-	
+
 	$("#weekTimeCalc").click(function () {
 		setWeekTime();
 		setWeekOverTime();
 		uploadDaysTime();
 		uploadState();
+	});
+
+	$("#daytimefields").keypress(function (event) {
+		if (event.which === 13) {
+			setWeekTime();
+			setWeekOverTime();
+			uploadDaysTime();
+			uploadState();
+			uploadDaysTime();
+		}
 	});
 	
 	$("#monday").change(function () {
@@ -182,7 +201,6 @@ $(document).ready(function () {
     }
 
 	function uploadState(){
-
 		writeToSessionStorage("calculated", true);
 	}
 
