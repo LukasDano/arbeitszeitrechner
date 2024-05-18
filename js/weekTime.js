@@ -276,7 +276,9 @@ $(document).ready(function () {
 		if (readFromSessionStorage("calculated")){
 			setWeekTime();
 			setWeekOverTimeNoGleittag();
+		} else {
+			$("#monday").focus();
 		}
-    }
+    } 
 
 });

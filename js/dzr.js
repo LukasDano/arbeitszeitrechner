@@ -1338,6 +1338,8 @@ function getRoundStart() {
         setIstTime();
         setCountdown();
         optimizeEnd();
+    } else {
+        $("#start").focus();
     }
 
 });
