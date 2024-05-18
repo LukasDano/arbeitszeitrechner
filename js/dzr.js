@@ -1310,6 +1310,8 @@ function getRoundStart() {
 
         if (floatTime != null){
             $("#float").val(floatTime); 
+        } else {
+            $("#float").val("+0.4");
         }
         
         if (sollValue != null && sollTime != null) {
