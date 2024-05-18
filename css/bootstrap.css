@@ -286,6 +286,7 @@ button,
 html [type="button"],
 [type="reset"],
 [type="submit"] {
+    appearance: button;
     -webkit-appearance: button;
 }
 
@@ -307,6 +308,7 @@ input[type="date"],
 input[type="time"],
 input[type="datetime-local"],
 input[type="month"] {
+    appearance: listbox;
     -webkit-appearance: listbox;
     width: auto;
     /*edited*/
@@ -315,6 +317,7 @@ input[type="month"] {
 }
 
 input[type="float"] {
+    appearance: listbox;
     -webkit-appearance: listbox;
     width: 77px;
     /*edited*/
@@ -358,6 +361,7 @@ progress {
 
 [type="search"] {
     outline-offset: -2px;
+    appearance: none;
     -webkit-appearance: none;
 }
 
@@ -5651,6 +5655,7 @@ button.close {
     padding: 0;
     background-color: transparent;
     border: 0;
+    appearance: none;
     -webkit-appearance: none;
 }
 

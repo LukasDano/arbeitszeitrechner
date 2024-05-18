@@ -254,6 +254,7 @@ tr.introjs-showElement > th {
     background-image: -moz-linear-gradient(#f4f4f4, #ececec);
     background-image: -o-linear-gradient(#f4f4f4, #ececec);
     background-image: linear-gradient(#f4f4f4, #ececec);
+    background-clip: padding-box;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     -o-background-clip: padding-box;
@@ -263,7 +264,8 @@ tr.introjs-showElement > th {
     -moz-border-radius: 0.2em;
     border-radius: 0.2em;
     /* IE hacks */
-    zoom: 1;
+    transform: scale(1);
+    transform-origin: 0 0;
     display: inline;
     margin-top: 10px;
 }
