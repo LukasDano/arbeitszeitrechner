@@ -142,6 +142,87 @@ $(document).ready(function () {
 	$("#weekTimeCalc").click(function () {
 		setWeekTime();
 		setWeekOverTime();
+		uploadDaysTime();
+		uploadState();
+	});
+	
+	$("#monday").change(function () {
+		uploadDaysTime();
 	})
+	
+	$("#tuesday").change(function () {
+		uploadDaysTime();
+	})
+	
+	$("#wednesday").change(function () {
+		uploadDaysTime();
+	})
+	
+	$("#thursday").change(function () {
+		uploadDaysTime();
+	})
+
+	$("#friday").change(function () {
+		uploadDaysTime();
+	})
+	
+	function uploadDaysTime(){
+
+		var monday_time = $("#monday").val();
+		var tuesday_time = $("#tuesday").val();
+		var wednesday_time = $("#wednesday").val();
+		var thursday_time = $("#thursday").val();
+		var friday_time = $("#friday").val();
+		
+		writeToSessionStorage("monday", monday_time);
+		writeToSessionStorage("tuesday", tuesday_time);
+		writeToSessionStorage("wednesday", wednesday_time);
+		writeToSessionStorage("thursday", thursday_time);
+		writeToSessionStorage("friday", friday_time);
+    }
+
+	function uploadState(){
+
+		writeToSessionStorage("calculated", true);
+	}
+
+	function readFromSessionStorageAndSetInDayFields() {
+
+        var mondayTime = readFromSessionStorage("monday");
+		var tuesdayTime = readFromSessionStorage("tuesday");
+		var wednesdayTime = readFromSessionStorage("wednesday");
+		var thursdayTime = readFromSessionStorage("thursday");
+		var fridayTime = readFromSessionStorage("friday");
+		
+
+        if (mondayTime != null ) { 
+            $("#monday").val(mondayTime);
+        }
+
+		if (tuesdayTime !== null ) { 
+			$("#tuesday").val(tuesdayTime);
+		}
+		
+		if (wednesdayTime !== null ) { 
+			$("#wednesday").val(wednesdayTime);
+		}
+		
+		if (thursdayTime !== null ) { 
+			$("#thursday").val(thursdayTime);
+		}
+		
+		if (fridayTime !== null ) { 
+			$("#friday").val(fridayTime);
+		}		
+        
+    }
+
+	if (readFromSessionStorage("weekWindowInitLoaded") && readFromSessionStorage("monday") != null){
+		readFromSessionStorageAndSetInDayFields();
+		if (readFromSessionStorage("calculated")){
+			setWeekTime();
+			setWeekOverTime();
+		}
+    }
 
 });
