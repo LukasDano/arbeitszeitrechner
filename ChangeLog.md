@@ -39,3 +39,4 @@
 - Neues Feautre: Daten bleiben erhalten wenn man den Tab wechselt
 - Changelog Design angepasst
 - ReadMe Struktur angepasst
+- Beispiel Bild auf v2.4 geupdated
