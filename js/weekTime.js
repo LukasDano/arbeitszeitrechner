@@ -79,7 +79,7 @@ $(document).ready(function () {
 		return countedDays;
 	}
 	
-    function calculateWeekOverTime() {
+    function calculateWeekOverTime(gleittagGenommen) {
 		var countedDays = getWorkedDaysForWeek();
 		var weekWorkTime = getWeekWorkTime();
 	
@@ -87,6 +87,11 @@ $(document).ready(function () {
 		var shouldMins = countedDays * 6;
 		var istHours = weekWorkTime[0];
 		var istMins = weekWorkTime[1];
+
+		if (gleittagGenommen) {
+			istHours = 35;
+			istMins = 30;
+		}
 	
 		var overTimeHours = istHours - shouldHours;
 		var overTimeMins = istMins - shouldMins;
@@ -124,9 +129,33 @@ $(document).ready(function () {
 		$("#weekworktime").html(weekTimeAusgabe);
 	}	
 
-	function setWeekOverTime(){
+	function setWeekOverTimeNoGleittag(){
     
-		var weekTime = calculateWeekOverTime();
+		var weekTime = calculateWeekOverTime(false);
+		
+		var weekHours = weekTime[0];
+		var weekMins = weekTime[1];
+		
+		if (weekHours < 0 || weekMins < 0){
+			
+			weekHours = Math.abs(weekHours);
+			weekMins = Math.abs(weekMins);
+	
+			var weekOverTimeAusgabe = "-" + weekHours + "." + weekMins + " h";
+			
+		} else if (weekHours > 0 || weekMins > 0){
+			var weekOverTimeAusgabe = "+" + weekHours + "." + weekMins + " h";
+		} else {
+			var weekOverTimeAusgabe = "0.0 h";
+		}
+	
+		//console.log(weekOverTimeAusgabe);
+		$("#weekovertime").html(weekOverTimeAusgabe);
+	}
+
+	function setWeekOverTimeWithGleittag(){
+    
+		var weekTime = calculateWeekOverTime(true);
 		
 		var weekHours = weekTime[0];
 		var weekMins = weekTime[1];
@@ -150,7 +179,14 @@ $(document).ready(function () {
 
 	$("#weekTimeCalc").click(function () {
 		setWeekTime();
-		setWeekOverTime();
+		setWeekOverTimeNoGleittag();
+		uploadDaysTime();
+		uploadState();
+	});
+
+	$("#weekTimeCalcFloat").click(function () {
+		setWeekTime();
+		setWeekOverTimeWithGleittag();
 		uploadDaysTime();
 		uploadState();
 	});
@@ -158,7 +194,7 @@ $(document).ready(function () {
 	$("#daytimefields").keypress(function (event) {
 		if (event.which === 13) {
 			setWeekTime();
-			setWeekOverTime();
+			setWeekOverTimeNoGleittag();
 			uploadDaysTime();
 			uploadState();
 			uploadDaysTime();
@@ -239,7 +275,7 @@ $(document).ready(function () {
 		readFromSessionStorageAndSetInDayFields();
 		if (readFromSessionStorage("calculated")){
 			setWeekTime();
-			setWeekOverTime();
+			setWeekOverTimeNoGleittag();
 		}
     }
 
