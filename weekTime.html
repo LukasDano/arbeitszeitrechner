@@ -37,91 +37,87 @@
     </nav>
 	
 	<main role="main" class="container">
-		<div class="row">
-			<div class="col-sm-1 col-1">
-				<div class="text-center">
-				<label for="weekTime"></label>
+		<div class="form-group ">
+			<div class="row" id ="daytimefields">
+				<div class="col-sm-1 col-1">
+					<div class="text-center">
+					<label for="weekTime"></label>
+					</div>
 				</div>
-			</div>
-			<div class="col-sm-2 col-2">
-				<div class="text-center">
-					<label for="monday">Montag</label>
+				<div class="col-sm-2 col-2">
+					<div class="text-center">
+						<label for="monday">Montag</label>
+					</div>
+					<input type="time" id="monday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
 				</div>
-				<input type="time" id="monday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
+
+				<div class="col-sm-2 col-2">
+					<div class="text-center">
+						<label for="tuesday">Dienstag</label>
+					</div>
+					<input type="time" id="tuesday" value="00:00"" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
+				</div>
+
+				<div class="col-sm-2 col-2">
+					<div class="text-center">
+						<label for="wednesday">Mittwoch</label>
+					</div>
+					<input type="time" id="wednesday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
+				</div>
+
+				<div class="col-sm-2 col-2">
+					<div class="text-center">
+						<label for="thursday">Donnerstag</label>
+					</div>
+					<input type="time" id="thursday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
+				</div>
+
+				<div class="col-sm-2 col-2">
+					<div class="text-center">
+						<label for="friday">Freitag</label>
+					</div>
+					<input type="time" id="friday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
+				</div>
 			</div>
 
-			<div class="col-sm-2 col-2">
-				<div class="text-center">
-					<label for="tuesday">Dienstag</label>
+			<div class="row">
+
+				<div class="col-sm-1 col-1">
 				</div>
-				<input type="time" id="tuesday" value="00:00"" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
+				
+				<div class="col-sm-4 col-12">	
+					<div class="text-center">
+						<label for="weekTimeCalc" style= color:#fff></label>
+					</div>
+					<button type="button" class="btn btn-light btn-md" id="weekTimeCalcFloat">Wochenzeit berechnen (Gleittag)</button>
+				</div>
+
+				<div class="col-sm-2 col-2">
+				</div>
+				
+				<div class="col-sm-4 col-12">
+					<div class="text-center">
+						<label for="weekTimeCalc" style= color:#fff></label>
+					</div>
+					<button type="button" class="btn btn-light btn-md" id="weekTimeCalc">Wochenzeit berechnen</button>
+				</div>
+	
 			</div>
 
-			<div class="col-sm-2 col-2">
-				<div class="text-center">
-					<label for="wednesday">Mittwoch</label>
-				</div>
-				<input type="time" id="wednesday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
-			</div>
-
-			<div class="col-sm-2 col-2">
-				<div class="text-center">
-					<label for="thursday">Donnerstag</label>
-				</div>
-				<input type="time" id="thursday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
-			</div>
-
-			<div class="col-sm-2 col-2">
-				<div class="text-center">
-					<label for="friday">Freitag</label>
-				</div>
-				<input type="time" id="friday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" required autofocus data-step="3" data-intro="Arbeitszeit eintragen">
-			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-sm-1 col-1">
-				<div class="text-center">
-				<label for="weekTime"></label>
-				</div>
-			</div>
-
-			<div class="col-sm-4 col-4">
-				<div class="text-center">
-				<label for="weekTime"></label>
-				</div>
-			</div>
-
-			<div class="col-sm-4 col-4">	
-				<div class="text-center">
-				<label for="weekTimeCalc" style= color:#fff></label>
-				</div>
-				<button type="button" class="btn btn-light btn-md" id="weekTimeCalc">Wochenzeit berechnen</button>
-			</div>
-			
-			<div class="col-sm-4 col-4">
-				<div class="text-center">
-				<label for="weekTime"></label>
-				</div>
-			</div>
-		</div>
 			
 		<div class="jumbotron form-worktime introjs-relativePosition" id="result" data-step="6" data-intro="Ergebnisse der Berechnung." data-tooltipclass="forLastStep">
 			<div class="text-center">
 				<div class="row container row-adaption">
-					<div class="col text-center">
-						<label for="gleitzeit"></label>
-						<p class="display-5"></p>
-					</div>
-
 					<div class="col text-center">
 						<label for="weekworktime">Wochenarbeitszeit</label>
 						<p class="display-5" id="weekworktime">0.0 h</p>
 					</div>
 
 					<div class="col text-center">
-						<label for="gleitzeit"></label>
-						<p class="display-5"></p>
+						<label for="wochengleitzeit">Wochengleitzeit</label>
+						<p class="display-5" id="weekovertime">0.0 h</p>
 					</div>
 				</div>
 			</div>
@@ -129,6 +125,10 @@
 	</main>
 	
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="js/storageUtils.js" type="text/javascript" async></script>
     <script src="js/weekTime.js" type="text/javascript" async></script>
+	<script defer>
+        sessionStorage.setItem("weekWindowInitLoaded", true);
+    </script>
 </body>
 </html>
