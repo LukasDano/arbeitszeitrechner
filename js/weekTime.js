@@ -122,6 +122,10 @@ $(document).ready(function () {
 		
 		var weekHours = week_time[0];
 		var weekMins = week_time[1];
+
+  if (weekMins <= 9){
+      weekMins = "0" + weekMins;
+  }
 		
 		var weekTimeAusgabe = weekHours + "." + weekMins + " h";
 	
