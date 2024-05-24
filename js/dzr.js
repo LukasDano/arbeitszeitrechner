@@ -1276,7 +1276,7 @@ function getRoundStart() {
         setIstTime();
         setCountdown();
         optimizeEnd();
-        uploadGleitzeit();
+        //uploadGleitzeit();
     });
 
     $("#float").focusin(function(){
@@ -1307,7 +1307,7 @@ function getRoundStart() {
         } else {
             $("#float").val("+0.4");
         }
-        
+           
     }
 
     function readSollAnPauseFromSessionStorageAndSetInFields() {
@@ -1335,14 +1335,14 @@ function getRoundStart() {
     }
 
     if (readFromSessionStorage("windowInitLoaded") && readFromSessionStorage("start") != null){
-        readStartAndFloatFromSessionStorageAndSetInFields();        
+        readSollAnPauseFromSessionStorageAndSetInFields();
+        readStartAndFloatFromSessionStorageAndSetInFields();
         roundAndSetTimesForFloat();
-        calculate();
+        calculate();    
 		setGleitzeit();
         setIstTime();
         setCountdown();
         optimizeEnd();
-        readSollAnPauseFromSessionStorageAndSetInFields();
     } else {
         $("#start").focus();
     }
