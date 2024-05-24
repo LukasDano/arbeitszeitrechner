@@ -1293,16 +1293,10 @@ function getRoundStart() {
         writeToSessionStorage("float", floatTime);
     }
 
-    function readFromSessionStorageAndSetInFields() {
+    function readStartAndFloatFromSessionStorageAndSetInFields() {
 
         var startTime = readFromSessionStorage("start");
         var floatTime = readFromSessionStorage("float");
-
-        var sollValue = "#" + readFromSessionStorage("soll");
-        var sollTime = readFromSessionStorage("sollTime");
-
-        var pauseValue = "#" + readFromSessionStorage("pause");
-        var pauseTime = readFromSessionStorage("pauseTime");
 
         if (startTime != null ) { 
             $("#start").val(startTime);
@@ -1314,6 +1308,16 @@ function getRoundStart() {
             $("#float").val("+0.4");
         }
         
+    }
+
+    function readSollAnPauseFromSessionStorageAndSetInFields() {
+
+        var sollValue = "#" + readFromSessionStorage("soll");
+        var sollTime = readFromSessionStorage("sollTime");
+
+        var pauseValue = "#" + readFromSessionStorage("pause");
+        var pauseTime = readFromSessionStorage("pauseTime");
+
         if (sollValue != null && sollTime != null) {
             $("#soll").val(sollTime);
             $("#6hours, #7hours6min, #10hours").removeClass("active");
@@ -1331,15 +1335,30 @@ function getRoundStart() {
     }
 
     if (readFromSessionStorage("windowInitLoaded") && readFromSessionStorage("start") != null){
-        readFromSessionStorageAndSetInFields();        
+        readStartAndFloatFromSessionStorageAndSetInFields();        
         roundAndSetTimesForFloat();
         calculate();
 		setGleitzeit();
         setIstTime();
         setCountdown();
         optimizeEnd();
+        readSollAnPauseFromSessionStorageAndSetInFields();
     } else {
         $("#start").focus();
     }
+
+    function floatValueCheck(){
+
+        var float = $("#float").val().split(":");
+
+        if (float == null || float == ""){
+            $("#float").val("0.00");
+        }
+    }
+    
+    $("#float").blur(function () {
+        setGleitzeit();
+        floatValueCheck();
+    });
 
 });
