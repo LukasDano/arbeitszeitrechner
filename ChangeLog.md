@@ -40,3 +40,8 @@
 - Changelog Design angepasst
 - ReadMe Struktur angepasst
 - Beispiel Bild auf v2.4 geupdated
+
+## v2.4.1
+- Bugfix: Wenn man 6 Stunden Arbeitszeit ausgewählt hat, wurde mit jedem neuladen der Seite die Arbeitszeit jeweils um eine Stunde reduziert
+	Wenn man 10 Stunden ausgewählt hat, wurde jeweils um 1 Stunde erhöht
+- Bugfix: Gleitzeitfeld kann jetzt nicht mehr leer sein
