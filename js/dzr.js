@@ -1276,7 +1276,7 @@ function getRoundStart() {
         setIstTime();
         setCountdown();
         optimizeEnd();
-        //uploadGleitzeit();
+        uploadGleitzeit();
     });
 
     $("#float").focusin(function(){
