@@ -1256,7 +1256,7 @@ function getRoundStart() {
         }
 
         $("#end").val(endHours +":"+ endMins);
-setCountdown();
+        setCountdown();
 
     }
 
