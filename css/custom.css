@@ -329,3 +329,10 @@ section {
     flex-grow: 0 !important;
     margin: auto;
 }
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.9;
+  }
+  
