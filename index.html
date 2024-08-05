@@ -43,32 +43,19 @@
         <div class="starter-template">
             <div class="form-group ">
                 <div class="container-fluid">
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="text-center" id="workAndPause">
-                                <!-- TODO: Auswahl der Soll-Arbeitszeit über einen Slider-->
-                                <h5>Arbeitszeit</h5>
-                                <div class="btn-group introjs-relativePosition" data-step="1" data-intro="Tägliche Soll-Arbeitszeit festlegen.">
-                                    <button type="button" class="btn btn-light btn-md" id="6hours">6:00</button>
-                                    <button type="button" class="btn btn-light btn-md active" id="7hours6min">7:06</button>
-                                    <button type="button" class="btn btn-light btn-md" id="10hours">10:00</button>
-                                    <!--<button type="button" class="btn btn-light btn" id="man">man</button>-->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="text-center">
-                                <h5>Pausenzeit</h5>
-                                <div class="btn-group introjs-relativePosition" data-step="2" data-intro="Pausenzeit auswählen.">
-                                    <button type="button" class="btn btn-light btn-md" id="00min">0:00</button>
-                                    <button type="button" class="btn btn-light btn-md active" id="30min">0:30</button>
-                                    <button type="button" class="btn btn-light btn-md" id="45min">0:45</button>
-                                </div>
-                            </div>
+                </div>
+
+                <div class="col">
+                    <div class="text-center">
+                        <h5>Pausenzeit</h5>
+                        <div class="btn-group introjs-relativePosition" data-step="2" data-intro="Pausenzeit auswählen.">
+                            <button type="button" class="btn btn-light btn-md" id="00min">0:00</button>
+                            <button type="button" class="btn btn-light btn-md active" id="30min">0:30</button>
+                            <button type="button" class="btn btn-light btn-md" id="45min">0:45</button>
                         </div>
                     </div>
                 </div>
+
                 <br>
                 <hr>
 
@@ -81,10 +68,12 @@
                     </div>
 
 					<div class="col-sm-4 col-8">
+                        <div class="disabled">
                         <div class="text-center">
                             <label for="pause">Pausenzeit</label>
                         </div>
                         <input type="time" id="pause" class="input-lg center-block form-control input-time introjs-relativePosition" value="00:30" data-step="4" data-intro="Pausenzeit individuell anpassen (bei Bedarf).">
+                        </div>
                     </div>
 
 					<div class="col-sm-4 col-8">
@@ -97,11 +86,13 @@
 				
 				<div class="row">
 				
-					<div class="col-sm-4 col-8">	
+					<div class="col-sm-4 col-8">
+                        <div class="disabled">	
                         <div class="text-center">
 						<label for="soll">Arbeitszeit</label>
                         </div>
                         <input type="time" id="soll" value="07:06" class="input-lg center-block form-control input-time">
+                        </div>
 					</div>
 					
 					<div class="col-sm-4 col-8">

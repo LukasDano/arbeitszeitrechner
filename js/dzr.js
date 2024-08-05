@@ -1,29 +1,5 @@
 $(document).ready(function () {
 
-    $("#6hours").click(function () {
-        $("#soll").val("06:00");
-        $("#6hours").addClass("active");
-        $("#7hours6min, #10hours").removeClass("active");
-        writeToSessionStorage("soll", "6hours");
-        writeToSessionStorage("sollTime", "06:00");
-        activateChanges();
-    })
-    $("#7hours6min").click(function () {
-        $("#soll").val("07:06");
-        $("#7hours6min").addClass("active");
-        $("#6hours, #10hours").removeClass("active");
-        writeToSessionStorage("soll", "7hours6min");
-        writeToSessionStorage("sollTime", "07:06");
-        activateChanges();
-    })
-    $("#10hours").click(function () {
-        $("#soll").val("10:00");
-        $("#10hours").addClass("active");
-        $("#6hours, #7hours6min").removeClass("active");
-        writeToSessionStorage("soll", "10hours");
-        writeToSessionStorage("sollTime", "10:00");
-        activateChanges();
-    })
     $("#00min").click(function () {
         $("#pause").val("00:00");
         $("#00min").addClass("active");
@@ -241,7 +217,6 @@ $(document).ready(function () {
     $("#end").change(function () {
         calculate();
         setGleitzeit();
-        workAndPauseTimeAutomatically();
         setIstTime();
         setCountdown();
         uploadGleitzeit();
@@ -250,21 +225,6 @@ $(document).ready(function () {
     $("#soll").change(function () {
         calculate();
     });
-
-
-    var curr_time = $.now();
-
-    function formatTimeOfDay(millisSinceEpoch) {
-        var secondsSinceEpoch = (millisSinceEpoch / 1000) | 0;
-        var secondsInDay = ((secondsSinceEpoch % 86400) + 86400) % 86400;
-        var seconds = secondsInDay % 60;
-        var minutes = ((secondsInDay / 60) | 0) % 60;
-        // +1 für Winterzeit
-        var hours = (secondsInDay / 3600 + 1) | 0;
-        return hours + (minutes < 10 ? ":0" : ":") +
-            minutes + (seconds < 10 ? ":0" : ":") +
-            seconds;
-    }
 
     function setCountdown() {
         // gibt das aktuelle Kalenderjahr zurück
@@ -793,64 +753,6 @@ function activateChanges(){
     calculate();
     setGleitzeit();
     setIstTime();
-}
-
-function setSixHoursNoBreak(){
-    $("#soll").val("06:00");
-    $("#6hours").addClass("active");
-    $("#7hours6min, #10hours").removeClass("active");
-
-    $("#pause").val("00:00");
-    $("#00min").addClass("active");
-    $("#30min, #45min").removeClass("active");
-
-    activateChanges();
-}
-
-function setTenHoursLongBreak(){
-    $("#soll").val("10:00");
-    $("#10hours").addClass("active");
-    $("#6hours, #7hours6min").removeClass("active");
-    
-    $("#pause").val("00:45");
-    $("#45min").addClass("active");
-    $("#00min, #30min").removeClass("active");
-    
-    activateChanges();
-
-}
-
-function setNormalTimes(){
-    $("#soll").val("07:06");
-    $("#7hours6min").addClass("active");
-    $("#6hours, #10hours").removeClass("active");
-    
-    $("#pause").val("00:30");
-    $("#30min").addClass("active");
-    $("#00min, #45min").removeClass("active");
-    activateChanges();
-
-}
-
-function workAndPauseTimeAutomatically(){
-
-    var istTime = getIstTime();
-
-    var istHours = istTime[0];
-    var istMins = istTime[1];
-
-    //console.log(istHours);
-
-    if (istHours == 6 && istMins == 0){
-        setSixHoursNoBreak();
-    } else if (istHours < 6){
-        setSixHoursNoBreak();
-    } else if (istHours >= 10){
-        setTenHoursLongBreak();
-    } else {
-        setNormalTimes();
-    }
-
 }
 
 function resetPauseAndWorkTime(){
