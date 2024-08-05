@@ -208,9 +208,9 @@ $(document).ready(function () {
     });
 
     $("#pause").change(function () {
-        calculate();
         setGleitzeit();
         setIstTime();
+        calculate();
         setCountdown();
     });
 
@@ -268,20 +268,6 @@ $(document).ready(function () {
 
         // Berechnet verbleibende Zeit in Sekunden (für den Countdown)
         var remainingSeconds = hoursToEnd * 60 * 60 + minutesToEnd * 60 + secondsToEnd;
-
-        // console.log(".now() + remaining: " + remainingSeconds);
-
-        /*$("#clock").countdown(remainingMilliseconds, {
-            elapse: true
-        }).on("update.countdown", function (event) {
-            var $this = $(this);
-            if (event.elapsed) {
-                $this.html(event.strftime('<span>%H:%M:%S</span>'));
-            } else {
-                $this.html(event.strftime('<span>%H:%M:%S</span>'));
-            }
-        });*/
-
 
         if ($('.ClassyCountdown-wrapper').length > 0) {
             //console.log("IF");

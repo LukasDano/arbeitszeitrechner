@@ -1,7 +1,8 @@
 # Arbeitszeitrechner #
 
 Eine einfache Anwendung, bei der man den Arbeitsbeginn einträgt und automatisch der Feierabendbeginn ausgerechnet wird.
-Jetzt einfach die [aktulle Version](https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html) ausprobieren.
+Jetzt einfach die [aktuelle Version](https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html) ausprobieren.
+Hier kann man die aktuelle [Testversion](https://raw.githack.com/LukasDano/arbeitszeitrechner/bugfix/index.html) einsehen.
 
 Diese Anwendung wurde von einer Anderen inspiriert, aber eigenständig erweitert/verändert.
 Hier geht es zum [Original.](https://github.com/iC0RE/arbeitszeitrechner)

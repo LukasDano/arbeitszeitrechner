@@ -45,3 +45,9 @@
 - Bugfix: Wenn man 6 Stunden Arbeitszeit ausgewählt hat, wurde mit jedem neuladen der Seite die Arbeitszeit jeweils um eine Stunde reduziert
 	Wenn man 10 Stunden ausgewählt hat, wurde jeweils um 1 Stunde erhöht
 - Bugfix: Gleitzeitfeld kann jetzt nicht mehr leer sein
+
+## v2.4.2
+- Man kann jetzt nicht mehr die Arbeitszeit selbständig auswählen
+	- hat mehrere Probleme verursacht
+	- war fachlich/praktisch keine sinnvolle Funktion
+- Bugfix: wenn man so arbeitet, dass man mehr oder weniger Pause braucht wird jetzt die richtige Zeit angegeben
