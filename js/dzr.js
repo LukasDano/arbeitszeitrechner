@@ -245,7 +245,7 @@ $(document).ready(function () {
         setIstTime();
         setCountdown();
         uploadGleitzeit();
-        checkForIfSixHourModeIsAllowed();
+        switchModeIfIsAllowed();
         calculate();
         setGleitzeit();
         setIstTime();
@@ -1162,7 +1162,7 @@ function getRoundStart() {
 
     $("#float").change(function () {
         applyFloatChanges();
-        checkForIfSixHourModeIsAllowed();
+        switchModeIfIsAllowed();
     });
 
     $("#float").focusin(function(){
@@ -1179,8 +1179,8 @@ function getRoundStart() {
         uploadGleitzeit();
     }
 
-    function checkForIfSixHourModeIsAllowed(){
-        // TODO evtl. in eine 6 Stunden automatik umbauen?!
+    function switchModeIfIsAllowed(){
+
         if(readFromSessionStorage("modus") === "6h00m"){
             let float =  getFloat(readFromSessionStorage("float"));
 
@@ -1194,6 +1194,30 @@ function getRoundStart() {
                 switchToSevenHourMode();
             }
         }
+
+        if(readFromSessionStorage("modus") === "7h06m"){
+            let istTime =  getIstTime();
+
+            let istHours = istTime[0];
+            let istMinutes = istTime[1];
+
+            if (istHours < 6) {
+                switchToSixHourMode();
+            } else if (istHours === 6 && istMinutes === 0){
+                switchToSixHourMode();
+            }
+        }
+    }
+
+    function switchToSixHourMode(){
+        $("#6h00m").addClass("active");
+        $("#7h06m").removeClass("active");
+        writeToSessionStorage("modus", "6h00m");
+        $("#pause").val("00:00");
+        $("#00min").addClass("active");
+        $("#30min,#45min").removeClass("active");
+        writeToSessionStorage("pause", "00min");
+        writeToSessionStorage("pauseTime", "00:00");
     }
 
     function switchToSevenHourMode(){
