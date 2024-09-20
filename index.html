@@ -94,40 +94,33 @@
                         <input type="time" id="end" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-intro="Endzeit wird automatisch berechnet.">
                     </div>
                 </div>
-				
-				<div class="row">
-				
-					<div class="col-sm-4 col-8">
-                        <div class="disabled">	
+
+                <div class="row">
+
+                    <div class="col-sm-4 col-8">
+                        <div class="disabled">
+                            <div class="text-center">
+                                <label for="soll">Arbeitszeit</label>
+                            </div>
+                            <input type="time" id="soll" value="07:06" class="input-lg center-block form-control input-time">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 col-8">
                         <div class="text-center">
-						<label for="soll">Arbeitszeit</label>
-                        </div>
-                        <input type="time" id="soll" value="07:06" class="input-lg center-block form-control input-time">
-                        </div>
-					</div>
-					
-					<div class="col-sm-4 col-8">
-						<div class="text-center">
-						<label for="float">Gleitzeit</label>
+                            <label for="float">Gleitzeit</label>
                         </div>
                         <input type="float" id="float" value="0.00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-inro="Gleitzeit kann eingetragen werden">
-					</div>
-					
-					<div class="col-sm-2 col-4">
-                        <div class="text-center">
-						<label for="optimize"></label>
-						</div>
-						<button type="button" class="btn btn-light btn-md" id="optimize">Optimize</button>
-					</div>
+                    </div>
 
-                    <div class="col-sm-2 col-4">
+                    <div class="col-sm-4 col-8">
                         <div class="text-center">
                             <label for="reset"></label>
                         </div>
                         <button type="button" class="btn btn-light btn-md" id="reset">Reset</button>
                     </div>
-					
-				</div>
+
+                </div>
             </div>
 			
             <div class="jumbotron form-worktime introjs-relativePosition" id="result" data-step="6" data-intro="Ergebnisse der Berechnung." data-tooltipclass="forLastStep">

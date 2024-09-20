@@ -744,7 +744,6 @@ function activateChanges(){
 }
 
 function resetPauseAndWorkTime(){
-
     $("#pause").val("00:30");
     $("#30min").addClass("active");
     $("#00min, #45min").removeClass("active");
@@ -1144,10 +1143,6 @@ function getRoundStart() {
         uploadGleitzeit();
 	});
 
-    $("#optimize").click(function () {
-        optimizeEnd();
-    });
-
     $("#float").change(function () {
         roundAndSetTimesForFloat();
         calculate();
@@ -1220,7 +1215,6 @@ function getRoundStart() {
         writeToSessionStorage("pause", "00min");
         writeToSessionStorage("pauseTime", "00:00");
         $("#float").val("-1.06");
-        $("#float").addClass("disabled");
     }
 
     function switchToSevenHourMode(){
@@ -1230,7 +1224,6 @@ function getRoundStart() {
         writeToSessionStorage("pause", "30min");
         writeToSessionStorage("pauseTime", "00:30");
         $("#float").val("+0.04");
-        $("#float").removeClass("disabled");
         writeToSessionStorage("float", "+0.04");
     }
 
