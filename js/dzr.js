@@ -751,6 +751,11 @@ function resetPauseAndWorkTime(){
     $("#soll").val("07:06");
     $("#7h06m").addClass("active");
     $("#6h00m").removeClass("active");
+
+    writeToSessionStorage("pause", "30min");
+    writeToSessionStorage("pauseTime", "00:30");
+    writeToSessionStorage("modus", "7h06m");
+    writeToSessionStorage("workTime", "07:06");
     activateChanges();
 }
 
@@ -1133,13 +1138,12 @@ function getRoundStart() {
 
     // TODO doppeltes Rest drücken sollte nicht mehr nötig sein
 	$("#reset").click(function () {
-        $("#float").removeClass("disabled");
+        resetPauseAndWorkTime();
         set_end();
         setGleitzeit();
         setIstTime();
         calculate();
         setCountdown();
-        resetPauseAndWorkTime();
         uploadGleitzeit();
 	});
 
