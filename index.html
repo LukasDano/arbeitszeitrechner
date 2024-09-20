@@ -7,8 +7,8 @@
     <meta name="description" content="Arbeitszeitrechner">
     <link rel="icon" href="favicon.ico">
 	
-	<meta name="Version" content="2.4.2">
-	<meta name="VersionName" content="Tabbing und Wochengleitzeit">
+	<meta name="Version" content="2.5">
+	<meta name="VersionName" content="Sechser Modus">
     <meta name="GitHub" content="https://github.com/LukasDano/arbeitszeitrechner">
 
     <title>Arbeitszeitrechner</title>
@@ -20,8 +20,6 @@
     <link href="css/introjs.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="css/jquery.classycountdown.css" rel="stylesheet" type="text/css">
-    <style>
-    </style>
 </head>
 
 <body>
@@ -46,6 +44,7 @@
                 <div class="container-fluid">
                 </div>
 
+                <div class ="row">
                 <div class="col">
                     <div class="text-center">
                         <h5>Pausenzeit</h5>
@@ -55,6 +54,17 @@
                             <button type="button" class="btn btn-light btn-md" id="45min">0:45</button>
                         </div>
                     </div>
+                </div>
+
+                <div class="col">
+                    <div class="text-center">
+                        <h5>Arbeitszeit</h5>
+                        <div class="btn-group introjs-relativePosition" data-step="2" data-intro="Arbeitszeit wählen.">
+                            <button type="button" class="btn btn-light btn-md" id="6h00m">6:00</button>
+                            <button type="button" class="btn btn-light btn-md active" id="7h06m">7:06</button>
+                        </div>
+                    </div>
+                </div>
                 </div>
 
                 <br>
@@ -103,12 +113,19 @@
                         <input type="float" id="float" value="0.00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-inro="Gleitzeit kann eingetragen werden">
 					</div>
 					
-					<div class="col-sm-4 col-8">	
+					<div class="col-sm-2 col-4">
                         <div class="text-center">
-						<label for="reset"></label>
+						<label for="optimize"></label>
 						</div>
-						<button type="button" class="btn btn-light btn-md" id="reset">Reset</button>
+						<button type="button" class="btn btn-light btn-md" id="optimize">Optimize</button>
 					</div>
+
+                    <div class="col-sm-2 col-4">
+                        <div class="text-center">
+                            <label for="reset"></label>
+                        </div>
+                        <button type="button" class="btn btn-light btn-md" id="reset">Reset</button>
+                    </div>
 					
 				</div>
             </div>
@@ -132,7 +149,7 @@
                         </div>
                     </div>
 
-                    <div id="cc-box" class="row container row-adaption" style="margin-top:0px;">
+                    <div id="cc-box" class="row container row-adaption" style="margin-top:0;">
                         <div id="countdown15" class="ClassyCountdownDemo container"></div>
                     </div>
                 </div>

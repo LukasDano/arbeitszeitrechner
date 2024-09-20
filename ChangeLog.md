@@ -51,3 +51,8 @@
 	- hat mehrere Probleme verursacht
 	- war fachlich/praktisch keine sinnvolle Funktion
 - Bugfix: wenn man so arbeitet, dass man mehr oder weniger Pause braucht wird jetzt die richtige Zeit angegeben
+
+## v2.5
+- Neues Feature: Man kann wählen zwischen einem Tag mit 6 Stunden und einem Tag mit 7:06 Stunden
+- Neues Feature: Man kann die Endzeit jetzt über einen Button optimieren
+	- Die Optimierung ist auch weiter hin über das Clicken auf das Gleitzeitfeld möglich 

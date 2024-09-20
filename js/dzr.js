@@ -25,6 +25,28 @@ $(document).ready(function () {
         activateChanges();
     })
 
+    $("#6h00m").click(function () {
+        $("#soll").val("05:56");
+        $("#6h00m").addClass("active");
+        $("#7h06m").removeClass("active");
+        writeToSessionStorage("modus", "6h00m");
+        writeToSessionStorage("workTime", "05:56");
+        writeToSessionStorage("float", "-1.06");
+        switchToSixHourMode();
+        activateChanges();
+        applyChangedWorktime();
+    })
+    $("#7h06m").click(function () {
+        $("#soll").val("07:06");
+        $("#7h06m").addClass("active");
+        $("#6h00m").removeClass("active");
+        writeToSessionStorage("modus", "7h06m");
+        writeToSessionStorage("workTime", "07:06");
+        switchToSevenHourMode();
+        activateChanges();
+        applyChangedWorktime();
+    })
+
     // liest Dienstbeginn aus dem Input-Feld aus
     function getStart_time() {
         var start_time = $("#start").val().split(":");
@@ -32,8 +54,7 @@ $(document).ready(function () {
        var start_hours = parseInt(start_time[0], 10);
        var start_mins = parseInt(start_time[1], 10);
 
-        start_time = new Array(start_hours, start_mins);
-        return start_time;
+        return [start_hours, start_mins];
     }
 
     // liest Dienstende aus dem Input-Feld aus
@@ -43,8 +64,7 @@ $(document).ready(function () {
         var end_hours = parseInt(end_time[0], 10);
         var end_mins = parseInt(end_time[1], 10);
 
-        end_time = new Array (end_hours, end_mins);
-        return end_time;
+        return [end_hours, end_mins];
     }
 
     // Gibt die Differenz zwischen Start und Ende zurück
@@ -65,8 +85,7 @@ $(document).ready(function () {
             diff_hours--;
             diff_mins = diff_mins + 60;
         }
-        var diff_time = [diff_hours, diff_mins];
-        return diff_time;
+        return [diff_hours, diff_mins];
     }
 
     // liest Pausenzeit aus dem Input-Feld aus
@@ -76,7 +95,7 @@ $(document).ready(function () {
         var pause_hours = parseInt(pause_time[0], 10);
         var pause_mins = parseInt(pause_time[1], 10);
 
-        pause_time = new Array (pause_hours, pause_mins);
+        pause_time = [pause_hours, pause_mins];
         return pause_time;
     }
 
@@ -87,8 +106,8 @@ $(document).ready(function () {
         var soll_hours = parseInt(soll_time[0], 10);
         var soll_mins = parseInt(soll_time[1], 10);
 
-        soll_time = new Array (soll_hours, soll_mins);
-        return soll_time;
+        console.log([soll_hours, soll_mins]);
+        return [soll_hours, soll_mins];
     }
 
     // Berechnet die reine Arbeitszeit (abzüglich Pause)
@@ -109,8 +128,7 @@ $(document).ready(function () {
             work_mins = work_mins + 60;
         }
 
-        var work_time = [work_hours, work_mins];
-        return work_time;
+        return [work_hours, work_mins];
     }
 
     // Berechnet die Differenz zwischen IST und SOLL
@@ -163,25 +181,6 @@ $(document).ready(function () {
         return diff_time;
     }
 
-    // Berechnet die Differenz zwischen Arbeitszeit und Sollzeit in Prozent
-    function getPercentage() {
-        var work_time = getWork_time();
-        var soll_time = getSoll_time();
-
-        var work_hours = work_time[0];
-        var work_mins = work_time[1];
-        var soll_hours = soll_time[0];
-        var soll_mins = soll_time[1];
-
-        work_mins = work_hours * 60 + work_mins;
-        soll_mins = soll_hours * 60 + soll_mins;
-
-        //var percentage = Math.round(work_mins*100/soll_mins,2);
-        var percentage = (work_mins * 100 / soll_mins).toFixed(2);
-
-        return percentage;
-    }
-
     // Setzt den Standard-Wert für die Pausenzeit
     function setDefault() {
         $('#pause').val("00:30");
@@ -197,6 +196,15 @@ $(document).ready(function () {
             setDefault();
         }
     });
+
+    function applyChangedWorktime(){
+        set_end();
+        setGleitzeit();
+        setIstTime();
+        calculate();
+        setCountdown();
+        uploadStartTime();
+    }
 
     $("#start").change(function () {
         set_end();
@@ -289,10 +297,9 @@ $(document).ready(function () {
 
     // Funktion zur Berechnung der Arbeitszeit, der Differenz zur Regeldienstzeit und des prozentualen Anteils der Arbeitszeit an der Regeldienstzeit
     function calculate() {
-		
+
         var diff_time = getTimeDifference();
         var work_time = getWork_time();
-        var percentage = getPercentage();
 
         var diff_hours = diff_time[0];
         var diff_mins = diff_time[1];
@@ -316,7 +323,6 @@ $(document).ready(function () {
         } else if (isNaN(diff_hours) && isNaN(diff_mins)) {
             $("#trueworktime").html("0:00");
             $("#difference").html("0:00");
-            $("#percentage").html("0,00%");
         } else if (diff_positive == true) {
             $("#difference").html("+" + diff_time);
         }
@@ -329,23 +335,20 @@ $(document).ready(function () {
         }
         if (isNaN(work_hours) && isNaN(work_mins)) {
             $("#trueworktime").html("0.00");
-            $("#percentage").html("0,00%");
         } else {
             $("#trueworktime").html(work_time);
-            $("#percentage").html(percentage + "%");
         }
     }
 
-    // Berechnet das Dienstende anhand der Start-, Pausen-, und Soll-Dienstzeit
+    // Berechnet das Dienstende anhand der Start-, Pausen- und Soll-Dienstzeit
     function set_end() {
-        var endTimes = calculateNormalEnd();
+        let normalEndTime = calculateNormalEnd();
 
-        var endHours = endTimes[0];
-        var endMins = endTimes[1];
+        let endHours = normalEndTime[0];
+        let endMins = normalEndTime[1];
 
         $("#end").val(endHours + ":" + endMins);
     }
-
 
     $('#countdown16').ClassyCountdown({
         theme: "flat-colors-wide",
@@ -692,19 +695,19 @@ $(document).ready(function () {
 // Ab hier selbstgeschrieben
 
 function calculateNormalEnd(){
-    var start_time = getStart_time();
-    var pause_time = getPause_time();
-    var soll_time = getSoll_time();
+    let start_time = getStart_time();
+    let pause_time = getPause_time();
+    let soll_time = getSoll_time();
 
-    start_hours = parseInt(start_time[0], 10);
-    start_mins = parseInt(start_time[1], 10);
-    pause_hours = parseInt(pause_time[0], 10);
-    pause_mins = parseInt(pause_time[1], 10);
-    soll_hours = parseInt(soll_time[0], 10);
-    soll_mins = parseInt(soll_time[1], 10);
+    let start_hours = parseInt(start_time[0], 10);
+    let start_mins = parseInt(start_time[1], 10);
+    let pause_hours = parseInt(pause_time[0], 10);
+    let pause_mins = parseInt(pause_time[1], 10);
+    let soll_hours = parseInt(soll_time[0], 10);
+    let soll_mins = parseInt(soll_time[1], 10);
 
-    end_hours = start_hours + pause_hours + soll_hours;
-    end_mins = start_mins + pause_mins + soll_mins;
+    let end_hours = start_hours + pause_hours + soll_hours;
+    let end_mins = start_mins + pause_mins + soll_mins;
 
     if (end_hours >= 24) {
         end_hours = end_hours - 24;
@@ -727,12 +730,11 @@ function calculateNormalEnd(){
         end_hours++;
     }
 
-
     if (end_mins < 10) {
         end_mins = "0" + end_mins;
     }
 
-    return endTime = [end_hours, end_mins];
+    return [end_hours, end_mins];
 }
 
 function activateChanges(){
@@ -742,69 +744,70 @@ function activateChanges(){
 }
 
 function resetPauseAndWorkTime(){
+
     $("#pause").val("00:30");
     $("#30min").addClass("active");
     $("#00min, #45min").removeClass("active");
-    
+
     $("#soll").val("07:06");
-    $("#7hours6min").addClass("active");
-    $("#6hours, #10hours").removeClass("active");
+    $("#7h06m").addClass("active");
+    $("#6h00m").removeClass("active");
     activateChanges();
 }
 
 // Arbeitsbeginn auf 10er und 5er abrunden
 function getRoundStart() {
-		
+
         var start_time = getStart_time();
 
         var start_hours = start_time[0];
         var start_mins = start_time[1];
         var tens = 0;
-			
+
         while(start_mins > 9){
             start_mins = start_mins - 10;
             tens++;
         }
-        
+
         if (start_mins >= 5){
             start_mins = 5;
         }
-        
+
         if (start_mins <= 4){
             start_mins = 0;
         }
-        
+
         start_mins = start_mins + (tens*10);
-        
+
         var rounded_start_time = [start_hours, start_mins];
         //console.log("Anfang: " + rounded_start_time);
         return(rounded_start_time);
-		
+
 	}
 
 	// Arbeitsende auf 10er und 5er abrunden
 	function getRoundEnd() {
-		
+
         var end_time = getEnd_time();
 
         var end_hours = end_time[0];
         var end_mins = end_time[1];
         var tens = 0;
-        
-        
+
+
         if (end_mins >= 56){
             end_mins = 0;
             end_hours++;
-        
+
             var rounded_end_time = [end_hours, end_mins];
             return(rounded_end_time);
         }
-        
+
         while(end_mins > 9){
             end_mins = end_mins - 10;
             tens++;
         }
-    
+
         if (end_mins >= 6){
             end_mins = 0;
             tens++;
@@ -813,31 +816,30 @@ function getRoundStart() {
         } else if (end_mins <= 4){
             end_mins = 5;
         }
-    
+
         end_mins = end_mins + (tens*10);
 
-        var rounded_end_time = [end_hours, end_mins];
-        //console.log("Ende: " + rounded_end_time);
-        return(rounded_end_time);
-		
+        // console.log("Ende: " + [end_hours, end_mins]);
+        return [end_hours, end_mins]
+
 	}
 
 	// GerundeterAnfang - GerundetesEnde = Ist Arbeitszeit
 	function getIstTime(){
-  
+
         var roundedStart = getRoundStart();
         var roundedEnd = getRoundEnd();
         var pauseTime =  getPause_time();
-      
+
         var startHours = roundedStart[0];
         var startMins = roundedStart[1];
         var endHours = roundedEnd[0];
         var endMins = roundedEnd[1];
         var pauseMins = pauseTime[1];
-        
+
         var istHours = endHours - startHours;
         var istMins = endMins - startMins - pauseMins;
-        
+
         while (istMins < 0){
           istHours--;
           istMins = istMins + 60;
@@ -847,24 +849,23 @@ function getRoundStart() {
             istHours = istHours - 2;
         }
 
-        return ist = [istHours, istMins];
-      
+        return [istHours, istMins];
+
       }
 
 	// Ist Arbeitszeit - Soll Arbeitszeit = Gleitzeit
 	function getGleitzeit(){
-  
+
         var istTime = getIstTime();
-        var sollTime = [7,6];
-        
+
         var istHours = istTime[0];
         var istMins = istTime[1];
-        var sollHours = sollTime[0];
-        var sollMins = sollTime[1];
+        var sollHours = 7;
+        var sollMins = 6;
 
         var gleitHours = istHours - sollHours;
         var gleitMins = istMins - sollMins;
-        
+
         if (istHours < sollHours){
           gleitHours++;
           gleitMins = gleitMins - 60;
@@ -877,49 +878,49 @@ function getRoundStart() {
           gleitHours--;
           gleitMins = gleitMins + 60;
         }
-        
-        
-        return gleit = [gleitHours, gleitMins];
+
+
+        return [gleitHours, gleitMins];
       }
 
     function setIstTime(){
-		
+
 		var istTime = getIstTime();
-		
+
         var istHours = istTime[0];
         var istMins = istTime[1];
-            
+
         if (istMins < 0) {
             istHours--;
             istMins = istMins + 60;
         }
-		
+
 		var istAusgabe = istHours + "." + istMins
 		$("#countedworktime").html(istAusgabe);
-		
+
 	}
 
 	function setGleitzeit(){
-		
+
 		var gleitzeit = getGleitzeit();
-		
+
 		var gleitHours = gleitzeit[0];
 		var gleitMins = gleitzeit[1];
-		
+
 		if (gleitHours < 0 || gleitMins < 0){
-			
+
 			gleitHours = Math.abs(gleitHours);
 			gleitMins = Math.abs(gleitMins);
 
 			var gleitAusgabe = "-" + gleitHours + "." + gleitMins;
-			
+
 			} else if (gleitHours > 0 || gleitMins > 0){
 				var gleitAusgabe = "+" + gleitHours + "." + gleitMins;
 			}
-	
+
 		$("#gleitzeit").html(gleitAusgabe);
         $("#float").val(gleitAusgabe);
-		
+
 	}
 
     function getFloatFromInput(){
@@ -944,10 +945,7 @@ function getRoundStart() {
             var gleitHours = parseInt(floatArray[1], 10);
             var gleitMins = parseInt(floatArray[3], 10);
 
-            var gleitHours = parseInt(floatArray[1], 10);
-            var gleitMins = parseInt(floatArray[3], 10);
-
-            return gleitTime = [vorzeichen, gleitHours, gleitMins];
+            return [vorzeichen, gleitHours, gleitMins];
         }
 
         // wenn es zweistellige Minuten gibt
@@ -968,24 +966,21 @@ function getRoundStart() {
     }
 
     function calculateEndForFloat(){
-        
+
         var floatTime = getFloatFromInput();
         var istEnd = calculateNormalEnd();
-        
+
         var istEndHours = parseInt(istEnd[0], 10);
         var istEndMins = parseInt(istEnd[1], 10);
 
         var gleitVorzeichen = floatTime[0];
-        //console.log("FloatTime: " + floatTime);
-        //console.log("Vorzeichen:" + gleitVorzeichen);
+        let floatTimeRounded = [];
 
-        if (gleitVorzeichen == 1){
+        if (gleitVorzeichen === 1){
             floatTimeRounded = getOptimalEndForPositive();
-        } else if (gleitVorzeichen == -1) {
+        } else if (gleitVorzeichen === -1) {
             floatTimeRounded = getOptimalEndForNegative();
         }
-
-        //console.log("FloatTimeRounded: " + floatTimeRounded);
 
         var gleitHours = floatTimeRounded[0];
         var gleitMins = floatTimeRounded[1];
@@ -993,29 +988,19 @@ function getRoundStart() {
         var sollEndHours = istEndHours + (gleitHours * gleitVorzeichen);
         var sollEndMins = istEndMins + (gleitMins * gleitVorzeichen);
 
-        //console.log("IstEndeHours: " + istEndHours);
-        //console.log("GleitHours: " + gleitHours);
-        //console.log("SollHours: " + sollEndHours);
-        //console.log("IstEndeMins: " + istEndMins);
-        //console.log("GleitMins: " + gleitMins);
-        //console.log("SollMins: " + sollEndMins);
+        if (readFromSessionStorage("modus") === "6h00m"){
+            return [istEndHours, istEndMins];
+        }
 
-        if (gleitVorzeichen == -1){
-            var ausgabeVorzeichen = "-";
-        }else{
-            var ausgabeVorzeichen = "+";
-        } 
-
-        //console.log("Minus oder Plus und Schlusszeit: " + ausgabeVorzeichen, sollEndHours, sollEndMins);
-        return ausgabe = [ausgabeVorzeichen, sollEndHours, sollEndMins];
+        return [sollEndHours, sollEndMins];
     }
 
     function roundAndSetTimesForFloat(){
 
         var endTime = calculateEndForFloat();
 
-        var endHours = endTime[1];
-        var endMins = endTime[2];
+        var endHours = endTime[0];
+        var endMins = endTime[1];
 
         while (endMins >= 60) {
             endHours++;
@@ -1032,8 +1017,7 @@ function getRoundStart() {
         }
 
         var sollEndHours = endHours;
-        var sollEndMins = endMins; 
-        //console.log("Soll" + sollEndHours + ":" + sollEndMins);
+        var sollEndMins = endMins;
 
         $("#end").val(sollEndHours +":"+ sollEndMins);
     }
@@ -1049,9 +1033,9 @@ function getRoundStart() {
         if (gleitHours != 0 && gleitMins == 0){
             gleitMins = 4;
             // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-            return gleitZeit = [gleitHours, gleitMins - 4];
+            return [gleitHours, gleitMins - 4];
         }
-        
+
         while(gleitMins > 9){
             gleitMins = gleitMins - 10;
             tens++;
@@ -1066,7 +1050,7 @@ function getRoundStart() {
         gleitMins =  10*tens + gleitMins;
         //console.log("Positive Minuten: " + gleitMins);
         // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-        return gleitZeit = [gleitHours, gleitMins - 4];
+        return [gleitHours, gleitMins - 4];
 
     }
 
@@ -1082,13 +1066,13 @@ function getRoundStart() {
             gleitMins = 56;
             gleitHours--;
             // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-            return gleitZeit = [gleitHours, gleitMins + 4];
+            return [gleitHours, gleitMins + 4];
         } else if (gleitHours == 0 && gleitMins == 0){
             gleitMins = 1;
             // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-            return gleitZeit = [gleitHours, gleitMins + 4];
+            return [gleitHours, gleitMins + 4];
         }
-        
+
         while(gleitMins > 9){
             gleitMins = gleitMins - 10;
             tens++;
@@ -1106,7 +1090,7 @@ function getRoundStart() {
         gleitMins =  10*tens + gleitMins;
         //console.log("Negative Minuten: " + gleitMins);
         //Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-        return gleitZeit = [gleitHours, gleitMins + 4];
+        return [gleitHours, gleitMins + 4];
 
     }
 
@@ -1148,7 +1132,9 @@ function getRoundStart() {
 
     }
 
+    // TODO doppeltes Rest drücken sollte nicht mehr nötig sein
 	$("#reset").click(function () {
+        $("#float").removeClass("disabled");
         set_end();
         setGleitzeit();
         setIstTime();
@@ -1157,6 +1143,10 @@ function getRoundStart() {
         resetPauseAndWorkTime();
         uploadGleitzeit();
 	});
+
+    $("#optimize").click(function () {
+        optimizeEnd();
+    });
 
     $("#float").change(function () {
         roundAndSetTimesForFloat();
@@ -1187,47 +1177,68 @@ function getRoundStart() {
         var startTime = readFromSessionStorage("start");
         var floatTime = readFromSessionStorage("float");
 
-        if (startTime != null ) { 
+        if (startTime != null ) {
             $("#start").val(startTime);
         }
 
         if (floatTime != null){
-            $("#float").val(floatTime); 
+            $("#float").val(floatTime);
         } else {
             $("#float").val("+0.4");
         }
-           
+
     }
 
     function readSollAnPauseFromSessionStorageAndSetInFields() {
 
-        var sollValue = "#" + readFromSessionStorage("soll");
-        var sollTime = readFromSessionStorage("sollTime");
+        var modusValue = "#" + readFromSessionStorage("modus");
+        var workTime = readFromSessionStorage("workTime");
 
         var pauseValue = "#" + readFromSessionStorage("pause");
         var pauseTime = readFromSessionStorage("pauseTime");
 
-        if (sollValue != null && sollTime != null) {
-            $("#soll").val(sollTime);
-            $("#6hours, #7hours6min, #10hours").removeClass("active");
-            $(sollValue).addClass("active");
+        if (modusValue != null && workTime != null) {
+            $("#modus").val(workTime);
+            $("#soll").val(workTime);
+            $("#6h00m, #7h06m").removeClass("active");
+            $(modusValue).addClass("active");
             activateChanges();
-        } 
-        
+        }
         if (pauseValue != null && pauseTime != null) {
             $("#pause").val(pauseTime);
             $("#00min, #30min, #45min").removeClass("active");
             $(pauseValue).addClass("active");
             activateChanges();
-        } 
-        
+        }
+
+    }
+
+    function switchToSixHourMode(){
+        $("#pause").val("00:00");
+        $("#00min").addClass("active");
+        $("#30min, #45min").removeClass("active");
+        writeToSessionStorage("pause", "00min");
+        writeToSessionStorage("pauseTime", "00:00");
+        $("#float").val("-1.06");
+        $("#float").addClass("disabled");
+    }
+
+    function switchToSevenHourMode(){
+        $("#pause").val("00:30");
+        $("#30min").addClass("active");
+        $("#00min,#45min").removeClass("active");
+        writeToSessionStorage("pause", "30min");
+        writeToSessionStorage("pauseTime", "00:30");
+        $("#float").val("+0.04");
+        $("#float").removeClass("disabled");
+        writeToSessionStorage("float", "+0.04");
     }
 
     if (readFromSessionStorage("windowInitLoaded") && readFromSessionStorage("start") != null){
         readSollAnPauseFromSessionStorageAndSetInFields();
         readStartAndFloatFromSessionStorageAndSetInFields();
         roundAndSetTimesForFloat();
-        calculate();    
+        calculate();
 		setGleitzeit();
         setIstTime();
         setCountdown();
