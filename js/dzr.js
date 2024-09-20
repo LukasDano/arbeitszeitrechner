@@ -1,51 +1,69 @@
 $(document).ready(function () {
 
     $("#00min").click(function () {
+        setNoPause();
+    })
+    $("#30min").click(function () {
+        setThirtyMinutesPause();
+    })
+    $("#45min").click(function () {
+        setFourtyFiveMinutesPause();
+    })
+
+    $("#6h00m").click(function () {
+        setNoPause();
+        setSixHourMode();
+    })
+
+    $("#7h06m").click(function () {
+        setThirtyMinutesPause();
+        setSevenHourMode();
+    })
+
+    function setNoPause(){
         $("#pause").val("00:00");
         $("#00min").addClass("active");
         $("#30min, #45min").removeClass("active");
         writeToSessionStorage("pause", "00min");
         writeToSessionStorage("pauseTime", "00:00");
         activateChanges();
-    })
-    $("#30min").click(function () {
+    }
+
+    function setThirtyMinutesPause(){
         $("#pause").val("00:30");
         $("#30min").addClass("active");
         $("#00min,#45min").removeClass("active");
         writeToSessionStorage("pause", "30min");
         writeToSessionStorage("pauseTime", "00:30");
         activateChanges();
-    })
-    $("#45min").click(function () {
+    }
+
+    function setFourtyFiveMinutesPause(){
         $("#pause").val("00:45");
         $("#45min").addClass("active");
         $("#00min, #30min").removeClass("active");
         writeToSessionStorage("pause", "45min");
         writeToSessionStorage("pauseTime", "00:45");
         activateChanges();
-    })
+    }
 
-    $("#6h00m").click(function () {
-        $("#soll").val("05:56");
+    function setSixHourMode(){
         $("#6h00m").addClass("active");
         $("#7h06m").removeClass("active");
         writeToSessionStorage("modus", "6h00m");
-        writeToSessionStorage("workTime", "05:56");
+        $("#float").val("-1.06");
         writeToSessionStorage("float", "-1.06");
-        switchToSixHourMode();
-        activateChanges();
-        applyChangedWorktime();
-    })
-    $("#7h06m").click(function () {
-        $("#soll").val("07:06");
+        applyFloatChanges();
+    }
+
+    function setSevenHourMode(){
         $("#7h06m").addClass("active");
         $("#6h00m").removeClass("active");
         writeToSessionStorage("modus", "7h06m");
-        writeToSessionStorage("workTime", "07:06");
-        switchToSevenHourMode();
-        activateChanges();
-        applyChangedWorktime();
-    })
+        $("#float").val("+0.04");
+        writeToSessionStorage("float", "+0.04");
+        applyFloatChanges();
+    }
 
     // liest Dienstbeginn aus dem Input-Feld aus
     function getStart_time() {
@@ -106,7 +124,6 @@ $(document).ready(function () {
         var soll_hours = parseInt(soll_time[0], 10);
         var soll_mins = parseInt(soll_time[1], 10);
 
-        console.log([soll_hours, soll_mins]);
         return [soll_hours, soll_mins];
     }
 
@@ -883,7 +900,6 @@ function getRoundStart() {
           gleitMins = gleitMins + 60;
         }
 
-
         return [gleitHours, gleitMins];
       }
 
@@ -965,7 +981,7 @@ function getRoundStart() {
 
             var gleitMins = gleitTens*10 + gleitOnes;
 
-            return gleitTime = [vorzeichen, gleitHours, gleitMins];
+            return [vorzeichen, gleitHours, gleitMins];
         }
     }
 
@@ -991,10 +1007,6 @@ function getRoundStart() {
 
         var sollEndHours = istEndHours + (gleitHours * gleitVorzeichen);
         var sollEndMins = istEndMins + (gleitMins * gleitVorzeichen);
-
-        if (readFromSessionStorage("modus") === "6h00m"){
-            return [istEndHours, istEndMins];
-        }
 
         return [sollEndHours, sollEndMins];
     }
@@ -1136,7 +1148,6 @@ function getRoundStart() {
 
     }
 
-    // TODO doppeltes Rest drücken sollte nicht mehr nötig sein
 	$("#reset").click(function () {
         resetPauseAndWorkTime();
         set_end();
@@ -1155,11 +1166,23 @@ function getRoundStart() {
         setCountdown();
         optimizeEnd();
         uploadGleitzeit();
+        applyFloatChanges();
     });
 
     $("#float").focusin(function(){
         optimizeEnd();
     });
+
+    function applyFloatChanges(){
+        roundAndSetTimesForFloat();
+        calculate();
+        setGleitzeit();
+        setIstTime();
+        setCountdown();
+        optimizeEnd();
+        uploadGleitzeit();
+    }
+
 
     function uploadStartTime(){
         var startTime = $("#start").val();
@@ -1212,25 +1235,6 @@ function getRoundStart() {
 
     }
 
-    function switchToSixHourMode(){
-        $("#pause").val("00:00");
-        $("#00min").addClass("active");
-        $("#30min, #45min").removeClass("active");
-        writeToSessionStorage("pause", "00min");
-        writeToSessionStorage("pauseTime", "00:00");
-        $("#float").val("-1.06");
-    }
-
-    function switchToSevenHourMode(){
-        $("#pause").val("00:30");
-        $("#30min").addClass("active");
-        $("#00min,#45min").removeClass("active");
-        writeToSessionStorage("pause", "30min");
-        writeToSessionStorage("pauseTime", "00:30");
-        $("#float").val("+0.04");
-        writeToSessionStorage("float", "+0.04");
-    }
-
     if (readFromSessionStorage("windowInitLoaded") && readFromSessionStorage("start") != null){
         readSollAnPauseFromSessionStorageAndSetInFields();
         readStartAndFloatFromSessionStorageAndSetInFields();
@@ -1246,7 +1250,7 @@ function getRoundStart() {
 
     function floatValueCheck(){
 
-        var float = $("#float").val().split(":");
+        let float = $("#float").val();
 
         if (float == null || float == ""){
             $("#float").val("0.00");
