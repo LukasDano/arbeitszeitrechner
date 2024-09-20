@@ -54,4 +54,7 @@
 
 ## v2.5
 - Neues Feature: Man kann wählen zwischen einem Tag mit 6 Stunden und einem Tag mit 7:06 Stunden
+	- Im 6 Stunden Modus kann man auch seine Gleitzeit eintragen
+    - Wenn man im 6 Stunden Modus durch ändern von Ende oder Gleitzeit wieder über die erlaubten 6 Stunden kommt, wird der Modus automatisch beendet
 - Bugfix: Man muss nur noch einmal den Rest Button clicken
+- Refactoring: Man es gibt jetzt einen Formatter für die Gleitzeitangaben

@@ -245,6 +245,12 @@ $(document).ready(function () {
         setIstTime();
         setCountdown();
         uploadGleitzeit();
+        checkForIfSixHourModeIsAllowed();
+        calculate();
+        setGleitzeit();
+        setIstTime();
+        setCountdown();
+        uploadGleitzeit();
     });
 
     $("#soll").change(function () {
@@ -943,15 +949,11 @@ function getRoundStart() {
 
 	}
 
-    function getFloatFromInput(){
+    function getFloat(float){
+        let floatArray = Array.of(...float);
+        let vorzeichen = 1;
 
-        var floatTime = $("#float").val();
-        var floatArray = Array.of(...floatTime);
-        var vorzeichen = 1;
-        //console.log(floatArray);
-        //console.log(floatArray.length);
-
-        if (floatArray[0] == "-"){
+        if (floatArray[0] === "-"){
             vorzeichen = -1;
         }
 
@@ -987,7 +989,7 @@ function getRoundStart() {
 
     function calculateEndForFloat(){
 
-        var floatTime = getFloatFromInput();
+        var floatTime = getFloat($("#float").val());
         var istEnd = calculateNormalEnd();
 
         var istEndHours = parseInt(istEnd[0], 10);
@@ -1040,7 +1042,7 @@ function getRoundStart() {
 
     function getOptimalEndForPositive(){
 
-        var floatTime = getFloatFromInput();
+        var floatTime = getFloat($("#float").val());
 
         var gleitHours = floatTime[1];
         var gleitMins = floatTime[2];
@@ -1072,7 +1074,7 @@ function getRoundStart() {
 
     function getOptimalEndForNegative(){
 
-        var floatTime = getFloatFromInput();
+        var floatTime = getFloat($("#float").val());
 
         var gleitHours = floatTime[1];
         var gleitMins = floatTime[2];
@@ -1159,14 +1161,8 @@ function getRoundStart() {
 	});
 
     $("#float").change(function () {
-        roundAndSetTimesForFloat();
-        calculate();
-		setGleitzeit();
-        setIstTime();
-        setCountdown();
-        optimizeEnd();
-        uploadGleitzeit();
         applyFloatChanges();
+        checkForIfSixHourModeIsAllowed();
     });
 
     $("#float").focusin(function(){
@@ -1183,6 +1179,33 @@ function getRoundStart() {
         uploadGleitzeit();
     }
 
+    function checkForIfSixHourModeIsAllowed(){
+        // TODO evtl. in eine 6 Stunden automatik umbauen?!
+        if(readFromSessionStorage("modus") === "6h00m"){
+            let float =  getFloat(readFromSessionStorage("float"));
+
+            let floatVorzeichen = float[0];
+            let floatHours = float[1];
+            let floatMinutes = float[2];
+
+            if (floatVorzeichen > 0 || floatHours < 1) {
+                switchToSevenHourMode();
+            } else if (floatHours === 1 && floatMinutes < 6){
+                switchToSevenHourMode();
+            }
+        }
+    }
+
+    function switchToSevenHourMode(){
+        $("#7h06m").addClass("active");
+        $("#6h00m").removeClass("active");
+        writeToSessionStorage("modus", "7h06m");
+        $("#pause").val("00:30");
+        $("#30min").addClass("active");
+        $("#00min,#45min").removeClass("active");
+        writeToSessionStorage("pause", "30min");
+        writeToSessionStorage("pauseTime", "00:30");
+    }
 
     function uploadStartTime(){
         var startTime = $("#start").val();
