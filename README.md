@@ -12,7 +12,7 @@ Hier gehts zum [Repository](https://github.com/neoascetic/rawgithack) des Tools.
 
 ## old versions
 
-- [v2.5](https://rawcdn.githack.com/LukasDano/arbeitszeitrechner/58747161d2dcae43b8328df155c2be62cb692872/index.html)
+- [v2.5](https://rawcdn.githack.com/LukasDano/arbeitszeitrechner/e4522ef0507b9d33320cf7ff6d02494186b8aa80/index.html)
 - [v2.2.02](https://rawcdn.githack.com/LukasDano/arbeitszeitrechner/1c4db626814297964dcc7d3a983e996029d80468/index.html)
 - [v2.1.03](https://rawcdn.githack.com/LukasDano/arbeitszeitrechner/d42c883503d5d91299906f788e7a74936b340537/index.html)
 - [v1.0](https://rawcdn.githack.com/LukasDano/arbeitszeitrechner/0eb78712aac0fa3f846ca71cf650d0df1f2e7175/index.html)
