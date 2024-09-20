@@ -1193,9 +1193,7 @@ function getRoundStart() {
             } else if (floatHours === 1 && floatMinutes < 6){
                 switchToSevenHourMode();
             }
-        }
-
-        if(readFromSessionStorage("modus") === "7h06m"){
+        }else if(readFromSessionStorage("modus") === "7h06m"){
             let istTime =  getIstTime();
 
             let istHours = istTime[0];
