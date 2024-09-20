@@ -18,4 +18,4 @@ Hier gehts zum [Repository](https://github.com/neoascetic/rawgithack) des Tools.
 
 ## Vorschau
 
-![v2.4](example.png)
+![v2.5](pictures/v2.5.png)
