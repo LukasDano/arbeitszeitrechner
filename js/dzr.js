@@ -113,8 +113,7 @@ $(document).ready(function () {
         var pause_hours = parseInt(pause_time[0], 10);
         var pause_mins = parseInt(pause_time[1], 10);
 
-        pause_time = [pause_hours, pause_mins];
-        return pause_time;
+        return [pause_hours, pause_mins];
     }
 
     // liest Solldienstzeit aus dem Input-Feld aus
@@ -188,31 +187,16 @@ $(document).ready(function () {
             diff_mins = diff_mins + 60;
         }
 
-        if (work_hours == soll_hours && work_mins < soll_mins || work_hours < soll_hours) {
-            var positive = false;
+        let positive;
+
+        if (work_hours === soll_hours && work_mins < soll_mins || work_hours < soll_hours) {
+            positive = false;
         } else {
-            var positive = true;
+            positive = true;
         }
 
-        var diff_time = [diff_hours, diff_mins, positive];
-        return diff_time;
+        return [diff_hours, diff_mins, positive];
     }
-
-    // Setzt den Standard-Wert für die Pausenzeit
-    function setDefault() {
-        $('#pause').val("00:30");
-    }
-
-    $("#choose_time").click(function () {
-        setSoll_time;
-    })
-
-    $("#pause").focusin(function () {
-        // Wenn Input leer, dann setDefault ausführen
-        if (jQuery(this).val() == "") {
-            setDefault();
-        }
-    });
 
     function applyChangedWorktime(){
         set_end();
@@ -697,24 +681,6 @@ $(document).ready(function () {
         introJs().start();
     })
 
-    $(window).scroll(function () {
-        if ($(window).scrollTop() >= 1500) {
-            $("#x-mas-Theme").addClass('fixed-element');
-        } else {
-            $("#x-mas-Theme").removeClass('fixed-element');
-        }
-    });
-
-    $(window).scroll(function (e) {
-        parallax();
-    });
-
-    function parallax() {
-        var scrolled = $(window).scrollTop();
-        $('.parallax').css('bottom', -(scrolled * 0.1) + 'px');
-    }
-
-
 // Ab hier selbstgeschrieben
 
 function calculateNormalEnd(){
@@ -838,7 +804,7 @@ function getRoundStart() {
         if (end_mins >= 6){
             end_mins = 0;
             tens++;
-        } else if(end_mins == 0){
+        } else if(end_mins === 0){
           end_mins = 0;
         } else if (end_mins <= 4){
             end_mins = 5;
@@ -1048,7 +1014,7 @@ function getRoundStart() {
         var gleitMins = floatTime[2];
         var tens = 0;
 
-        if (gleitHours != 0 && gleitMins == 0){
+        if (gleitHours !== 0 && gleitMins === 0){
             gleitMins = 4;
             // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
             return [gleitHours, gleitMins - 4];
@@ -1080,12 +1046,12 @@ function getRoundStart() {
         var gleitMins = floatTime[2];
         var tens = 0;
 
-        if (gleitHours != 0 && gleitMins == 0){
+        if (gleitHours !== 0 && gleitMins === 0){
             gleitMins = 56;
             gleitHours--;
             // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
             return [gleitHours, gleitMins + 4];
-        } else if (gleitHours == 0 && gleitMins == 0){
+        } else if (gleitHours === 0 && gleitMins === 0){
             gleitMins = 1;
             // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
             return [gleitHours, gleitMins + 4];
@@ -1096,7 +1062,7 @@ function getRoundStart() {
             tens++;
         }
 
-        if (gleitMins == 0){
+        if (gleitMins === 0){
             gleitMins = 6;
             tens--;
         }else if (gleitMins >= 6 ){
@@ -1106,7 +1072,6 @@ function getRoundStart() {
         }
 
         gleitMins =  10*tens + gleitMins;
-        //console.log("Negative Minuten: " + gleitMins);
         //Ausgleich, weil man normalerweise schon plus 4 Minuten macht
         return [gleitHours, gleitMins + 4];
 
@@ -1125,10 +1090,10 @@ function getRoundStart() {
             tens++;
         }
 
-        if (endMins == 0 && tens == 0){
+        if (endMins === 0 && tens === 0){
             endMins = 56;
             endHours--;
-        } else if (endMins == 0){
+        } else if (endMins === 0){
             endMins = 6;
             tens--;
         } else if (endMins >= 6 ){
@@ -1138,8 +1103,6 @@ function getRoundStart() {
         }
 
         endMins =  10*tens + endMins;
-        //console.log("EndHours: " + endHours);
-        //console.log("EndMins: " + endMins);
 
         if (endMins <= 9){
             endMins = 0 + endMins.toString();
