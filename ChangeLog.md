@@ -59,3 +59,7 @@
     - Wenn man im 7 Stunden Modus durch ändern von Ende oder Gleitzeit unter 6 Stunden kommen sollte, aktiviert man automatisch den 6 Stunden Modus
 - Bugfix: Man muss nur noch einmal den Rest Button clicken
 - Refactoring: Man es gibt jetzt einen Formatter für die Gleitzeitangaben
+
+# v2.5.1
+- Man kann jetzt nicht mehr per Tab in das Pause- und das Arbeitszeitfeld
+- Die Gleitzeit pro Woche wird bei Gleittagen jetzt richtig berechnet und angezeigt
