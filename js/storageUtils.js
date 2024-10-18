@@ -14,6 +14,10 @@ function writeToLocalStorage(key, value) {
     localStorage.setItem(key, value);
 }
 
-function readFromlocalStorage(key) {
+function readFromLocalStorage(key) {
     return localStorage.getItem(key);
+}
+
+function deleteFromLocalStorage(key) {
+    localStorage.removeItem(key);
 }
