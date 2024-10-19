@@ -744,7 +744,6 @@ function resetPauseAndWorkTime(){
     writeToLocalStorage("pause", "30min");
     writeToLocalStorage("pauseTime", "00:30");
     writeToLocalStorage("modus", "7h06m");
-    writeToLocalStorage("workTime", "07:06");
     activateChanges();
 }
 
@@ -1210,7 +1209,7 @@ function getRoundStart() {
         writeToLocalStorage("float", floatTime);
     }
 
-    function readStartAndFloatFromSessionStorageAndSetInFields() {
+    function readStartAndFloatFromLocalStorageAndSetInFields() {
 
         var startTime = readFromLocalStorage("start");
         var floatTime = readFromLocalStorage("float");
@@ -1227,17 +1226,13 @@ function getRoundStart() {
 
     }
 
-    function readSollAnPauseFromSessionStorageAndSetInFields() {
+    function readSollAnPauseFromLocalStorageAndSetInFields() {
 
-        var modusValue = "#" + readFromLocalStorage("modus");
-        var workTime = readFromLocalStorage("workTime");
+        const modusValue = "#" + readFromLocalStorage("modus");
+        const pauseValue = "#" + readFromLocalStorage("pause");
+        const pauseTime = readFromLocalStorage("pauseTime");
 
-        var pauseValue = "#" + readFromLocalStorage("pause");
-        var pauseTime = readFromLocalStorage("pauseTime");
-
-        if (modusValue != null && workTime != null) {
-            $("#modus").val(workTime);
-            $("#soll").val(workTime);
+        if (modusValue != null) {
             $("#6h00m, #7h06m").removeClass("active");
             $(modusValue).addClass("active");
             activateChanges();
@@ -1280,9 +1275,27 @@ function getRoundStart() {
         return datesAreTheSame(currentDate, storageDate);
     }
 
+    function resetLocalStorage(){
+        deleteFromLocalStorage("monday");
+        deleteFromLocalStorage("tuesday");
+        deleteFromLocalStorage("wednesday");
+        deleteFromLocalStorage("thursday");
+        deleteFromLocalStorage("friday");
+
+        deleteFromLocalStorage("todayTimeStamp");
+        deleteFromLocalStorage("modus");
+        deleteFromLocalStorage("float");
+        deleteFromLocalStorage("gleittage");
+        deleteFromLocalStorage("pause");
+        deleteFromLocalStorage("pauseTime");
+        deleteFromLocalStorage("start");
+
+        writeToLocalStorage("todayTimeStamp", new Date().getTime());
+    }
+
     if (readFromLocalStorage("windowInitLoaded") && readFromLocalStorage("start") != null && isTheSameDay()){
-        readSollAnPauseFromSessionStorageAndSetInFields();
-        readStartAndFloatFromSessionStorageAndSetInFields();
+        readSollAnPauseFromLocalStorageAndSetInFields();
+        readStartAndFloatFromLocalStorageAndSetInFields();
         roundAndSetTimesForFloat();
         calculate();
 		setGleitzeit();
@@ -1291,7 +1304,7 @@ function getRoundStart() {
         optimizeEnd();
     } else {
         $("#start").focus();
-        writeToLocalStorage("todayTimeStamp", new Date().getTime());
+        resetLocalStorage();
     }
 
     function floatValueCheck(){

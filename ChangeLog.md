@@ -66,3 +66,5 @@
 - Die Eingaben werden jetzt im LocalStorage gespeichert und einmal pro Tag gelöscht
   - jetzt kann man das Fenster schließen, und wenn man dieselbe Seite am gleichen Tag wieder aufruft, werden die letzten Eingaben wieder aufgerufen
 - Bei der Gleitzeit wird die Zehnerstelle jetzt mit einer 0 Aufgefüllt
+- Bugfix: Der Modus wird jetzt beim neuladen automatisch eingestellt gewechselt
+- Bugfix: Die Daten werden wirklich aus dem Localstorage gelöscht
