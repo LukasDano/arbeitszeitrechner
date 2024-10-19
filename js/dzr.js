@@ -24,8 +24,8 @@ $(document).ready(function () {
         $("#pause").val("00:00");
         $("#00min").addClass("active");
         $("#30min, #45min").removeClass("active");
-        writeToSessionStorage("pause", "00min");
-        writeToSessionStorage("pauseTime", "00:00");
+        writeToLocalStorage("pause", "00min");
+        writeToLocalStorage("pauseTime", "00:00");
         activateChanges();
     }
 
@@ -33,8 +33,8 @@ $(document).ready(function () {
         $("#pause").val("00:30");
         $("#30min").addClass("active");
         $("#00min,#45min").removeClass("active");
-        writeToSessionStorage("pause", "30min");
-        writeToSessionStorage("pauseTime", "00:30");
+        writeToLocalStorage("pause", "30min");
+        writeToLocalStorage("pauseTime", "00:30");
         activateChanges();
     }
 
@@ -42,26 +42,26 @@ $(document).ready(function () {
         $("#pause").val("00:45");
         $("#45min").addClass("active");
         $("#00min, #30min").removeClass("active");
-        writeToSessionStorage("pause", "45min");
-        writeToSessionStorage("pauseTime", "00:45");
+        writeToLocalStorage("pause", "45min");
+        writeToLocalStorage("pauseTime", "00:45");
         activateChanges();
     }
 
     function setSixHourMode(){
         $("#6h00m").addClass("active");
         $("#7h06m").removeClass("active");
-        writeToSessionStorage("modus", "6h00m");
+        writeToLocalStorage("modus", "6h00m");
         $("#float").val("-1.06");
-        writeToSessionStorage("float", "-1.06");
+        writeToLocalStorage("float", "-1.06");
         applyFloatChanges();
     }
 
     function setSevenHourMode(){
         $("#7h06m").addClass("active");
         $("#6h00m").removeClass("active");
-        writeToSessionStorage("modus", "7h06m");
+        writeToLocalStorage("modus", "7h06m");
         $("#float").val("+0.04");
-        writeToSessionStorage("float", "+0.04");
+        writeToLocalStorage("float", "+0.04");
         applyFloatChanges();
     }
 
@@ -741,10 +741,10 @@ function resetPauseAndWorkTime(){
     $("#7h06m").addClass("active");
     $("#6h00m").removeClass("active");
 
-    writeToSessionStorage("pause", "30min");
-    writeToSessionStorage("pauseTime", "00:30");
-    writeToSessionStorage("modus", "7h06m");
-    writeToSessionStorage("workTime", "07:06");
+    writeToLocalStorage("pause", "30min");
+    writeToLocalStorage("pauseTime", "00:30");
+    writeToLocalStorage("modus", "7h06m");
+    writeToLocalStorage("workTime", "07:06");
     activateChanges();
 }
 
@@ -1144,8 +1144,8 @@ function getRoundStart() {
 
     function switchModeIfIsAllowed(){
 
-        if(readFromSessionStorage("modus") === "6h00m"){
-            let float =  getFloat(readFromSessionStorage("float"));
+        if(readFromLocalStorage("modus") === "6h00m"){
+            let float =  getFloat(readFromLocalStorage("float"));
 
             let floatVorzeichen = float[0];
             let floatHours = float[1];
@@ -1156,7 +1156,7 @@ function getRoundStart() {
             } else if (floatHours === 1 && floatMinutes < 6){
                 switchToSevenHourMode();
             }
-        }else if(readFromSessionStorage("modus") === "7h06m"){
+        }else if(readFromLocalStorage("modus") === "7h06m"){
             let istTime =  getIstTime();
 
             let istHours = istTime[0];
@@ -1173,39 +1173,39 @@ function getRoundStart() {
     function switchToSixHourMode(){
         $("#6h00m").addClass("active");
         $("#7h06m").removeClass("active");
-        writeToSessionStorage("modus", "6h00m");
+        writeToLocalStorage("modus", "6h00m");
         $("#pause").val("00:00");
         $("#00min").addClass("active");
         $("#30min,#45min").removeClass("active");
-        writeToSessionStorage("pause", "00min");
-        writeToSessionStorage("pauseTime", "00:00");
+        writeToLocalStorage("pause", "00min");
+        writeToLocalStorage("pauseTime", "00:00");
     }
 
     function switchToSevenHourMode(){
         $("#7h06m").addClass("active");
         $("#6h00m").removeClass("active");
-        writeToSessionStorage("modus", "7h06m");
+        writeToLocalStorage("modus", "7h06m");
         $("#pause").val("00:30");
         $("#30min").addClass("active");
         $("#00min,#45min").removeClass("active");
-        writeToSessionStorage("pause", "30min");
-        writeToSessionStorage("pauseTime", "00:30");
+        writeToLocalStorage("pause", "30min");
+        writeToLocalStorage("pauseTime", "00:30");
     }
 
     function uploadStartTime(){
         var startTime = $("#start").val();
-        writeToSessionStorage("start", startTime);
+        writeToLocalStorage("start", startTime);
     }
 
     function uploadGleitzeit(){
         var floatTime = $("#float").val();
-        writeToSessionStorage("float", floatTime);
+        writeToLocalStorage("float", floatTime);
     }
 
     function readStartAndFloatFromSessionStorageAndSetInFields() {
 
-        var startTime = readFromSessionStorage("start");
-        var floatTime = readFromSessionStorage("float");
+        var startTime = readFromLocalStorage("start");
+        var floatTime = readFromLocalStorage("float");
 
         if (startTime != null ) {
             $("#start").val(startTime);
@@ -1221,11 +1221,11 @@ function getRoundStart() {
 
     function readSollAnPauseFromSessionStorageAndSetInFields() {
 
-        var modusValue = "#" + readFromSessionStorage("modus");
-        var workTime = readFromSessionStorage("workTime");
+        var modusValue = "#" + readFromLocalStorage("modus");
+        var workTime = readFromLocalStorage("workTime");
 
-        var pauseValue = "#" + readFromSessionStorage("pause");
-        var pauseTime = readFromSessionStorage("pauseTime");
+        var pauseValue = "#" + readFromLocalStorage("pause");
+        var pauseTime = readFromLocalStorage("pauseTime");
 
         if (modusValue != null && workTime != null) {
             $("#modus").val(workTime);
@@ -1243,7 +1243,36 @@ function getRoundStart() {
 
     }
 
-    if (readFromSessionStorage("windowInitLoaded") && readFromSessionStorage("start") != null){
+    function formatDate(date){
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        return `${day}.${month}.${year}`;
+    }
+
+    function datesAreTheSame(date1, date2){
+        const date1String = formatDate(date1);
+        const date2String = formatDate(date2);
+
+        //console.log(date1String)
+        //console.log(date2String)
+
+        if (date1String === date2String){
+            return true
+        } else if (date1String !== date2String){
+            return false
+        }
+    }
+
+    function isTheSameDay(){
+        const currentDate = new Date();
+        const storageDate = new Date(readIntFromLocalStorage("todayTimeStamp"))
+
+        return datesAreTheSame(currentDate, storageDate);
+    }
+
+    if (readFromLocalStorage("windowInitLoaded") && readFromLocalStorage("start") != null && isTheSameDay()){
         readSollAnPauseFromSessionStorageAndSetInFields();
         readStartAndFloatFromSessionStorageAndSetInFields();
         roundAndSetTimesForFloat();
@@ -1254,13 +1283,14 @@ function getRoundStart() {
         optimizeEnd();
     } else {
         $("#start").focus();
+        writeToLocalStorage("todayTimeStamp", new Date().getTime());
     }
 
     function floatValueCheck(){
 
         let float = $("#float").val();
 
-        if (float == null || float == ""){
+        if (float == null || float === ""){
             $("#float").val("0.00");
         }
     }

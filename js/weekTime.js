@@ -82,15 +82,15 @@ $(document).ready(function () {
     function calculateWeekOverTime(gleitagGenommen) {
 		var countedDays = getWorkedDaysForWeek();
 		var weekWorkTime = getWeekWorkTime();
-		const gleittageThisWeek= parseInt(readFromSessionStorage("gleittage"))
+		const gleittageThisWeek= parseInt(readFromLocalStorage("gleittage"))
 
 		if (gleittageThisWeek && gleitagGenommen){
 			countedDays = gleittageThisWeek + countedDays;
-			deleteFromSessionStorage("gleittage");
+			deleteFromLocalStorage("gleittage");
 		}else if (gleitagGenommen) {
 			const gleittageThisWeek = parseInt(prompt("Anzahl Gleitage diese Woche:", ""), 10);
 			countedDays = gleittageThisWeek + countedDays;
-			writeToSessionStorage("gleittage", gleittageThisWeek);
+			writeToLocalStorage("gleittage", gleittageThisWeek);
 		}
 
 		var shouldHours = countedDays * 7;
@@ -169,7 +169,7 @@ $(document).ready(function () {
 		setWeekTime();
 		setWeekOverTime(gleittag);
 		uploadDaysTime();
-		writeToSessionStorage("calculated", gleittag);
+		writeToLocalStorage("calculated", gleittag);
 	}
 
 	$("#weekTimeCalc").click(function () {
@@ -217,20 +217,20 @@ $(document).ready(function () {
 		var thursday_time = $("#thursday").val();
 		var friday_time = $("#friday").val();
 		
-		writeToSessionStorage("monday", monday_time);
-		writeToSessionStorage("tuesday", tuesday_time);
-		writeToSessionStorage("wednesday", wednesday_time);
-		writeToSessionStorage("thursday", thursday_time);
-		writeToSessionStorage("friday", friday_time);
+		writeToLocalStorage("monday", monday_time);
+		writeToLocalStorage("tuesday", tuesday_time);
+		writeToLocalStorage("wednesday", wednesday_time);
+		writeToLocalStorage("thursday", thursday_time);
+		writeToLocalStorage("friday", friday_time);
     }
 
-	function readFromSessionStorageAndSetInDayFields() {
+	function readFromLocalStorageAndSetInDayFields() {
 
-        var mondayTime = readFromSessionStorage("monday");
-		var tuesdayTime = readFromSessionStorage("tuesday");
-		var wednesdayTime = readFromSessionStorage("wednesday");
-		var thursdayTime = readFromSessionStorage("thursday");
-		var fridayTime = readFromSessionStorage("friday");
+        var mondayTime = readFromLocalStorage("monday");
+		var tuesdayTime = readFromLocalStorage("tuesday");
+		var wednesdayTime = readFromLocalStorage("wednesday");
+		var thursdayTime = readFromLocalStorage("thursday");
+		var fridayTime = readFromLocalStorage("friday");
 		
 
         if (mondayTime != null ) { 
@@ -255,14 +255,14 @@ $(document).ready(function () {
         
     }
 
-	if (readFromSessionStorage("weekWindowInitLoaded") && readFromSessionStorage("monday") != null){
-		readFromSessionStorageAndSetInDayFields();
+	if (readFromLocalStorage("weekWindowInitLoaded") && readFromLocalStorage("monday") != null){
+		readFromLocalStorageAndSetInDayFields();
 
-		var calculated = readFromSessionStorage("calculated");
+		var calculated = readBooleanFromLocalStorage("calculated");
 
-		if(calculated === "true"){
+		if(calculated){
 			calculateWeekTime(true);
-		}else if(calculated === "false"){
+		}else if(!calculated){
 			calculateWeekTime(false);
 		} else {
 			$("#monday").focus();
