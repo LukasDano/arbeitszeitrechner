@@ -898,22 +898,30 @@ function getRoundStart() {
 
 		var gleitHours = gleitzeit[0];
 		var gleitMins = gleitzeit[1];
+        let gleitAusgabe;
 
 		if (gleitHours < 0 || gleitMins < 0){
 
 			gleitHours = Math.abs(gleitHours);
 			gleitMins = Math.abs(gleitMins);
 
-			var gleitAusgabe = "-" + gleitHours + "." + gleitMins;
+			gleitAusgabe = "-" + gleitHours + "." + formateGleitMins(gleitMins);
 
-			} else if (gleitHours > 0 || gleitMins > 0){
-				var gleitAusgabe = "+" + gleitHours + "." + gleitMins;
-			}
+        } else if (gleitHours > 0 || gleitMins > 0){
+            gleitAusgabe = "+" + gleitHours + "." + formateGleitMins(gleitMins);
+        }
 
 		$("#gleitzeit").html(gleitAusgabe);
         $("#float").val(gleitAusgabe);
 
 	}
+
+    function formateGleitMins(gleitMins){
+        if (gleitMins <= 9) {
+            return "0" + gleitMins;
+        }
+        return gleitMins;
+    }
 
     function getFloat(float){
         let floatArray = Array.of(...float);
