@@ -102,9 +102,9 @@ function getStart_time(){
       istHours--;
       istMins = istMins + 60;
     }
-    
-    return ist = [istHours, istMins];
-  
+
+    return [istHours, istMins];
+
   }
   console.log("Soll Zeit: " + getSoll_time());
   console.log("Gewertete Zeit: " + getIstTime());

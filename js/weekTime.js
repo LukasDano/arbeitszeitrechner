@@ -79,27 +79,31 @@ $(document).ready(function () {
 		return countedDays;
 	}
 	
-    function calculateWeekOverTime(gleittagGenommen) {
+    function calculateWeekOverTime(gleitagGenommen) {
 		var countedDays = getWorkedDaysForWeek();
 		var weekWorkTime = getWeekWorkTime();
-	
+		const gleittageThisWeek= parseInt(readFromLocalStorage("gleittage"))
+
+		if (gleittageThisWeek && gleitagGenommen){
+			countedDays = gleittageThisWeek + countedDays;
+			deleteFromLocalStorage("gleittage");
+		}else if (gleitagGenommen) {
+			const gleittageThisWeek = parseInt(prompt("Anzahl Gleitage diese Woche:", ""), 10);
+			countedDays = gleittageThisWeek + countedDays;
+			writeToLocalStorage("gleittage", gleittageThisWeek);
+		}
+
 		var shouldHours = countedDays * 7;
 		var shouldMins = countedDays * 6;
 		var istHours = weekWorkTime[0];
 		var istMins = weekWorkTime[1];
-
-		if (gleittagGenommen) {
-			istHours = 35;
-			istMins = 30;
-		}
 	
 		var overTimeHours = istHours - shouldHours;
 		var overTimeMins = istMins - shouldMins;
 	
 		//console.log("overTimeHours: " + overTimeHours);
 		//console.log("overTimeMins: " + overTimeMins);
-	
-	
+
 		if (overTimeMins < 0) {
 			overTimeHours--;
 			overTimeMins += 60;
@@ -107,12 +111,12 @@ $(document).ready(function () {
 			overTimeHours++;
 			overTimeMins -= 60;
 		}
-	
+
 		if (overTimeHours < 0) {
 			overTimeHours++;
 			overTimeMins -= 60;
 		}
-	
+
 		return [overTimeHours, overTimeMins];
 	}
 	
@@ -123,13 +127,13 @@ $(document).ready(function () {
 		var weekHours = week_time[0];
 		var weekMins = week_time[1];
 
-  if (weekHours <= 9){
-      weekHours = "0" + weekHours;
-  }
+		if (weekHours <= 9){
+			weekHours = "0" + weekHours;
+	  	}
 
-  if (weekMins <= 9){
-      weekMins = "0" + weekMins;
-  }
+	  	if (weekMins <= 9){
+		    weekMins = "0" + weekMins;
+		}
 		
 		var weekTimeAusgabe = weekHours + "." + weekMins + " h";
 	
@@ -137,9 +141,9 @@ $(document).ready(function () {
 		$("#weekworktime").html(weekTimeAusgabe);
 	}	
 
-	function setWeekOverTimeNoGleittag(){
-    
-		var weekTime = calculateWeekOverTime(false);
+	function setWeekOverTime(gleittag) {
+
+		var weekTime = calculateWeekOverTime(gleittag);
 		
 		var weekHours = weekTime[0];
 		var weekMins = weekTime[1];
@@ -161,50 +165,26 @@ $(document).ready(function () {
 		$("#weekovertime").html(weekOverTimeAusgabe);
 	}
 
-	function setWeekOverTimeWithGleittag(){
-    
-		var weekTime = calculateWeekOverTime(true);
-		
-		var weekHours = weekTime[0];
-		var weekMins = weekTime[1];
-		
-		if (weekHours < 0 || weekMins < 0){
-			
-			weekHours = Math.abs(weekHours);
-			weekMins = Math.abs(weekMins);
-	
-			var weekOverTimeAusgabe = "-" + weekHours + "." + weekMins + " h";
-			
-		} else if (weekHours > 0 || weekMins > 0){
-			var weekOverTimeAusgabe = "+" + weekHours + "." + weekMins + " h";
-		} else {
-			var weekOverTimeAusgabe = "0.0 h";
-		}
-	
-		//console.log(weekOverTimeAusgabe);
-		$("#weekovertime").html(weekOverTimeAusgabe);
+	function calculateWeekTime(gleittag){
+		setWeekTime();
+		setWeekOverTime(gleittag);
+		uploadDaysTime();
+		writeToLocalStorage("calculated", gleittag);
 	}
 
 	$("#weekTimeCalc").click(function () {
-		setWeekTime();
-		setWeekOverTimeNoGleittag();
-		uploadDaysTime();
-		uploadState();
+		calculateWeekTime(false);
 	});
 
 	$("#weekTimeCalcFloat").click(function () {
-		setWeekTime();
-		setWeekOverTimeWithGleittag();
-		uploadDaysTime();
-		uploadState();
+		calculateWeekTime(true);
 	});
 
 	$("#daytimefields").keypress(function (event) {
 		if (event.which === 13) {
 			setWeekTime();
-			setWeekOverTimeNoGleittag();
+			setWeekOverTime();
 			uploadDaysTime();
-			uploadState();
 			uploadDaysTime();
 		}
 	});
@@ -237,24 +217,20 @@ $(document).ready(function () {
 		var thursday_time = $("#thursday").val();
 		var friday_time = $("#friday").val();
 		
-		writeToSessionStorage("monday", monday_time);
-		writeToSessionStorage("tuesday", tuesday_time);
-		writeToSessionStorage("wednesday", wednesday_time);
-		writeToSessionStorage("thursday", thursday_time);
-		writeToSessionStorage("friday", friday_time);
+		writeToLocalStorage("monday", monday_time);
+		writeToLocalStorage("tuesday", tuesday_time);
+		writeToLocalStorage("wednesday", wednesday_time);
+		writeToLocalStorage("thursday", thursday_time);
+		writeToLocalStorage("friday", friday_time);
     }
 
-	function uploadState(){
-		writeToSessionStorage("calculated", true);
-	}
+	function readFromLocalStorageAndSetInDayFields() {
 
-	function readFromSessionStorageAndSetInDayFields() {
-
-        var mondayTime = readFromSessionStorage("monday");
-		var tuesdayTime = readFromSessionStorage("tuesday");
-		var wednesdayTime = readFromSessionStorage("wednesday");
-		var thursdayTime = readFromSessionStorage("thursday");
-		var fridayTime = readFromSessionStorage("friday");
+        var mondayTime = readFromLocalStorage("monday");
+		var tuesdayTime = readFromLocalStorage("tuesday");
+		var wednesdayTime = readFromLocalStorage("wednesday");
+		var thursdayTime = readFromLocalStorage("thursday");
+		var fridayTime = readFromLocalStorage("friday");
 		
 
         if (mondayTime != null ) { 
@@ -279,11 +255,15 @@ $(document).ready(function () {
         
     }
 
-	if (readFromSessionStorage("weekWindowInitLoaded") && readFromSessionStorage("monday") != null){
-		readFromSessionStorageAndSetInDayFields();
-		if (readFromSessionStorage("calculated")){
-			setWeekTime();
-			setWeekOverTimeNoGleittag();
+	if (readFromLocalStorage("weekWindowInitLoaded") && readFromLocalStorage("monday") != null){
+		readFromLocalStorageAndSetInDayFields();
+
+		var calculated = readBooleanFromLocalStorage("calculated");
+
+		if(calculated){
+			calculateWeekTime(true);
+		}else if(!calculated){
+			calculateWeekTime(false);
 		} else {
 			$("#monday").focus();
 		}

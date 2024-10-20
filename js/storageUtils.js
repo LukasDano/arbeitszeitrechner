@@ -1,19 +1,26 @@
-function writeToSessionStorage(key, value) {
-    sessionStorage.setItem(key, value);
-}
-
-function readFromSessionStorage(key) {
-    return sessionStorage.getItem(key);
-}
-
-function deleteFromSessionStorage(key) {
-    sessionStorage.removeItem(key);
-}
-
 function writeToLocalStorage(key, value) {
     localStorage.setItem(key, value);
 }
 
-function readFromlocalStorage(key) {
+function readFromLocalStorage(key) {
     return localStorage.getItem(key);
+}
+
+function deleteFromLocalStorage(key) {
+    localStorage.removeItem(key);
+}
+
+function readBooleanFromLocalStorage(key) {
+    const value= localStorage.getItem(key);
+
+    if (value === "true") {
+        return true;
+    } else if (value === "false") {
+        return false;
+    }
+    console.log("Kein Boolean Wert")
+}
+
+function readIntFromLocalStorage(key) {
+    return parseInt(localStorage.getItem(key), 10);
 }
