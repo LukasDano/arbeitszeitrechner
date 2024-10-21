@@ -335,4 +335,7 @@ section {
     cursor: default;
     opacity: 0.9;
   }
-  
+
+.devOption{
+    background-color: #404a57;
+}
