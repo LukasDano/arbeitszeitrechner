@@ -68,3 +68,8 @@
 - Bei der Gleitzeit wird die Zehnerstelle jetzt mit einer 0 Aufgefüllt
 - Bugfix: Der Modus wird jetzt beim neuladen automatisch eingestellt gewechselt
 - Bugfix: Die Daten werden wirklich aus dem Localstorage gelöscht
+
+#### v2.5.2
+- Neues Feature: DevOptions
+  - Es werden neue Tabs angezeigt: Testversion, Repo und Exit (um den Modus wieder zuverlassen)
+  - Um in den Modus zu kommen, muss man auf der Konsole "enableDevOptions()" eingeben oder die Seite über einen bestimmten Link aufrufen

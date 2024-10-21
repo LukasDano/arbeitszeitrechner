@@ -15,7 +15,7 @@ function readBooleanFromLocalStorage(key) {
 
     if (value === "true") {
         return true;
-    } else if (value === "false") {
+    } else if (value === "false" || value === null) {
         return false;
     }
     console.log("Kein Boolean Wert")
