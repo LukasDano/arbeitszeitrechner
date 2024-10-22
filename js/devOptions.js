@@ -42,5 +42,28 @@ function activateDevMode(url, key, value){
     url.searchParams.delete('param2');
 
     window.history.replaceState({}, document.title, url.pathname + url.search);
-    window.location.href="";
+    window.location.reload();
+}
+
+function resetLocalStorage(){
+    deleteFromLocalStorage("monday");
+    deleteFromLocalStorage("tuesday");
+    deleteFromLocalStorage("wednesday");
+    deleteFromLocalStorage("thursday");
+    deleteFromLocalStorage("friday");
+
+    deleteFromLocalStorage("todayTimeStamp");
+    deleteFromLocalStorage("modus");
+    deleteFromLocalStorage("float");
+    deleteFromLocalStorage("gleittage");
+    deleteFromLocalStorage("pause");
+    deleteFromLocalStorage("pauseTime");
+    deleteFromLocalStorage("start");
+
+    writeToLocalStorage("todayTimeStamp", new Date().getTime());
+}
+
+function resetPage(){
+    resetLocalStorage();
+    window.location.reload();
 }

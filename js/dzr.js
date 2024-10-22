@@ -1275,24 +1275,6 @@ function getRoundStart() {
         return datesAreTheSame(currentDate, storageDate);
     }
 
-    function resetLocalStorage(){
-        deleteFromLocalStorage("monday");
-        deleteFromLocalStorage("tuesday");
-        deleteFromLocalStorage("wednesday");
-        deleteFromLocalStorage("thursday");
-        deleteFromLocalStorage("friday");
-
-        deleteFromLocalStorage("todayTimeStamp");
-        deleteFromLocalStorage("modus");
-        deleteFromLocalStorage("float");
-        deleteFromLocalStorage("gleittage");
-        deleteFromLocalStorage("pause");
-        deleteFromLocalStorage("pauseTime");
-        deleteFromLocalStorage("start");
-
-        writeToLocalStorage("todayTimeStamp", new Date().getTime());
-    }
-
     if (readFromLocalStorage("windowInitLoaded") && readFromLocalStorage("start") != null && isTheSameDay()){
         readSollAnPauseFromLocalStorageAndSetInFields();
         readStartAndFloatFromLocalStorageAndSetInFields();

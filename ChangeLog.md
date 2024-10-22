@@ -71,5 +71,5 @@
 
 #### v2.5.2
 - Neues Feature: DevOptions
-  - Es werden neue Tabs angezeigt: Aktuelle Version, Testversion, Repo und Exit (um den Modus wieder zuverlassen)
+  - Es werden neue Tabs angezeigt: Aktuelle Version, Testversion, Repo, Restart und Exit (um den Modus wieder zuverlassen)
   - Um in den Modus zu kommen, muss man auf der Konsole "enableDevOptions()" eingeben oder die Seite über einen bestimmten Link aufrufen
