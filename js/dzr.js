@@ -1285,8 +1285,9 @@ function getRoundStart() {
         setCountdown();
         optimizeEnd();
     } else {
-        $("#start").focus();
         resetLocalStorage();
+        writeToLocalStorage("modus", "7h06m");
+        $("#start").focus();
     }
 
     function floatValueCheck(){
