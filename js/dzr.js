@@ -1303,4 +1303,10 @@ function getRoundStart() {
         floatValueCheck();
     });
 
+    document.addEventListener("visibilitychange", function() {
+        if (document.visibilityState === 'visible') {
+            location.reload();
+        }
+    });
+
 });

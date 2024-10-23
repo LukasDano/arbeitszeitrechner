@@ -76,3 +76,5 @@
 
 #### v2.5.3
 - Refactoring: DevOptions werden jetzt als Icons angezeigt
+- QoL: Die Seite wird automatisch neu geladen, wenn man den Tab öffnet 
+  - dadurch sollte der Countdown jetzt auch nach dem Sperren des PCs die richtige Zeit anzeigen
