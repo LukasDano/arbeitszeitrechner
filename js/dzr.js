@@ -889,9 +889,7 @@ function getRoundStart() {
 
     function getOptimalEndForPositive(){
 
-        const floatTime = getFloat();
-
-        let [, gleitHours, gleitMins] = floatTime;
+        let [, gleitHours, gleitMins] = getFloat();
         let tens = 0;
 
         if (gleitHours !== 0 && gleitMins === 0){
@@ -919,9 +917,7 @@ function getRoundStart() {
 
     function getOptimalEndForNegative(){
 
-        const floatTime = getFloat();
-
-        let [, gleitHours, gleitMins] = floatTime;
+        let [, gleitHours, gleitMins] = getFloat();
         let tens = 0;
 
         if (gleitHours !== 0 && gleitMins === 0){
