@@ -3,7 +3,7 @@ window.onload = function() {
 }
 
 function checkForDevOptions() {
-    const devOptionStatus = readBooleanFromLocalStorage("devOptions");
+    const devOptionStatus = getBooleanCookie("devOptions");
     const displayStyle = devOptionStatus ? "block" : "none";
 
     document.querySelectorAll(".devOption").forEach(element => {
@@ -13,12 +13,12 @@ function checkForDevOptions() {
 
 // Kann in der Console Aufgerufen werden, soll/muss keine usages haben
 function enableDevOptions(){
-    writeToLocalStorage("devOptions", true);
+    setCookie("devOptions", true);
     checkForDevOptions();
 }
 
 function disableDevOptions(){
-    deleteFromLocalStorage("devOptions");
+    deleteCookie("devOptions");
     checkForDevOptions();
 }
 
@@ -36,7 +36,7 @@ function activateDevOptionsFromURL(){
 
 function activateDevMode(url, key, value){
 
-    writeToLocalStorage(key, value);
+    setCookieUntilMidnight(key, value);
 
     url.searchParams.delete('param1');
     url.searchParams.delete('param2');
@@ -45,25 +45,31 @@ function activateDevMode(url, key, value){
     window.location.reload();
 }
 
-function resetLocalStorage(){
-    deleteFromLocalStorage("monday");
-    deleteFromLocalStorage("tuesday");
-    deleteFromLocalStorage("wednesday");
-    deleteFromLocalStorage("thursday");
-    deleteFromLocalStorage("friday");
+function resetCookies(){
+    deleteCookie("monday");
+    deleteCookie("tuesday");
+    deleteCookie("wednesday");
+    deleteCookie("thursday");
+    deleteCookie("friday");
 
-    deleteFromLocalStorage("todayTimeStamp");
-    deleteFromLocalStorage("modus");
-    deleteFromLocalStorage("float");
-    deleteFromLocalStorage("gleittage");
-    deleteFromLocalStorage("pause");
-    deleteFromLocalStorage("pauseTime");
-    deleteFromLocalStorage("start");
+    deleteCookie("todayTimeStamp");
+    deleteCookie("modus");
+    deleteCookie("float");
+    deleteCookie("gleittage");
+    deleteCookie("pause");
+    deleteCookie("pauseTime");
+    deleteCookie("start");
 
-    writeToLocalStorage("todayTimeStamp", new Date().getTime());
+    setCookie("todayTimeStamp", new Date().getTime());
+}
+
+function deleteDataFromStorages(){
+    // TODO nach dem nächsten Update entfernen, soll nur aufräumen
+    localStorage.clear();
+    sessionStorage.clear();
 }
 
 function resetPage(){
-    resetLocalStorage();
+    resetCookies();
     window.location.reload();
 }

@@ -82,3 +82,12 @@
   - Beim neu Laden wird jetzt immer ein Knopf als aktiv angezeigt
 - Refactoring: DevOptions die eine Funktion aufrufen, sind jetzt buttons
   - Die Buttons sehen aber aus wie alle anderen Tabs
+
+#### v2.5.4
+- Auf Cookies umgestellt
+    - Local und SessionStorage Methoden wurden entfernt
+    - SameDayCheck entfernt, ist mit Expering Cookies überflüssig
+- Code Refactoring
+    - var auf const und let geändert und unnötige Zeilen entfernt
+    - destructuring implementiert
+    - einige zwischen variablen gelöscht einheitliche benennung (snake_case to camelCase)
