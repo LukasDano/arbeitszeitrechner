@@ -921,7 +921,7 @@ function getRoundStart() {
 
         const floatTime = getFloat();
 
-        let [gleitHours, gleitMins] = floatTime;
+        let [, gleitHours, gleitMins] = floatTime;
         let tens = 0;
 
         if (gleitHours !== 0 && gleitMins === 0){
