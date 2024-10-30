@@ -1,79 +1,55 @@
 $(document).ready(function () {
 
-	function getDaysWorkHoursAsList(){
-	
-		const monday_time = $("#monday").val().split(":");
-		const monday_hours = parseInt(monday_time[0], 10);
-	   
-		const tuesday_time = $("#tuesday").val().split(":");
-		const tuesday_hours = parseInt(tuesday_time[0], 10);
-	   
-		const wednesday_time = $("#wednesday").val().split(":");
-		const wednesday_hours = parseInt(wednesday_time[0], 10);
-	   
-		const thursday_time = $("#thursday").val().split(":");
-		const thursday_hours = parseInt(thursday_time[0], 10);
-	   
-		const friday_time = $("#friday").val().split(":");
-		const friday_hours = parseInt(friday_time[0], 10);
+    function getTimeForDay(day){
+        const [hours, mins] = $(day).val().toString().split(":").map(time => parseInt(time, 10));
+        return { hours, mins };
+    }
 
-		return [monday_hours, tuesday_hours, wednesday_hours, thursday_hours, friday_hours];
+    function getTimeForWeek() {
+        return {
+            monday: getTimeForDay("#monday"),
+            tuesday: getTimeForDay("#tuesday"),
+            wednesday: getTimeForDay("#wednesday"),
+            thursday: getTimeForDay("#thursday"),
+            friday: getTimeForDay("#friday"),
+        };
+    }
 
-	}
-	
-	function getDaysWorkMinsAsList(){
-	
-		const monday_time = $("#monday").val().split(":");
-		const monday_mins = parseInt(monday_time[1], 10);
-	   
-		const tuesday_time = $("#tuesday").val().split(":");
-		const tuesday_mins = parseInt(tuesday_time[1], 10);
-	   
-		const wednesday_time = $("#wednesday").val().split(":");
-		const wednesday_mins = parseInt(wednesday_time[1], 10);
-	   
-		const thursday_time = $("#thursday").val().split(":");
-		const thursday_mins = parseInt(thursday_time[1], 10);
-	   
-		const friday_time = $("#friday").val().split(":");
-		const friday_mins = parseInt(friday_time[1], 10);
+    function getWeekWorkTime() {
+        const weekTime = getTimeForWeek();
 
-		return [monday_mins, tuesday_mins, wednesday_mins, thursday_mins, friday_mins];
+        let totalHours = 0;
+        let totalMins = 0;
 
-	}
-	
-	function getWeekWorkTime(){
+        // Iterate through the week
+        for (const day in weekTime) {
+            if (weekTime.hasOwnProperty(day)) {
+                totalHours += weekTime[day].hours;
+                totalMins += weekTime[day].mins;
+            }
+        }
 
-		const daysWorkHours = getDaysWorkHoursAsList();
-		const daysWorkMins = getDaysWorkMinsAsList();
-	
-		let week_hours = daysWorkHours[0] + daysWorkHours[1] + daysWorkHours[2] + daysWorkHours[3] + daysWorkHours[4];
-		let week_mins = daysWorkMins[0] + daysWorkMins[1] + daysWorkMins[2] + daysWorkMins[3] + daysWorkMins[4];
-		
-		while (week_mins >= 60) {
-		week_mins = week_mins - 60;
-		week_hours++;
-		}
-	
-		return [week_hours, week_mins];
-	
-	}
-	
-	function getWorkedDaysForWeek(){
+        totalHours += Math.floor(totalMins / 60);
+        totalMins = totalMins % 60;
 
-		const daysWorkHours = getDaysWorkHoursAsList();
-		const daysWorkMins = getDaysWorkMinsAsList();
-		let countedDays = 5;
-		
-		for (let i = 0; i<5; i++){
-		
-			if(daysWorkHours[i] === 0 && daysWorkMins[i] === 0){
-				countedDays --;
-			}
-			
-		}
-		return countedDays;
-	}
+        return [totalHours, totalMins];
+    }
+
+    function getWorkedDaysForWeek() {
+
+        const [daysWorkHours, daysWorkMins] = getWeekWorkTime();
+        let countedDays = 5;
+
+        for (let i = 0; i<5; i++){
+
+            if(daysWorkHours[i] === 0 && daysWorkMins[i] === 0){
+                countedDays --;
+            }
+
+        }
+
+        return countedDays;
+    }
 	
     function calculateWeekOverTime(gleitagGenommen) {
 		let countedDays = getWorkedDaysForWeek();
@@ -100,6 +76,7 @@ $(document).ready(function () {
 		if (overTimeMins < 0) {
 			overTimeHours--;
 			overTimeMins += 60;
+
 		} else if (overTimeMins >= 60) {
 			overTimeHours++;
 			overTimeMins -= 60;
@@ -149,6 +126,7 @@ $(document).ready(function () {
 			
 		} else if (weekHours > 0 || weekMins > 0){
 			weekOverTimeAusgabe = "+" + weekHours + "." + weekMins + " h";
+
 		} else {
 			weekOverTimeAusgabe = "0.0 h";
 		}
@@ -251,10 +229,12 @@ $(document).ready(function () {
 
 		let calculated = getBooleanCookie("calculated");
 
-		if(calculated){
+		if (calculated){
 			calculateWeekTime(true);
-		}else if(!calculated){
+
+		} else if(!calculated){
 			calculateWeekTime(false);
+
 		} else {
 			$("#monday").focus();
 		}

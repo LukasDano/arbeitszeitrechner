@@ -91,3 +91,5 @@
     - var auf const und let geändert und unnötige Zeilen entfernt
     - destructuring implementiert
     - einige zwischen variablen gelöscht einheitliche benennung (snake_case to camelCase)
+    - dzr in dzr und dzrUtils unterteilt
+      - dzrUtils sind alle funktionen die nicht direkt auf das html zugreifen müssen 

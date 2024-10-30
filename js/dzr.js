@@ -1,3 +1,4 @@
+//TODO wichtige variablen als const speichern, damit man sie nicht in jeder function neu callen muss
 $(document).ready(function () {
 
     $("#00min").click(function () {
@@ -67,99 +68,26 @@ $(document).ready(function () {
 
     // liest Dienstbeginn aus dem Input-Feld aus
     function getStartTime() {
-        const startTime = $("#start").val().split(":");
-        return startTime.map(time => parseInt(time, 10));
+        const [hours, mins] = $("#start").val().toString().split(":").map(Number);
+        return [hours, mins ];
     }
 
     // liest Pausenzeit aus dem Input-Feld aus
     function getPauseTime() {
-        const pauseTime = $("#pause").val().split(":");
-        return pauseTime.map(time => parseInt(time, 10));
+        const [hours, mins] = $("#pause").val().toString().split(":").map(Number);
+        return [hours, mins ];
     }
 
     // liest Dienstende aus dem Input-Feld aus
     function getEndTime() {
-        const endTime = $("#end").val().split(":");
-        return endTime.map(time => parseInt(time, 10));
+        const [hours, mins] = $("#end").val().toString().split(":").map(Number);
+        return [hours, mins ];
     }
 
     // liest Solldienstzeit aus dem Input-Feld aus
     function getSollTime() {
-        const sollTime = $("#soll").val().split(":");
-        return sollTime.map(time => parseInt(time, 10));
-    }
-
-    // Gibt die Differenz zwischen Start und Ende zurück
-    function getDiffTime() {
-
-        const [startHours, startMins] = getStartTime().map(time => parseInt(time, 10));
-        const [endHours, endMins] = getEndTime().map(time => parseInt(time, 10));
-
-        let diffHours = endHours - startHours;
-        let diffMins = endMins - startMins;
-
-        // Bei negativer Differenz: + 60 min & -1h
-        if (diffMins < 0) {
-            diffHours--;
-            diffMins = diffMins + 60;
-        }
-        return [diffHours, diffMins];
-    }
-
-    // Berechnet die reine Arbeitszeit (abzüglich Pause)
-    function getWorkTime() {
-
-        const [diffHours, diffMins] = getDiffTime();
-        const [pauseHours, pauseMins] = getPauseTime();
-
-        let workHours = diffHours - pauseHours;
-        let workMins = diffMins - pauseMins;
-
-        if (workMins < 0) {
-            workHours--;
-            workMins = workMins + 60;
-        }
-
-        return [workHours, workMins];
-    }
-
-// Berechnet die Differenz zwischen IST und SOLL
-    function getTimeDifference() {
-
-        const [workHours, workMins] = getWorkTime();
-        const [sollHours, sollMins] = getSollTime();
-
-        let diffHours = workHours - sollHours;
-        let diffMins;
-
-        if (diffHours === 0 && workMins > sollMins) {
-            diffMins = workMins - sollMins;
-
-        } else if (diffHours > 0) {
-            diffMins = 60 - sollMins + workMins;
-            diffHours--;
-
-            if (diffMins >= 60) {
-                diffMins = diffMins - 60;
-                diffHours++;
-            }
-
-        } else if (workMins > sollMins && workMins < 60) {
-            diffMins = 60 - workMins + sollMins;
-            diffHours++;
-
-        } else {
-            diffMins = sollMins - workMins;
-        }
-
-        if (diffMins < 0) {
-            diffHours--;
-            diffMins = diffMins + 60;
-        }
-
-        const positive = !(workHours === sollHours && workMins < sollMins || workHours < sollHours);
-
-        return [diffHours, diffMins, positive];
+        const [hours, mins] = $("#soll").val().toString().split(":").map(Number);
+        return [hours, mins ];
     }
 
     $("#start").change(function () {
@@ -227,6 +155,7 @@ $(document).ready(function () {
                 theme: "flat-colors-wide",
                 end: $.now() + remainingSeconds
             });
+
         } else {
             $('#countdown15').ClassyCountdown({
                 theme: "flat-colors-wide",
@@ -237,13 +166,20 @@ $(document).ready(function () {
 
     // Funktion zur Berechnung der Arbeitszeit, der Differenz zur Regeldienstzeit
     function calculate() {
-        const [workHours, workMins] = getWorkTime();
-        const [diffHours, diffMins, diffPositive] = getTimeDifference();
 
-        const formatTime = (hours, mins) => `${hours}.${mins.toString().padStart(2, '0')}`;
+        const startTime = getStartTime();
+        const endTime = getEndTime();
+        const pauseTime = getPauseTime();
+        const sollTime = getSollTime();
 
-        const workTime = formatTime(workHours, workMins);
-        const diffTime = formatTime(Math.abs(diffHours), diffMins);
+        let diffTime = calculateStartEndeTimeDiff(startTime, endTime);
+        let workTime =  calculateWorkTime(diffTime, pauseTime);
+
+        const [workHours, workMins] = workTime
+        const [diffHours, diffMins, diffPositive] = calculateIstSollTimeDiff(workTime, sollTime);
+
+        workTime = formatTime(workHours, workMins);
+        diffTime = formatTime(Math.abs(diffHours), diffMins);
         let diffDisplay = diffTime;
 
         if (diffPositive && (diffHours !== 0 || diffMins !== 0)) {
@@ -265,7 +201,12 @@ $(document).ready(function () {
 
     // Berechnet das Dienstende anhand der Start-, Pausen- und Soll-Dienstzeit
     function setEnd() {
-        const [endHours, endMins] = calculateNormalEnd();
+
+        const startTime = getStartTime();
+        const pauseTime = getPauseTime();
+        const sollTime = getSollTime();
+
+        const [endHours, endMins] = calculateNormalEnd(startTime, pauseTime, sollTime);
         $("#end").val(endHours + ":" + endMins);
     }
 
@@ -595,280 +536,81 @@ $(document).ready(function () {
 
 // Ab hier selbstgeschrieben
 
-function calculateNormalEnd(){
-
-    const [startHours, startMins] = getStartTime().map(time => parseInt(time, 10));
-    const [pauseHours, pauseMins] = getPauseTime().map(time => parseInt(time, 10));
-    const [sollHours, sollMins] = getSollTime().map(time => parseInt(time, 10));
-
-    let endHours = startHours + pauseHours + sollHours;
-    let endMins = startMins + pauseMins + sollMins;
-
-    if (endHours >= 24) {
-        endHours = endHours - 24;
+    function activateChanges(){
+        calculate();
+        setGleitzeit();
+        setIstTime();
     }
 
-    // Wenn Start-Minuten + Pausen-Minuten + Soll-Minuten >= 120 sind
-    if (endMins >= 120) {
-        endMins = endMins - 120;
-        endHours += 2;
+    function resetPauseAndWorkTime(){
+        $("#pause").val("00:30");
+        $("#30min").addClass("active");
+        $("#00min, #45min").removeClass("active");
+
+        $("#soll").val("07:06");
+        $("#7h06m").addClass("active");
+        $("#6h00m").removeClass("active");
+
+        setCookieUntilMidnight("pause", "30min");
+        setCookieUntilMidnight("pauseTime", "00:30");
+        setCookieUntilMidnight("modus", "7h06m");
+        activateChanges();
     }
 
-    // Wenn Start-Minuten + Pausen-Minuten + Soll-Minuten >= 60 sind
-    if (endMins >= 60) {
-        endMins = endMins - 60;
-        endHours++;
-    }
+    function setIstTime() {
 
-    if (endMins < 10) {
-        endMins = "0" + endMins;
-    }
+        const startTime = getStartTime();
+        const endTime = getEndTime();
+        const pauseTime = getPauseTime();
 
-    return [endHours, endMins];
-}
-
-function activateChanges(){
-    calculate();
-    setGleitzeit();
-    setIstTime();
-}
-
-function resetPauseAndWorkTime(){
-    $("#pause").val("00:30");
-    $("#30min").addClass("active");
-    $("#00min, #45min").removeClass("active");
-
-    $("#soll").val("07:06");
-    $("#7h06m").addClass("active");
-    $("#6h00m").removeClass("active");
-
-    setCookieUntilMidnight("pause", "30min");
-    setCookieUntilMidnight("pauseTime", "00:30");
-    setCookieUntilMidnight("modus", "7h06m");
-    activateChanges();
-}
-
-// Arbeitsbeginn auf 10er und 5er abrunden
-function getRoundStart() {
-
-        let [startHours, startMins] = getStartTime().map(time => parseInt(time, 10));
-        let tens = 0;
-
-        while(startMins > 9){
-            startMins = startMins - 10;
-            tens++;
-        }
-
-        if (startMins >= 5){
-            startMins = 5;
-        }
-
-        if (startMins <= 4){
-            startMins = 0;
-        }
-
-        startMins = startMins + (tens*10);
-
-        return [startHours, startMins];
-	}
-
-	// Arbeitsende auf 10er und 5er abrunden
-	function getRoundEnd() {
-
-        let [endHours, endMins] = getEndTime().map(time => parseInt(time, 10));
-        let tens = 0;
-
-
-        if (endMins >= 56){
-            endMins = 0;
-            endHours++;
-
-            return [endHours, endMins];
-        }
-
-        while (endMins > 9){
-            endMins = endMins - 10;
-            tens++;
-        }
-
-        if (endMins >= 6){
-            endMins = 0;
-            tens++;
-
-        } else if(endMins === 0){
-          endMins = 0;
-
-        } else if (endMins <= 4){
-            endMins = 5;
-        }
-
-        endMins = endMins + (tens*10);
-
-        return [endHours, endMins]
-	}
-
-	// GerundeterAnfang - GerundetesEnde = Ist Arbeitszeit
-	function getIstTime(){
-
-        const [startHours, startMins] = getRoundStart();
-        const [endHours, endMins] = getRoundEnd();
-        const pauseMins = getPauseTime()[1];
-
-        let istHours = endHours - startHours;
-        let istMins = endMins - startMins - pauseMins;
-
-        while (istMins < 0){
-          istHours--;
-          istMins = istMins + 60;
-        }
-
-        if (istHours >= 12){
-            istHours = istHours - 2;
-        }
-
-        return [istHours, istMins];
-      }
-
-	// Ist Arbeitszeit - Soll Arbeitszeit = Gleitzeit
-	function getGleitzeit(){
-
-        const [istHours, istMins] = getIstTime();
-        const [sollHours, sollMins] = [7,6];
-
-        let gleitHours = istHours - sollHours;
-        let gleitMins = istMins - sollMins;
-
-        if (istHours < sollHours) {
-          gleitHours++;
-          gleitMins = gleitMins - 60;
-        }
-
-        if (gleitHours > 0 && gleitMins < 0){
-          gleitHours--;
-          gleitMins = gleitMins + 60;
-        }
-
-        if (gleitMins < -59){
-          gleitHours--;
-          gleitMins = gleitMins + 60;
-        }
-
-        return [gleitHours, gleitMins];
-      }
-
-    function setIstTime(){
-
-		const istTime = getIstTime();
-        let [istHours, istMins] = istTime;
+        let [istHours, istMins] = calcuateIstTime(startTime, endTime, pauseTime);
 
         if (istMins < 0) {
             istHours--;
             istMins = istMins + 60;
         }
 
-		const istAusgabe = istHours + "." + istMins
-		$("#countedworktime").html(istAusgabe);
+        const istAusgabe = istHours + "." + istMins
+        $("#countedworktime").html(istAusgabe);
 
-	}
+    }
 
-	function setGleitzeit(){
+    function setGleitzeit() {
+        const startTime = getStartTime();
+        const endTime = getEndTime();
+        const pauseTime = getPauseTime();
+        const istTime = calcuateIstTime(startTime, endTime, pauseTime);
 
-		const gleitzeit = getGleitzeit();
-        let [gleitHours, gleitMins] = gleitzeit;
+        let [gleitHours, gleitMins] = calcuateGleitzeit(istTime);
         let gleitAusgabe;
 
-		if (gleitHours < 0 || gleitMins < 0){
+        if (gleitHours < 0 || gleitMins < 0){
 
-			gleitHours = Math.abs(gleitHours);
-			gleitMins = Math.abs(gleitMins);
+            gleitHours = Math.abs(gleitHours);
+            gleitMins = Math.abs(gleitMins);
 
-			gleitAusgabe = "-" + gleitHours + "." + formateGleitMins(gleitMins);
+            gleitAusgabe = "-" + gleitHours + "." + formateGleitMins(gleitMins);
 
         } else if (gleitHours > 0 || gleitMins > 0){
             gleitAusgabe = "+" + gleitHours + "." + formateGleitMins(gleitMins);
         }
 
-		$("#gleitzeit").html(gleitAusgabe);
+        $("#gleitzeit").html(gleitAusgabe);
         $("#float").val(gleitAusgabe);
 
-	}
-
-    function formateGleitMins(gleitMins){
-        if (gleitMins <= 9) {
-            return "0" + gleitMins;
-        }
-        return gleitMins;
     }
 
-    function getFloat(otherFloat){
-        let float = $("#float").val();
+    function roundAndSetTimesForFloat() {
 
-        if (otherFloat){
-            float = otherFloat;
-        }
+        const startTime = getStartTime();
+        const sollTime = getSollTime();
+        const pauseTime = getPauseTime();        
+        const float = $("#float").val()?.toString() || "";
 
-        const floatArray = Array.of(...float);
-        let vorzeichen = 1;
+        const normalTime = calculateNormalEnd(startTime, pauseTime, sollTime);
+        const floatTime = getFloat(float);
 
-        if (floatArray[0] === "-"){
-            vorzeichen = -1;
-        }
-
-        // wenn es nur einstellige Minuten gibt
-        if (floatArray.length === 4) {
-
-            // Fromat
-            // 0,1,2,3
-            // +,0,.,4
-
-            const gleitHours = parseInt(floatArray[1], 10);
-            const gleitMins = parseInt(floatArray[3], 10);
-
-            return [vorzeichen, gleitHours, gleitMins];
-        }
-
-        // wenn es zweistellige Minuten gibt
-        if (floatArray.length > 4) {
-
-            // Fromat
-            // 0,1,2,3,4
-            // +,0,.,1,4
-
-            const gleitHours = parseInt(floatArray[1], 10);
-            const gleitTens = parseInt(floatArray[3], 10);
-            const gleitOnes = parseInt(floatArray[4], 10);
-
-            const gleitMins = gleitTens*10 + gleitOnes;
-
-            return [vorzeichen, gleitHours, gleitMins];
-        }
-    }
-
-    function calculateEndForFloat(){
-
-        const floatTime = getFloat();
-        let [istEndHours, istEndMins] = calculateNormalEnd().map(time => parseInt(time, 10));
-        const gleitVorzeichen = floatTime[0];
-
-        let floatTimeRounded = [];
-
-        if (gleitVorzeichen === 1){
-            floatTimeRounded = getOptimalEndForPositive();
-        } else if (gleitVorzeichen === -1) {
-            floatTimeRounded = getOptimalEndForNegative();
-        }
-
-        const [gleitHours, gleitMins] = floatTimeRounded;
-
-        const sollEndHours = istEndHours + (gleitHours * gleitVorzeichen);
-        const sollEndMins = istEndMins + (gleitMins * gleitVorzeichen);
-
-        return [sollEndHours, sollEndMins];
-    }
-
-    function roundAndSetTimesForFloat(){
-
-        let [endHours, endMins] = calculateEndForFloat();
+        let [endHours, endMins] = calculateEndForFloat(normalTime, floatTime);
 
         while (endMins >= 60) {
             endHours++;
@@ -881,87 +623,17 @@ function getRoundStart() {
         }
 
         if (endMins < 10){
-        endMins = "0" + endMins;
+            endMins = "0" + endMins;
         }
 
         $("#end").val(endHours +":"+ endMins);
     }
 
-    function getOptimalEndForPositive(){
+    function optimizeEnd() {
 
-        let [, gleitHours, gleitMins] = getFloat();
+        let [endHours, endMins] = getEndTime();
         let tens = 0;
-
-        if (gleitHours !== 0 && gleitMins === 0){
-            gleitMins = 4;
-            // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-            return [gleitHours, gleitMins - 4];
-        }
-
-        while(gleitMins > 9){
-            gleitMins = gleitMins - 10;
-            tens++;
-        }
-
-        if (gleitMins <= 4){
-            gleitMins = 4;
-
-        } else if (gleitMins <= 9){
-            gleitMins = 9;
-        }
-
-        gleitMins =  10*tens + gleitMins;
-
-        return [gleitHours, gleitMins - 4];
-    }
-
-    function getOptimalEndForNegative(){
-
-        let [, gleitHours, gleitMins] = getFloat();
-        let tens = 0;
-
-        if (gleitHours !== 0 && gleitMins === 0){
-            gleitMins = 56;
-            gleitHours--;
-
-            // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-            return [gleitHours, gleitMins + 4];
-
-        } else if (gleitHours === 0 && gleitMins === 0){
-            gleitMins = 1;
-
-            // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-            return [gleitHours, gleitMins + 4];
-        }
-
-        while (gleitMins > 9){
-            gleitMins = gleitMins - 10;
-            tens++;
-        }
-
-        if (gleitMins === 0){
-            gleitMins = 6;
-            tens--;
-
-        } else if (gleitMins >= 6 ){
-            gleitMins = 6;
-
-        } else if (gleitMins <= 5){
-            gleitMins = 1;
-        }
-
-        gleitMins =  10*tens + gleitMins;
-
-        //Ausgleich, weil man normalerweise schon plus 4 Minuten macht
-        return [gleitHours, gleitMins + 4];
-    }
-
-    function optimizeEnd(){
-
-        const endTimeBefore = getEndTime();
-
-        let [endHours, endMins] = endTimeBefore.map(time => parseInt(time, 10));
-        let tens = 0;
+        let endMinsString;
 
         while (endMins > 9){
             endMins = endMins - 10;
@@ -984,16 +656,17 @@ function getRoundStart() {
         }
 
         endMins =  10*tens + endMins;
+        endMinsString = endMins.toString();
 
         if (endMins <= 9){
-            endMins = 0 + endMins.toString();
+            endMinsString = 0 + endMins.toString();
         }
 
-        $("#end").val(endHours +":"+ endMins);
+        $("#end").val(endHours +":"+ endMinsString);
         setCountdown();
     }
 
-	$("#reset").click(function () {
+    $("#reset").click(function () {
         resetPauseAndWorkTime();
         setEnd();
         setGleitzeit();
@@ -1001,7 +674,7 @@ function getRoundStart() {
         calculate();
         setCountdown();
         uploadGleitzeit();
-	});
+    });
 
     $("#float").change(function () {
         applyFloatChanges();
@@ -1027,17 +700,19 @@ function getRoundStart() {
         const currentMode = getCookie("modus")
         const floatCookie = getCookie("float");
         const float =  getFloat(floatCookie);
-        const istTime =  getIstTime();
+        const startTime = getStartTime();
+        const endTime = getEndTime();
+        const pauseTime = getPauseTime();
 
-        const [floatVorzeichen, floatHours, floatMinutes] = float;
-        const [istHours, istMinutes] = istTime;
+        const [floatVorzeichen, floatHours, floatMins] = float;
+        const [istHours, istMins] = calcuateIstTime(startTime, endTime, pauseTime);
 
         const positivOrLessThenOneHour = floatVorzeichen > 0 || floatHours < 1;
-        const oneHourAndLessThenSixMinutes = floatHours === 1 && floatMinutes < 6;
+        const oneHourAndLessThenSixMinutes = floatHours === 1 && floatMins < 6;
         const sixHourModeAllowed = positivOrLessThenOneHour || oneHourAndLessThenSixMinutes;
 
         const lessThenSixHours = istHours < 6;
-        const sixHourWorkDay = istHours === 6 && istMinutes === 0;
+        const sixHourWorkDay = istHours === 6 && istMins === 0;
         const sevenHourModeAllowed =  lessThenSixHours || sixHourWorkDay
 
         if (currentMode === "6h00m" && sixHourModeAllowed) {
@@ -1048,7 +723,7 @@ function getRoundStart() {
     }
 
 
-    function switchToSixHourMode(){
+    function switchToSixHourMode() {
         $("#6h00m").addClass("active");
         $("#7h06m").removeClass("active");
         setCookieUntilMidnight("modus", "6h00m");
@@ -1059,7 +734,7 @@ function getRoundStart() {
         setCookieUntilMidnight("pauseTime", "00:00");
     }
 
-    function switchToSevenHourMode(){
+    function switchToSevenHourMode() {
         $("#7h06m").addClass("active");
         $("#6h00m").removeClass("active");
         setCookieUntilMidnight("modus", "7h06m");
@@ -1070,13 +745,13 @@ function getRoundStart() {
         setCookieUntilMidnight("pauseTime", "00:30");
     }
 
-    function uploadStartTime(){
-        const startTime = $("#start").val();
+    function uploadStartTime() {
+        const startTime = $("#start").val()?.toString();
         setCookieUntilMidnight("start", startTime);
     }
 
-    function uploadGleitzeit(){
-        const floatTime = $("#float").val();
+    function uploadGleitzeit() {
+        const floatTime = $("#float").val()?.toString();
         setCookieUntilMidnight("float", floatTime);
     }
 
@@ -1096,7 +771,7 @@ function getRoundStart() {
 
     }
 
-    function readSollAnPauseFromLocalStorageAndSetInFields() {
+    function readSollAnPauseFromLocalStorageAndSetInFields()  {
 
         const modusValue = "#" + getCookie("modus");
         const pauseValue = "#" + getCookie("pause");
@@ -1117,12 +792,12 @@ function getRoundStart() {
 
     }
 
-    if (getCookie("windowInitLoaded") && getCookie("start") != null ){
+    if (getCookie("windowInitLoaded") && getCookie("start") != null ) {
         readSollAnPauseFromLocalStorageAndSetInFields();
         readStartAndFloatFromLocalStorageAndSetInFields();
         roundAndSetTimesForFloat();
         calculate();
-		setGleitzeit();
+        setGleitzeit();
         setIstTime();
         setCountdown();
         optimizeEnd();
@@ -1130,11 +805,11 @@ function getRoundStart() {
         deleteDataFromStorages();
         resetCookies();
         setCookieUntilMidnight("modus", "7h06m");
-        setCookieUntilMidnight("windowInitLoaded", true);
+        setCookieUntilMidnight("windowInitLoaded", "true");
         $("#start").focus();
     }
 
-    function floatValueCheck(){
+    function floatValueCheck() {
 
         const float = $("#float").val();
 
@@ -1142,7 +817,7 @@ function getRoundStart() {
             $("#float").val("0.00");
         }
     }
-    
+
     $("#float").blur(function () {
         setGleitzeit();
         floatValueCheck();
