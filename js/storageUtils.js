@@ -22,12 +22,10 @@ function getBooleanCookie(name){
     }
 }
 
-function setCookie(name, value, days) {
+function setCookie(name, value, expirationDate) {
     let expires = '';
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = '; expires=' + date.toUTCString();
+    if (expirationDate instanceof Date) {
+        expires = '; expires=' + expirationDate.toUTCString();
     }
     document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
 }
