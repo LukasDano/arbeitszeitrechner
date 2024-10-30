@@ -104,6 +104,55 @@ function calculateNormalEnd(startTime, pauseTime, sollTime) {
     return [endHours, endMins];
 }
 
+// GerundeterAnfang - GerundetesEnde = Ist Arbeitszeit
+function calcuateIstTime(startTime, endTime, pauseTime){
+
+    const [startHours, startMins] = roundStart(startTime);
+    const [endHours, endMins] = roundEnd(endTime);
+    const [, pauseMins] = pauseTime;
+
+    let istHours = endHours - startHours;
+    let istMins = endMins - startMins - pauseMins;
+
+    while (istMins < 0){
+        istHours--;
+        istMins = istMins + 60;
+    }
+
+    if (istHours >= 12){
+        istHours = istHours - 2;
+    }
+
+    return [istHours, istMins];
+}
+
+function calcuateGleitzeit(istTime){
+
+    const [istHours, istMins] = istTime;
+    const [sollHours, sollMins] = [7,6];
+
+    let gleitHours = istHours - sollHours;
+    let gleitMins = istMins - sollMins;
+
+    if (istHours < sollHours) {
+        gleitHours++;
+        gleitMins = gleitMins - 60;
+    }
+
+    if (gleitHours > 0 && gleitMins < 0){
+        gleitHours--;
+        gleitMins = gleitMins + 60;
+    }
+
+    if (gleitMins < -59){
+        gleitHours--;
+        gleitMins = gleitMins + 60;
+    }
+
+    return [gleitHours, gleitMins];
+}
+
+
 // Arbeitsbeginn auf 10er und 5er abrunden
 function roundStart(startTime) {
 
@@ -163,54 +212,6 @@ function roundEnd(endTime) {
     return [endHours, endMins];
 }
 
-// GerundeterAnfang - GerundetesEnde = Ist Arbeitszeit
-function calcuateIstTime(startTime, endTime, pauseTime){
-
-    const [startHours, startMins] = roundStart(startTime);
-    const [endHours, endMins] = roundEnd(endTime);
-    const [, pauseMins] = pauseTime;
-
-    let istHours = endHours - startHours;
-    let istMins = endMins - startMins - pauseMins;
-
-    while (istMins < 0){
-        istHours--;
-        istMins = istMins + 60;
-    }
-
-    if (istHours >= 12){
-        istHours = istHours - 2;
-    }
-
-   return [istHours, istMins];
-}
-
-function calcuateGleitzeit(istTime){
-
-    const [istHours, istMins] = istTime;
-    const [sollHours, sollMins] = [7,6];
-
-    let gleitHours = istHours - sollHours;
-    let gleitMins = istMins - sollMins;
-
-    if (istHours < sollHours) {
-        gleitHours++;
-        gleitMins = gleitMins - 60;
-    }
-
-    if (gleitHours > 0 && gleitMins < 0){
-        gleitHours--;
-        gleitMins = gleitMins + 60;
-    }
-
-    if (gleitMins < -59){
-        gleitHours--;
-        gleitMins = gleitMins + 60;
-    }
-
-    return [gleitHours, gleitMins];
-}
-
 function formateGleitMins(gleitMins) {
     if (gleitMins <= 9) {
         return "0" + gleitMins;
@@ -241,7 +242,7 @@ function calculateEndForFloat(normalEnd, float) {
 
 function calculateOptimalEndForPositive(float) {
 
-    let [gleitHours, gleitMins] = float;
+    let [, gleitHours, gleitMins] = float;
     let tens = 0;
 
     if (gleitHours !== 0 && gleitMins === 0){
@@ -269,7 +270,7 @@ function calculateOptimalEndForPositive(float) {
 
 function calculateOptimalEndForNegative(float){
 
-    let [gleitHours, gleitMins] = float;
+    let [, gleitHours, gleitMins] = float;
     let tens = 0;
 
     if (gleitHours !== 0 && gleitMins === 0){
@@ -306,7 +307,7 @@ function calculateOptimalEndForNegative(float){
     return [gleitHours, (gleitMins + 4)];
 }
 
-function getFloat(float) {
+function getFloatValue(float) {
 
     const floatArray = float.split('');
     let vorzeichen = 1;

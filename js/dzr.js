@@ -1,4 +1,3 @@
-//TODO wichtige variablen als const speichern, damit man sie nicht in jeder function neu callen muss
 $(document).ready(function () {
 
     $("#00min").click(function () {
@@ -90,6 +89,39 @@ $(document).ready(function () {
         return [hours, mins ];
     }
 
+    const timeValues = {
+        get startTime() {
+            return getStartTime();
+        },
+        get endTime() {
+            return getEndTime();
+        },
+        get pauseTime() {
+            return getPauseTime();
+        },
+        get sollTime() {
+            return getSollTime();
+        },
+        get istTime() {
+            return calcuateIstTime(this.startTime, this.endTime, this.pauseTime);
+        },
+        get workTime() {
+            return calculateWorkTime(this.startEndeDiff, this.pauseTime);
+        },
+        get gleitzeit() {
+            return calcuateGleitzeit(this.istTime);
+        },
+        get startEndeDiff() {
+            return calculateStartEndeTimeDiff(this.startTime, this.endTime);
+        },
+        get istSollDiff() {
+            return calculateIstSollTimeDiff(this.istTime, this.sollTime);
+        },
+        get normalEnd(){
+            return calculateNormalEnd(this.startTime, this.pauseTime, this.sollTime);
+        }
+    };
+
     $("#start").change(function () {
         setEnd();
         setGleitzeit();
@@ -130,8 +162,8 @@ $(document).ready(function () {
         const currMin = new Date().getMinutes();
         const currSec = new Date().getSeconds();
 
-        let hoursToEnd = getEndTime()[0] - currHour;
-        let minutesToEnd = getEndTime()[1] - currMin;
+        let hoursToEnd = timeValues.endTime[0] - currHour;
+        let minutesToEnd = timeValues.endTime[1] - currMin;
 
         if (minutesToEnd < 0) {
             hoursToEnd--;
@@ -167,16 +199,8 @@ $(document).ready(function () {
     // Funktion zur Berechnung der Arbeitszeit, der Differenz zur Regeldienstzeit
     function calculate() {
 
-        const startTime = getStartTime();
-        const endTime = getEndTime();
-        const pauseTime = getPauseTime();
-        const sollTime = getSollTime();
-
-        let diffTime = calculateStartEndeTimeDiff(startTime, endTime);
-        let workTime =  calculateWorkTime(diffTime, pauseTime);
-
-        const [workHours, workMins] = workTime
-        const [diffHours, diffMins, diffPositive] = calculateIstSollTimeDiff(workTime, sollTime);
+        const [workHours, workMins] = timeValues.workTime;
+        const [diffHours, diffMins, diffPositive] = timeValues.istSollDiff;
 
         workTime = formatTime(workHours, workMins);
         diffTime = formatTime(Math.abs(diffHours), diffMins);
@@ -201,12 +225,7 @@ $(document).ready(function () {
 
     // Berechnet das Dienstende anhand der Start-, Pausen- und Soll-Dienstzeit
     function setEnd() {
-
-        const startTime = getStartTime();
-        const pauseTime = getPauseTime();
-        const sollTime = getSollTime();
-
-        const [endHours, endMins] = calculateNormalEnd(startTime, pauseTime, sollTime);
+        const [endHours, endMins] = timeValues.normalEnd
         $("#end").val(endHours + ":" + endMins);
     }
 
@@ -559,12 +578,7 @@ $(document).ready(function () {
 
     function setIstTime() {
 
-        const startTime = getStartTime();
-        const endTime = getEndTime();
-        const pauseTime = getPauseTime();
-
-        let [istHours, istMins] = calcuateIstTime(startTime, endTime, pauseTime);
-
+        let [istHours, istMins] = timeValues.istTime;
         if (istMins < 0) {
             istHours--;
             istMins = istMins + 60;
@@ -576,12 +590,8 @@ $(document).ready(function () {
     }
 
     function setGleitzeit() {
-        const startTime = getStartTime();
-        const endTime = getEndTime();
-        const pauseTime = getPauseTime();
-        const istTime = calcuateIstTime(startTime, endTime, pauseTime);
 
-        let [gleitHours, gleitMins] = calcuateGleitzeit(istTime);
+        let [gleitHours, gleitMins] = timeValues.gleitzeit;
         let gleitAusgabe;
 
         if (gleitHours < 0 || gleitMins < 0){
@@ -602,15 +612,10 @@ $(document).ready(function () {
 
     function roundAndSetTimesForFloat() {
 
-        const startTime = getStartTime();
-        const sollTime = getSollTime();
-        const pauseTime = getPauseTime();        
         const float = $("#float").val()?.toString() || "";
+        const floatTime = getFloatValue(float);
 
-        const normalTime = calculateNormalEnd(startTime, pauseTime, sollTime);
-        const floatTime = getFloat(float);
-
-        let [endHours, endMins] = calculateEndForFloat(normalTime, floatTime);
+        let [endHours, endMins] = calculateEndForFloat(timeValues.normalEnd, floatTime);
 
         while (endMins >= 60) {
             endHours++;
@@ -631,9 +636,8 @@ $(document).ready(function () {
 
     function optimizeEnd() {
 
-        let [endHours, endMins] = getEndTime();
+        let [endHours, endMins] = timeValues.endTime;
         let tens = 0;
-        let endMinsString;
 
         while (endMins > 9){
             endMins = endMins - 10;
@@ -656,13 +660,12 @@ $(document).ready(function () {
         }
 
         endMins =  10*tens + endMins;
-        endMinsString = endMins.toString();
 
         if (endMins <= 9){
-            endMinsString = 0 + endMins.toString();
+            endMins = 0 + endMins
         }
 
-        $("#end").val(endHours +":"+ endMinsString);
+        $("#end").val(endHours +":"+ endMins);
         setCountdown();
     }
 
@@ -699,13 +702,10 @@ $(document).ready(function () {
 
         const currentMode = getCookie("modus")
         const floatCookie = getCookie("float");
-        const float =  getFloat(floatCookie);
-        const startTime = getStartTime();
-        const endTime = getEndTime();
-        const pauseTime = getPauseTime();
+        const float =  getFloatValue(floatCookie);
 
         const [floatVorzeichen, floatHours, floatMins] = float;
-        const [istHours, istMins] = calcuateIstTime(startTime, endTime, pauseTime);
+        const [istHours, istMins] = timeValues.istTime;
 
         const positivOrLessThenOneHour = floatVorzeichen > 0 || floatHours < 1;
         const oneHourAndLessThenSixMinutes = floatHours === 1 && floatMins < 6;
@@ -828,5 +828,4 @@ $(document).ready(function () {
             location.reload();
         }
     });
-
 });
