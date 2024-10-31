@@ -662,7 +662,7 @@ $(document).ready(function () {
         endMins =  10*tens + endMins;
 
         if (endMins <= 9){
-            endMins = 0 + endMins
+            endMins = "0" + endMins
         }
 
         $("#end").val(endHours +":"+ endMins);
