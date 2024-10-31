@@ -94,3 +94,6 @@
     - dzr in dzr und dzrUtils unterteilt
       - dzrUtils sind alle funktionen die nicht direkt auf das html zugreifen müssen
     - getter and calculations simplified, sodass man jetzt über eine const immer auf den aktuellen Wert zugreifen kann
+
+#### v2.5.5
+- inroducing: testing with jest

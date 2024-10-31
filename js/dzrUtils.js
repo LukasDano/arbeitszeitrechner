@@ -152,7 +152,6 @@ function calcuateGleitzeit(istTime){
     return [gleitHours, gleitMins];
 }
 
-
 // Arbeitsbeginn auf 10er und 5er abrunden
 function roundStart(startTime) {
 
@@ -345,3 +344,20 @@ function getFloatValue(float) {
         return [vorzeichen, gleitHours, gleitMins];
     }
 }
+
+module.exports = {
+    calculateStartEndeTimeDiff,
+    calculateIstSollTimeDiff,
+    calculateWorkTime,
+    formatTime,
+    calculateNormalEnd,
+    calcuateIstTime,
+    calcuateGleitzeit,
+    roundStart,
+    roundEnd,
+    formateGleitMins,
+    calculateEndForFloat,
+    calculateOptimalEndForPositive,
+    calculateOptimalEndForNegative,
+    getFloatValue
+};
