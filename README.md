@@ -1,4 +1,4 @@
-# Arbeitszeitrechner #
+# Arbeitszeitrechner
 
 Eine einfache Anwendung, bei der man den Arbeitsbeginn einträgt und automatisch der Feierabendbeginn ausgerechnet wird.
 Jetzt einfach die [aktuelle Version](https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html) ausprobieren.
@@ -9,6 +9,11 @@ Hier geht es zum [Original.](https://github.com/iC0RE/arbeitszeitrechner)
 
 Über dieses [Tool](https://raw.githack.com/) kann man die HTML-Datei direkt auf GitHub abrufen und darstellen.
 Hier gehts zum [Repository](https://github.com/neoascetic/rawgithack) des Tools.
+
+## Anmerkung
+
+Vorschläge werden gerne entgegenkommen und nach Möglichkeit auch umgesetzt. Wer das Tool eigenständig weiter entwickeln möchte, kann das gerne tun.
+Dann aber bitte auf dieses oder das Original verweisen. Oder einfach Fork erstellen, sodass gleich zu erkennen ist, woher der Code eigentlich kommt.
 
 ## old versions
 
