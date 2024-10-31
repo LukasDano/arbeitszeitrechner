@@ -339,3 +339,55 @@ section {
 .devOption{
     background-color: #404a57;
 }
+
+.icon {
+    height: 20px;
+    width: 20px;
+    transition: transform 0.2s ease;
+}
+
+.icon.animation,
+.icon.reAnimation {
+    transition: transform 0.5s ease;
+}
+
+.icon.small {
+    height: 24px;
+    width: 24px;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.icon.animation:hover {
+    transform: scale(1.2) rotate(360deg);
+}
+
+.icon.reAnimation:hover {
+    transform: scale(1.2) rotate(-360deg);
+}
+
+/* Used to Display buttons in the nav-tabs as all other nav-link items */
+.nav-link {
+    display: block; /* Makes it behave like a block element */
+    padding: 0.5rem 1rem; /* Adjust padding to match Bootstrap */
+    color: #007bff; /* Bootstrap link color */
+    text-align: left; /* Align text to the left */
+    text-decoration: none; /* Remove underline */
+    background: none; /* Remove default button background */
+    border: none; /* Remove default button border */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.nav-link:hover {
+    color: #0056b3; /* Darker color on hover */
+    text-decoration: underline; /* Optional: underline on hover */
+}
+
+.nav-link:focus,
+.nav-link:active {
+    outline: none; /* Remove the focus outline */
+    box-shadow: none; /* Remove any box-shadow */
+    border: none; /* Ensure border is not shown */
+}

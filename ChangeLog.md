@@ -71,5 +71,26 @@
 
 #### v2.5.2
 - Neues Feature: DevOptions
-  - Es werden neue Tabs angezeigt: Aktuelle Version, Testversion, Repo und Exit (um den Modus wieder zuverlassen)
+  - Es werden neue Tabs angezeigt: Aktuelle Version, Testversion, Repo, Restart und Exit (um den Modus wieder zuverlassen)
   - Um in den Modus zu kommen, muss man auf der Konsole "enableDevOptions()" eingeben oder die Seite über einen bestimmten Link aufrufen
+
+#### v2.5.3
+- Refactoring: DevOptions werden jetzt als Icons angezeigt
+- QoL: Die Seite wird automatisch neu geladen, wenn man den Tab öffnet 
+  - dadurch sollte der Countdown jetzt auch nach dem Sperren des PCs die richtige Zeit anzeigen
+- Bugfix: Der Modus wird jetzt auch gespeichert, wenn man die Seite zum ersten mal öffnet
+  - Beim neu Laden wird jetzt immer ein Knopf als aktiv angezeigt
+- Refactoring: DevOptions die eine Funktion aufrufen, sind jetzt buttons
+  - Die Buttons sehen aber aus wie alle anderen Tabs
+
+#### v2.5.4
+- Auf Cookies umgestellt
+    - Local und SessionStorage Methoden wurden entfernt
+    - SameDayCheck entfernt, ist mit Expering Cookies überflüssig
+- Code Refactoring
+    - var auf const und let geändert und unnötige Zeilen entfernt
+    - destructuring implementiert
+    - einige zwischen variablen gelöscht einheitliche benennung (snake_case to camelCase)
+    - dzr in dzr und dzrUtils unterteilt
+      - dzrUtils sind alle funktionen die nicht direkt auf das html zugreifen müssen
+    - getter and calculations simplified, sodass man jetzt über eine const immer auf den aktuellen Wert zugreifen kann

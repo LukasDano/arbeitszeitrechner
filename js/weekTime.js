@@ -1,112 +1,82 @@
 $(document).ready(function () {
 
-	function getDaysWorkHoursAsList(){
-	
-		var monday_time = $("#monday").val().split(":");
-		var monday_hours = parseInt(monday_time[0], 10);
-	   
-		var tuesday_time = $("#tuesday").val().split(":");
-		var tuesday_hours = parseInt(tuesday_time[0], 10);
-	   
-		var wednesday_time = $("#wednesday").val().split(":");
-		var wednesday_hours = parseInt(wednesday_time[0], 10);
-	   
-		var thursday_time = $("#thursday").val().split(":");
-		var thursday_hours = parseInt(thursday_time[0], 10);
-	   
-		var friday_time = $("#friday").val().split(":");
-		var friday_hours = parseInt(friday_time[0], 10);
-		
-		let daysWorkHours = [monday_hours, tuesday_hours, wednesday_hours, thursday_hours, friday_hours];
-		
-		return daysWorkHours;
+    function getTimeForDay(day){
+        const [hours, mins] = $(day).val().toString().split(":").map(time => parseInt(time, 10));
+        return { hours, mins };
+    }
 
-	}
-	
-	function getDaysWorkMinsAsList(){
-	
-		var monday_time = $("#monday").val().split(":");
-		var monday_mins = parseInt(monday_time[1], 10);
-	   
-		var tuesday_time = $("#tuesday").val().split(":");
-		var tuesday_mins = parseInt(tuesday_time[1], 10);
-	   
-		var wednesday_time = $("#wednesday").val().split(":");
-		var wednesday_mins = parseInt(wednesday_time[1], 10);
-	   
-		var thursday_time = $("#thursday").val().split(":");
-		var thursday_mins = parseInt(thursday_time[1], 10);
-	   
-		var friday_time = $("#friday").val().split(":");
-		var friday_mins = parseInt(friday_time[1], 10);
-		
-		let daysWorkMins = [monday_mins, tuesday_mins, wednesday_mins, thursday_mins, friday_mins];
-		
-		return daysWorkMins;
+    function getTimeForWeek() {
+        return {
+            monday: getTimeForDay("#monday"),
+            tuesday: getTimeForDay("#tuesday"),
+            wednesday: getTimeForDay("#wednesday"),
+            thursday: getTimeForDay("#thursday"),
+            friday: getTimeForDay("#friday"),
+        };
+    }
 
-	}
-	
-	function getWeekWorkTime(){
+    function getWeekWorkTime() {
+        const weekTime = getTimeForWeek();
 
-		var daysWorkHours = getDaysWorkHoursAsList();
-		var daysWorkMins = getDaysWorkMinsAsList();
-	
-		var week_hours = daysWorkHours[0] + daysWorkHours[1] + daysWorkHours[2] + daysWorkHours[3] + daysWorkHours[4];
-		var week_mins = daysWorkMins[0] + daysWorkMins[1] + daysWorkMins[2] + daysWorkMins[3] + daysWorkMins[4];
-		
-		while (week_mins >= 60) {
-		week_mins = week_mins - 60;
-		week_hours++;
-		}
-	
-		return week_time = [week_hours, week_mins];
-	
-	}
-	
-	function getWorkedDaysForWeek(){
+        let totalHours = 0;
+        let totalMins = 0;
 
-		var daysWorkHours = getDaysWorkHoursAsList();
-		var daysWorkMins = getDaysWorkMinsAsList();
-		var countedDays = 5;
-		
-		for (let i = 0; i<5; i++){
-		
-			if(daysWorkHours[i] == 0 && daysWorkMins[i] == 0){
-				countedDays --;
-			}
-			
-		}
-		return countedDays;
-	}
+        // Iterate through the week
+        for (const day in weekTime) {
+            if (weekTime.hasOwnProperty(day)) {
+                totalHours += weekTime[day].hours;
+                totalMins += weekTime[day].mins;
+            }
+        }
+
+        totalHours += Math.floor(totalMins / 60);
+        totalMins = totalMins % 60;
+
+        return [totalHours, totalMins];
+    }
+
+    function getWorkedDaysForWeek() {
+
+        const [daysWorkHours, daysWorkMins] = getWeekWorkTime();
+        let countedDays = 5;
+
+        for (let i = 0; i<5; i++){
+
+            if(daysWorkHours[i] === 0 && daysWorkMins[i] === 0){
+                countedDays --;
+            }
+
+        }
+
+        return countedDays;
+    }
 	
     function calculateWeekOverTime(gleitagGenommen) {
-		var countedDays = getWorkedDaysForWeek();
-		var weekWorkTime = getWeekWorkTime();
-		const gleittageThisWeek= parseInt(readFromLocalStorage("gleittage"))
+		let countedDays = getWorkedDaysForWeek();
+		const weekWorkTime = getWeekWorkTime();
+		const gleittageThisWeek= parseInt(getCookie("gleittage"))
 
 		if (gleittageThisWeek && gleitagGenommen){
 			countedDays = gleittageThisWeek + countedDays;
-			deleteFromLocalStorage("gleittage");
+			deleteCookie("gleittage");
 		}else if (gleitagGenommen) {
 			const gleittageThisWeek = parseInt(prompt("Anzahl Gleitage diese Woche:", ""), 10);
 			countedDays = gleittageThisWeek + countedDays;
-			writeToLocalStorage("gleittage", gleittageThisWeek);
+			setCookie("gleittage", gleittageThisWeek);
 		}
 
-		var shouldHours = countedDays * 7;
-		var shouldMins = countedDays * 6;
-		var istHours = weekWorkTime[0];
-		var istMins = weekWorkTime[1];
+		const shouldHours = countedDays * 7;
+		const shouldMins = countedDays * 6;
+		const istHours = weekWorkTime[0];
+		const istMins = weekWorkTime[1];
 	
-		var overTimeHours = istHours - shouldHours;
-		var overTimeMins = istMins - shouldMins;
-	
-		//console.log("overTimeHours: " + overTimeHours);
-		//console.log("overTimeMins: " + overTimeMins);
+		let overTimeHours = istHours - shouldHours;
+		let overTimeMins = istMins - shouldMins;
 
 		if (overTimeMins < 0) {
 			overTimeHours--;
 			overTimeMins += 60;
+
 		} else if (overTimeMins >= 60) {
 			overTimeHours++;
 			overTimeMins -= 60;
@@ -122,10 +92,10 @@ $(document).ready(function () {
 	
 	function setWeekTime(){
     
-		var week_time = getWeekWorkTime();
+		const week_time = getWeekWorkTime();
 		
-		var weekHours = week_time[0];
-		var weekMins = week_time[1];
+		let weekHours = week_time[0];
+		let weekMins = week_time[1];
 
 		if (weekHours <= 9){
 			weekHours = "0" + weekHours;
@@ -135,33 +105,32 @@ $(document).ready(function () {
 		    weekMins = "0" + weekMins;
 		}
 		
-		var weekTimeAusgabe = weekHours + "." + weekMins + " h";
-	
-		//console.log(weekTimeAusgabe);
+		const weekTimeAusgabe = weekHours + "." + weekMins + " h";
 		$("#weekworktime").html(weekTimeAusgabe);
 	}	
 
 	function setWeekOverTime(gleittag) {
 
-		var weekTime = calculateWeekOverTime(gleittag);
+		const weekTime = calculateWeekOverTime(gleittag);
 		
-		var weekHours = weekTime[0];
-		var weekMins = weekTime[1];
+		let weekHours = weekTime[0];
+		let weekMins = weekTime[1];
+		let weekOverTimeAusgabe;
 		
 		if (weekHours < 0 || weekMins < 0){
 			
 			weekHours = Math.abs(weekHours);
 			weekMins = Math.abs(weekMins);
 	
-			var weekOverTimeAusgabe = "-" + weekHours + "." + weekMins + " h";
+			weekOverTimeAusgabe = "-" + weekHours + "." + weekMins + " h";
 			
 		} else if (weekHours > 0 || weekMins > 0){
-			var weekOverTimeAusgabe = "+" + weekHours + "." + weekMins + " h";
+			weekOverTimeAusgabe = "+" + weekHours + "." + weekMins + " h";
+
 		} else {
-			var weekOverTimeAusgabe = "0.0 h";
+			weekOverTimeAusgabe = "0.0 h";
 		}
 	
-		//console.log(weekOverTimeAusgabe);
 		$("#weekovertime").html(weekOverTimeAusgabe);
 	}
 
@@ -169,7 +138,7 @@ $(document).ready(function () {
 		setWeekTime();
 		setWeekOverTime(gleittag);
 		uploadDaysTime();
-		writeToLocalStorage("calculated", gleittag);
+		setCookie("calculated", gleittag);
 	}
 
 	$("#weekTimeCalc").click(function () {
@@ -211,26 +180,26 @@ $(document).ready(function () {
 	
 	function uploadDaysTime(){
 
-		var monday_time = $("#monday").val();
-		var tuesday_time = $("#tuesday").val();
-		var wednesday_time = $("#wednesday").val();
-		var thursday_time = $("#thursday").val();
-		var friday_time = $("#friday").val();
+		const monday_time = $("#monday").val();
+		const tuesday_time = $("#tuesday").val();
+		const wednesday_time = $("#wednesday").val();
+		const thursday_time = $("#thursday").val();
+		const friday_time = $("#friday").val();
 		
-		writeToLocalStorage("monday", monday_time);
-		writeToLocalStorage("tuesday", tuesday_time);
-		writeToLocalStorage("wednesday", wednesday_time);
-		writeToLocalStorage("thursday", thursday_time);
-		writeToLocalStorage("friday", friday_time);
+		setCookie("monday", monday_time);
+		setCookie("tuesday", tuesday_time);
+		setCookie("wednesday", wednesday_time);
+		setCookie("thursday", thursday_time);
+		setCookie("friday", friday_time);
     }
 
-	function readFromLocalStorageAndSetInDayFields() {
+	function getCookieAndSetInDayFields() {
 
-        var mondayTime = readFromLocalStorage("monday");
-		var tuesdayTime = readFromLocalStorage("tuesday");
-		var wednesdayTime = readFromLocalStorage("wednesday");
-		var thursdayTime = readFromLocalStorage("thursday");
-		var fridayTime = readFromLocalStorage("friday");
+        const mondayTime = getCookie("monday");
+		const tuesdayTime = getCookie("tuesday");
+		const wednesdayTime = getCookie("wednesday");
+		const thursdayTime = getCookie("thursday");
+		const fridayTime = getCookie("friday");
 		
 
         if (mondayTime != null ) { 
@@ -255,15 +224,17 @@ $(document).ready(function () {
         
     }
 
-	if (readFromLocalStorage("weekWindowInitLoaded") && readFromLocalStorage("monday") != null){
-		readFromLocalStorageAndSetInDayFields();
+	if (getCookie("weekWindowInitLoaded") && getCookie("monday") != null){
+		getCookieAndSetInDayFields();
 
-		var calculated = readBooleanFromLocalStorage("calculated");
+		let calculated = getBooleanCookie("calculated");
 
-		if(calculated){
+		if (calculated){
 			calculateWeekTime(true);
-		}else if(!calculated){
+
+		} else if(!calculated){
 			calculateWeekTime(false);
+
 		} else {
 			$("#monday").focus();
 		}

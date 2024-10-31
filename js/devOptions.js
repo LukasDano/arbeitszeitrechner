@@ -3,7 +3,7 @@ window.onload = function() {
 }
 
 function checkForDevOptions() {
-    const devOptionStatus = readBooleanFromLocalStorage("devOptions");
+    const devOptionStatus = getBooleanCookie("devOptions");
     const displayStyle = devOptionStatus ? "block" : "none";
 
     document.querySelectorAll(".devOption").forEach(element => {
@@ -13,12 +13,12 @@ function checkForDevOptions() {
 
 // Kann in der Console Aufgerufen werden, soll/muss keine usages haben
 function enableDevOptions(){
-    writeToLocalStorage("devOptions", true);
+    setCookie("devOptions", true);
     checkForDevOptions();
 }
 
 function disableDevOptions(){
-    deleteFromLocalStorage("devOptions");
+    deleteCookie("devOptions");
     checkForDevOptions();
 }
 
@@ -36,11 +36,40 @@ function activateDevOptionsFromURL(){
 
 function activateDevMode(url, key, value){
 
-    writeToLocalStorage(key, value);
+    setCookieUntilMidnight(key, value);
 
     url.searchParams.delete('param1');
     url.searchParams.delete('param2');
 
     window.history.replaceState({}, document.title, url.pathname + url.search);
-    window.location.href="";
+    window.location.reload();
+}
+
+function resetCookies(){
+    deleteCookie("monday");
+    deleteCookie("tuesday");
+    deleteCookie("wednesday");
+    deleteCookie("thursday");
+    deleteCookie("friday");
+
+    deleteCookie("todayTimeStamp");
+    deleteCookie("modus");
+    deleteCookie("float");
+    deleteCookie("gleittage");
+    deleteCookie("pause");
+    deleteCookie("pauseTime");
+    deleteCookie("start");
+
+    setCookie("todayTimeStamp", new Date().getTime());
+}
+
+function deleteDataFromStorages(){
+    // TODO nach dem nächsten Update entfernen, soll nur aufräumen
+    localStorage.clear();
+    sessionStorage.clear();
+}
+
+function resetPage(){
+    resetCookies();
+    window.location.reload();
 }
