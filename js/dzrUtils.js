@@ -388,6 +388,28 @@ function calculateOptimizedEnd(endTime){
     return [endHours, endMins];
 }
 
+// Rechnet aus dem eigentlichen Ende und der Gleitzeit das Ende für diese Gleitzeit
+function roundTimeForFloat(normalEnd, floatTime){
+
+    let [endHours, endMins] = calculateEndForFloat(normalEnd, floatTime);
+
+    while (endMins >= 60) {
+        endHours++;
+        endMins = endMins - 60;
+    }
+
+    while (endMins < 0) {
+        endHours--;
+        endMins = endMins + 60;
+    }
+
+    if (endMins < 10){
+        endMins = "0" + endMins;
+    }
+
+    return [endHours, endMins];
+}
+
 module.exports = {
     calculateStartEndeTimeDiff,
     calculateIstSollTimeDiff,
@@ -403,5 +425,6 @@ module.exports = {
     calculateTimeToAddForEndWithPositiveFloat,
     calculateTimeToAddForEndWithNegativeFloat,
     getFloatValueFromText,
-    calculateOptimizedEnd
+    calculateOptimizedEnd,
+    roundTimeForFloat
 };

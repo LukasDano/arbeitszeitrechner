@@ -13,7 +13,8 @@ const {
     calculateTimeToAddForEndWithPositiveFloat,
     calculateTimeToAddForEndWithNegativeFloat,
     getFloatValueFromText,
-    calculateOptimizedEnd
+    calculateOptimizedEnd,
+    roundTimeForFloat
 } = require("../js/dzrUtils")
 
 describe('calculateStartEndeTimeDiff', () => {
@@ -290,6 +291,23 @@ describe('calculateOptimizedEnd', () => {
         const endTime = [15,38];
         const result = calculateOptimizedEnd(endTime);
         expect(result).toEqual([15,36]);
+    });
+
+});
+
+describe('roundTimeForFloat', () => {
+    test('correct with positiv values', () => {
+        const normalEnd = [15,34];
+        const floatTime = [1,0,34];
+        const result = roundTimeForFloat(normalEnd, floatTime);
+        expect(result).toEqual([16,"04"]);
+    });
+
+    test('correct with negativ values', () => {
+        const normalEnd = [15,34];
+        const floatTime = [-1,0,16];
+        const result = roundTimeForFloat(normalEnd, floatTime);
+        expect(result).toEqual([15,14]);
     });
 
 });

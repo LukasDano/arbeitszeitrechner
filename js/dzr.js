@@ -261,6 +261,7 @@ $(document).ready(function () {
     function setIstTime() {
 
         let [istHours, istMins] = timeValues.istTime;
+
         if (istMins < 0) {
             istHours--;
             istMins = istMins + 60;
@@ -292,27 +293,11 @@ $(document).ready(function () {
 
     }
 
-    function roundAndSetTimesForFloat() {
+    function setTimesForFloat() {
 
         const float = $("#float").val()?.toString() || "";
         const floatTime = getFloatValueFromText(float);
-
-        let [endHours, endMins] = calculateEndForFloat(timeValues.normalEnd, floatTime);
-
-        while (endMins >= 60) {
-            endHours++;
-            endMins = endMins - 60;
-        }
-
-        while (endMins < 0) {
-            endHours--;
-            endMins = endMins + 60;
-        }
-
-        if (endMins < 10){
-            endMins = "0" + endMins;
-        }
-
+        const [endHours, endMins] = roundTimeForFloat(timeValues.normalEnd, floatTime);
         $("#end").val(endHours +":"+ endMins);
     }
 
@@ -342,7 +327,7 @@ $(document).ready(function () {
     });
 
     function applyFloatChanges(){
-        roundAndSetTimesForFloat();
+        setTimesForFloat();
         calculate();
         setGleitzeit();
         setIstTime();
@@ -448,7 +433,7 @@ $(document).ready(function () {
     if (getCookie("windowInitLoaded") && getCookie("start") != null ) {
         readSollAnPauseFromLocalStorageAndSetInFields();
         readStartAndFloatFromLocalStorageAndSetInFields();
-        roundAndSetTimesForFloat();
+        setTimesForFloat();
         calculate();
         setGleitzeit();
         setIstTime();
