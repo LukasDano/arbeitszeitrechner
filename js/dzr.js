@@ -103,13 +103,13 @@ $(document).ready(function () {
             return getSollTime();
         },
         get istTime() {
-            return calcuateIstTime(this.startTime, this.endTime, this.pauseTime);
+            return calculateIstTime(this.startTime, this.endTime, this.pauseTime);
         },
         get workTime() {
             return calculateWorkTime(this.startEndeDiff, this.pauseTime);
         },
         get gleitzeit() {
-            return calcuateGleitzeit(this.istTime);
+            return calculateGleitzeit(this.istTime);
         },
         get startEndeDiff() {
             return calculateStartEndeTimeDiff(this.startTime, this.endTime);
@@ -599,10 +599,10 @@ $(document).ready(function () {
             gleitHours = Math.abs(gleitHours);
             gleitMins = Math.abs(gleitMins);
 
-            gleitAusgabe = "-" + gleitHours + "." + formateGleitMins(gleitMins);
+            gleitAusgabe = "-" + gleitHours + "." + formateGleitmins(gleitMins);
 
         } else if (gleitHours > 0 || gleitMins > 0){
-            gleitAusgabe = "+" + gleitHours + "." + formateGleitMins(gleitMins);
+            gleitAusgabe = "+" + gleitHours + "." + formateGleitmins(gleitMins);
         }
 
         $("#gleitzeit").html(gleitAusgabe);
@@ -613,7 +613,7 @@ $(document).ready(function () {
     function roundAndSetTimesForFloat() {
 
         const float = $("#float").val()?.toString() || "";
-        const floatTime = getFloatValue(float);
+        const floatTime = getFloatValueFromText(float);
 
         let [endHours, endMins] = calculateEndForFloat(timeValues.normalEnd, floatTime);
 
@@ -635,36 +635,7 @@ $(document).ready(function () {
     }
 
     function optimizeEnd() {
-
-        let [endHours, endMins] = timeValues.endTime;
-        let tens = 0;
-
-        while (endMins > 9){
-            endMins = endMins - 10;
-            tens++;
-        }
-
-        if (endMins === 0 && tens === 0){
-            endMins = 56;
-            endHours--;
-
-        } else if (endMins === 0){
-            endMins = 6;
-            tens--;
-
-        } else if (endMins >= 6 ){
-            endMins = 6;
-
-        } else if (endMins <= 5){
-            endMins = 1;
-        }
-
-        endMins =  10*tens + endMins;
-
-        if (endMins <= 9){
-            endMins = "0" + endMins
-        }
-
+        const [endHours, endMins] = calculateOptimizedEnd(timeValues.endTime);
         $("#end").val(endHours +":"+ endMins);
         setCountdown();
     }
@@ -702,7 +673,7 @@ $(document).ready(function () {
 
         const currentMode = getCookie("modus")
         const floatCookie = getCookie("float");
-        const float =  getFloatValue(floatCookie);
+        const float =  getFloatValueFromText(floatCookie);
 
         const [floatVorzeichen, floatHours, floatMins] = float;
         const [istHours, istMins] = timeValues.istTime;
