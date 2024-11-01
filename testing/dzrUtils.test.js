@@ -4,8 +4,8 @@ const {
     calculateWorkTime,
     formatTime,
     calculateNormalEnd,
-    calcuateIstTime,
-    calcuateGleitzeit,
+    calculateIstTime,
+    calculateGleitzeit,
     roundStart,
     roundEnd,
     formateGleitmins,
@@ -120,7 +120,7 @@ describe('calculateIstTime', () => {
         const startTime = [7,7];
         const endTime = [14,43];
         const pauseTime = [0,30];
-        const result = calcuateIstTime(startTime, endTime, pauseTime);
+        const result = calculateIstTime(startTime, endTime, pauseTime);
         expect(result).toEqual([7,10]);
     });
 
@@ -129,13 +129,13 @@ describe('calculateIstTime', () => {
 describe('calculateGleitzeit', () => {
     test('return correct with default values', () => {
         const istTime = [7,10];
-        const result = calcuateGleitzeit(istTime);
+        const result = calculateGleitzeit(istTime);
         expect(result).toEqual([0,4]);
     });
 
     test('return correct with negativ values', () => {
         const istTime = [7,5];
-        const result = calcuateGleitzeit(istTime);
+        const result = calculateGleitzeit(istTime);
         expect(result).toEqual([0,-1]);
     });
 
