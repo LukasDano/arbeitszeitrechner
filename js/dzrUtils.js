@@ -103,7 +103,7 @@ function calculateNormalEnd(startTime, pauseTime, sollTime) {
         endHours++;
     }
 
-    return [endHours, formateMins(endMins)];
+    return [endHours, endMins];
 }
 
 // Berechnet die gewertete Zeit aus dem gerundeten Start und dem gerundeten Ende
