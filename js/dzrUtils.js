@@ -72,7 +72,7 @@ function calculateWorkTime(diffTime, pauseTime) {
 }
 
 // Add 0 to the minutes and put hours and mins to gether into this format: "hh:mm"
-function formatTime (hours, mins) {
+function formatTime(hours, mins) {
     const formattedMins = mins < 10 ? `0${mins}` : mins;
     return `${hours}:${formattedMins}`;
 }
@@ -103,11 +103,11 @@ function calculateNormalEnd(startTime, pauseTime, sollTime) {
         endHours++;
     }
 
-    return [endHours, endMins];
+    return [endHours, formateMins(endMins)];
 }
 
 // Berechnet die gewertete Zeit aus dem gerundeten Start und dem gerundeten Ende
-function calculateIstTime(startTime, endTime, pauseTime){
+function calculateIstTime(startTime, endTime, pauseTime) {
 
     const [startHours, startMins] = roundStart(startTime);
     const [endHours, endMins] = roundEnd(endTime);
@@ -116,12 +116,12 @@ function calculateIstTime(startTime, endTime, pauseTime){
     let istHours = endHours - startHours;
     let istMins = endMins - startMins - pauseMins;
 
-    while (istMins < 0){
+    while (istMins < 0) {
         istHours--;
         istMins = istMins + 60;
     }
 
-    if (istHours >= 12){
+    if (istHours >= 12) {
         istHours = istHours - 2;
     }
 
@@ -129,10 +129,10 @@ function calculateIstTime(startTime, endTime, pauseTime){
 }
 
 // Zieht die sollZeit von der istZeit ab und gibt das als Gleitzeit zurück
-function calculateGleitzeit(istTime){
+function calculateGleitzeit(istTime) {
 
     const [istHours, istMins] = istTime;
-    const [sollHours, sollMins] = [7,6];
+    const [sollHours, sollMins] = [7, 6];
 
     let gleitHours = istHours - sollHours;
     let gleitMins = istMins - sollMins;
@@ -142,12 +142,12 @@ function calculateGleitzeit(istTime){
         gleitMins = gleitMins - 60;
     }
 
-    if (gleitHours > 0 && gleitMins < 0){
+    if (gleitHours > 0 && gleitMins < 0) {
         gleitHours--;
         gleitMins = gleitMins + 60;
     }
 
-    if (gleitMins < -59){
+    if (gleitMins < -59) {
         gleitHours--;
         gleitMins = gleitMins + 60;
     }
@@ -161,20 +161,20 @@ function roundStart(startTime) {
     let [startHours, startMins] = startTime;
     let tens = 0;
 
-    while (startMins > 9){
+    while (startMins > 9) {
         startMins = startMins - 10;
         tens++;
     }
 
-    if (startMins >= 5){
+    if (startMins >= 5) {
         startMins = 5;
     }
 
-    if (startMins <= 4){
+    if (startMins <= 4) {
         startMins = 0;
     }
 
-    startMins = startMins + (tens*10);
+    startMins = startMins + (tens * 10);
 
     return [startHours, startMins];
 }
@@ -186,40 +186,40 @@ function roundEnd(endTime) {
     let tens = 0;
 
 
-    if (endMins >= 56){
+    if (endMins >= 56) {
         endMins = 0;
         endHours++;
 
         return [endHours, endMins];
     }
 
-    while (endMins > 9){
+    while (endMins > 9) {
         endMins = endMins - 10;
         tens++;
     }
 
-    if (endMins >= 6){
+    if (endMins >= 6) {
         endMins = 0;
         tens++;
 
-    } else if(endMins === 0){
+    } else if (endMins === 0) {
         endMins = 0;
 
-    } else if (endMins <= 4){
+    } else if (endMins <= 4) {
         endMins = 5;
     }
 
-    endMins = endMins + (tens*10);
+    endMins = endMins + (tens * 10);
 
     return [endHours, endMins];
 }
 
 // Add a 0 if the Minutes are below 10
-function formateGleitmins(gleitMins) {
-    if (gleitMins <= 9) {
-        return "0" + gleitMins;
+function formateMins(mins) {
+    if (mins <= 9) {
+        return "0" + mins;
     }
-    return gleitMins.toString();
+    return mins.toString();
 }
 
 // Calculate the End from the normal End and the desired amount of Float time
@@ -230,7 +230,7 @@ function calculateEndForFloat(normalEnd, float) {
 
     let floatTimeRounded;
 
-    if (gleitVorzeichen === 1){
+    if (gleitVorzeichen === 1) {
         floatTimeRounded = calculateTimeToAddForEndWithPositiveFloat(float);
     } else if (gleitVorzeichen === -1) {
         floatTimeRounded = calculateTimeToAddForEndWithNegativeFloat(float);
@@ -250,65 +250,65 @@ function calculateTimeToAddForEndWithPositiveFloat(float) {
     let [, gleitHours, gleitMins] = float;
     let tens = 0;
 
-    if (gleitHours !== 0 && gleitMins === 0){
+    if (gleitHours !== 0 && gleitMins === 0) {
         gleitMins = 4;
         // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
         return [gleitHours, (gleitMins - 4)];
     }
 
-    while(gleitMins > 9){
+    while (gleitMins > 9) {
         gleitMins = gleitMins - 10;
         tens++;
     }
 
-    if (gleitMins <= 4){
+    if (gleitMins <= 4) {
         gleitMins = 4;
 
-    } else if (gleitMins <= 9){
+    } else if (gleitMins <= 9) {
         gleitMins = 9;
     }
 
-    gleitMins =  10*tens + gleitMins;
+    gleitMins = 10 * tens + gleitMins;
 
     return [gleitHours, (gleitMins - 4)];
 }
 
 // Berechnet die Zeit, die dem normalen Ende hinzugefügt werden muss, um die gewünschte Gleitzeit zu bekommen, wenn diese nagativ ist
-function calculateTimeToAddForEndWithNegativeFloat(float){
+function calculateTimeToAddForEndWithNegativeFloat(float) {
 
     let [, gleitHours, gleitMins] = float;
     let tens = 0;
 
-    if (gleitHours !== 0 && gleitMins === 0){
+    if (gleitHours !== 0 && gleitMins === 0) {
         gleitMins = 56;
         gleitHours--;
 
         // Ausgleich, weil man normalerweise schon plus 4 Minuten macht
         return [gleitHours, (gleitMins + 4)];
 
-    } else if (gleitHours === 0 && gleitMins === 0){
+    } else if (gleitHours === 0 && gleitMins === 0) {
         gleitMins = 1;
 
         return [gleitHours, (gleitMins + 4)];
     }
 
-    while (gleitMins > 9){
+    while (gleitMins > 9) {
         gleitMins = gleitMins - 10;
         tens++;
     }
 
-    if (gleitMins === 0){
+    if (gleitMins === 0) {
         gleitMins = 6;
         tens--;
 
-    } else if (gleitMins >= 6 ){
+    } else if (gleitMins >= 6) {
         gleitMins = 6;
 
-    } else if (gleitMins <= 5){
+    } else if (gleitMins <= 5) {
         gleitMins = 1;
     }
 
-    gleitMins =  10*tens + gleitMins;
+    gleitMins = 10 * tens + gleitMins;
 
     return [gleitHours, (gleitMins + 4)];
 }
@@ -319,7 +319,7 @@ function getFloatValueFromText(float) {
     const floatArray = float.split('');
     let vorzeichen = 1;
 
-    if (floatArray[0] === "-"){
+    if (floatArray[0] === "-") {
         vorzeichen = -1;
     }
 
@@ -347,41 +347,41 @@ function getFloatValueFromText(float) {
         const gleitTens = parseInt(floatArray[3], 10);
         const gleitOnes = parseInt(floatArray[4], 10);
 
-        const gleitMins = gleitTens*10 + gleitOnes;
+        const gleitMins = gleitTens * 10 + gleitOnes;
 
         return [vorzeichen, gleitHours, gleitMins];
     }
 }
 
 // Takes the current End Time and gives the Time with the least amount of worktime that gives the same amount of Gleitzeit
-function calculateOptimizedEnd(endTime){
+function calculateOptimizedEnd(endTime) {
 
     let [endHours, endMins] = endTime;
     let tens = 0;
 
-    while (endMins > 9){
+    while (endMins > 9) {
         endMins = endMins - 10;
         tens++;
     }
 
-    if (endMins === 0 && tens === 0){
+    if (endMins === 0 && tens === 0) {
         endMins = 56;
         endHours--;
 
-    } else if (endMins === 0){
+    } else if (endMins === 0) {
         endMins = 6;
         tens--;
 
-    } else if (endMins >= 6 ){
+    } else if (endMins >= 6) {
         endMins = 6;
 
-    } else if (endMins <= 5){
+    } else if (endMins <= 5) {
         endMins = 1;
     }
 
-    endMins =  10*tens + endMins;
+    endMins = 10 * tens + endMins;
 
-    if (endMins <= 9){
+    if (endMins <= 9) {
         endMins = "0" + endMins
     }
 
@@ -389,7 +389,7 @@ function calculateOptimizedEnd(endTime){
 }
 
 // Rechnet aus dem eigentlichen Ende und der Gleitzeit das Ende für diese Gleitzeit
-function roundTimeForFloat(normalEnd, floatTime){
+function roundTimeForFloat(normalEnd, floatTime) {
 
     let [endHours, endMins] = calculateEndForFloat(normalEnd, floatTime);
 
@@ -403,7 +403,7 @@ function roundTimeForFloat(normalEnd, floatTime){
         endMins = endMins + 60;
     }
 
-    if (endMins < 10){
+    if (endMins < 10) {
         endMins = "0" + endMins;
     }
 
@@ -420,7 +420,7 @@ module.exports = {
     calculateGleitzeit,
     roundStart,
     roundEnd,
-    formateGleitmins,
+    formateMins,
     calculateEndForFloat,
     calculateTimeToAddForEndWithPositiveFloat,
     calculateTimeToAddForEndWithNegativeFloat,
