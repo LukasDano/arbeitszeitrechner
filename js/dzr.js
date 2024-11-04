@@ -226,7 +226,7 @@ $(document).ready(function () {
     // Berechnet das Dienstende anhand der Start-, Pausen- und Soll-Dienstzeit
     function setEnd() {
         let [endHours, endMins] = timeValues.normalEnd
-        $("#end").val(endHours + ":" + endMins);
+        $("#end").val(endHours + ":" + formateMins(endMins));
     }
 
     $("#start_Tour").click(function () {
