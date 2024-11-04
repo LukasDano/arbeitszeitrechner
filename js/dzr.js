@@ -20,7 +20,7 @@ $(document).ready(function () {
         setSevenHourMode();
     })
 
-    function setNoPause(){
+    function setNoPause() {
         $("#pause").val("00:00");
         $("#00min").addClass("active");
         $("#30min, #45min").removeClass("active");
@@ -29,7 +29,7 @@ $(document).ready(function () {
         activateChanges();
     }
 
-    function setThirtyMinutesPause(){
+    function setThirtyMinutesPause() {
         $("#pause").val("00:30");
         $("#30min").addClass("active");
         $("#00min,#45min").removeClass("active");
@@ -38,7 +38,7 @@ $(document).ready(function () {
         activateChanges();
     }
 
-    function setFourtyFiveMinutesPause(){
+    function setFourtyFiveMinutesPause() {
         $("#pause").val("00:45");
         $("#45min").addClass("active");
         $("#00min, #30min").removeClass("active");
@@ -47,7 +47,7 @@ $(document).ready(function () {
         activateChanges();
     }
 
-    function setSixHourMode(){
+    function setSixHourMode() {
         $("#6h00m").addClass("active");
         $("#7h06m").removeClass("active");
         setCookieUntilMidnight("modus", "6h00m");
@@ -56,7 +56,7 @@ $(document).ready(function () {
         applyFloatChanges();
     }
 
-    function setSevenHourMode(){
+    function setSevenHourMode() {
         $("#7h06m").addClass("active");
         $("#6h00m").removeClass("active");
         setCookieUntilMidnight("modus", "7h06m");
@@ -68,25 +68,25 @@ $(document).ready(function () {
     // liest Dienstbeginn aus dem Input-Feld aus
     function getStartTime() {
         const [hours, mins] = $("#start").val().toString().split(":").map(Number);
-        return [hours, mins ];
+        return [hours, mins];
     }
 
     // liest Pausenzeit aus dem Input-Feld aus
     function getPauseTime() {
         const [hours, mins] = $("#pause").val().toString().split(":").map(Number);
-        return [hours, mins ];
+        return [hours, mins];
     }
 
     // liest Dienstende aus dem Input-Feld aus
     function getEndTime() {
         const [hours, mins] = $("#end").val().toString().split(":").map(Number);
-        return [hours, mins ];
+        return [hours, mins];
     }
 
     // liest Solldienstzeit aus dem Input-Feld aus
     function getSollTime() {
         const [hours, mins] = $("#soll").val().toString().split(":").map(Number);
-        return [hours, mins ];
+        return [hours, mins];
     }
 
     const timeValues = {
@@ -117,7 +117,7 @@ $(document).ready(function () {
         get istSollDiff() {
             return calculateIstSollTimeDiff(this.istTime, this.sollTime);
         },
-        get normalEnd(){
+        get normalEnd() {
             return calculateNormalEnd(this.startTime, this.pauseTime, this.sollTime);
         }
     };
@@ -225,7 +225,7 @@ $(document).ready(function () {
 
     // Berechnet das Dienstende anhand der Start-, Pausen- und Soll-Dienstzeit
     function setEnd() {
-        const [endHours, endMins] = timeValues.normalEnd
+        let [endHours, endMins] = timeValues.normalEnd
         $("#end").val(endHours + ":" + endMins);
     }
 
@@ -235,15 +235,15 @@ $(document).ready(function () {
         introJs().start();
     })
 
-// Ab hier selbstgeschrieben
+    // Ab hier selbstgeschrieben
 
-    function activateChanges(){
+    function activateChanges() {
         calculate();
         setGleitzeit();
         setIstTime();
     }
 
-    function resetPauseAndWorkTime(){
+    function resetPauseAndWorkTime() {
         $("#pause").val("00:30");
         $("#30min").addClass("active");
         $("#00min, #45min").removeClass("active");
@@ -277,15 +277,15 @@ $(document).ready(function () {
         let [gleitHours, gleitMins] = timeValues.gleitzeit;
         let gleitAusgabe;
 
-        if (gleitHours < 0 || gleitMins < 0){
+        if (gleitHours < 0 || gleitMins < 0) {
 
             gleitHours = Math.abs(gleitHours);
             gleitMins = Math.abs(gleitMins);
 
-            gleitAusgabe = "-" + gleitHours + "." + formateGleitmins(gleitMins);
+            gleitAusgabe = "-" + gleitHours + "." + formateMins(gleitMins);
 
-        } else if (gleitHours > 0 || gleitMins > 0){
-            gleitAusgabe = "+" + gleitHours + "." + formateGleitmins(gleitMins);
+        } else if (gleitHours > 0 || gleitMins > 0) {
+            gleitAusgabe = "+" + gleitHours + "." + formateMins(gleitMins);
         }
 
         $("#gleitzeit").html(gleitAusgabe);
@@ -298,12 +298,12 @@ $(document).ready(function () {
         const float = $("#float").val()?.toString() || "";
         const floatTime = getFloatValueFromText(float);
         const [endHours, endMins] = roundTimeForFloat(timeValues.normalEnd, floatTime);
-        $("#end").val(endHours +":"+ endMins);
+        $("#end").val(endHours + ":" + endMins);
     }
 
     function optimizeEnd() {
         const [endHours, endMins] = calculateOptimizedEnd(timeValues.endTime);
-        $("#end").val(endHours +":"+ endMins);
+        $("#end").val(endHours + ":" + endMins);
         setCountdown();
     }
 
@@ -322,11 +322,11 @@ $(document).ready(function () {
         switchModeIfIsAllowed();
     });
 
-    $("#float").focusin(function(){
+    $("#float").focusin(function () {
         optimizeEnd();
     });
 
-    function applyFloatChanges(){
+    function applyFloatChanges() {
         setTimesForFloat();
         calculate();
         setGleitzeit();
@@ -340,7 +340,7 @@ $(document).ready(function () {
 
         const currentMode = getCookie("modus")
         const floatCookie = getCookie("float");
-        const float =  getFloatValueFromText(floatCookie);
+        const float = getFloatValueFromText(floatCookie);
 
         const [floatVorzeichen, floatHours, floatMins] = float;
         const [istHours, istMins] = timeValues.istTime;
@@ -351,7 +351,7 @@ $(document).ready(function () {
 
         const lessThenSixHours = istHours < 6;
         const sixHourWorkDay = istHours === 6 && istMins === 0;
-        const sevenHourModeAllowed =  lessThenSixHours || sixHourWorkDay
+        const sevenHourModeAllowed = lessThenSixHours || sixHourWorkDay
 
         if (currentMode === "6h00m" && sixHourModeAllowed) {
             switchToSixHourMode();
@@ -397,11 +397,11 @@ $(document).ready(function () {
         const startTime = getCookie("start");
         const floatTime = getCookie("float");
 
-        if (startTime != null ) {
+        if (startTime != null) {
             $("#start").val(startTime);
         }
 
-        if (floatTime != null){
+        if (floatTime != null) {
             $("#float").val(floatTime);
         } else {
             $("#float").val("+0.4");
@@ -409,7 +409,7 @@ $(document).ready(function () {
 
     }
 
-    function readSollAnPauseFromLocalStorageAndSetInFields()  {
+    function readSollAnPauseFromLocalStorageAndSetInFields() {
 
         const modusValue = "#" + getCookie("modus");
         const pauseValue = "#" + getCookie("pause");
@@ -430,7 +430,7 @@ $(document).ready(function () {
 
     }
 
-    if (getCookie("windowInitLoaded") && getCookie("start") != null ) {
+    if (getCookie("windowInitLoaded") && getCookie("start") != null) {
         readSollAnPauseFromLocalStorageAndSetInFields();
         readStartAndFloatFromLocalStorageAndSetInFields();
         setTimesForFloat();
@@ -451,7 +451,7 @@ $(document).ready(function () {
 
         const float = $("#float").val();
 
-        if (float == null || float === ""){
+        if (float == null || float === "") {
             $("#float").val("0.00");
         }
     }
@@ -461,7 +461,7 @@ $(document).ready(function () {
         floatValueCheck();
     });
 
-    document.addEventListener("visibilitychange", function() {
+    document.addEventListener("visibilitychange", function () {
         if (document.visibilityState === 'visible') {
             location.reload();
         }
