@@ -8,7 +8,7 @@ const {
     calculateGleitzeit,
     roundStart,
     roundEnd,
-    formateGleitmins,
+    formateMins,
     calculateEndForFloat,
     calculateTimeToAddForEndWithPositiveFloat,
     calculateTimeToAddForEndWithNegativeFloat,
@@ -107,105 +107,105 @@ describe('formatTime', () => {
 
 describe('calculateNormalEnd', () => {
     test('return the correct with default values', () => {
-        const startTime = [7,7];
-        const pauseTime = [0,30];
-        const sollTime = [7,6];
+        const startTime = [7, 7];
+        const pauseTime = [0, 30];
+        const sollTime = [7, 6];
         const result = calculateNormalEnd(startTime, pauseTime, sollTime);
-        expect(result).toEqual([14,43]);
+        expect(result).toEqual([14, 43]);
     });
 
 });
 
 describe('calculateIstTime', () => {
     test('return the correct with default values', () => {
-        const startTime = [7,7];
-        const endTime = [14,43];
-        const pauseTime = [0,30];
+        const startTime = [7, 7];
+        const endTime = [14, 43];
+        const pauseTime = [0, 30];
         const result = calculateIstTime(startTime, endTime, pauseTime);
-        expect(result).toEqual([7,10]);
+        expect(result).toEqual([7, 10]);
     });
 
 });
 
 describe('calculateGleitzeit', () => {
     test('return correct with default values', () => {
-        const istTime = [7,10];
+        const istTime = [7, 10];
         const result = calculateGleitzeit(istTime);
-        expect(result).toEqual([0,4]);
+        expect(result).toEqual([0, 4]);
     });
 
     test('return correct with negativ values', () => {
-        const istTime = [7,5];
+        const istTime = [7, 5];
         const result = calculateGleitzeit(istTime);
-        expect(result).toEqual([0,-1]);
+        expect(result).toEqual([0, -1]);
     });
 
 });
 
 describe('roundStart', () => {
     test('return correct value with more than 5', () => {
-        const startTime = [7,7];
+        const startTime = [7, 7];
         const result = roundStart(startTime);
-        expect(result).toEqual([7,5]);
+        expect(result).toEqual([7, 5]);
     });
 
     test('return correct with less than 5', () => {
-        const startTime = [7,13];
+        const startTime = [7, 13];
         const result = roundStart(startTime);
-        expect(result).toEqual([7,10]);
+        expect(result).toEqual([7, 10]);
     });
 
     test('return correct with 0', () => {
-        const startTime = [7,10];
+        const startTime = [7, 10];
         const result = roundStart(startTime);
-        expect(result).toEqual([7,10]);
+        expect(result).toEqual([7, 10]);
     });
 
     test('return correct with 5', () => {
-        const startTime = [7,25];
+        const startTime = [7, 25];
         const result = roundStart(startTime);
-        expect(result).toEqual([7,25]);
+        expect(result).toEqual([7, 25]);
     });
 
 });
 
 describe('roundEnd', () => {
     test('return correct value with more than 5', () => {
-        const startTime = [15,18];
+        const startTime = [15, 18];
         const result = roundEnd(startTime);
-        expect(result).toEqual([15,20]);
+        expect(result).toEqual([15, 20]);
     });
 
     test('return correct with less than 5', () => {
-        const startTime = [15,22];
+        const startTime = [15, 22];
         const result = roundEnd(startTime);
-        expect(result).toEqual([15,25]);
+        expect(result).toEqual([15, 25]);
     });
 
     test('return correct with 0', () => {
-        const startTime = [15,20];
+        const startTime = [15, 20];
         const result = roundEnd(startTime);
-        expect(result).toEqual([15,20]);
+        expect(result).toEqual([15, 20]);
     });
 
     test('return correct with 5', () => {
-        const startTime = [15,25];
+        const startTime = [15, 25];
         const result = roundEnd(startTime);
-        expect(result).toEqual([15,25]);
+        expect(result).toEqual([15, 25]);
     });
 
 });
 
-describe('formateGleitmins', () => {
+describe('formateMins', () => {
     test('return correct with less than 10', () => {
         const gleitMins = 4;
-        const result = formateGleitmins(gleitMins);
+        const result = formateMins(gleitMins);
         expect(result).toEqual("04");
     });
 
     test('return correct with more than 10', () => {
         const istTime = 12;
-        const result = formateGleitmins(istTime);
+        const result = formateMins(istTime);
         expect(result).toEqual("12");
     });
 
@@ -213,54 +213,54 @@ describe('formateGleitmins', () => {
 
 describe('calculateEndForFloat', () => {
     test('return correct with default values', () => {
-        const normalEnd = [15,28];
-        const float = [1,0,4];
+        const normalEnd = [15, 28];
+        const float = [1, 0, 4];
         const result = calculateEndForFloat(normalEnd, float);
-        expect(result).toEqual([15,28]);
+        expect(result).toEqual([15, 28]);
     });
 
     test('return correct with positive float', () => {
-        const normalEnd = [15,28];
-        const float = [1,0,14];
+        const normalEnd = [15, 28];
+        const float = [1, 0, 14];
         const result = calculateEndForFloat(normalEnd, float);
-        expect(result).toEqual([15,38]);
+        expect(result).toEqual([15, 38]);
     });
 
     test('return correct with negative float', () => {
-        const normalEnd = [15,28];
-        const float = [-1,0,-1];
+        const normalEnd = [15, 28];
+        const float = [-1, 0, -1];
         const result = calculateEndForFloat(normalEnd, float);
-        expect(result).toEqual([15,23]);
+        expect(result).toEqual([15, 23]);
     });
 
 });
 
 describe('calculateTimeToAddForEndWithPositiveFloat', () => {
     test('return correct with default values', () => {
-        const float = [1,0,4];
+        const float = [1, 0, 4];
         const result = calculateTimeToAddForEndWithPositiveFloat(float);
-        expect(result).toEqual([0,0]);
+        expect(result).toEqual([0, 0]);
     });
 
     test('return correct with positive float', () => {
-        const float = [1,0,14];
+        const float = [1, 0, 14];
         const result = calculateTimeToAddForEndWithPositiveFloat(float);
-        expect(result).toEqual([0,10]);
+        expect(result).toEqual([0, 10]);
     });
 
 });
 
 describe('calculateTimeToAddForEndWithNegativeFloat', () => {
     test('return correct with less than 10', () => {
-        const float = [-1,0,1];
+        const float = [-1, 0, 1];
         const result = calculateTimeToAddForEndWithNegativeFloat(float);
-        expect(result).toEqual([0,5]);
+        expect(result).toEqual([0, 5]);
     });
 
     test('return correct with more than 10', () => {
-        const float = [-1,0,11];
+        const float = [-1, 0, 11];
         const result = calculateTimeToAddForEndWithNegativeFloat(float);
-        expect(result).toEqual([0,15]);
+        expect(result).toEqual([0, 15]);
     });
 
 });
@@ -269,45 +269,45 @@ describe('getFloatValueFromText', () => {
     test('correct with default values', () => {
         const float = "+0.04";
         const result = getFloatValueFromText(float);
-        expect(result).toEqual([1,0,4]);
+        expect(result).toEqual([1, 0, 4]);
     });
 
     test('correct with negativ values', () => {
         const float = "-1.06";
         const result = getFloatValueFromText(float);
-        expect(result).toEqual([-1,1,6]);
+        expect(result).toEqual([-1, 1, 6]);
     });
 
 });
 
 describe('calculateOptimizedEnd', () => {
     test('correct when less then 5 mins', () => {
-        const endTime = [15,34];
+        const endTime = [15, 34];
         const result = calculateOptimizedEnd(endTime);
-        expect(result).toEqual([15,31]);
+        expect(result).toEqual([15, 31]);
     });
 
     test('correct when more then 5 mins', () => {
-        const endTime = [15,38];
+        const endTime = [15, 38];
         const result = calculateOptimizedEnd(endTime);
-        expect(result).toEqual([15,36]);
+        expect(result).toEqual([15, 36]);
     });
 
 });
 
 describe('roundTimeForFloat', () => {
     test('correct with positiv values', () => {
-        const normalEnd = [15,34];
-        const floatTime = [1,0,34];
+        const normalEnd = [15, 34];
+        const floatTime = [1, 0, 34];
         const result = roundTimeForFloat(normalEnd, floatTime);
-        expect(result).toEqual([16,"04"]);
+        expect(result).toEqual([16, "04"]);
     });
 
     test('correct with negativ values', () => {
-        const normalEnd = [15,34];
-        const floatTime = [-1,0,16];
+        const normalEnd = [15, 34];
+        const floatTime = [-1, 0, 16];
         const result = roundTimeForFloat(normalEnd, floatTime);
-        expect(result).toEqual([15,14]);
+        expect(result).toEqual([15, 14]);
     });
 
 });
