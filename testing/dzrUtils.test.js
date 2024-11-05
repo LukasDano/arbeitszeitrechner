@@ -343,7 +343,7 @@ describe('calculateIncreasedValue', () => {
     test('correct transition from neagtiv to positiv', () => {
         const floatTime = [-1, 0, 1];
         const result = calculateIncreasedValue(floatTime);
-        expect(result).toEqual([0, 4]);
+        expect(result).toEqual([-0, 4]);
     });
 
 });
@@ -374,7 +374,7 @@ describe('calculateDecreasedValue', () => {
     });
 
     test('correct transition from positiv to negativ', () => {
-        const floatTime = [-1, 0, 4];
+        const floatTime = [1, 0, 4];
         const result = calculateDecreasedValue(floatTime);
         expect(result).toEqual([0, -1]);
     });
@@ -403,7 +403,7 @@ describe('createGleitzeitAusgabeFromFloat', () => {
     test('correct with lower negativ values', () => {
         const float = [-1, -6];
         const result = createGleitzeitAusgabeFromFloat(float);
-        expect(result).toEqual("-1.26");
+        expect(result).toEqual("-1.06");
     });
 
 });

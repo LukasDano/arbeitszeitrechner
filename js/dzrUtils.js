@@ -438,6 +438,10 @@ function calculateIncreasedValue(float) {
 
     floatMins = floatMins + 5;
 
+    if (floatHours === -0) {
+        floatHours = 0;
+    }
+
     return [floatHours, floatMins];
 }
 
@@ -468,6 +472,10 @@ function calculateDecreasedValue(float) {
     }
 
     floatMins = floatMins - 5;
+
+    if (floatHours === -0) {
+        floatHours = 0;
+    }
 
     return [floatHours, floatMins];
 }
