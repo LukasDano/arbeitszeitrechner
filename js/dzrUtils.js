@@ -323,20 +323,6 @@ function getFloatValueFromText(float) {
         vorzeichen = -1;
     }
 
-    // TODO: Refactoring?! Float Strings sind jetzt eigentlich immer 5 lang (zusätzliche 0, wenn unter 10)
-    // wenn es nur einstellige Minuten gibt
-    if (floatArray.length === 4) {
-
-        // Fromat
-        // 0,1,2,3
-        // +,0,.,4
-
-        const gleitHours = parseInt(floatArray[1], 10);
-        const gleitMins = parseInt(floatArray[3], 10);
-
-        return [vorzeichen, gleitHours, gleitMins];
-    }
-
     // wenn es zweistellige Minuten gibt
     if (floatArray.length > 4) {
 
