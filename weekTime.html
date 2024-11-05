@@ -23,111 +23,128 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="index.html">Arbeitszeitrechner</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-			<ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="weekTime.html">Wochenzeitrechner</a>
                 </li>
-		    </ul>
+            </ul>
         </div>
     </nav>
-	
-	<main role="main" class="container">
-		<div class="form-group ">
-			<div class="row" id ="daytimefields">
-				<div class="col-sm-1 col-1">
-					<div class="text-center">
-					</div>
-				</div>
-				<div class="col-sm-2 col-2">
-					<div class="text-center">
-						<label for="monday">Montag</label>
-					</div>
-					<input type="time" id="monday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
-				</div>
 
-				<div class="col-sm-2 col-2">
-					<div class="text-center">
-						<label for="tuesday">Dienstag</label>
-					</div>
-					<input type="time" id="tuesday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
-				</div>
+    <main role="main" class="container">
+        <div class="form-group ">
+            <div class="row" id="daytimefields">
+                <div class="col-sm-1 col-1">
+                    <div class="text-center">
+                    </div>
+                </div>
+                <div class="col-sm-2 col-2">
+                    <div class="text-center">
+                        <label for="monday">Montag</label>
+                    </div>
+                    <input type="time" id="monday" value="00:00"
+                        class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3"
+                        data-intro="Arbeitszeit eintragen">
+                </div>
 
-				<div class="col-sm-2 col-2">
-					<div class="text-center">
-						<label for="wednesday">Mittwoch</label>
-					</div>
-					<input type="time" id="wednesday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
-				</div>
+                <div class="col-sm-2 col-2">
+                    <div class="text-center">
+                        <label for="tuesday">Dienstag</label>
+                    </div>
+                    <input type="time" id="tuesday" value="00:00"
+                        class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3"
+                        data-intro="Arbeitszeit eintragen">
+                </div>
 
-				<div class="col-sm-2 col-2">
-					<div class="text-center">
-						<label for="thursday">Donnerstag</label>
-					</div>
-					<input type="time" id="thursday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
-				</div>
+                <div class="col-sm-2 col-2">
+                    <div class="text-center">
+                        <label for="wednesday">Mittwoch</label>
+                    </div>
+                    <input type="time" id="wednesday" value="00:00"
+                        class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3"
+                        data-intro="Arbeitszeit eintragen">
+                </div>
 
-				<div class="col-sm-2 col-2">
-					<div class="text-center">
-						<label for="friday">Freitag</label>
-					</div>
-					<input type="time" id="friday" value="00:00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitszeit eintragen">
-				</div>
-			</div>
+                <div class="col-sm-2 col-2">
+                    <div class="text-center">
+                        <label for="thursday">Donnerstag</label>
+                    </div>
+                    <input type="time" id="thursday" value="00:00"
+                        class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3"
+                        data-intro="Arbeitszeit eintragen">
+                </div>
 
-			<div class="row">
+                <div class="col-sm-2 col-2">
+                    <div class="text-center">
+                        <label for="friday">Freitag</label>
+                    </div>
+                    <input type="time" id="friday" value="00:00"
+                        class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3"
+                        data-intro="Arbeitszeit eintragen">
+                </div>
+            </div>
 
-				<div class="col-sm-1 col-1">
-				</div>
-				
-				<div class="col-sm-4 col-12">	
-					<div class="text-center">
-						<label for="weekTimeCalc" style= color:#fff></label>
-					</div>
-					<button type="button" class="btn btn-light btn-md" id="weekTimeCalcFloat">Wochenzeit berechnen (Gleittag)</button>
-				</div>
+            <div class="row">
 
-				<div class="col-sm-2 col-2">
-				</div>
-				
-				<div class="col-sm-4 col-12">
-					<div class="text-center">
-						<label for="weekTimeCalc" style= color:#fff></label>
-					</div>
-					<button type="button" class="btn btn-light btn-md" id="weekTimeCalc">Wochenzeit berechnen</button>
-				</div>
-	
-			</div>
+                <div class="col-sm-1 col-1">
+                </div>
 
-		</div>
+                <div class="col-sm-4 col-12">
+                    <div class="text-center">
+                        <label for="weekTimeCalc" style=color:#fff></label>
+                    </div>
+                    <button type="button" class="btn btn-light btn-md" id="weekTimeCalcFloat">Wochenzeit berechnen
+                        (Gleittag)</button>
+                </div>
 
-			
-		<div class="jumbotron form-worktime introjs-relativePosition" id="result" data-step="6" data-intro="Ergebnisse der Berechnung." data-tooltipclass="forLastStep">
-			<div class="text-center">
-				<div class="row container row-adaption">
-					<div class="col text-center">
-						<label for="weekworktime">Wochenarbeitszeit</label>
-						<p class="display-5" id="weekworktime">0.0 h</p>
-					</div>
+                <div class="col-sm-2 col-2">
+                </div>
 
-					<div class="col text-center">
-						<label for="weekovertime">Wochengleitzeit</label>
-						<p class="display-5" id="weekovertime">0.0 h</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</main>
-	
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                <div class="col-sm-4 col-12">
+                    <div class="text-center">
+                        <label for="weekTimeCalc" style=color:#fff></label>
+                    </div>
+                    <button type="button" class="btn btn-light btn-md" id="weekTimeCalc">Wochenzeit berechnen</button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="jumbotron form-worktime introjs-relativePosition" id="result" data-step="6"
+            data-intro="Ergebnisse der Berechnung." data-tooltipclass="forLastStep">
+            <div class="text-center">
+                <div class="row container row-adaption">
+                    <div class="col text-center">
+                        <label for="weekworktime">Wochenarbeitszeit</label>
+                        <p class="display-5" id="weekworktime">0.0 h</p>
+                    </div>
+
+                    <div class="col text-center">
+                        <label for="weekovertime">Wochengleitzeit</label>
+                        <p class="display-5" id="weekovertime">0.0 h</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
     <script src="js/storageUtils.js" type="text/javascript" async></script>
+    <script src="js/weekTimeUtils.js" type="text/javascript" async></script>
     <script src="js/weekTime.js" type="text/javascript" async></script>
-	<script defer>
+    <script defer>
         sessionStorage.setItem("weekWindowInitLoaded", true);
     </script>
 </body>
+
 </html>
