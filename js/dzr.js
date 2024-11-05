@@ -273,21 +273,7 @@ $(document).ready(function () {
     }
 
     function setGleitzeit() {
-
-        let [gleitHours, gleitMins] = timeValues.gleitzeit;
-        let gleitAusgabe;
-
-        if (gleitHours < 0 || gleitMins < 0) {
-
-            gleitHours = Math.abs(gleitHours);
-            gleitMins = Math.abs(gleitMins);
-
-            gleitAusgabe = "-" + gleitHours + "." + formateMins(gleitMins);
-
-        } else if (gleitHours > 0 || gleitMins > 0) {
-            gleitAusgabe = "+" + gleitHours + "." + formateMins(gleitMins);
-        }
-
+        const gleitAusgabe = createGleitzeitAusgabeFromFloat(timeValues.gleitzeit);
         $("#gleitzeit").html(gleitAusgabe);
         $("#float").val(gleitAusgabe);
 
@@ -466,4 +452,34 @@ $(document).ready(function () {
             location.reload();
         }
     });
+
+    function increaseFloat() {
+        const float = $("#float").val()?.toString() || "";
+        const floatTime = getFloatValueFromText(float);
+        return calculateIncreasedValue(floatTime);
+    }
+
+    function decreaseFloat() {
+        const float = $("#float").val()?.toString() || "";
+        const floatTime = getFloatValueFromText(float);
+        return calculateDecreasedValue(floatTime);
+    }
+
+    document.getElementById("float").addEventListener("keydown", function (event) {
+        let changedValue;
+
+        if (event.key === "ArrowUp") {
+            event.preventDefault();
+            changedValue = increaseFloat();
+        } else if (event.key === "ArrowDown") {
+            event.preventDefault();
+            changedValue = decreaseFloat();
+        }
+
+        const gleitAusgabe = createGleitzeitAusgabeFromFloat(changedValue);
+        $("#float").val(gleitAusgabe);
+        applyFloatChanges();
+        switchModeIfIsAllowed();
+    });
+
 });

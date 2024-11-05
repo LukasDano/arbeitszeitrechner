@@ -76,7 +76,7 @@
 
 #### v2.5.3
 - Refactoring: DevOptions werden jetzt als Icons angezeigt
-- QoL: Die Seite wird automatisch neu geladen, wenn man den Tab öffnet 
+- QoL: Die Seite wird automatisch neu geladen, wenn man den Tab öffnet
   - dadurch sollte der Countdown jetzt auch nach dem Sperren des PCs die richtige Zeit anzeigen
 - Bugfix: Der Modus wird jetzt auch gespeichert, wenn man die Seite zum ersten mal öffnet
   - Beim neu Laden wird jetzt immer ein Knopf als aktiv angezeigt
@@ -97,3 +97,4 @@
 
 #### v2.5.5
 - inroducing: testing with jest
+- neues feature: Gleitzeit über die Pfeiltasten erhöhen und verringern

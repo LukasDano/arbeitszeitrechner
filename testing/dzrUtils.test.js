@@ -14,7 +14,10 @@ const {
     calculateTimeToAddForEndWithNegativeFloat,
     getFloatValueFromText,
     calculateOptimizedEnd,
-    roundTimeForFloat
+    roundTimeForFloat,
+    calculateIncreasedValue,
+    calculateDecreasedValue,
+    createGleitzeitAusgabeFromFloat
 } = require("../js/dzrUtils")
 
 describe('calculateStartEndeTimeDiff', () => {
@@ -308,6 +311,99 @@ describe('roundTimeForFloat', () => {
         const floatTime = [-1, 0, 16];
         const result = roundTimeForFloat(normalEnd, floatTime);
         expect(result).toEqual([15, 14]);
+    });
+
+});
+
+describe('calculateIncreasedValue', () => {
+    test('correct with small positiv values', () => {
+        const floatTime = [1, 0, 4];
+        const result = calculateIncreasedValue(floatTime);
+        expect(result).toEqual([0, 9]);
+    });
+
+    test('correct with bigger positiv values', () => {
+        const floatTime = [1, 0, 39];
+        const result = calculateIncreasedValue(floatTime);
+        expect(result).toEqual([0, 44]);
+    });
+
+    test('correct with small negativ values', () => {
+        const floatTime = [-1, 0, 6];
+        const result = calculateIncreasedValue(floatTime);
+        expect(result).toEqual([0, -1]);
+    });
+
+    test('correct with bigger negativ values', () => {
+        const floatTime = [-1, 1, 26];
+        const result = calculateIncreasedValue(floatTime);
+        expect(result).toEqual([-1, -21]);
+    });
+
+    test('correct transition from neagtiv to positiv', () => {
+        const floatTime = [-1, 0, 1];
+        const result = calculateIncreasedValue(floatTime);
+        expect(result).toEqual([0, 4]);
+    });
+
+});
+
+describe('calculateDecreasedValue', () => {
+    test('correct with small positiv values', () => {
+        const floatTime = [1, 0, 9];
+        const result = calculateDecreasedValue(floatTime);
+        expect(result).toEqual([0, 4]);
+    });
+
+    test('correct with bigger positiv values', () => {
+        const floatTime = [1, 0, 44];
+        const result = calculateDecreasedValue(floatTime);
+        expect(result).toEqual([0, 39]);
+    });
+
+    test('correct with small negativ values', () => {
+        const floatTime = [-1, 0, 1];
+        const result = calculateDecreasedValue(floatTime);
+        expect(result).toEqual([0, -6]);
+    });
+
+    test('correct with bigger negativ values', () => {
+        const floatTime = [-1, 1, 21];
+        const result = calculateDecreasedValue(floatTime);
+        expect(result).toEqual([-1, -26]);
+    });
+
+    test('correct transition from positiv to negativ', () => {
+        const floatTime = [-1, 0, 4];
+        const result = calculateDecreasedValue(floatTime);
+        expect(result).toEqual([0, -1]);
+    });
+
+});
+
+describe('createGleitzeitAusgabeFromFloat', () => {
+    test('correct with default values', () => {
+        const float = [0, 4];
+        const result = createGleitzeitAusgabeFromFloat(float);
+        expect(result).toEqual("+0.04");
+    });
+
+    test('correct with higher positiv values', () => {
+        const float = [1, 26];
+        const result = createGleitzeitAusgabeFromFloat(float);
+        expect(result).toEqual("+1.26");
+    });
+
+    test('correct with negativ values', () => {
+        const float = [-0, -1];
+        const result = createGleitzeitAusgabeFromFloat(float);
+        expect(result).toEqual("-0.01");
+    });
+
+    test('correct with lower negativ values', () => {
+        const float = [-1, -6];
+        const result = createGleitzeitAusgabeFromFloat(float);
+        expect(result).toEqual("-1.26");
     });
 
 });

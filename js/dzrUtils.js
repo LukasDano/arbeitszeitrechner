@@ -323,6 +323,7 @@ function getFloatValueFromText(float) {
         vorzeichen = -1;
     }
 
+    // TODO: Refactoring?! Float Strings sind jetzt eigentlich immer 5 lang (zusätzliche 0, wenn unter 10)
     // wenn es nur einstellige Minuten gibt
     if (floatArray.length === 4) {
 
@@ -410,6 +411,88 @@ function roundTimeForFloat(normalEnd, floatTime) {
     return [endHours, endMins];
 }
 
+// Increases the Value of a given float value to the next higher allowed value
+function calculateIncreasedValue(float) {
+    let [floatVorzeichen, floatHours, floatMins] = float;
+    // 1,0,4
+    floatHours = floatHours * floatVorzeichen
+    floatMins = floatMins * floatVorzeichen
+
+    if (floatMins == 59) {
+        floatHours += 1;
+        floatMins = 4;
+
+        return [floatHours, floatMins];
+    }
+
+    if (floatHours === 0 && floatMins === -1) {
+        floatMins = 4;
+        return [floatHours, floatMins];
+    }
+
+    if (floatHours <= 0 && floatMins === -1) {
+        floatHours += 1;
+        floatMins = -56
+        return [floatHours, floatMins];
+    }
+
+    floatMins = floatMins + 5;
+
+    return [floatHours, floatMins];
+}
+
+// Decreases the Value of a given float value to the next lower allowed value
+function calculateDecreasedValue(float) {
+    let [floatVorzeichen, floatHours, floatMins] = float;
+    // 1,0,4
+    floatHours = floatHours * floatVorzeichen
+    floatMins = floatMins * floatVorzeichen
+
+    if (floatMins === 4 && floatHours === 0) {
+        floatMins = -1;
+
+        return [floatHours, floatMins];
+    }
+
+    if (floatHours <= 0 && floatMins === -56) {
+        floatHours -= 1;
+        floatMins = -1
+        return [floatHours, floatMins];
+    }
+
+    if (floatMins === 4) {
+        floatHours -= 1;
+        floatMins = 59;
+
+        return [floatHours, floatMins];
+    }
+
+    floatMins = floatMins - 5;
+
+    return [floatHours, floatMins];
+}
+
+// Erzeugt aus [FloatHours, FloatMins] einen lesbareren String, der zur Darstellung genutz werden kann
+function createGleitzeitAusgabeFromFloat(float) {
+
+    let [gleitHours, gleitMins] = float;
+    let gleitAusgabe;
+
+    if (gleitHours < 0 || gleitMins < 0) {
+
+        gleitHours = Math.abs(gleitHours);
+        gleitMins = Math.abs(gleitMins);
+
+        gleitAusgabe = "-" + gleitHours + "." + formateMins(gleitMins);
+
+    } else if (gleitHours > 0 || gleitMins > 0) {
+        gleitAusgabe = "+" + gleitHours + "." + formateMins(gleitMins);
+    }
+
+    return gleitAusgabe;
+}
+
+
 module.exports = {
     calculateStartEndeTimeDiff,
     calculateIstSollTimeDiff,
@@ -426,5 +509,8 @@ module.exports = {
     calculateTimeToAddForEndWithNegativeFloat,
     getFloatValueFromText,
     calculateOptimizedEnd,
-    roundTimeForFloat
+    roundTimeForFloat,
+    calculateIncreasedValue,
+    calculateDecreasedValue,
+    createGleitzeitAusgabeFromFloat
 };
