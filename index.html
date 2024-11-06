@@ -7,8 +7,8 @@
     <meta name="description" content="Arbeitszeitrechner">
     <link rel="icon" href="favicon.ico">
 
-    <meta name="Version" content="2.5.4">
-    <meta name="VersionName" content="Cookies und Style">
+    <meta name="Version" content="2.5.5">
+    <meta name="VersionName" content="Testing und Refactoring">
     <meta name="GitHub" content="https://github.com/LukasDano/arbeitszeitrechner">
 
     <title>Arbeitszeitrechner</title>
@@ -24,197 +24,215 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
-    <a class="navbar-brand" href="index.html">Arbeitszeitrechner</a>
+        <a class="navbar-brand" href="index.html">Arbeitszeitrechner</a>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="weekTime.html" id="wochenzeitrechner">Wochenzeitrechner</a>
-            </li>
-
-            <div class="devOption">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html?param1=devOptions&param2=true" >
-                        <img class="icon" src="pictures/icons/calendar.png" alt="Aktuelle Version">
-                    </a>
+                    <a class="nav-link" href="weekTime.html" id="wochenzeitrechner">Wochenzeitrechner</a>
                 </li>
-            </div>
 
-            <div class="devOption">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://raw.githack.com/LukasDano/arbeitszeitrechner/bugfix/index.html?param1=devOptions&param2=true" >
-                        <img class="icon small reAnimation" src="pictures/icons/process.png" alt="Testversion">
-                    </a>
-                </li>
-            </div>
-
-            <div class="devOption">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/LukasDano/arbeitszeitrechner">
-                        <img class="icon" src="pictures/icons/repository.png" alt="Repository">
-                    </a>
-                </li>
-            </div>
-
-            <div class="devOption">
-                <li class="nav-item">
-                    <button class="nav-link" onclick="resetPage()">
-                        <img class="icon animation" src="pictures/icons/reload.png" alt="Reset">
-                    </button>
-                </li>
-            </div>
-
-            <div class="devOption">
-                <li class="nav-item">
-                    <button class="nav-link" onclick="disableDevOptions()" >
-                        <img class="icon" src="pictures/icons/close.png" alt="Exit">
-                    </button>
-                </li>
-            </div>
-        </ul>
-
-    </div>
-</nav>
-
-<main role="main" class="container">
-    <div class="starter-template">
-        <div class="form-group ">
-            <div class="container-fluid">
-            </div>
-
-            <div class ="row">
-                <div class="col">
-                    <div class="text-center">
-                        <h5>Pausenzeit</h5>
-                        <div class="btn-group introjs-relativePosition" data-step="2" data-intro="Pausenzeit auswählen.">
-                            <button type="button" class="btn btn-light btn-md" id="00min">0:00</button>
-                            <button type="button" class="btn btn-light btn-md active" id="30min">0:30</button>
-                            <button type="button" class="btn btn-light btn-md" id="45min">0:45</button>
-                        </div>
-                    </div>
+                <div class="devOption">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html?param1=devOptions&param2=true">
+                            <img class="icon" src="pictures/icons/calendar.png" alt="Aktuelle Version">
+                        </a>
+                    </li>
                 </div>
 
-                <div class="col">
-                    <div class="text-center">
-                        <h5>Arbeitszeit</h5>
-                        <div class="btn-group introjs-relativePosition" data-step="2" data-intro="Arbeitszeit wählen.">
-                            <button type="button" class="btn btn-light btn-md" id="6h00m">6:00</button>
-                            <button type="button" class="btn btn-light btn-md active" id="7h06m">7:06</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <br>
-            <hr>
-
-            <div class="row">
-                <div class="col-sm-4 col-8">
-                    <div class="text-center">
-                        <label for="start">Arbeitsbeginn</label>
-                    </div>
-                    <input type="time" id="start" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3" data-intro="Arbeitsbeginn eintragen.">
+                <div class="devOption">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="https://raw.githack.com/LukasDano/arbeitszeitrechner/bugfix/index.html?param1=devOptions&param2=true">
+                            <img class="icon small reAnimation" src="pictures/icons/process.png" alt="Testversion">
+                        </a>
+                    </li>
                 </div>
 
-                <div class="col-sm-4 col-8">
-                    <div class="disabled">
+                <div class="devOption">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/LukasDano/arbeitszeitrechner">
+                            <img class="icon" src="pictures/icons/repository.png" alt="Repository">
+                        </a>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" onclick="resetPage()">
+                            <img class="icon animation" src="pictures/icons/reload.png" alt="Reset">
+                        </button>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" onclick="disableDevOptions()">
+                            <img class="icon" src="pictures/icons/close.png" alt="Exit">
+                        </button>
+                    </li>
+                </div>
+            </ul>
+
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="starter-template">
+            <div class="form-group ">
+                <div class="container-fluid">
+                </div>
+
+                <div class="row">
+                    <div class="col">
                         <div class="text-center">
-                            <label for="pause">Pausenzeit</label>
+                            <h5>Pausenzeit</h5>
+                            <div class="btn-group introjs-relativePosition" data-step="2"
+                                data-intro="Pausenzeit auswählen.">
+                                <button type="button" class="btn btn-light btn-md" id="00min">0:00</button>
+                                <button type="button" class="btn btn-light btn-md active" id="30min">0:30</button>
+                                <button type="button" class="btn btn-light btn-md" id="45min">0:45</button>
+                            </div>
                         </div>
-                        <input type="time" id="pause" class="input-lg center-block form-control input-time introjs-relativePosition" value="00:30" data-step="4" data-intro="Pausenzeit individuell anpassen (bei Bedarf).">
+                    </div>
+
+                    <div class="col">
+                        <div class="text-center">
+                            <h5>Arbeitszeit</h5>
+                            <div class="btn-group introjs-relativePosition" data-step="2"
+                                data-intro="Arbeitszeit wählen.">
+                                <button type="button" class="btn btn-light btn-md" id="6h00m">6:00</button>
+                                <button type="button" class="btn btn-light btn-md active" id="7h06m">7:06</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-sm-4 col-8">
-                    <div class="text-center">
-                        <label for="end">Arbeitsende</label>
+                <br>
+                <hr>
+
+                <div class="row">
+                    <div class="col-sm-4 col-8">
+                        <div class="text-center">
+                            <label for="start">Arbeitsbeginn</label>
+                        </div>
+                        <input type="time" id="start"
+                            class="input-lg center-block form-control input-time introjs-relativePosition" data-step="3"
+                            data-intro="Arbeitsbeginn eintragen.">
                     </div>
-                    <input type="time" id="end" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-intro="Endzeit wird automatisch berechnet.">
+
+                    <div class="col-sm-4 col-8">
+                        <div class="disabled">
+                            <div class="text-center">
+                                <label for="pause">Pausenzeit</label>
+                            </div>
+                            <input type="time" id="pause"
+                                class="input-lg center-block form-control input-time introjs-relativePosition"
+                                value="00:30" data-step="4" data-intro="Pausenzeit individuell anpassen (bei Bedarf).">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 col-8">
+                        <div class="text-center">
+                            <label for="end">Arbeitsende</label>
+                        </div>
+                        <input type="time" id="end"
+                            class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5"
+                            data-intro="Endzeit wird automatisch berechnet.">
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-4 col-8">
+                        <div class="disabled">
+                            <div class="text-center">
+                                <label for="soll">Arbeitszeit</label>
+                            </div>
+                            <input type="time" id="soll" value="07:06"
+                                class="input-lg center-block form-control input-time">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 col-8">
+                        <div class="text-center">
+                            <label for="float">Gleitzeit</label>
+                        </div>
+                        <input type="float" id="float" value="0.00"
+                            class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5"
+                            data-inro="Gleitzeit kann eingetragen werden">
+                    </div>
+
+                    <div class="col-sm-4 col-8">
+                        <div class="text-center">
+                            <label for="reset"></label>
+                        </div>
+                        <button type="button" class="btn btn-light btn-md" id="reset">Reset</button>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="row">
-
-                <div class="col-sm-4 col-8">
-                    <div class="disabled">
-                        <div class="text-center">
-                            <label for="soll">Arbeitszeit</label>
+            <div class="jumbotron form-worktime introjs-relativePosition" id="result" data-step="6"
+                data-intro="Ergebnisse der Berechnung." data-tooltipclass="forLastStep">
+                <div class="text-center">
+                    <div class="row container row-adaption">
+                        <div class="col text-center">
+                            <label for="countedworktime">Gewertete Arbeitszeit</label>
+                            <p class="display-5" id="countedworktime">0.00</p>
                         </div>
-                        <input type="time" id="soll" value="07:06" class="input-lg center-block form-control input-time">
+
+                        <div class="col text-center">
+                            <label for="trueworktime">Tatsächliche Arbeitszeit</label>
+                            <p class="display-5" id="trueworktime">0.00</p>
+                        </div>
+
+                        <div class="col text-center">
+                            <label for="gleitzeit">Gleitzeit</label>
+                            <p class="display-5" id="gleitzeit">0.00</p>
+                        </div>
+                    </div>
+
+                    <div id="cc-box" class="row container row-adaption" style="margin-top:0;">
+                        <div id="countdown15" class="ClassyCountdownDemo container"></div>
                     </div>
                 </div>
-
-                <div class="col-sm-4 col-8">
-                    <div class="text-center">
-                        <label for="float">Gleitzeit</label>
-                    </div>
-                    <input type="float" id="float" value="0.00" class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5" data-inro="Gleitzeit kann eingetragen werden">
-                </div>
-
-                <div class="col-sm-4 col-8">
-                    <div class="text-center">
-                        <label for="reset"></label>
-                    </div>
-                    <button type="button" class="btn btn-light btn-md" id="reset">Reset</button>
-                </div>
-
             </div>
         </div>
+    </main>
 
-        <div class="jumbotron form-worktime introjs-relativePosition" id="result" data-step="6" data-intro="Ergebnisse der Berechnung." data-tooltipclass="forLastStep">
-            <div class="text-center">
-                <div class="row container row-adaption">
-                    <div class="col text-center">
-                        <label for="countedworktime">Gewertete Arbeitszeit</label>
-                        <p class="display-5" id="countedworktime">0.00</p>
-                    </div>
+    <!-- /.container -->
 
-                    <div class="col text-center">
-                        <label for="trueworktime">Tatsächliche Arbeitszeit</label>
-                        <p class="display-5" id="trueworktime">0.00</p>
-                    </div>
+    <!-- Bootstrap core JavaScript-->
+    <!--================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="js/storageUtils.js" defer></script>
+    <script src="js/dzrUtils.js" defer></script>
+    <script src="js/dzr.js" type="text/javascript" defer></script>
+    <script src="js/countdown.js" defer></script>
+    <script>
 
-                    <div class="col text-center">
-                        <label for="gleitzeit">Gleitzeit</label>
-                        <p class="display-5" id="gleitzeit">0.00</p>
-                    </div>
-                </div>
-
-                <div id="cc-box" class="row container row-adaption" style="margin-top:0;">
-                    <div id="countdown15" class="ClassyCountdownDemo container"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-
-<!-- /.container -->
-
-<!-- Bootstrap core JavaScript-->
-<!--================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="js/storageUtils.js" defer></script>
-<script src="js/dzrUtils.js" defer></script>
-<script src="js/dzr.js" type="text/javascript" defer></script>
-<script>
-
-</script>
-<script src="js/bootstrap.js" defer></script>
-<script src="js/intro.js" defer></script>
-<script src="js/jquery.knob.js" defer></script>
-<script src="js/jquery.throttle.js" defer></script>
-<script src="js/jquery.classycountdown.js" defer></script>
-<script src="js/disable.js" defer></script>
-<script src="js/devOptions.js" defer></script>
-<script defer>
-    document.addEventListener('DOMContentLoaded', function() {
-        checkForDevOptions();
-    })
-</script>
+    </script>
+    <script src="js/bootstrap.js" defer></script>
+    <script src="js/intro.js" defer></script>
+    <script src="js/jquery.knob.js" defer></script>
+    <script src="js/jquery.throttle.js" defer></script>
+    <script src="js/jquery.classycountdown.js" defer></script>
+    <script src="js/disable.js" defer></script>
+    <script src="js/devOptions.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            checkForDevOptions();
+        })
+    </script>
 
 
 </body>
+
 </html>

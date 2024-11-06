@@ -20,55 +20,55 @@
             labels: true,
             labelsOptions: {
                 lang: {
-                    days: 'Days',
-                    hours: 'Stunden',
-                    minutes: 'Minuten',
-                    seconds: 'Sekunden'
+                    days: "Days",
+                    hours: "Stunden",
+                    minutes: "Minuten",
+                    seconds: "Sekunden",
                 },
-                style: 'font-size: 0.5em;'
+                style: "font-size: 0.5em;",
             },
             style: {
-                element: '',
+                element: "",
                 labels: false,
                 textResponsive: 0.5,
                 days: {
                     gauge: {
                         thickness: 0.02,
-                        bgColor: 'rgba(0, 0, 0, 0)',
-                        fgColor: 'rgba(0, 0, 0, 1)',
-                        lineCap: 'butt'
+                        bgColor: "rgba(0, 0, 0, 0)",
+                        fgColor: "rgba(0, 0, 0, 1)",
+                        lineCap: "butt",
                     },
-                    textCSS: ''
+                    textCSS: "",
                 },
                 hours: {
                     gauge: {
                         thickness: 0.02,
-                        bgColor: 'rgba(0, 0, 0, 0)',
-                        fgColor: 'rgba(0, 0, 0, 1)',
-                        lineCap: 'butt'
+                        bgColor: "rgba(0, 0, 0, 0)",
+                        fgColor: "rgba(0, 0, 0, 1)",
+                        lineCap: "butt",
                     },
-                    textCSS: ''
+                    textCSS: "",
                 },
                 minutes: {
                     gauge: {
                         thickness: 0.02,
-                        bgColor: 'rgba(0, 0, 0, 0)',
-                        fgColor: 'rgba(0, 0, 0, 1)',
-                        lineCap: 'butt'
+                        bgColor: "rgba(0, 0, 0, 0)",
+                        fgColor: "rgba(0, 0, 0, 1)",
+                        lineCap: "butt",
                     },
-                    textCSS: ''
+                    textCSS: "",
                 },
                 seconds: {
                     gauge: {
                         thickness: 0.02,
-                        bgColor: 'rgba(0, 0, 0, 0)',
-                        fgColor: 'rgba(0, 0, 0, 1)',
-                        lineCap: 'butt'
+                        bgColor: "rgba(0, 0, 0, 0)",
+                        fgColor: "rgba(0, 0, 0, 1)",
+                        lineCap: "butt",
                     },
-                    textCSS: ''
-                }
+                    textCSS: "",
+                },
             },
-            onEndCallback: function () {}
+            onEndCallback: function () { },
         };
         if (options.theme) {
             settings = $.extend(true, settings, getPreset(options.theme));
@@ -80,62 +80,107 @@
         doResponsive();
 
         function prepare() {
-                element.html('<div class="ClassyCountdown-wrapper container">' +
-                    /*'<div class="ClassyCountdown-days">' +
-                        '<input type="text" />' +
-                        '<span class="ClassyCountdown-value"><div></div><span></span></span>' +
-                    '</div>' +*/
-                    '<div class="ClassyCountdown-hours">' +
-                    '<input type="text" />' +
-                    '<span class="ClassyCountdown-value"><div id="stunden"></div><label for="stunden"></label>' +
-                    '</div>' +
-                    '<div class="ClassyCountdown-minutes">' +
-                    '<input type="text" />' +
-                    '<span class="ClassyCountdown-value"><div id="minuten"></div><label for="minuten"></label></span>' +
-                    '</div>' +
-                    '<div class="ClassyCountdown-seconds">' +
-                    '<input type="text" />' +
-                    '<span class="ClassyCountdown-value"><div id="sekunden"></div><label for="sekunden"></label></span>' +
-                    '</div>' +
-                    '</div>');
-            element.find('.ClassyCountdown-days input').knob($.extend({
-                width: '100%',
-                displayInput: false,
-                readOnly: true,
-                max: 365
-            }, settings.style.days.gauge));
-            element.find('.ClassyCountdown-hours input').knob($.extend({
-                width: '100%',
-                displayInput: false,
-                readOnly: true,
-                max: 24
-            }, settings.style.hours.gauge));
-            element.find('.ClassyCountdown-minutes input').knob($.extend({
-                width: '100%',
-                displayInput: false,
-                readOnly: true,
-                max: 60
-            }, settings.style.minutes.gauge));
-            element.find('.ClassyCountdown-seconds input').knob($.extend({
-                width: '100%',
-                displayInput: false,
-                readOnly: true,
-                max: 60
-            }, settings.style.seconds.gauge));
-            element.find('.ClassyCountdown-wrapper > div').attr("style", settings.style.element);
-            element.find('.ClassyCountdown-days .ClassyCountdown-value').attr('style', settings.style.days.textCSS);
-            element.find('.ClassyCountdown-hours .ClassyCountdown-value').attr('style', settings.style.hours.textCSS);
-            element.find('.ClassyCountdown-minutes .ClassyCountdown-value').attr('style', settings.style.minutes.textCSS);
-            element.find('.ClassyCountdown-seconds .ClassyCountdown-value').attr('style', settings.style.seconds.textCSS);
-            element.find('.ClassyCountdown-value').each(function () {
-                $(this).css('margin-top', Math.floor(0 - (parseInt($(this).height()) / 2)) + 'px');
+            element.html(
+                '<div class="ClassyCountdown-wrapper container">' +
+                /*'<div class="ClassyCountdown-days">' +
+                              '<input type="text" />' +
+                              '<span class="ClassyCountdown-value"><div></div><span></span></span>' +
+                          '</div>' +*/
+                '<div class="ClassyCountdown-hours">' +
+                '<input type="text" />' +
+                '<span class="ClassyCountdown-value"><div id="stunden"></div><label for="stunden"></label>' +
+                "</div>" +
+                '<div class="ClassyCountdown-minutes">' +
+                '<input type="text" />' +
+                '<span class="ClassyCountdown-value"><div id="minuten"></div><label for="minuten"></label></span>' +
+                "</div>" +
+                '<div class="ClassyCountdown-seconds">' +
+                '<input type="text" />' +
+                '<span class="ClassyCountdown-value"><div id="sekunden"></div><label for="sekunden"></label></span>' +
+                "</div>" +
+                "</div>",
+            );
+            element.find(".ClassyCountdown-days input").knob(
+                $.extend(
+                    {
+                        width: "100%",
+                        displayInput: false,
+                        readOnly: true,
+                        max: 365,
+                    },
+                    settings.style.days.gauge,
+                ),
+            );
+            element.find(".ClassyCountdown-hours input").knob(
+                $.extend(
+                    {
+                        width: "100%",
+                        displayInput: false,
+                        readOnly: true,
+                        max: 24,
+                    },
+                    settings.style.hours.gauge,
+                ),
+            );
+            element.find(".ClassyCountdown-minutes input").knob(
+                $.extend(
+                    {
+                        width: "100%",
+                        displayInput: false,
+                        readOnly: true,
+                        max: 60,
+                    },
+                    settings.style.minutes.gauge,
+                ),
+            );
+            element.find(".ClassyCountdown-seconds input").knob(
+                $.extend(
+                    {
+                        width: "100%",
+                        displayInput: false,
+                        readOnly: true,
+                        max: 60,
+                    },
+                    settings.style.seconds.gauge,
+                ),
+            );
+            element
+                .find(".ClassyCountdown-wrapper > div")
+                .attr("style", settings.style.element);
+            element
+                .find(".ClassyCountdown-days .ClassyCountdown-value")
+                .attr("style", settings.style.days.textCSS);
+            element
+                .find(".ClassyCountdown-hours .ClassyCountdown-value")
+                .attr("style", settings.style.hours.textCSS);
+            element
+                .find(".ClassyCountdown-minutes .ClassyCountdown-value")
+                .attr("style", settings.style.minutes.textCSS);
+            element
+                .find(".ClassyCountdown-seconds .ClassyCountdown-value")
+                .attr("style", settings.style.seconds.textCSS);
+            element.find(".ClassyCountdown-value").each(function () {
+                $(this).css(
+                    "margin-top",
+                    Math.floor(0 - parseInt($(this).height()) / 2) + "px",
+                );
             });
             if (settings.labels) {
-                element.find(".ClassyCountdown-days .ClassyCountdown-value > span").html(settings.labelsOptions.lang.days);
-                element.find(".ClassyCountdown-hours .ClassyCountdown-value > label").html(settings.labelsOptions.lang.hours);
-                element.find(".ClassyCountdown-minutes .ClassyCountdown-value > label").html(settings.labelsOptions.lang.minutes);
-                element.find(".ClassyCountdown-seconds .ClassyCountdown-value > label").html(settings.labelsOptions.lang.seconds);
-                element.find(".ClassyCountdown-value > span").attr("style", settings.labelsOptions.style);
+                element
+                    .find(".ClassyCountdown-days .ClassyCountdown-value > span")
+                    .html(settings.labelsOptions.lang.days);
+                element
+                    .find(".ClassyCountdown-hours .ClassyCountdown-value > label")
+                    .html(settings.labelsOptions.lang.hours);
+                element
+                    .find(".ClassyCountdown-minutes .ClassyCountdown-value > label")
+                    .html(settings.labelsOptions.lang.minutes);
+                element
+                    .find(".ClassyCountdown-seconds .ClassyCountdown-value > label")
+                    .html(settings.labelsOptions.lang.seconds);
+                element
+                    .find(".ClassyCountdown-value > span")
+                    .attr("style", settings.labelsOptions.style);
             }
             secondsLeft = settings.end - settings.now;
             secondsToDHMS();
@@ -161,59 +206,103 @@
                 MinutesLeft = 0;
                 SecondsLeft = 0;
             }
-            element.find('.ClassyCountdown-days input').val(365 - DaysLeft).trigger('change');
-            element.find('.ClassyCountdown-hours input').val(24 - HoursLeft).trigger('change');
-            element.find('.ClassyCountdown-minutes input').val(60 - MinutesLeft).trigger('change');
-            element.find('.ClassyCountdown-seconds input').val(60 - SecondsLeft).trigger('change');
-            element.find('.ClassyCountdown-days .ClassyCountdown-value > div').html(DaysLeft);
-            element.find('.ClassyCountdown-hours .ClassyCountdown-value > div').html(HoursLeft);
-            element.find('.ClassyCountdown-minutes .ClassyCountdown-value > div').html(MinutesLeft);
-            element.find('.ClassyCountdown-seconds .ClassyCountdown-value > div').html(SecondsLeft);
+            element
+                .find(".ClassyCountdown-days input")
+                .val(365 - DaysLeft)
+                .trigger("change");
+            element
+                .find(".ClassyCountdown-hours input")
+                .val(24 - HoursLeft)
+                .trigger("change");
+            element
+                .find(".ClassyCountdown-minutes input")
+                .val(60 - MinutesLeft)
+                .trigger("change");
+            element
+                .find(".ClassyCountdown-seconds input")
+                .val(60 - SecondsLeft)
+                .trigger("change");
+            element
+                .find(".ClassyCountdown-days .ClassyCountdown-value > div")
+                .html(DaysLeft);
+            element
+                .find(".ClassyCountdown-hours .ClassyCountdown-value > div")
+                .html(HoursLeft);
+            element
+                .find(".ClassyCountdown-minutes .ClassyCountdown-value > div")
+                .html(MinutesLeft);
+            element
+                .find(".ClassyCountdown-seconds .ClassyCountdown-value > div")
+                .html(SecondsLeft);
         }
 
         function doResponsive() {
-            element.find('.ClassyCountdown-wrapper > div').each(function () {
-                $(this).css('height', $(this).width() + 'px');
+            element.find(".ClassyCountdown-wrapper > div").each(function () {
+                $(this).css("height", $(this).width() + "px");
             });
             if (settings.style.textResponsive) {
-                element.find('.ClassyCountdown-value').css('font-size', Math.floor(element.find('> div').eq(0).width() * settings.style.textResponsive / 10) + 'px');
-                element.find('.ClassyCountdown-value').each(function () {
-                    $(this).css('margin-top', Math.floor(0 - (parseInt($(this).height()) / 2)) + 'px');
+                element
+                    .find(".ClassyCountdown-value")
+                    .css(
+                        "font-size",
+                        Math.floor(
+                            (element.find("> div").eq(0).width() *
+                                settings.style.textResponsive) /
+                            10,
+                        ) + "px",
+                    );
+                element.find(".ClassyCountdown-value").each(function () {
+                    $(this).css(
+                        "margin-top",
+                        Math.floor(0 - parseInt($(this).height()) / 2) + "px",
+                    );
                 });
             }
-            $(window).trigger('resize');
+            $(window).trigger("resize");
             $(window).resize($.throttle(50, onResize));
         }
 
         function onResize() {
-            element.find('.ClassyCountdown-wrapper > div').each(function () {
-                $(this).css('height', $(this).width() + 'px');
+            element.find(".ClassyCountdown-wrapper > div").each(function () {
+                $(this).css("height", $(this).width() + "px");
             });
             if (settings.style.textResponsive) {
-                element.find('.ClassyCountdown-value').css('font-size', Math.floor(element.find('> div').eq(0).width() * settings.style.textResponsive / 10) + 'px');
+                element
+                    .find(".ClassyCountdown-value")
+                    .css(
+                        "font-size",
+                        Math.floor(
+                            (element.find("> div").eq(0).width() *
+                                settings.style.textResponsive) /
+                            10,
+                        ) + "px",
+                    );
             }
-            element.find('.ClassyCountdown-value').each(function () {
-                $(this).css("margin-top", Math.floor(0 - (parseInt($(this).height()) / 2)) + 'px');
+            element.find(".ClassyCountdown-value").each(function () {
+                $(this).css(
+                    "margin-top",
+                    Math.floor(0 - parseInt($(this).height()) / 2) + "px",
+                );
             });
-            element.find('.ClassyCountdown-days input').trigger('change');
-            element.find('.ClassyCountdown-hours input').trigger('change');
-            element.find('.ClassyCountdown-minutes input').trigger('change');
-            element.find('.ClassyCountdown-seconds input').trigger('change');
+            element.find(".ClassyCountdown-days input").trigger("change");
+            element.find(".ClassyCountdown-hours input").trigger("change");
+            element.find(".ClassyCountdown-minutes input").trigger("change");
+            element.find(".ClassyCountdown-seconds input").trigger("change");
         }
 
         function getPreset(theme) {
             switch (theme) {
-                case 'flat-colors':
+                case "flat-colors":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.01,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#1abc9c"
+                                    fgColor: "#1abc9c",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -221,7 +310,7 @@
                                 gauge: {
                                     thickness: 0.01,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#2980b9"
+                                    fgColor: "#2980b9",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -229,7 +318,7 @@
                                 gauge: {
                                     thickness: 0.01,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#8e44ad"
+                                    fgColor: "#8e44ad",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -237,23 +326,23 @@
                                 gauge: {
                                     thickness: 0.01,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#f39c12"
+                                    fgColor: "#f39c12",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
-                            }
-                        }
+                            },
+                        },
                     };
-                case 'flat-colors-wide':
+                case "flat-colors-wide":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#1abc9c"
+                                    fgColor: "#1abc9c",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -261,7 +350,7 @@
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#2980b9"
+                                    fgColor: "#2980b9",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -269,7 +358,7 @@
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#8e44ad"
+                                    fgColor: "#8e44ad",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -277,23 +366,23 @@
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#f39c12"
+                                    fgColor: "#f39c12",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
-                            }
-                        }
+                            },
+                        },
                     };
-                case 'flat-colors-very-wide':
+                case "flat-colors-very-wide":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.12,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#1abc9c"
+                                    fgColor: "#1abc9c",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -301,7 +390,7 @@
                                 gauge: {
                                     thickness: 0.12,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#2980b9"
+                                    fgColor: "#2980b9",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -309,7 +398,7 @@
                                 gauge: {
                                     thickness: 0.12,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#8e44ad"
+                                    fgColor: "#8e44ad",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -317,24 +406,24 @@
                                 gauge: {
                                     thickness: 0.12,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#f39c12"
+                                    fgColor: "#f39c12",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
-                            }
-                        }
+                            },
+                        },
                     };
-                case 'flat-colors-black':
+                case "flat-colors-black":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.25,
                                     bgColor: "rgba(0,0,0,0.05)",
                                     fgColor: "#1abc9c",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -343,7 +432,7 @@
                                     thickness: 0.25,
                                     bgColor: "rgba(0,0,0,0.05)",
                                     fgColor: "#2980b9",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -352,7 +441,7 @@
                                     thickness: 0.25,
                                     bgColor: "rgba(0,0,0,0.05)",
                                     fgColor: "#8e44ad",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -361,23 +450,23 @@
                                     thickness: 0.25,
                                     bgColor: "rgba(0,0,0,0.05)",
                                     fgColor: "#f39c12",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
-                            }
-                        }
+                            },
+                        },
                     };
-                case 'black':
+                case "black":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.01,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -385,7 +474,7 @@
                                 gauge: {
                                     thickness: 0.01,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -393,7 +482,7 @@
                                 gauge: {
                                     thickness: 0.01,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -401,23 +490,23 @@
                                 gauge: {
                                     thickness: 0.01,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
-                            }
-                        }
+                            },
+                        },
                     };
-                case 'black-wide':
+                case "black-wide":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -425,7 +514,7 @@
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -433,7 +522,7 @@
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -441,23 +530,23 @@
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
-                            }
-                        }
+                            },
+                        },
                     };
-                case 'black-very-wide':
+                case "black-very-wide":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.17,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -465,7 +554,7 @@
                                 gauge: {
                                     thickness: 0.17,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -473,7 +562,7 @@
                                 gauge: {
                                     thickness: 0.17,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -481,24 +570,24 @@
                                 gauge: {
                                     thickness: 0.17,
                                     bgColor: "rgba(0,0,0,0.05)",
-                                    fgColor: "#222"
+                                    fgColor: "#222",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
-                            }
-                        }
+                            },
+                        },
                     };
-                case 'black-black':
+                case "black-black":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.25,
                                     bgColor: "rgba(0,0,0,0.05)",
                                     fgColor: "#222",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -507,7 +596,7 @@
                                     thickness: 0.25,
                                     bgColor: "rgba(0,0,0,0.05)",
                                     fgColor: "#222",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -516,7 +605,7 @@
                                     thickness: 0.25,
                                     bgColor: "rgba(0,0,0,0.05)",
                                     fgColor: "#222",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
                             },
@@ -525,175 +614,175 @@
                                     thickness: 0.25,
                                     bgColor: "rgba(0,0,0,0.05)",
                                     fgColor: "#222",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
                                 /*textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#34495e;'*/
-                            }
-                        }
+                            },
+                        },
                     };
-                case 'white':
+                case "white":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             hours: {
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             minutes: {
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             seconds: {
                                 gauge: {
                                     thickness: 0.03,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
-                            }
-                        }
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
+                            },
+                        },
                     };
-                case 'white-wide':
+                case "white-wide":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.06,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             hours: {
                                 gauge: {
                                     thickness: 0.06,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             minutes: {
                                 gauge: {
                                     thickness: 0.06,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             seconds: {
                                 gauge: {
                                     thickness: 0.06,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
-                            }
-                        }
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
+                            },
+                        },
                     };
-                case 'white-very-wide':
+                case "white-very-wide":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.16,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             hours: {
                                 gauge: {
                                     thickness: 0.16,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             minutes: {
                                 gauge: {
                                     thickness: 0.16,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             seconds: {
                                 gauge: {
                                     thickness: 0.16,
                                     bgColor: "rgba(255,255,255,0.05)",
-                                    fgColor: "#fff"
+                                    fgColor: "#fff",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
-                            }
-                        }
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
+                            },
+                        },
                     };
-                case 'white-black':
+                case "white-black":
                     return {
                         labels: true,
                         style: {
-                            element: '',
+                            element: "",
                             textResponsive: 0.5,
                             days: {
                                 gauge: {
                                     thickness: 0.25,
                                     bgColor: "rgba(255,255,255,0.05)",
                                     fgColor: "#fff",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             hours: {
                                 gauge: {
                                     thickness: 0.25,
                                     bgColor: "rgba(255,255,255,0.05)",
                                     fgColor: "#fff",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             minutes: {
                                 gauge: {
                                     thickness: 0.25,
                                     bgColor: "rgba(255,255,255,0.05)",
                                     fgColor: "#fff",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
                             },
                             seconds: {
                                 gauge: {
                                     thickness: 0.25,
                                     bgColor: "rgba(255,255,255,0.05)",
                                     fgColor: "#fff",
-                                    lineCap: 'round'
+                                    lineCap: "round",
                                 },
-                                textCSS: 'font-family:\'Open Sans\';font-weight:300;color:#fff;'
-                            }
-                        }
+                                textCSS: "font-family:'Open Sans';font-weight:300;color:#fff;",
+                            },
+                        },
                     };
             }
         }

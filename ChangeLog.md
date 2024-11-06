@@ -76,7 +76,7 @@
 
 #### v2.5.3
 - Refactoring: DevOptions werden jetzt als Icons angezeigt
-- QoL: Die Seite wird automatisch neu geladen, wenn man den Tab öffnet 
+- QoL: Die Seite wird automatisch neu geladen, wenn man den Tab öffnet
   - dadurch sollte der Countdown jetzt auch nach dem Sperren des PCs die richtige Zeit anzeigen
 - Bugfix: Der Modus wird jetzt auch gespeichert, wenn man die Seite zum ersten mal öffnet
   - Beim neu Laden wird jetzt immer ein Knopf als aktiv angezeigt
@@ -94,3 +94,11 @@
     - dzr in dzr und dzrUtils unterteilt
       - dzrUtils sind alle funktionen die nicht direkt auf das html zugreifen müssen
     - getter and calculations simplified, sodass man jetzt über eine const immer auf den aktuellen Wert zugreifen kann
+
+#### v2.5.5
+- inroducing: testing with jest
+- neues feature: Gleitzeit über die Pfeiltasten erhöhen und verringern
+- weekTimeUtils eingeführt
+    - tests für die weekTimeUtils geschrieben
+- handling für falsche Formate von FloatArrays
+- calculate() code etwas reduziert
