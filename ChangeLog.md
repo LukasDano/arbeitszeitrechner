@@ -98,3 +98,7 @@
 #### v2.5.5
 - inroducing: testing with jest
 - neues feature: Gleitzeit über die Pfeiltasten erhöhen und verringern
+- weekTimeUtils eingeführt
+    - tests für die weekTimeUtils geschrieben
+- handling für falsche Formate von FloatArrays
+- calculate() code etwas reduziert
