@@ -1,51 +1,49 @@
-window.onload = function() {
+window.onload = function () {
     activateDevOptionsFromURL();
-}
+};
 
 function checkForDevOptions() {
     const devOptionStatus = getBooleanCookie("devOptions");
     const displayStyle = devOptionStatus ? "block" : "none";
 
-    document.querySelectorAll(".devOption").forEach(element => {
+    document.querySelectorAll(".devOption").forEach((element) => {
         element.style.display = displayStyle;
     });
 }
 
 // Kann in der Console Aufgerufen werden, soll/muss keine usages haben
-function enableDevOptions(){
+function enableDevOptions() {
     setCookie("devOptions", true);
     checkForDevOptions();
 }
 
-function disableDevOptions(){
+function disableDevOptions() {
     deleteCookie("devOptions");
     checkForDevOptions();
 }
 
 // ...index.html?param1=devOptions&param2=true
-function activateDevOptionsFromURL(){
-
+function activateDevOptionsFromURL() {
     const url = new URL(window.location.href);
-    const key = url.searchParams.get('param1');
-    const value = url.searchParams.get('param2');
+    const key = url.searchParams.get("param1");
+    const value = url.searchParams.get("param2");
 
     if (key && value) {
         activateDevMode(url, key, value);
     }
 }
 
-function activateDevMode(url, key, value){
-
+function activateDevMode(url, key, value) {
     setCookieUntilMidnight(key, value);
 
-    url.searchParams.delete('param1');
-    url.searchParams.delete('param2');
+    url.searchParams.delete("param1");
+    url.searchParams.delete("param2");
 
     window.history.replaceState({}, document.title, url.pathname + url.search);
     window.location.reload();
 }
 
-function resetCookies(){
+function resetCookies() {
     deleteCookie("monday");
     deleteCookie("tuesday");
     deleteCookie("wednesday");
@@ -63,13 +61,13 @@ function resetCookies(){
     setCookie("todayTimeStamp", new Date().getTime());
 }
 
-function deleteDataFromStorages(){
+function deleteDataFromStorages() {
     // TODO nach dem nächsten Update entfernen, soll nur aufräumen
     localStorage.clear();
     sessionStorage.clear();
 }
 
-function resetPage(){
+function resetPage() {
     resetCookies();
     window.location.reload();
 }
