@@ -66,8 +66,15 @@ function calculateWeekOverTime(gleitagGenommen, weekWorkTime) {
   return [overTimeHours, overTimeMins];
 }
 
-// Formatiert die Gleitzeit zur Darstellung
-function formatWeekTime(weekTime) {
+/**
+ * Formatiert die Arbeitszeit der Woche bzw. die Gleitzeit der Woche in eine lesbare Ausgabe
+ * 
+ * @param weekTime {[number, number]} Die Arbeitszeit/Gleitzeit der Woche
+ * @param workTime {boolean} Der Übergebene Wert sit die Arbeitszeit
+ * 
+ * @return Einen lesbaren String
+ */
+function formatWeekTime(weekTime, workTime) {
   let [weekHours, weekMins] = weekTime;
   let weekOverTimeAusgabe;
 
@@ -88,6 +95,10 @@ function formatWeekTime(weekTime) {
     weekOverTimeAusgabe = "+" + weekHours + "." + weekMins + " h";
   } else {
     weekOverTimeAusgabe = "0.0 h";
+  }
+  
+  if (workTime) {
+    weekOverTimeAusgabe = weekOverTimeAusgabe.substring(1);
   }
 
   return weekOverTimeAusgabe;
