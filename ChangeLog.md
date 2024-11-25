@@ -102,3 +102,6 @@
     - tests für die weekTimeUtils geschrieben
 - handling für falsche Formate von FloatArrays
 - calculate() code etwas reduziert
+
+#### v2.5.6
+- Das Plus bei der Wochenarbeitszeit entfernen
