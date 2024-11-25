@@ -34,12 +34,12 @@ $(document).ready(function () {
   };
 
   function setWeekTime() {
-    const weekTimeAusgabe = formatWeekTime(timeValues.weekWorkTime);
+    const weekTimeAusgabe = formatWeekTime(timeValues.weekWorkTime, true);
     $("#weekworktime").html(weekTimeAusgabe);
   }
 
   function setWeekOverTime() {
-    const weekOverTimeAusgabe = formatWeekTime(timeValues.weekOverTime);
+    const weekOverTimeAusgabe = formatWeekTime(timeValues.weekOverTime, false);
     $("#weekovertime").html(weekOverTimeAusgabe);
   }
 
