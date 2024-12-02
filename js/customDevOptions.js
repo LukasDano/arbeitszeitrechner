@@ -10,69 +10,6 @@ function customDevOptionAdvice() {
  * Man kann immer nur eine zurzeit hinzufügen.
  * Ist auf insgesamt 3 beschränkt, diese können aber überschrieben werden.
  *
- * @param {number} optionNr Die DevOption die man setzten möchte (1,2,3)
- * @param {string} url Der Link zu dem der neue Button führen soll
- * @param {string} cookieAltName Der Name der Angezeigt wird, wenn die Icons nicht richtig geladen werden
- * @deprecated Kann später entfernt werden
- */
-async function addDevOption(optionNr, url, cookieAltName) {
-    let customDevOption;
-
-    if (optionNr === 1) {
-        setCookieForMaximumTime("customDevOptionOne", url);
-        setCookieForMaximumTime("customDevOptionOneAltName", cookieAltName);
-        customDevOption = "customDevOptionOne";
-    } else if (optionNr === 2) {
-        setCookieForMaximumTime("customDevOptionTwo", url);
-        setCookieForMaximumTime("customDevOptionTwoAltName", cookieAltName);
-        customDevOption = "customDevOptionTwo";
-        customDevOption = "customDevOptionOne";
-    } else if (optionNr === 3) {
-        setCookieForMaximumTime("customDevOptionThree", url);
-        setCookieForMaximumTime("customDevOptionTHreeAltName", cookieAltName);
-        customDevOption = "customDevOptionTHree";
-    } else {
-        console.error(optionNr + " ist keine gültige Nummer. Bitte 1, 2 oder 3 eingeben");
-        return;
-    }
-
-    const icons = await listAllIcons();
-    console.log("Alle existierenden Icons" + icons);
-    chooseIcon(customDevOption);
-}
-
-/**
- * Lässt den User das Icon wählen, welches die DevOption haben soll
- *
- * @param {string} cookieNameForDevOption Den Namen unter dem der Link als Cookie gespeichert wurde (customDevOptionOne/customDevOptionTwo)
- * @deprecated Kann noch normal genutzt werden. Die Funktion mit der Oberfläche sollte priorisiert werden
- */
-async function chooseIcon(cookieNameForDevOption) {
-    const customDevOption = cookieNameForDevOption + "Icon";
-    const validIcons = await listAllIcons();
-    let userSelectionIsValid = true;
-    let iconName;
-
-    while (userSelectionIsValid) {
-        iconName = prompt("Welches Icon soll deine DevOption haben? \n(Bitten den Namen ohne .png angeben!)");
-
-        if (validIcons.hasOwnProperty(iconName)) {
-            userSelectionIsValid = false;
-        }
-    }
-
-    const iconFileName = iconName + ".png"
-    const iconFilePath = `pictures/icons/${iconFileName}`
-    setCookieForMaximumTime(customDevOption, iconFilePath);
-
-    location.reload();
-}
-
-/**
- * Startet den Prozess eigene DevOptions hinzuzufügen.
- * Man kann immer nur eine zur Zeit hinzufügen.
- * Ist auf insgesamt 3 beschränkt, diese können aber überschrieben werden.
- *
  * @param {string} customDevOption Die DevOption die man setzten möchte (1,2,3)
  * @param {string} url Der Link zu dem der neue Button führen soll
  * @param {string} cookieAltName Der Name der Angezeigt wird, wenn die Icons nicht richtig geladen werden
@@ -247,7 +184,7 @@ function devOptionSettings() {
     return `
         <div class="overlay" id="overlay"></div>
         <div class="form-popup" id="myForm">
-            <form class="form-container" onsubmit="submitForm(event)">
+            <form class="form-container">
                 <span class="close" onclick="closeForm()">&times;</span>
                 <h1>DevOption Setting</h1>
 
@@ -264,7 +201,8 @@ function devOptionSettings() {
                 <input type="text" id="url" name="url" placeholder="URL eingeben" required>
 
                 <div class="btn-container">
-                    <button type="submit" class="btn">Save</button>
+                    <button class="btn" onclick="submitForm()">Save</button>
+                    <button class="btn" onclick="deleteCustomButton()">Delete</button>
                 </div>
             </form>
         </div>
@@ -307,8 +245,7 @@ function closeForm() {
     deleteCookie("settingsOpen");
 }
 
-function submitForm(event) {
-    event.preventDefault(); // Prevent the default form submission
+function submitForm() {
     const customButtonName = document.getElementById("devOptionButtonDropDown").value;
     const name = document.getElementById("name").value;
     const icon = document.getElementById("iconDropDown").value;
@@ -394,4 +331,11 @@ async function updateValues(){
             iconDropDown.value = getJSONIconNameCookie("customDevOptionThreeIcon") || defaultIconText;
             break;
     }
+}
+
+function deleteCustomButton(){
+    const selectedCustomDevOptionsButton = document.getElementById("devOptionButtonDropDown").value;
+    deleteCookie(selectedCustomDevOptionsButton);
+    deleteCookie(selectedCustomDevOptionsButton + "Icon");
+    deleteCookie(selectedCustomDevOptionsButton + "AltName");
 }

@@ -113,3 +113,5 @@
 - PopUp Fenster um DevOptions hinzuzufügen
 - Wenn ein Button Mittag oder Lunch heißt und der Link ein entsprechendes Format hat, wird er bei jedem laden updated
 - Neues Format für den ChangLog eingeführt
+- CustomDevOptions lassen sich wieder entfernen
+- Einige Deprecated Methoden wurden entfernt
