@@ -7,8 +7,8 @@
     <meta name="description" content="Arbeitszeitrechner">
     <link rel="icon" href="favicon.ico">
 
-    <meta name="Version" content="2.5.5">
-    <meta name="VersionName" content="Testing und Refactoring">
+    <meta name="Version" content="2.5.6">
+    <meta name="VersionName" content="New and Custom DevOptions">
     <meta name="GitHub" content="https://github.com/LukasDano/arbeitszeitrechner">
 
     <title>Arbeitszeitrechner</title>
@@ -37,7 +37,7 @@
                 <div class="devOption">
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html?param1=devOptions&param2=true">
+                            href="https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html?param1=devOptions&param2=true" target="_blank">
                             <img class="icon" src="pictures/icons/calendar.png" alt="Aktuelle Version">
                         </a>
                     </li>
@@ -46,7 +46,7 @@
                 <div class="devOption">
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="https://raw.githack.com/LukasDano/arbeitszeitrechner/bugfix/index.html?param1=devOptions&param2=true">
+                            href="https://raw.githack.com/LukasDano/arbeitszeitrechner/bugfix/index.html?param1=devOptions&param2=true" target="_blank">
                             <img class="icon small reAnimation" src="pictures/icons/process.png" alt="Testversion">
                         </a>
                     </li>
@@ -54,7 +54,15 @@
 
                 <div class="devOption">
                     <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/LukasDano/arbeitszeitrechner">
+                        <button class="nav-link" id="addBetterDefaultFloat">
+                            <img class="icon" src="pictures/icons/plusFourteen.png" alt="+0.14">
+                        </button>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/LukasDano/arbeitszeitrechner" target="_blank">
                             <img class="icon" src="pictures/icons/repository.png" alt="Repository">
                         </a>
                     </li>
@@ -75,6 +83,20 @@
                         </button>
                     </li>
                 </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" onclick="openForm()">
+                            <img class="icon" src="pictures/icons/add.png" alt="Add DevOption">
+                        </button>
+                    </li>
+                </div>
+
+                <div class="devOption"><div class="customDevOption One"></div></div>
+                <div class="devOption"><div class="customDevOption Two"></div></div>
+                <div class="devOption"><div class="customDevOption Three"></div></div>
+
+                <div id="devOptionSettings"></div>
             </ul>
 
         </div>
@@ -226,6 +248,7 @@
     <script src="js/jquery.classycountdown.js" defer></script>
     <script src="js/disable.js" defer></script>
     <script src="js/devOptions.js" defer></script>
+    <script src="js/customDevOptions.js" defer></script>
     <script defer>
         document.addEventListener('DOMContentLoaded', function () {
             checkForDevOptions();
