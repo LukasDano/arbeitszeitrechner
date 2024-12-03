@@ -1,8 +1,10 @@
 ﻿/**
- * Gibt eine kurze Anleitung aus wie man eigene DevOptions hinzufügen kann
+ * Gibt einen kurzen Tipp zu den customDevOptions aus
  */
 function customDevOptionAdvice() {
-    console.log("Füge eine eigene DevOption hinzu: addDevOption(optionNr, url, cookieAltName)");
+    console.log("Es gibt die Möglichkeit, bestimmte URL täglich zu aktualisieren. Dafür müssen diese unter 'Mittag' oder 'lunch' angelegt werden");
+    console.log("Dann muss man auch noch einen 'lunchURLVerificator' setzten. Da muss man je nach dem aufbau des links einen hochladen. Als Tipp kann man hier eine AI fragen");
+    console.log("So setzt man den Verificator: setCookieForMaximumTime('lunchURLVerificator', individueller string); ");
 }
 
 /**
@@ -74,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     settingsContainer.innerHTML = devOptionSettings();
 
     options.forEach(option => {
-        const {cookiePrefix, id} = option;
+        const { cookiePrefix, id } = option;
         const targetUrl = getCookie(cookiePrefix);
         const devOptionIcon = getCookie(`${cookiePrefix}Icon`);
         const devOptionAltName = getCookie(`${cookiePrefix}AltName`);
@@ -129,7 +131,7 @@ function isValidSpeiseplanURL(inputString) {
  * @param {string} cookieURL Die in den Cookies gespeicherte URL
  * @param {string} devOptionsButtonName den Namen, unter dem der Cookie gespeichert wurde
  */
-function updateLink(cookieURL, devOptionsButtonName){
+function updateLink(cookieURL, devOptionsButtonName) {
     if (isValidSpeiseplanURL(cookieURL)) {
         const speisePlanURL = cookieURL.substring(0, cookieURL.lastIndexOf('-') + 1);
         const currentSpeisePlanURL = speisePlanURL + getCurrentKW() + ".pdf";
@@ -144,9 +146,9 @@ function updateLink(cookieURL, devOptionsButtonName){
  */
 function getAllDevOptions() {
     const options = [
-        {id: 'One', cookiePrefix: 'customDevOptionOne'},
-        {id: 'Two', cookiePrefix: 'customDevOptionTwo'},
-        {id: 'Three', cookiePrefix: 'customDevOptionThree'}
+        { id: 'One', cookiePrefix: 'customDevOptionOne' },
+        { id: 'Two', cookiePrefix: 'customDevOptionTwo' },
+        { id: 'Three', cookiePrefix: 'customDevOptionThree' }
     ];
 
     return options;
@@ -193,7 +195,7 @@ function devOptionSettings() {
 
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" placeholder="Namen vergeben" required>
-      
+
                 <label for="iconDropDown">Icon:</label>
                 <select id="iconDropDown"></select>
 
@@ -253,14 +255,24 @@ function submitForm() {
 
     addDevOptionFromModal(customButtonName, url, name, icon);
     closeForm();
-    location.reload();
+
+    removeCustomButtonParameters();
+    window.location.href = "";
+}
+
+/**
+ * Löscht die komischen Parameter, die in die URL gesetzt werden
+ */
+function removeCustomButtonParameters() {
+    const urlWithoutParams = window.location.href.split('?')[0];
+    history.pushState({}, '', urlWithoutParams);
 }
 
 /**
  * Schreibt Daten aus einem Objekt oder einer Liste in ein DropDownMenu mit der angegebenen ID.
  *
  * @param {string} dropDownId Die ID des DropDownMenu HTML-Elements
- * @param {array|object} optionsList Die Liste/ das Objekt mit den Daten
+ * @param {[]|{}} optionsList Die Liste/ das Objekt mit den Daten
  */
 function populateDropdown(dropDownId, optionsList) {
     const dropdown = document.getElementById(dropDownId);
@@ -303,7 +315,7 @@ function updateDropdownValue(elementId, valueText) {
  *
  * @returns {Promise<void>}
  */
-async function updateValues(){
+async function updateValues() {
     const dropdown = document.getElementById("devOptionButtonDropDown");
     const nameInput = document.getElementById("name");
     const urlInput = document.getElementById("url");
@@ -317,7 +329,7 @@ async function updateValues(){
     switch (selectedValue) {
         case "customDevOptionOne":
             nameInput.value = getCookie("customDevOptionOneAltName") || defaultNameText;
-            urlInput.value = getCookie("customDevOptionOne") || defaultURLText ;
+            urlInput.value = getCookie("customDevOptionOne") || defaultURLText;
             iconDropDown.value = getJSONIconNameCookie("customDevOptionOneIcon") || defaultIconText;
             break;
         case "customDevOptionTwo":
@@ -333,7 +345,7 @@ async function updateValues(){
     }
 }
 
-function deleteCustomButton(){
+function deleteCustomButton() {
     const selectedCustomDevOptionsButton = document.getElementById("devOptionButtonDropDown").value;
     deleteCookie(selectedCustomDevOptionsButton);
     deleteCookie(selectedCustomDevOptionsButton + "Icon");

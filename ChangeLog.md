@@ -8,7 +8,7 @@
 
 #### v2.1.03
 - Bugfix: Gleitzeitberechnung ReWork
-- Darstellung der Tatsächlichen Zeit angepasst
+- Darstellung der tatsächlichen Zeit angepasst
 
 ## v2.2
 - Neuer Tab: Wochenarbeitszeit
@@ -17,20 +17,20 @@
 - Anpassungen der MetaDaten in index.html
 
 #### v2.2.01
-- Kleinere Optische Anpassung im Wochenarbeitszeit-Tab
-- Anpassung der der MetaDaten
+- Kleinere optische Anpassung im Wochenarbeitszeit-Tab
+- Anpassung der MetaDaten
 
 #### v2.2.02
-- Bugfix: Beim Reset wird jetzt auch die Gewertete Zeit zurückgesetzt
+- Bugfix: Beim Reset wird jetzt auch die gewertete Zeit zurückgesetzt
 
 ## v2.3
 - Arbeitszeitenvorauswahl remake
 - Pausenzeitenauswahl remake
 - Bugfix: Fehler bei der Berechnung der Gleitzeit behoben (wird jetzt nur noch mit 7.06 als Soll berechnet)
 - Neues Feature: Automatische Pausenzeit auswahl
-- Neues Feature: Automatische Arbeitszeitenvorauswahl (Hat keinen Effekt auf die Gleizeit berechnung)
+- Neues Feature: Automatische Arbeitszeitenvorauswahl (Hat keinen Effekt auf die Gleitzeit berechnung)
 - Neues Feature: Arbeitsende nach gewünschter Gleitzeit ausrechnen
-- Neues Feautre: Optimales Ende wird angeben (wenigste Arbeitszeit mit maximaler Gleitzeit)
+- Neues Feature: Optimales Ende wird angeben (wenigste Arbeitszeit mit maximaler Gleitzeit)
 - Anpassung: Bessere Darstellung der Wochenarbeitszeit
 
 ## v2.4
@@ -71,14 +71,14 @@
 
 #### v2.5.2 - DevOptions
 - Neues Feature: DevOptions
-  - Es werden neue Tabs angezeigt: aktuelle Version, Testversion, Repo, Restart und Exit (um den Modus wieder zuverlassen)
+  - Es werden neue Tabs angezeigt: aktuelle Version, Testversion, Repo, Restart und Exit (um den Modus wieder zu verlassen)
   - Um in den Modus zu kommen, muss man auf der Konsole "enableDevOptions()" eingeben oder die Seite über einen bestimmten Link aufrufen
 
 #### v2.5.3 - DevOption Icons
 - Refactoring: DevOptions werden jetzt als Icons angezeigt
 - QoL: Die Seite wird automatisch neu geladen, wenn man den Tab öffnet
   - dadurch sollte der Countdown jetzt auch nach dem Sperren des PCs die richtige Zeit anzeigen
-- Bugfix: Der Modus wird jetzt auch gespeichert, wenn man die Seite zum ersten mal öffnet
+- Bugfix: Der Modus wird jetzt auch gespeichert, wenn man die Seite zum ersten Mal öffnet
   - Beim neuen Laden wird jetzt immer ein Knopf als aktiv angezeigt
 - Refactoring: DevOptions die eine Funktion aufrufen, sind jetzt buttons
   - Die Buttons sehen aber aus wie alle anderen Tabs
@@ -96,7 +96,7 @@
     - getter and calculations simplified, sodass man jetzt über eine const immer auf den aktuellen Wert zugreifen kann
 
 #### v2.5.5 - Testing and Refactoring
-- inroducing: testing with jest
+- introducing: testing with jest
 - neues feature: Gleitzeit über die Pfeiltasten erhöhen und verringern
 - weekTimeUtils eingeführt
     - tests für die weekTimeUtils geschrieben
@@ -115,3 +115,10 @@
 - Neues Format für den ChangLog eingeführt
 - CustomDevOptions lassen sich wieder entfernen
 - Einige Deprecated Methoden wurden entfernt
+- Man kann jetzt die DevTools per F2 öffnen
+    - Öffnen oder schließen, je nach aktuellen Status
+- JSDoc für devOptions ergänzt
+- Dependencies in die Readme geschrieben
+- Bugfix: URL wird komisch angezeigt
+- Types in JSDoc eingeführt
+    - In den Utils Files und an anderen stellen entsprechende Kommentare ergänzt

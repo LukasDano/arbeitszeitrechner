@@ -64,25 +64,37 @@ $(document).ready(function () {
         applyFloatChanges();
     }
 
-    // liest Dienstbeginn aus dem Input-Feld aus
+    /**
+     * liest Dienstbeginn aus dem Input-Feld aus
+     * @returns {Time} Die Startzeit
+     */
     function getStartTime() {
         const [hours, mins] = $("#start").val().toString().split(":").map(Number);
         return [hours, mins];
     }
 
-    // liest Pausenzeit aus dem Input-Feld aus
+    /**
+     * liest Pausenzeit aus dem Input-Feld aus
+     * @returns {Time} Die Pausenzeit
+     */
     function getPauseTime() {
         const [hours, mins] = $("#pause").val().toString().split(":").map(Number);
         return [hours, mins];
     }
 
-    // liest Dienstende aus dem Input-Feld aus
+    /**
+     * liest Dienstende aus dem Input-Feld aus
+     * @returns {Time} Die Endzeit
+     */
     function getEndTime() {
         const [hours, mins] = $("#end").val().toString().split(":").map(Number);
         return [hours, mins];
     }
 
-    // liest Solldienstzeit aus dem Input-Feld aus
+    /**
+     * liest Solldienstzeit aus dem Input-Feld aus
+     * @returns {Time} Die Sollzeit
+     */
     function getSollTime() {
         const [hours, mins] = $("#soll").val().toString().split(":").map(Number);
         return [hours, mins];
@@ -477,4 +489,14 @@ $(document).ready(function () {
         const floatFourteenMinutes = [0, 14];
         setFloatValue(floatFourteenMinutes);
     })
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'F2') {
+            event.preventDefault();
+            openOrCloseDevOptionsFromButton();
+        }
+    });
+
+
+
 });

@@ -2,6 +2,9 @@ window.onload = function () {
     activateDevOptionsFromURL();
 };
 
+/**
+ * Prüft ob die DevOptions aktiv sein sollen und stellt die Buttons dann da
+ */
 function checkForDevOptions() {
     const devOptionStatus = getBooleanCookie("devOptions");
     const displayStyle = devOptionStatus ? "block" : "none";
@@ -11,18 +14,42 @@ function checkForDevOptions() {
     });
 }
 
-// Kann in der Console Aufgerufen werden, soll/muss keine usages haben
+/**
+ * Startet die DevOptions
+ * (Kann in der Console Aufgerufen werden, soll/muss keine usages haben)
+ */
 function enableDevOptions() {
     setCookie("devOptions", true);
     checkForDevOptions();
 }
 
+/**
+ * Schließt die DevOptions
+ * (Kann in der Konsole aufgerufen werden)
+ */
 function disableDevOptions() {
     deleteCookie("devOptions");
     checkForDevOptions();
 }
 
-// ...index.html?param1=devOptions&param2=true
+/**
+ * Öffnet oder schließt die DevOptions jenachdem ob sie offen oder geschlossen sind
+ */
+function openOrCloseDevOptionsFromButton() {
+    const devOptionsEnabled = getBooleanCookie("devOptions");
+
+    if (devOptionsEnabled) {
+        disableDevOptions();
+        return;
+    }
+
+    enableDevOptions();
+}
+
+/**
+ * Aktiviert die DevOptions wenn in der URL bestimmte Parameter drinnen sind
+ * (Der benötigite Link: "...index.html?param1=devOptions&param2=true")
+ */
 function activateDevOptionsFromURL() {
     const url = new URL(window.location.href);
     const key = url.searchParams.get("param1");
@@ -33,6 +60,14 @@ function activateDevOptionsFromURL() {
     }
 }
 
+/**
+ * Aktiviert den DevMode.
+ * Löscht die Parameter aus der URL und lädt die Seite neu
+ *
+ * @param {string} url Die gesamte URL
+ * @param {string} key Der Key zu dem der Cookie gesetzt wird
+ * @param {string} value Der Wert der in den Cookie gestezt wird
+ */
 function activateDevMode(url, key, value) {
     setCookieUntilMidnight(key, value);
 
@@ -43,6 +78,9 @@ function activateDevMode(url, key, value) {
     window.location.reload();
 }
 
+/**
+ * Löscht alle Cookies die Zeiten für die Seite speichern
+ */
 function resetCookies() {
     deleteCookie("monday");
     deleteCookie("tuesday");
@@ -61,12 +99,18 @@ function resetCookies() {
     setCookie("todayTimeStamp", new Date().getTime());
 }
 
+/**
+ * Löscht alle Daten aus dem Local und dem Session Storage
+ */
 function deleteDataFromStorages() {
     // TODO nach dem nächsten Update entfernen, soll nur aufräumen
     localStorage.clear();
     sessionStorage.clear();
 }
 
+/**
+ * Startet die Seite komplett neu
+ */
 function resetPage() {
     resetCookies();
     window.location.reload();

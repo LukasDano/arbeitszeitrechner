@@ -1,3 +1,10 @@
+/**
+ * Gibt den Wert des Cookies als String zurück.
+ * Wenn der Cookie nicht existiert, wird ein leer String **""** zurück gegeben.
+ *
+ * @param {string} name Name unter dem der Cookie gespeichert wurde
+ * @returns {string} Der Wert des Cookies
+ */
 function getCookie(name) {
     const cookies = document.cookie.split(";");
     for (let cookie of cookies) {
@@ -8,6 +15,13 @@ function getCookie(name) {
     }
 }
 
+/**
+ * Gibt den Wert eines Cookies als boolean zurück.
+ * Es wird auch **false** zurück gegeben, wenn der Cookie nicht existiert
+ *
+ * @param {string} name Name unter dem der Cookie gespeichert wurde
+ * @returns {boolean} Den Wert des Cookies
+ */
 function getBooleanCookie(name) {
     const cookies = document.cookie.split(";");
     for (let cookie of cookies) {
@@ -22,6 +36,12 @@ function getBooleanCookie(name) {
     }
 }
 
+/**
+ * Gibt den Wert des Cookies als number zurück. Wenn der Cookie nicht existiert wird **0** zurückgegeben.
+ *
+ * @param {string} name Name unter dem der Cookie gespeichert wurde
+ * @returns {number} Den Wert des Cookies
+ */
 function getIntCookie(name) {
     const cookies = document.cookie.split(";");
     for (let cookie of cookies) {
@@ -32,25 +52,33 @@ function getIntCookie(name) {
     }
 }
 
-
 /**
  * Gibt den Namen des Icons aus der JSON Datei zurück.
  * (Wenn der Pfad zum Icon abgespeichert wurde)
  *
  * @param {string} name Der Name unter dem der Cookie gespeichert wurde
- * @return Den reinen IconNamen, so wie er auch in der JSON Datei steht oder NULL,
+ * @return {string|null} Den reinen IconNamen, so wie er auch in der JSON Datei steht oder NULL,
  * wenn keiner vorhanden ist
  */
-function getJSONIconNameCookie(name){
+function getJSONIconNameCookie(name) {
     const originalCookie = getCookie(name);
 
     if (originalCookie) {
         const fileNameWithExtension = originalCookie.split("/").pop();
         return fileNameWithExtension.split(".")[0];
     }
-     return null;
+    return null;
 }
 
+
+/**
+ * Setzt den Wert für einen Cookie unter einem angegeben Namen.
+ * Optional kann man auch ein Ablaufdatum mit geben.
+ *
+ * @param {string} name Der Name, unter dem der Cookie gespeichert werden soll
+ * @param {string} value Der Wert, der gespeichert werden soll
+ * @param {Date} expirationDate (Optional): Der Zeitpunkt, zu dem der Cookie Ablaeuft bzw. er gelöscht wird.
+ */
 function setCookie(name, value, expirationDate) {
     let expires = "";
     if (expirationDate instanceof Date) {
@@ -60,6 +88,12 @@ function setCookie(name, value, expirationDate) {
         name + "=" + encodeURIComponent(value) + expires + "; path=/";
 }
 
+/**
+ * Setzt einen Cookie für den Rest des Tages
+ *
+ * @param {string} name Name des Cookies
+ * @param {string} value Wert des Cookies
+ */
 function setCookieUntilMidnight(name, value) {
     const now = new Date();
     const midnight = new Date(
@@ -91,7 +125,7 @@ function setCookieForMaximumTime(name, value) {
 /**
  * Löscht einen Cookie unter dem angegebenen Namen
  *
- * @param name Name unter dem der Cookie gespeichert wurde
+ * @param {string} name Name unter dem der Cookie gespeichert wurde
  */
 function deleteCookie(name) {
     document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
