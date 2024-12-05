@@ -122,3 +122,6 @@
 - Bugfix: URL wird komisch angezeigt
 - Types in JSDoc eingeführt
     - In den Utils Files und an anderen stellen entsprechende Kommentare ergänzt
+- ChangeLog als DevButton ergänzt
+- Es können nur noch die benötigten Zeichen in das Floatfeld eingetragen werden
+    - Entsprechende Tests ergänzt

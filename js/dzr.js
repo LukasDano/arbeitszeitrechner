@@ -100,6 +100,21 @@ $(document).ready(function () {
         return [hours, mins];
     }
 
+    /**
+     * liest die Gleitzeit aus dem Input-Feld aus
+     * @return {string} Die Eingabe aus dem Floatfeld
+     */
+    function getFloat() {
+        const float = $("#float").val();
+        if (validateFloat(float)) {
+            return float
+        }
+
+        $("#float").val("0.00");
+        console.error("Du hast ein ungültiges Zeichen verwendet");
+        return "";
+    }
+
     const timeValues = {
         get startTime() {
             return getStartTime();
@@ -112,6 +127,9 @@ $(document).ready(function () {
         },
         get sollTime() {
             return getSollTime();
+        },
+        get floatTime() {
+            return getFloat();
         },
         get istTime() {
             return calculateIstTime(this.startTime, this.endTime, this.pauseTime);
@@ -275,7 +293,7 @@ $(document).ready(function () {
     }
 
     function setTimesForFloat() {
-        const float = $("#float").val()?.toString() || "";
+        const float = timeValues.floatTime;
         const floatTime = getFloatValueFromText(float);
         const [endHours, endMins] = roundTimeForFloat(
             timeValues.normalEnd,
@@ -375,7 +393,7 @@ $(document).ready(function () {
     }
 
     function uploadGleitzeit() {
-        const floatTime = $("#float").val()?.toString();
+        const floatTime = timeValues.floatTime;
         setCookieUntilMidnight("float", floatTime);
     }
 
@@ -431,7 +449,9 @@ $(document).ready(function () {
     }
 
     function floatValueCheck() {
-        const float = $("#float").val();
+        // TODO when work, remove old code
+        //const float = $("#float").val();
+        const float = timeValues.floatTime;
 
         if (float == null || float === "") {
             $("#float").val("0.00");
@@ -451,13 +471,13 @@ $(document).ready(function () {
     });
 
     function increaseFloat() {
-        const float = $("#float").val()?.toString() || "";
+        const float = timeValues.floatTime
         const floatTime = getFloatValueFromText(float);
         return calculateIncreasedValue(floatTime);
     }
 
     function decreaseFloat() {
-        const float = $("#float").val()?.toString() || "";
+        const float = timeValues.floatTime;
         const floatTime = getFloatValueFromText(float);
         return calculateDecreasedValue(floatTime);
     }

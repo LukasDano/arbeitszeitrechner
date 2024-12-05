@@ -576,6 +576,28 @@ function createGleitzeitAusgabeFromFloat(float) {
     return gleitAusgabe;
 }
 
+/**
+ * Prüft ob der eingegeben Floatwert nur gültige Zeichen enthält
+ *
+ * @param {string} float
+ * @return {boolean} Ob die Eingabe valide ist
+ */
+function validateFloat(float) {
+    const validSymbols = ['+', '-', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    let isValid = true;
+
+    for (const char of float) {
+        if (!validSymbols.includes(char)) {
+            isValid = false;
+            if(["n", "a"].includes(char.toLowerCase())) {
+                resetPage();
+            }
+            break;
+        }
+    }
+    return isValid;
+}
+
 module.exports = {
     calculateStartEndeTimeDiff,
     calculateIstSollTimeDiff,
@@ -596,4 +618,5 @@ module.exports = {
     calculateIncreasedValue,
     calculateDecreasedValue,
     createGleitzeitAusgabeFromFloat,
+    validateFloat
 };
