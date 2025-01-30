@@ -18,6 +18,7 @@ const {
   calculateIncreasedValue,
   calculateDecreasedValue,
   createGleitzeitAusgabeFromFloat,
+  validateFloat
 } = require("../js/dzrUtils");
 
 describe("calculateStartEndeTimeDiff", () => {
@@ -389,5 +390,47 @@ describe("createGleitzeitAusgabeFromFloat", () => {
     const float = [-1, -6];
     const result = createGleitzeitAusgabeFromFloat(float);
     expect(result).toEqual("-1.06");
+  });
+});
+
+describe("validateFloat", () => {
+  beforeEach(() => {
+    global.resetPage = jest.fn();
+  });
+
+  test("correct with default values", () => {
+    const float = "+0.04";
+    const result = validateFloat(float);
+    expect(result).toEqual(true);
+  });
+
+  test("correct with negativ values", () => {
+    const float = "-0.01";
+    const result = validateFloat(float);
+    expect(result).toEqual(true);
+  });
+
+  test("correct with letters and correct values", () => {
+    const float = "-0.0a";
+    const result = validateFloat(float);
+    expect(result).toEqual(false);
+  });
+  
+  test("correct with a komma", () => {
+    const float = "+0,04";
+    const result = validateFloat(float);
+    expect(result).toEqual(false);
+  });
+
+  test("correct with only letters", () => {
+    const float = "abcdefghijklmnopqrstuvwxyz";
+    const result = validateFloat(float);
+    expect(result).toEqual(false);
+  });
+
+  test("correct with a space", () => {
+    const float = "+ 0.04";
+    const result = validateFloat(float);
+    expect(result).toEqual(false);
   });
 });

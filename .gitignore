@@ -1,4 +1,3 @@
 .idea
-package.json
-package-lock.json
+.husky
 node_modules
