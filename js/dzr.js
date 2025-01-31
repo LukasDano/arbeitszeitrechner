@@ -168,17 +168,20 @@ $(document).ready(function () {
     });
 
     $("#end").change(function () {
-        calculate();
-        setGleitzeit();
-        setIstTime();
-        setCountdown();
-        uploadGleitzeit();
-        switchModeIfIsAllowed();
-        calculate();
-        setGleitzeit();
-        setIstTime();
-        setCountdown();
-        uploadGleitzeit();
+
+        if (isValidTime(timeValues.endTime)) {
+            calculate();
+            setGleitzeit();
+            setIstTime();
+            setCountdown();
+            uploadGleitzeit();
+            switchModeIfIsAllowed();
+            calculate();
+            setGleitzeit();
+            setIstTime();
+            setCountdown();
+            uploadGleitzeit();
+        }
     });
 
     $("#soll").change(function () {
