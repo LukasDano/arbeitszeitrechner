@@ -434,3 +434,30 @@ describe("validateFloat", () => {
     expect(result).toEqual(false);
   });
 });
+
+describe("isValidTime", () => {
+    test("correct with two numbers", () => {
+        const float = [12,21];
+        const result = isValidTime(float);
+        expect(result).toEqual(true);
+    });
+
+    test("correct with NaN", () => {
+        const time = [12,NaN];
+        const result = isValidTime(time);
+        expect(result).toEqual(false);
+    });
+
+    test("correct with null", () => {
+        const time = [12,null];
+        const result = isValidTime(time);
+        expect(result).toEqual(false);
+    });
+
+    test("correct with undefinded", () => {
+        const time = [12,undefined];
+        const result = isValidTime(time);
+        expect(result).toEqual(false);
+    });
+});
+
