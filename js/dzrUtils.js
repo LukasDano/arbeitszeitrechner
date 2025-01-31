@@ -598,6 +598,27 @@ function validateFloat(float) {
     return isValid;
 }
 
+/**
+ * Prüft ob ein Parameter eine Zeit bestehend aus zwei Zahlen ist.
+ *
+ * @param {Time} numberList Die Zeit die überprüft werden soll
+ * @return {boolean} Ist der Parameter eine Time bestehend aus zwei Zahlen
+ */
+function isValidTime(numberList) {
+    const [hours, minutes] = numberList;
+
+    return (
+        typeof hours === "number" &&
+        typeof minutes === "number" &&
+        !isNaN(hours) &&
+        !isNaN(minutes) &&
+        hours >= 0 &&
+        hours < 24 &&
+        minutes >= 0 &&
+        minutes < 60
+    );
+}
+
 module.exports = {
     calculateStartEndeTimeDiff,
     calculateIstSollTimeDiff,
@@ -618,5 +639,6 @@ module.exports = {
     calculateIncreasedValue,
     calculateDecreasedValue,
     createGleitzeitAusgabeFromFloat,
-    validateFloat
+    validateFloat,
+    isValidTime
 };
