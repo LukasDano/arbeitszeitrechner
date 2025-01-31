@@ -95,14 +95,6 @@
       - dzrUtils sind alle funktionen die nicht direkt auf das html zugreifen müssen
     - getter and calculations simplified, sodass man jetzt über eine const immer auf den aktuellen Wert zugreifen kann
 
-#### v2.5.5 - Testing and Refactoring
-- introducing: testing with jest
-- neues feature: Gleitzeit über die Pfeiltasten erhöhen und verringern
-- weekTimeUtils eingeführt
-    - tests für die weekTimeUtils geschrieben
-- handling für falsche Formate von FloatArrays
-- calculate() code etwas reduziert
-
 #### v2.5.6 - New and Custom DevOptions
 - Das Plus bei der Wochenarbeitszeit entfernen
 - Man kann jetzt bis zu 3 eigene DevOptions vergeben
@@ -125,3 +117,4 @@
 - ChangeLog als DevButton ergänzt
 - Es können nur noch die benötigten Zeichen in das Floatfeld eingetragen werden
     - Entsprechende Tests ergänzt
+- Bugfix: Wenn man die Zahlen aus dem Endzeitfeld löscht, wird nicht mehr automatisch die Zeit berechnet, was früher zu fehlern geführt hat
