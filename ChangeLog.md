@@ -125,3 +125,4 @@
 - ChangeLog als DevButton ergänzt
 - Es können nur noch die benötigten Zeichen in das Floatfeld eingetragen werden
     - Entsprechende Tests ergänzt
+- Bugfix: Wenn man die Zahlen aus dem Endzeitfeld löscht, wird nicht mehr automatisch die Zeit berechnet, was früher zu fehlern geführt hat
