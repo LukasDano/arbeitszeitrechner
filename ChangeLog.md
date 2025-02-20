@@ -126,3 +126,19 @@
 - Es können nur noch die benötigten Zeichen in das Floatfeld eingetragen werden
     - Entsprechende Tests ergänzt
 - Bugfix: Wenn man die Zahlen aus dem Endzeitfeld löscht, wird nicht mehr automatisch die Zeit berechnet, was früher zu fehlern geführt hat
+
+
+#### v2.5.7 - FlexOffice-Zeitrechner
+- Cookies werden jetzt zwischen main und bugfix unterschieden
+    - jetzt kann man unterschiedliche Werte in bugfix und main haben und sie bedingen sich nicht mehr
+- Neue Funktionalität: Forever Cookies
+    - Cookies können jetzt so gespeichert werden, dass sie regelmäßig
+      automatisch neu eingespeichert werden und somit nie verloren gehen
+- Wochenzeitrechner ist jetzt ein Icon
+- Neues Feature:
+    - Man kann sich jetzt durch die Eingabe von Flexoffice-Quote, Abwesenheitstagen sowie der Zeit, die diesen Monat schon im Flexoffice erbracht wurde, die Zeit ausrechnen, die man diesen Monat noch im Flexoffice machen kann
+    - Die Eingaben werden bei jeder Berechnung gespeichert, sodass man seine Werte immer nur erhöhen muss
+      - Die gespeicherten Daten werden immer am Ende des Monats gelöscht
+    - Für die neuen Funktionen wurden Teilweise tests geschrieben
+- Die neuen Icons wurden in der DB eingefügt
+- Das Script zum Erstellen der DB wurde auf ein TS Script geändert

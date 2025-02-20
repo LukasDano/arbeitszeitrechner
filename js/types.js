@@ -27,4 +27,16 @@
  * @property {DayTime} freitag - Zeiten für Freitag
  */
 
-
+/**
+ * @typedef {Object} FeiertageHamburg
+ * @property {Date} Neujahr
+ * @property {Date} Karfreitag
+ * @property {Date} Ostermontag
+ * @property {Date} TagDerArbeit
+ * @property {Date} ChristiHimmelfahrt
+ * @property {Date} Pfingstmontag
+ * @property {Date} TagDerDeutschenEinheit
+ * @property {Date} Reformationstag
+ * @property {Date} ErsterWeihnachtsfeiertag
+ * @property {Date} ZweiterWeihnachtsfeiertag
+ */

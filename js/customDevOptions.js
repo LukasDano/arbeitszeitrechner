@@ -4,7 +4,7 @@
 function customDevOptionAdvice() {
     console.log("Es gibt die Möglichkeit, bestimmte URL täglich zu aktualisieren. Dafür müssen diese unter 'Mittag' oder 'lunch' angelegt werden");
     console.log("Dann muss man auch noch einen 'lunchURLVerificator' setzten. Da muss man je nach dem aufbau des links einen hochladen. Als Tipp kann man hier eine AI fragen");
-    console.log("So setzt man den Verificator: setCookieForMaximumTime('lunchURLVerificator', individueller string); ");
+    console.log("So setzt man den Verificator: setCookieForever('lunchURLVerificator', individueller string); ");
 }
 
 /**
@@ -19,12 +19,12 @@ function customDevOptionAdvice() {
  */
 function addDevOptionFromModal(customDevOption, url, cookieAltName, iconName) {
 
-    setCookieForMaximumTime(customDevOption, url);
-    setCookieForMaximumTime(customDevOption + "AltName", cookieAltName);
+    setCookieForever(customDevOption, url);
+    setCookieForever(customDevOption + "AltName", cookieAltName);
 
     const iconFileName = iconName + ".png"
     const iconFilePath = `pictures/icons/${iconFileName}`
-    setCookieForMaximumTime(customDevOption + "Icon", iconFilePath);
+    setCookieForever(customDevOption + "Icon", iconFilePath);
 }
 
 /**
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     settingsContainer.innerHTML = devOptionSettings();
 
     options.forEach(option => {
-        const { cookiePrefix, id } = option;
+        const {cookiePrefix, id} = option;
         const targetUrl = getCookie(cookiePrefix);
         const devOptionIcon = getCookie(`${cookiePrefix}Icon`);
         const devOptionAltName = getCookie(`${cookiePrefix}AltName`);
@@ -103,9 +103,9 @@ function refreshDevOptionCookies() {
         const devOptionIcon = getCookie(`${option.cookiePrefix}Icon`);
         const devOptionAltName = getCookie(`${option.cookiePrefix}AltName`);
 
-        if (targetUrl) setCookieForMaximumTime(option.cookiePrefix, targetUrl);
-        if (devOptionIcon) setCookieForMaximumTime(option.cookiePrefix + "Icon", devOptionIcon);
-        if (devOptionAltName) setCookieForMaximumTime(option.cookiePrefix + "AltName", devOptionAltName);
+        if (targetUrl) setCookieForever(option.cookiePrefix, targetUrl);
+        if (devOptionIcon) setCookieForever(option.cookiePrefix + "Icon", devOptionIcon);
+        if (devOptionAltName) setCookieForever(option.cookiePrefix + "AltName", devOptionAltName);
         if (devOptionAltName === ("Mittag" || "Lunch")) updateLink(targetUrl, option.cookiePrefix);
     });
 }
@@ -118,7 +118,7 @@ function refreshDevOptionCookies() {
  */
 function isValidSpeiseplanURL(inputString) {
     const lunchURLVerificator = getCookie("lunchURLVerificator");
-    setCookieForMaximumTime("lunchURLVerificator", lunchURLVerificator);
+    setCookieForever("lunchURLVerificator", lunchURLVerificator);
 
     const lunchURLExpression = RegExp(lunchURLVerificator);
 
@@ -135,7 +135,7 @@ function updateLink(cookieURL, devOptionsButtonName) {
     if (isValidSpeiseplanURL(cookieURL)) {
         const speisePlanURL = cookieURL.substring(0, cookieURL.lastIndexOf('-') + 1);
         const currentSpeisePlanURL = speisePlanURL + getCurrentKW() + ".pdf";
-        setCookieForMaximumTime(devOptionsButtonName, currentSpeisePlanURL);
+        setCookieForever(devOptionsButtonName, currentSpeisePlanURL);
     }
 }
 
@@ -146,9 +146,9 @@ function updateLink(cookieURL, devOptionsButtonName) {
  */
 function getAllDevOptions() {
     const options = [
-        { id: 'One', cookiePrefix: 'customDevOptionOne' },
-        { id: 'Two', cookiePrefix: 'customDevOptionTwo' },
-        { id: 'Three', cookiePrefix: 'customDevOptionThree' }
+        {id: 'One', cookiePrefix: 'customDevOptionOne'},
+        {id: 'Two', cookiePrefix: 'customDevOptionTwo'},
+        {id: 'Three', cookiePrefix: 'customDevOptionThree'}
     ];
 
     return options;
@@ -184,10 +184,10 @@ function customDevOption(targetUrl, devOptionIcon, devOptionAltName) {
 function devOptionSettings() {
 
     return `
-        <div class="overlay" id="overlay"></div>
-        <div class="form-popup" id="myForm">
+        <div class="devOptionsOverlay" id="devOptionsOverlay"></div>
+        <div class="form-popup" id="devOptionsForm">
             <form class="form-container">
-                <span class="close" onclick="closeForm()">&times;</span>
+                <span class="close" onclick="closeDevOptionsForm()">&times;</span>
                 <h1>DevOption Setting</h1>
 
                 <label for="devOptionButtonDropDown">DevOptionButton:</label>
@@ -214,10 +214,10 @@ function devOptionSettings() {
 /**
  * Öffnet das SettingsModal
  */
-async function openForm() {
+async function openDevOptionsForm() {
     setCookie("settingsOpen", true);
-    document.getElementById("myForm").style.display = "block"; // Show the form
-    document.getElementById("overlay").style.display = "block"; // Show the overlay
+    document.getElementById("devOptionsForm").style.display = "block"; // Show the form
+    document.getElementById("devOptionsOverlay").style.display = "block"; // Show the overlay
 
     const iconDropDownId = "iconDropDown";
     const allIconsList = await listAllIcons();
@@ -241,9 +241,9 @@ async function openForm() {
 /**
  * Schließt das SettingsModal
  */
-function closeForm() {
-    document.getElementById("myForm").style.display = "none"; // Hide the form
-    document.getElementById("overlay").style.display = "none"; // Hide the overlay
+function closeDevOptionsForm() {
+    document.getElementById("devOptionsForm").style.display = "none"; // Hide the form
+    document.getElementById("devOptionsOverlay").style.display = "none"; // Hide the overlay
     deleteCookie("settingsOpen");
 }
 
@@ -347,7 +347,7 @@ async function updateValues() {
 
 function deleteCustomButton() {
     const selectedCustomDevOptionsButton = document.getElementById("devOptionButtonDropDown").value;
-    deleteCookie(selectedCustomDevOptionsButton);
-    deleteCookie(selectedCustomDevOptionsButton + "Icon");
-    deleteCookie(selectedCustomDevOptionsButton + "AltName");
+    deleteForeverCookie(selectedCustomDevOptionsButton);
+    deleteForeverCookie(selectedCustomDevOptionsButton + "Icon");
+    deleteForeverCookie(selectedCustomDevOptionsButton + "AltName");
 }

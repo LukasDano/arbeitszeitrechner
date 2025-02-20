@@ -469,7 +469,7 @@ function roundTimeForFloat(normalEnd, floatTime) {
 
 /**
  * Gibt die nächst größere valide Gleitzeit zurück
- * Zum Beispiel: "+0.04" => "+0.09"
+ * zum Beispiel: "+0.04" → "+0.09"
  *
  * @param {FloatTime} float Die aktuelle Gleitzeit
  * @return {Time} Die nächst größere Gleitzeit
@@ -589,7 +589,7 @@ function validateFloat(float) {
     for (const char of float) {
         if (!validSymbols.includes(char)) {
             isValid = false;
-            if(["n", "a"].includes(char.toLowerCase())) {
+            if (["n", "a"].includes(char.toLowerCase())) {
                 resetPage();
             }
             break;
@@ -599,7 +599,7 @@ function validateFloat(float) {
 }
 
 /**
- * Prüft ob ein Parameter eine Zeit bestehend aus zwei Zahlen ist.
+ * Prüft, ob ein Parameter eine Zeit bestehend aus zwei Zahlen ist.
  *
  * @param {Time} numberList Die Zeit die überprüft werden soll
  * @return {boolean} Ist der Parameter eine Time bestehend aus zwei Zahlen
@@ -617,6 +617,23 @@ function isValidTime(numberList) {
         minutes >= 0 &&
         minutes < 60
     );
+}
+
+/**
+ * Vergleicht zwei Time Werte miteinander und gibt den späteren zurück.
+ * Wenn, beide übereinstimmen wird der erste timeOne zurückgegeben.
+ *
+ * @param {Time} timeOne Der erste Zeitpunkt für den Vergleich.
+ * @param {Time} timeTwo Der erste Zeitpunkt für den Vergleich.
+ * @return {Time} Der später Zeitpunkt/ timeOne, wenn beide gleich sind
+ */
+function getLaterTime(timeOne, timeTwo) {
+    for (let i = 0; i < Math.min(timeOne.length, timeTwo.length); i++) {
+        if (timeOne[i] < timeTwo[i]) return timeTwo;
+        if (timeOne[i] > timeTwo[i]) return timeOne;
+    }
+
+    return timeOne.length >= timeTwo.length ? timeOne : timeTwo;
 }
 
 module.exports = {
@@ -640,5 +657,6 @@ module.exports = {
     calculateDecreasedValue,
     createGleitzeitAusgabeFromFloat,
     validateFloat,
-    isValidTime
+    isValidTime,
+    getLaterTime
 };

@@ -393,7 +393,7 @@ section {
 }
 
 /*PopUp Window*/
-.overlay {
+.devOptionsOverlay {
     display: none; /* Hidden by default */
     position: fixed;
     top: 0;
@@ -404,17 +404,65 @@ section {
     backdrop-filter: blur(5px); /* Blur effect on the background */
 }
 
-.form-popup {
+.flexOfficeOverlay {
     display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Blur effect on the background */
+}
+
+/* Popup container */
+.form-popup {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centering */
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    z-index: 9;
-    background-color: white; /* Keeps popup background white */
-    width: 400px; /* Fixed width for modern look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 90%;
+    max-width: 400px;
+    display: none;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Zentriert horizontal */
+    align-items: center;
+    gap: 12px;
+}
+
+h1 {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Labels */
+label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Inputs and select */
+input, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#flexOfficeResult{
+    background-color: #E9ECEF;
+    border-radius: 6px;
 }
 
 .form-container {
