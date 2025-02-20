@@ -39,7 +39,7 @@ function flexOfficeCalculator() {
                     <div class="row container row-adaption">
                         <div class="col text-center">
                             <label for="currentMonth">Aktueller Monat</label>
-                            <p class="display-5" id="currentMonth">1</p>
+                            <p class="display-5" id="currentMonth"></p>
                         </div>
     
                         <div class="col text-center">
@@ -156,7 +156,9 @@ function calculateFlexOffice() {
 
     const flexTime = [flexHours, flexMinutes];
 
-    const restFlexTimeThisMonth = calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote);
+    let restFlexTimeThisMonth = calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote);
+    restFlexTimeThisMonth = checkIfTimeIsBelowZero(restFlexTimeThisMonth)
+
 
     document.getElementById("currentMonth").textContent = getValidCurrentMonthOutPut();
     document.getElementById("workDaysCurrentMonth").textContent = getWorkDaysInMonth();

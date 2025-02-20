@@ -245,9 +245,28 @@ function formatTimeValueToString(time) {
     return hours + "." + mins;
 }
 
+/**
+ * Prüft, ob ein Time Value unter 0 ist.
+ * Wenn der Wert nicht unter 0 ist, wird die Zeit einfach wieder zurückgegeben.
+ * Wenn der Wert unter 0 ist, wird der Wert für 0 Stunden und 0 Minuten zurückgegeben.
+ *
+ * @param {Time} time Die Zeit, die geprüft werden soll
+ * @returns {Time} "time" oder 0 Stunden und 0 Minuten
+ */
+function checkIfTimeIsBelowZero(time) {
+    const [hours, mins] = time;
+
+    if (hours < 0 || mins < 0) {
+        return [0,0]
+    }
+
+    return time;
+}
+
 module.exports = {
     minutesToTime,
     calculatePercentage,
     timeLeftToReachPercentage,
-    formatTimeValueToString
+    formatTimeValueToString,
+    checkIfTimeIsBelowZero
 };

@@ -142,3 +142,5 @@
     - Für die neuen Funktionen wurden Teilweise tests geschrieben
 - Die neuen Icons wurden in der DB eingefügt
 - Das Script zum Erstellen der DB wurde auf ein TS Script geändert
+- Nachbesserung: wenn die Zeiten unter 0 sind, werden sie jetzt einfach als 0 angezeigt
+- Bugfix: Der Monat zeigt jetzt nicht mehr eine 1 an, wenn die Werte noch nicht geladen sind

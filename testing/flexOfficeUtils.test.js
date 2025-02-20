@@ -2,7 +2,8 @@ const {
     minutesToTime,
     calculatePercentage,
     timeLeftToReachPercentage,
-    formatTimeValueToString
+    formatTimeValueToString,
+    checkIfTimeIsBelowZero
 } = require("../js/flexOfficeUtils");
 
 describe("minutesToTime", () => {
@@ -49,5 +50,43 @@ describe("formatTimeValueToString", () => {
         const time = [127, 48];
         const result = formatTimeValueToString(time);
         expect(result).toEqual("127.48");
+    });
+});
+
+describe("checkIfTimeIsBelowZero", () => {
+    test("default", () => {
+        const time = [7, 50];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([7, 50]);
+    });
+
+    test("einstellige Minuten", () => {
+        const time = [7, 6];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([7, 6]);
+    });
+
+    test("0h, 0m", () => {
+        const time = [0, 0];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([0, 0]);
+    });
+
+    test("minus Stunden", () => {
+        const time = [-1, 0];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([0, 0]);
+    });
+
+    test("minus Minuten", () => {
+        const time = [0, -14];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([0, 0]);
+    });
+
+    test("minus Stunden und Minuten", () => {
+        const time = [-1, -14];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([0, 0]);
     });
 });
