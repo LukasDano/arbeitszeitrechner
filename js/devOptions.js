@@ -3,7 +3,7 @@ window.onload = function () {
 };
 
 /**
- * Prüft ob die DevOptions aktiv sein sollen und stellt die Buttons dann da
+ * Prüft, ob die DevOptions aktiv sein sollen und stellt die Buttons dann da
  */
 function checkForDevOptions() {
     const devOptionStatus = getBooleanCookie("devOptions");
@@ -16,7 +16,7 @@ function checkForDevOptions() {
 
 /**
  * Startet die DevOptions
- * (Kann in der Console Aufgerufen werden, soll/muss keine usages haben)
+ * (Kann in der Console aufgerufen werden, soll/muss keine usages haben)
  */
 function enableDevOptions() {
     setCookie("devOptions", true);
@@ -33,7 +33,7 @@ function disableDevOptions() {
 }
 
 /**
- * Öffnet oder schließt die DevOptions jenachdem ob sie offen oder geschlossen sind
+ * Öffnet oder schließt die DevOptions je nachdem ob sie offen oder geschlossen sind
  */
 function openOrCloseDevOptionsFromButton() {
     const devOptionsEnabled = getBooleanCookie("devOptions");
@@ -47,8 +47,8 @@ function openOrCloseDevOptionsFromButton() {
 }
 
 /**
- * Aktiviert die DevOptions wenn in der URL bestimmte Parameter drinnen sind
- * (Der benötigite Link: "...index.html?param1=devOptions&param2=true")
+ * Aktiviert die DevOptions, wenn in der URL bestimmte Parameter drinnen sind
+ * (Der benötigte Link: "...index.html?param1=devOptions&param2=true")
  */
 function activateDevOptionsFromURL() {
     const url = new URL(window.location.href);
@@ -82,12 +82,6 @@ function activateDevMode(url, key, value) {
  * Löscht alle Cookies die Zeiten für die Seite speichern
  */
 function resetCookies() {
-    deleteCookie("monday");
-    deleteCookie("tuesday");
-    deleteCookie("wednesday");
-    deleteCookie("thursday");
-    deleteCookie("friday");
-
     deleteCookie("todayTimeStamp");
     deleteCookie("modus");
     deleteCookie("float");
@@ -97,15 +91,6 @@ function resetCookies() {
     deleteCookie("start");
 
     setCookie("todayTimeStamp", new Date().getTime());
-}
-
-/**
- * Löscht alle Daten aus dem Local und dem Session Storage
- */
-function deleteDataFromStorages() {
-    // TODO nach dem nächsten Update entfernen, soll nur aufräumen
-    localStorage.clear();
-    sessionStorage.clear();
 }
 
 /**

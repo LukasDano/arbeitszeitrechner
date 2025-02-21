@@ -248,6 +248,11 @@ $(document).ready(function () {
         $("#end").val(endHours + ":" + formateMins(endMins));
     }
 
+    function setStartTime(startTime) {
+        const [startHours, startMins] = startTime;
+        $("#start").val(startHours + ":" + formateMins(startMins));
+    }
+
     $("#start_Tour").click(function () {
         $(".introjs-relativePosition").addClass("introjs-showElement");
         introJs().refresh();
@@ -444,7 +449,6 @@ $(document).ready(function () {
         setCountdown();
         optimizeEnd();
     } else {
-        deleteDataFromStorages();
         resetCookies();
         setCookieUntilMidnight("modus", "7h06m");
         setCookieUntilMidnight("windowInitLoaded", "true");
@@ -519,7 +523,5 @@ $(document).ready(function () {
             openOrCloseDevOptionsFromButton();
         }
     });
-
-
 
 });

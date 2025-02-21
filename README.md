@@ -34,4 +34,4 @@ npm install --save-dev husky
 
 ## Vorschau
 
-![v2.5](pictures/v2.5.png)
+![v2.5.7](pictures/v2.5.7.png)

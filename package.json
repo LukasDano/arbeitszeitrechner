@@ -4,7 +4,6 @@
     "jest": "^29.7.0"
   },
   "scripts": {
-    "updateIconJSON": "node ./database/icons/generateIconDB.js ../../../../../pictures/icons",
     "tests": "jest"
   },
   "husky": {

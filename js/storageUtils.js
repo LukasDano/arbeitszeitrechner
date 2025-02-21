@@ -72,20 +72,22 @@ function getJSONIconNameCookie(name) {
 
 
 /**
- * Setzt den Wert für einen Cookie unter einem angegeben Namen.
- * Optional kann man auch ein Ablaufdatum mit geben.
+ * Setzt den Wert für einen Cookie unter einem angegebenen Namen.
+ * Optional kann man auch ein Ablaufdatum mitgeben.
  *
  * @param {string} name Der Name, unter dem der Cookie gespeichert werden soll
  * @param {string} value Der Wert, der gespeichert werden soll
- * @param {Date} expirationDate (Optional): Der Zeitpunkt, zu dem der Cookie Ablaeuft bzw. er gelöscht wird.
+ * @param {Date} expirationDate (Optional): Der Zeitpunkt, zu dem der Cookie abläuft bzw. er gelöscht wird.
  */
 function setCookie(name, value, expirationDate) {
+    const cookiePath = getCurrentPath();
     let expires = "";
+
     if (expirationDate instanceof Date) {
         expires = "; expires=" + expirationDate.toUTCString();
     }
     document.cookie =
-        name + "=" + encodeURIComponent(value) + expires + "; path=/";
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
 }
 
 /**
@@ -95,6 +97,7 @@ function setCookie(name, value, expirationDate) {
  * @param {string} value Wert des Cookies
  */
 function setCookieUntilMidnight(name, value) {
+    const cookiePath = getCurrentPath();
     const now = new Date();
     const midnight = new Date(
         now.getFullYear(),
@@ -106,20 +109,60 @@ function setCookieUntilMidnight(name, value) {
     );
     const expires = "; expires=" + midnight.toUTCString();
     document.cookie =
-        name + "=" + encodeURIComponent(value) + expires + "; path=/";
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
 }
 
 /**
- * Setzt das Abaufdatum des Cookies auf in 366 Tagen
+ * Setzt einen Cookie bis zum Ende der aktuellen Woche (Sonntag um Mitternacht)
+ *
+ * @param {string} name Name des Cookies
+ * @param {string} value Wert des Cookies
+ */
+function setCookieUntilEndOfWeek(name, value) {
+    const cookiePath = getCurrentPath();
+    const now = new Date();
+    const endOfWeek = new Date(now);
+
+    // Berechne die Anzahl der Tage bis zum nächsten Sonntag
+    const daysUntilSunday = 7 - now.getDay();
+
+    // Setze das Datum auf den nächsten Sonntag um Mitternacht
+    endOfWeek.setDate(now.getDate() + daysUntilSunday);
+    endOfWeek.setHours(0, 0, 0, 0);
+
+    const expires = "; expires=" + endOfWeek.toUTCString();
+    document.cookie =
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
+}
+
+
+/**
+ * Setzt einen Cookie bis zum Ende des Monats
+ *
+ * @param {string} name Name des Cookies
+ * @param {string} value Wert des Cookies
+ */
+function setCookieUntilEndOfMonth(name, value) {
+    const cookiePath = getCurrentPath();
+    const now = new Date();
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+    const expires = "; expires=" + endOfMonth.toUTCString();
+    document.cookie =
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
+}
+
+/**
+ * Setzt das Ablaufdatum des Cookies auf in 366 Tagen
  *
  * @param {string} name Name unter dem der Cookie gespeichert wird
  * @param {string} value Wert der als gespeichert wird
  */
 function setCookieForMaximumTime(name, value) {
+    const cookiePath = getCurrentPath();
     const now = new Date();
     const expirationDate = new Date(now.getTime() + 366 * 24 * 60 * 60 * 1000); // 366 days in milliseconds
     const expires = "; expires=" + expirationDate.toUTCString();
-    document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+    document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
 }
 
 /**
@@ -128,7 +171,8 @@ function setCookieForMaximumTime(name, value) {
  * @param {string} name Name unter dem der Cookie gespeichert wurde
  */
 function deleteCookie(name) {
-    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    const cookiePath = getCurrentPath();
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=" + cookiePath;
 }
 
 /**
@@ -138,4 +182,144 @@ function deleteCookie(name) {
  */
 function getCurrentKW() {
     return Math.ceil((((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / 86400000) + new Date(new Date().getFullYear(), 0, 1).getDay() + 1) / 7)
+}
+
+/**
+ * Gibt den aktuellen Pfad aus der URL aus.
+ * Das genaue HTML-Dokument wird dabei ignoriert.
+ *
+ * @return {string} Den aktuellen Pfad
+ */
+function getCurrentPath() {
+    const fullPath = window.location.pathname;
+    return fullPath.substring(0, fullPath.lastIndexOf('/') + 1);
+}
+
+/**
+ * Setzt einen ForeverCookie neu, sodass der Zeitraum wieder auf das maximum gesetzt wird.
+ *
+ * @param {string} cookieName Der Name des Cookies, der aktualisiert werden soll
+ */
+function updateForeverCookie(cookieName) {
+    const cookieValue = getCookie(cookieName);
+    setCookieForever(cookieName, cookieValue);
+}
+
+/**
+ * Prüft, ob ein CookieName in einem ListenCookie enthalten ist.
+ *
+ * @param {string} listCookieName Der Name des ListenCookies
+ * @param {string} cookieName Der Name des Cookies der in der Liste sein soll
+ * @return {boolean} Ob der Cookiename in der übergebenen Cookieliste ist
+ */
+function isItemInCookieList(listCookieName, cookieName) {
+    const list = getListCookie(listCookieName);
+
+    if (Array.isArray(list)) {
+        return list.includes(cookieName);
+    }
+    return false;
+}
+
+/**
+ * Setzt das Ablaufdatum für alle ForeverCookies auf das maximum.
+ */
+function updateForeverCookies() {
+    const foreverCookiesListName = "foreverCookies";
+    const listOfForeverCookies = getListCookie(foreverCookiesListName);
+
+    if (listOfForeverCookies !== null) {
+        listOfForeverCookies.forEach(element => {
+            updateForeverCookie(element);
+        });
+    }
+}
+
+/**
+ * Erstellt einen Cookie, der für immer gespeichert wird.
+ *
+ * @param {string} cookieName Der Name des Cookies
+ * @param {string|number|boolean} cookieValue Der Wert des Cookies
+ */
+function setCookieForever(cookieName, cookieValue) {
+    const foreverCookiesListName = "foreverCookies";
+
+    setCookieForMaximumTime(cookieName, cookieValue);
+    putInCookieList(foreverCookiesListName, cookieName);
+}
+
+/**
+ * Gibt eine Liste aus, die als Cookie gespeichert wurde.
+ *
+ * @param {string} listCookieName Der Name des Cookies mit der Liste
+ * @return {[] | null} Der Wert des Cookies
+ */
+function getListCookie(listCookieName) {
+    const cookieValue = document.cookie
+        .split('; ')
+        .find(row => row.startsWith(listCookieName + '='))
+        ?.split('=')[1];
+
+    if (cookieValue) {
+        return JSON.parse(decodeURIComponent(cookieValue));
+    }
+
+    return null;
+}
+
+/**
+ * Speichert einen neuen Eintrag in einer Liste in einem Cookie.
+ *
+ * @param {string} listCookieName Der Name der Liste mit dem Cookies
+ * @param {string} value Der Wert, der in der Liste gespeichert werden soll
+ */
+function putInCookieList(listCookieName, value) {
+    let list = getListCookie(listCookieName);
+    if (!Array.isArray(list)) {
+        list = [];
+    }
+    if (!list.includes(value)) {
+        list.push(value);
+        setCookieForMaximumTime(listCookieName, JSON.stringify(list));
+    }
+}
+
+/**
+ * Löscht einen Eintrag aus einer Cookieliste
+ *
+ * @param {string} listCookieName Der Name der Liste mit dem Cookies
+ * @param {string} value Der Wert, der aus Liste gelöscht werden soll
+ */
+function removeFromCookieList(listCookieName, value) {
+    let list = getListCookie(listCookieName);
+    if (Array.isArray(list)) {
+        const index = list.indexOf(value);
+        if (index > -1) {
+            list.splice(index, 1);
+            setCookieForMaximumTime(listCookieName, JSON.stringify(list));
+        }
+    }
+}
+
+/**
+ * Löscht Forevercookies.
+ *
+ * @param {string} cookieName Der Name des Forevercookies
+ */
+function deleteForeverCookie(cookieName) {
+    const foreverCookiesListName = "foreverCookies";
+    deleteCookie(cookieName);
+    removeFromCookieList(foreverCookiesListName, cookieName);
+}
+
+/**
+ * Löscht alle Cookies
+ */
+function deleteAllCookies() {
+    const cookies = document.cookie.split(';');
+
+    for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        deleteCookie(name);
+    }
 }
