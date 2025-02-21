@@ -30,11 +30,13 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+
             <li class="nav-item">
-                <a class="nav-link" href="weekTime.html">
+                <button class="nav-link" onclick="openWeekTimeCalculator()">
                     <img class="icon" src="pictures/icons/week.png" alt="Wochenzeitrechner">
-                </a>
+                </button>
             </li>
+            <div id="weekTimeCalculator"></div>
 
             <li class="nav-item">
                 <button class="nav-link" onclick="openFlexOfficeCalculator()">
@@ -269,10 +271,13 @@
 <script src="js/customDevOptions.js" defer></script>
 <script src="js/flexOfficeUtils.js" defer></script>
 <script src="js/flexOffice.js" defer></script>
+<script src="js/weekTimeUtils.js" defer></script>
+<script src="js/weekTime.js" defer></script>
 <script defer>
     document.addEventListener('DOMContentLoaded', function () {
         checkForDevOptions();
         removeCustomButtonParameters();
+        updateForeverCookies();
     })
 </script>
 

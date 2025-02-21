@@ -144,3 +144,9 @@
 - Das Script zum Erstellen der DB wurde auf ein TS Script geändert
 - Nachbesserung: wenn die Zeiten unter 0 sind, werden sie jetzt einfach als 0 angezeigt
 - Bugfix: Der Monat zeigt jetzt nicht mehr eine 1 an, wenn die Werte noch nicht geladen sind
+- Das Bild in der Readme wurde auf die 2.5.7 ausgetauscht
+- Bugfix: Die DevOptions werden beim laden der Seite jetzt nicht mehr angezeigt
+- Bugfix: Die ForeverCookies werden jetzt bei jedem laden der Seite neu gesetzt
+- Neue Cookie Funktionen: man kann jetzt welche bis zum Ende des Monats und bis zum Ende der Woche speichern und alle vorhanden Cookies löschen
+- Wochenzeitrechner als Modal umgesetzt und die extra HTML Seite entfernt
+  - Aktuell funktioniert ist aber nur die Wochenarbeitszeit umgesetzt, die Gleitzeit kommt zu einem späteren Zeitpunkt wieder

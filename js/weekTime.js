@@ -1,146 +1,135 @@
-$(document).ready(function () {
-    function getTimeForDay(day) {
-        const [hours, mins] = $(day)
-            .val()
-            .toString()
-            .split(":")
-            .map((time) => parseInt(time, 10));
-        return { hours, mins };
-    }
+/**
+ * Gibt den HTML-Code für das WochenZeit Modal zurück
+ *
+ * @return {string} Den HTML Code Abschnitt für das Modal
+ */
+function weekTimeCalculator() {
 
-    function getTimeForWeek() {
-        return {
-            monday: getTimeForDay("#monday"),
-            tuesday: getTimeForDay("#tuesday"),
-            wednesday: getTimeForDay("#wednesday"),
-            thursday: getTimeForDay("#thursday"),
-            friday: getTimeForDay("#friday"),
-        };
-    }
+    return `
+        <div class="weekTimeOverlay" id="weekTimeOverlay"></div>
+        <div class="form-popup" id="weekTimeForm">
+            <form class="form-container">
+                <span class="close" onclick="closeWeekTimeCalculator()">&times;</span>
+                <h1>Wochenzeit Rechner</h1>
 
-    const timeValues = {
-        get weekTime() {
-            return getTimeForWeek();
-        },
-        get weekWorkTime() {
-            return getWeekWorkTime(this.weekTime);
-        },
-        get floatThisWeek() {
-            return getBooleanCookie("gleittageGenommen");
-        },
-        get weekOverTime() {
-            return calculateWeekOverTime(this.floatThisWeek, this.weekWorkTime);
-        },
-    };
+                <label for="monday">Montag:</label>
+                <input type="time" id="monday" name="monday" required>
+                
+                <label for="tuesday">Dienstag:</label>
+                <input type="time" id="tuesday" name="tuesday" required>
+                
+                <label for="wednesday">Mittwoch:</label>
+                <input type="time" id="wednesday" name="wednesday" required>
+                
+                <label for="thursday">Donnerstag:</label>
+                <input type="time" id="thursday" name="thursday" required>
+                
+                <label for="friday">Freitag:</label>
+                <input type="time" id="friday" name="friday" required>
+                
+                <label id="floatDaysLabel" for="floatDays">Anazahl Gleitage:</label>
+                <input type="number" id="floatDays" name="floatDays" max="7" required>                
+                
+                <div class="text-center" id="weekTimeResult">
+                    <div class="row container row-adaption">
+                        <div class="col text-center">
+                            <label for="weekWorkTime">Wochenarbeitszeit</label>
+                            <p class="display-5" id="weekWorkTime"></p>
+                        </div>
+                    </div>
+                </div>
 
-    function setWeekTime() {
-        const weekTimeAusgabe = formatWeekTime(timeValues.weekWorkTime, true);
-        $("#weekworktime").html(weekTimeAusgabe);
-    }
+                <div class="btn-container">
+                    <button type="button" class="btn" onclick="calculateWeekTime()">
+                        <img class="icon" src="pictures/icons/calculator.png" alt="Enter"/>
+                    </button
+                </div>
+            </form>
+        </div>
+    `;
+}
 
-    function setWeekOverTime() {
-        const weekOverTimeAusgabe = formatWeekTime(timeValues.weekOverTime, false);
-        $("#weekovertime").html(weekOverTimeAusgabe);
-    }
+/**
+ * Öffnet das WochenZeit Modal
+ */
+function openWeekTimeCalculator() {
+    setCookie("settingsOpen", true);
+    document.getElementById("weekTimeForm").style.display = "block"; // Show the form
+    document.getElementById("weekTimeOverlay").style.display = "block"; // Show the overlay
+    document.getElementById("weekTimeResult").style.display = "none";
+    document.getElementById("floatDaysLabel").style.display = "none";
+    document.getElementById("floatDays").style.display = "none";
 
-    function calculateWeekTime(gleittageGenommen) {
-        setCookie("gleittageGenommen", gleittageGenommen);
-        setWeekTime();
-        setWeekOverTime();
-        uploadDaysTime();
-        setCookie("calculated", true);
-    }
+    const fields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+    fields.forEach(field => setInitialValue(field));
+    fields.forEach(field => getDayFieldValueAndUpdateCookie(field));
 
-    $("#weekTimeCalc").click(function () {
-        calculateWeekTime(false);
-    });
-
-    $("#weekTimeCalcFloat").click(function () {
-        calculateWeekTime(true);
-    });
-
-    $("#daytimefields").keypress(function (event) {
-        if (event.which === 13) {
-            setWeekTime();
-            setWeekOverTime();
-            uploadDaysTime();
-            uploadDaysTime();
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            calculateWeekTime();
         }
     });
 
-    $("#monday").change(function () {
-        uploadDaysTime();
-    });
+}
 
-    $("#tuesday").change(function () {
-        uploadDaysTime();
-    });
+/**
+ * Schließt das WochenZeit Modal
+ */
+function closeWeekTimeCalculator() {
+    document.getElementById("weekTimeForm").style.display = "none"; // Hide the form
+    document.getElementById("weekTimeOverlay").style.display = "none"; // Hide the overlay
+    deleteCookie("settingsOpen");
+}
 
-    $("#wednesday").change(function () {
-        uploadDaysTime();
-    });
+/**
+ * Setzt den Wert des Feldes auf den Wert des gleichnamigen Cookies.
+ *
+ * @param {string} field Name des Feldes und des Cookies
+ */
+function setInitialValue(field){
+    const fieldValue = getCookie(field);
 
-    $("#thursday").change(function () {
-        uploadDaysTime();
-    });
-
-    $("#friday").change(function () {
-        uploadDaysTime();
-    });
-
-    function uploadDaysTime() {
-        const monday_time = $("#monday").val();
-        const tuesday_time = $("#tuesday").val();
-        const wednesday_time = $("#wednesday").val();
-        const thursday_time = $("#thursday").val();
-        const friday_time = $("#friday").val();
-
-        setCookie("monday", monday_time);
-        setCookie("tuesday", tuesday_time);
-        setCookie("wednesday", wednesday_time);
-        setCookie("thursday", thursday_time);
-        setCookie("friday", friday_time);
+    if (document.getElementById(field).type === "number"){
+        document.getElementById(field).value = 0;
+        return;
+    } else if (!fieldValue) {
+        document.getElementById(field).value = "00:00";
+        return;
     }
 
-    function getCookiesAndSetInDayFields() {
-        const mondayTime = getCookie("monday");
-        const tuesdayTime = getCookie("tuesday");
-        const wednesdayTime = getCookie("wednesday");
-        const thursdayTime = getCookie("thursday");
-        const fridayTime = getCookie("friday");
+    document.getElementById(field).value = fieldValue;
+}
 
-        if (mondayTime != null) {
-            $("#monday").val(mondayTime);
-        }
+/**
+ * Gibt den Wert den ein Tagesfeld hat zurück
+ *
+ * @param {string} day ElementID eines Tages Feldes
+ * @return {string} Die Arbeitszeiten eines Tages
+ */
+function getDayFieldValueAndUpdateCookie(day) {
+    const dayValue = document.getElementById(day).value;
+    setCookieUntilEndOfWeek(day, dayValue);
+    return dayValue;
 
-        if (tuesdayTime !== null) {
-            $("#tuesday").val(tuesdayTime);
-        }
+}
 
-        if (wednesdayTime !== null) {
-            $("#wednesday").val(wednesdayTime);
-        }
+/**
+ * Berechnet die Wochenzeiten
+ */
+function calculateWeekTime() {
+    document.getElementById("weekTimeResult").style.display = "block";
+    const weekTime = getTimeForWeek();
 
-        if (thursdayTime !== null) {
-            $("#thursday").val(thursdayTime);
-        }
+    let weekWorkTime = getWeekWorkTime(weekTime);
+    weekWorkTime = formatWeekTime(weekWorkTime, true);
 
-        if (fridayTime !== null) {
-            $("#friday").val(fridayTime);
-        }
-    }
+    document.getElementById("weekWorkTime").textContent = weekWorkTime;
 
-    if (getCookie("weekWindowInitLoaded") && getCookie("monday") != null) {
-        getCookiesAndSetInDayFields();
+}
 
-        let calculated = getBooleanCookie("calculated");
+document.addEventListener('DOMContentLoaded', function () {
+    refreshDevOptionCookies();
 
-        if (calculated) {
-            calculateWeekTime(true);
-        } else if (!calculated) {
-            calculateWeekTime(false);
-        } else {
-            $("#monday").focus();
-        }
-    }
+    const settingsContainer = document.getElementById("weekTimeCalculator");
+    settingsContainer.innerHTML = weekTimeCalculator();
 });

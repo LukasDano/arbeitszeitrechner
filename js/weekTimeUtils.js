@@ -7,24 +7,15 @@
 function getWeekWorkTime(weekTime) {
     let totalHours = 0;
     let totalMins = 0;
-    let workedDays = 5;
 
     // Iterate through the week
     for (const day in weekTime) {
         if (weekTime.hasOwnProperty(day)) {
             totalHours += weekTime[day].hours;
             totalMins += weekTime[day].mins;
-
-            const workedThisDay =
-                weekTime[day].hours === 0 && weekTime[day].mins === 0;
-
-            if (workedThisDay) {
-                workedDays -= 1;
-            }
         }
     }
 
-    setCookie("workedDays", workedDays);
     totalHours += Math.floor(totalMins / 60);
     totalMins = totalMins % 60;
 
@@ -34,25 +25,11 @@ function getWeekWorkTime(weekTime) {
 /**
  * Rechnet die Gleitzeit für diese Woche aus (Kann nicht getestet werden)
  *
- * @param {boolean} gleitagGenommen
+ * @param {number} floatDaysThisWeek Die Anzahl der Gleittage diese Woche
  * @param {Time} weekWorkTime Gesamt Arbeitszeit einer Woche
  * @returns Die Überstunden der gesamten Woche in Stunden und Minuten
  */
-function calculateWeekOverTime(gleitagGenommen, weekWorkTime) {
-    const gleittageThisWeek = getIntCookie("gleittage");
-    let workedDays = getIntCookie("workedDays");
-
-    if (gleittageThisWeek && gleitagGenommen) {
-        workedDays = gleittageThisWeek + workedDays;
-        deleteCookie("gleittage");
-    } else if (gleitagGenommen) {
-        const gleittageThisWeek = parseInt(
-            prompt("Anzahl Gleitage diese Woche:", ""),
-            10,
-        );
-        workedDays = gleittageThisWeek + workedDays;
-        setCookie("gleittage", gleittageThisWeek);
-    }
+function calculateWeekOverTime(floatDaysThisWeek, weekWorkTime) {
 
     const shouldHours = 35;
     const shouldMins = 30;
@@ -81,11 +58,10 @@ function calculateWeekOverTime(gleitagGenommen, weekWorkTime) {
  * Formatiert die Arbeits- bzw. die Gleitzeit der Woche
  *
  * @param {Time} weekTime Die Arbeitszeit/Gleitzeit der Woche
- * @param {boolean} workTime Der Übergebene Wert ist die Arbeitszeit
  *
  * @return {string} Wochen-/Gleitzeit als lesbarer String
  */
-function formatWeekTime(weekTime, workTime) {
+function formatWeekTime(weekTime) {
     let [weekHours, weekMins] = weekTime;
     let weekOverTimeAusgabe;
 
@@ -108,11 +84,33 @@ function formatWeekTime(weekTime, workTime) {
         weekOverTimeAusgabe = "0.0 h";
     }
 
-    if (workTime) {
-        weekOverTimeAusgabe = weekOverTimeAusgabe.substring(1);
-    }
-
     return weekOverTimeAusgabe;
+}
+
+/**
+ * Gibt die Zeiten eines Tages zurück
+ *
+ * @param {string} day ElementID eines Tages Feldes
+ * @return {DayTime} Die Arbeitszeiten eines Tages
+ */
+function getTimeForDay(day){
+    const [hours, mins] =  getDayFieldValueAndUpdateCookie(day).toString().split(":").map((time) => parseInt(time, 10));
+    return {hours, mins};
+}
+
+/**
+ * Gibt die Arbeitszeiten der gesamnten Woche zurück
+ *
+ * @return {WeekTime} Die Arbeitszeiten jedes Wochentages zusammengefasst
+ */
+function getTimeForWeek() {
+    return {
+        monday: getTimeForDay("monday"),
+        tuesday: getTimeForDay("tuesday"),
+        wednesday: getTimeForDay("wednesday"),
+        thursday: getTimeForDay("thursday"),
+        friday: getTimeForDay("friday"),
+    };
 }
 
 module.exports = {

@@ -337,6 +337,7 @@ section {
   }
 
 .devOption{
+    display: none;
     background-color: #404a57;
 }
 
@@ -405,6 +406,17 @@ section {
 }
 
 .flexOfficeOverlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Blur effect on the background */
+}
+
+.weekTimeOverlay {
     display: none; /* Hidden by default */
     position: fixed;
     top: 0;

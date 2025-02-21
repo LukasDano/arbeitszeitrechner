@@ -113,6 +113,30 @@ function setCookieUntilMidnight(name, value) {
 }
 
 /**
+ * Setzt einen Cookie bis zum Ende der aktuellen Woche (Sonntag um Mitternacht)
+ *
+ * @param {string} name Name des Cookies
+ * @param {string} value Wert des Cookies
+ */
+function setCookieUntilEndOfWeek(name, value) {
+    const cookiePath = getCurrentPath();
+    const now = new Date();
+    const endOfWeek = new Date(now);
+
+    // Berechne die Anzahl der Tage bis zum nächsten Sonntag
+    const daysUntilSunday = 7 - now.getDay();
+
+    // Setze das Datum auf den nächsten Sonntag um Mitternacht
+    endOfWeek.setDate(now.getDate() + daysUntilSunday);
+    endOfWeek.setHours(0, 0, 0, 0);
+
+    const expires = "; expires=" + endOfWeek.toUTCString();
+    document.cookie =
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
+}
+
+
+/**
  * Setzt einen Cookie bis zum Ende des Monats
  *
  * @param {string} name Name des Cookies
@@ -204,11 +228,11 @@ function updateForeverCookies() {
     const foreverCookiesListName = "foreverCookies";
     const listOfForeverCookies = getListCookie(foreverCookiesListName);
 
-    listOfForeverCookies.forEach(element => {
-        updateForeverCookie(element);
-    });
-
-    updateForeverCookie(foreverCookiesListName);
+    if (listOfForeverCookies !== null) {
+        listOfForeverCookies.forEach(element => {
+            updateForeverCookie(element);
+        });
+    }
 }
 
 /**
@@ -286,4 +310,16 @@ function deleteForeverCookie(cookieName) {
     const foreverCookiesListName = "foreverCookies";
     deleteCookie(cookieName);
     removeFromCookieList(foreverCookiesListName, cookieName);
+}
+
+/**
+ * Löscht alle Cookies
+ */
+function deleteAllCookies() {
+    const cookies = document.cookie.split(';');
+
+    for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        deleteCookie(name);
+    }
 }

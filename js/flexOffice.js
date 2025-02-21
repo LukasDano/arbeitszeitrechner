@@ -1,5 +1,5 @@
 /**
- * Gibt den HTML-Code für das FlexOfficeModal zurück
+ * Gibt den HTML-Code für das FlexOffice Modal zurück
  *
  * @return {string} Den HTML Code Abschnitt für das Settings Modal
  */
@@ -79,9 +79,9 @@ function setInitialValue(field){
 }
 
 /**
- * Öffnet das SettingsModal
+ * Öffnet das FlexOffice Modal
  */
-async function openFlexOfficeCalculator() {
+function openFlexOfficeCalculator() {
     setCookie("settingsOpen", true);
     document.getElementById("flexOfficeForm").style.display = "block"; // Show the form
     document.getElementById("flexOfficeOverlay").style.display = "block"; // Show the overlay
@@ -131,7 +131,7 @@ async function openFlexOfficeCalculator() {
 }
 
 /**
- * Schließt das SettingsModal
+ * Schließt das FlexOffice Modal
  */
 function closeFlexOfficeCalculator() {
     document.getElementById("flexOfficeForm").style.display = "none"; // Hide the form

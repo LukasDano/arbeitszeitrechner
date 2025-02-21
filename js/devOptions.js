@@ -82,12 +82,6 @@ function activateDevMode(url, key, value) {
  * Löscht alle Cookies die Zeiten für die Seite speichern
  */
 function resetCookies() {
-    deleteCookie("monday");
-    deleteCookie("tuesday");
-    deleteCookie("wednesday");
-    deleteCookie("thursday");
-    deleteCookie("friday");
-
     deleteCookie("todayTimeStamp");
     deleteCookie("modus");
     deleteCookie("float");
