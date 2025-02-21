@@ -10,7 +10,7 @@ function weekTimeCalculator() {
         <div class="form-popup" id="weekTimeForm">
             <form class="form-container">
                 <span class="close" onclick="closeWeekTimeCalculator()">&times;</span>
-                <h1>Wochenzeit Rechner</h1>
+                <h1>Wochenzeitrechner</h1>
 
                 <label for="monday">Montag:</label>
                 <input type="time" id="monday" name="monday" required>
@@ -101,7 +101,7 @@ function setInitialValue(field){
 }
 
 /**
- * Gibt den Wert den ein Tagesfeld hat zurück
+ * Gibt den Wert, den ein Tagesfeld hat zurück
  *
  * @param {string} day ElementID eines Tages Feldes
  * @return {string} Die Arbeitszeiten eines Tages
