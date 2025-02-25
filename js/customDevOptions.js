@@ -215,7 +215,7 @@ function devOptionSettings() {
  * Öffnet das SettingsModal
  */
 async function openDevOptionsForm() {
-    setCookie("settingsOpen", true);
+    setCookieFor10Minutes("settingsOpen", true);
     document.getElementById("devOptionsForm").style.display = "block"; // Show the form
     document.getElementById("devOptionsOverlay").style.display = "block"; // Show the overlay
 

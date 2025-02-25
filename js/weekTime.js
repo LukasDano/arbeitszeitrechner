@@ -53,7 +53,7 @@ function weekTimeCalculator() {
  * Öffnet das WochenZeit Modal
  */
 function openWeekTimeCalculator() {
-    setCookie("settingsOpen", true);
+    setCookieFor10Minutes("settingsOpen", true);
     document.getElementById("weekTimeForm").style.display = "block"; // Show the form
     document.getElementById("weekTimeOverlay").style.display = "block"; // Show the overlay
     document.getElementById("weekTimeResult").style.display = "none";

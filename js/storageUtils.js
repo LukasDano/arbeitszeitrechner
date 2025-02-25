@@ -91,6 +91,21 @@ function setCookie(name, value, expirationDate) {
 }
 
 /**
+ * Setzt einen Cookie, der sich nach 10 Minuten löscht
+ *
+ * @param {string} name Name des Cookies
+ * @param {string} value Wert des Cookies
+ */
+function setCookieFor10Minutes(name, value) {
+    const cookiePath = getCurrentPath();
+    const now = new Date();
+    const expiresDate = new Date(now.getTime() + (10 * 60 * 1000));
+    const expires = "; expires=" + expiresDate.toUTCString();
+    document.cookie =
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
+}
+
+/**
  * Setzt einen Cookie für den Rest des Tages
  *
  * @param {string} name Name des Cookies
