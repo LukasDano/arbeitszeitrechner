@@ -230,9 +230,8 @@ $(document).ready(function () {
 
     // Funktion zur Berechnung der Arbeitszeit, der Differenz zur Regeldienstzeit
     function calculate() {
-        let [workHours, workMins] = timeValues.workTime;
-        const formattedTime = formatTime(workHours, workMins);
-        [workHours, workMins] = formattedTime;
+        const formattedTime = formatTime(timeValues.workTime);
+        const [workHours, workMins] = formattedTime;
 
         if (isNaN(workHours) && isNaN(workMins)) {
             $("#trueworktime").html("0:00");
@@ -245,12 +244,12 @@ $(document).ready(function () {
 
     function setEnd() {
         let [endHours, endMins] = timeValues.normalEnd;
-        $("#end").val(endHours + ":" + formateMins(endMins));
+        $("#end").val(endHours + ":" + formatMins(endMins));
     }
 
     function setStartTime(startTime) {
         const [startHours, startMins] = startTime;
-        $("#start").val(startHours + ":" + formateMins(startMins));
+        $("#start").val(startHours + ":" + formatMins(startMins));
     }
 
     $("#start_Tour").click(function () {

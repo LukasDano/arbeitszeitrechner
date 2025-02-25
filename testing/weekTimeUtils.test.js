@@ -2,7 +2,7 @@
   getWeekWorkTime,
   calculateWeekOverTime,
   formatWeekTime,
-} = require("../js/weekTimeUtils");
+} = require("../js/custom/weekTimeUtils");
 
 describe("getWeekWorkTime", () => {
   global.setCookie = jest.fn();

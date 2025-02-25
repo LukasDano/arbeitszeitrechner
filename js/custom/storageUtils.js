@@ -191,15 +191,6 @@ function deleteCookie(name) {
 }
 
 /**
- * Gibt die aktuelle Kalenderwoche zurück
- *
- * @return {number} Die Aktuelle KW
- */
-function getCurrentKW() {
-    return Math.ceil((((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / 86400000) + new Date(new Date().getFullYear(), 0, 1).getDay() + 1) / 7)
-}
-
-/**
  * Gibt den aktuellen Pfad aus der URL aus.
  * Das genaue HTML-Dokument wird dabei ignoriert.
  *
