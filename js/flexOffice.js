@@ -82,7 +82,7 @@ function setInitialValue(field){
  * Öffnet das FlexOffice Modal
  */
 function openFlexOfficeCalculator() {
-    setCookie("settingsOpen", true);
+    setCookieFor10Minutes("settingsOpen", true);
     document.getElementById("flexOfficeForm").style.display = "block"; // Show the form
     document.getElementById("flexOfficeOverlay").style.display = "block"; // Show the overlay
     document.getElementById("flexOfficeResult").style.display = "none";

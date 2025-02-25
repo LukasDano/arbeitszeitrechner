@@ -150,3 +150,4 @@
 - Neue Cookie Funktionen: man kann jetzt welche bis zum Ende des Monats und bis zum Ende der Woche speichern und alle vorhanden Cookies löschen
 - Wochenzeitrechner als Modal umgesetzt und die extra HTML Seite entfernt
   - Aktuell funktioniert ist aber nur die Wochenarbeitszeit umgesetzt, die Gleitzeit kommt zu einem späteren Zeitpunkt wieder
+- Bugfix es wird maximal 10 Minuten gespeichert, das ein Modal geöffnet ist
