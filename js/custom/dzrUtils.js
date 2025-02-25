@@ -538,31 +538,22 @@ function calculateDecreasedValue(float) {
  */
 function createGleitzeitAusgabeFromFloat(float) {
     let [gleitHours, gleitMins] = float;
-    let gleitAusgabe;
 
     if (typeof jest !== "undefined") {
-        const formatMins = require("./utility.js").formatMins;
-
-        if (gleitHours < 0 || gleitMins < 0) {
-            gleitHours = Math.abs(gleitHours);
-            gleitMins = Math.abs(gleitMins);
-
-            gleitAusgabe = "-" + gleitHours + "." + formatMins(gleitMins);
-        } else if (gleitHours > 0 || gleitMins > 0) {
-            gleitAusgabe = "+" + gleitHours + "." + formatMins(gleitMins);
-        }
-    } else {
-        if (gleitHours < 0 || gleitMins < 0) {
-            gleitHours = Math.abs(gleitHours);
-            gleitMins = Math.abs(gleitMins);
-
-            gleitAusgabe = "-" + gleitHours + "." + formatMins(gleitMins);
-        } else if (gleitHours > 0 || gleitMins > 0) {
-            gleitAusgabe = "+" + gleitHours + "." + formatMins(gleitMins);
-        }
+        var formatMins = require("./utility.js").formatMins;
     }
 
-    return gleitAusgabe;
+    // Funktion für die Formatierung definieren, falls nicht vorhanden
+    formatMins = formatMins || ((mins) => String(mins).padStart(2, "0"));
+
+    // Vorzeichen ermitteln
+    let sign = (gleitHours < 0 || gleitMins < 0) ? "-" : "+";
+
+    // Absolutwerte nehmen
+    gleitHours = Math.abs(gleitHours);
+    gleitMins = Math.abs(gleitMins);
+
+    return sign + gleitHours + "." + formatMins(gleitMins);
 }
 
 /**
