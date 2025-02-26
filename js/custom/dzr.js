@@ -168,7 +168,14 @@ $(document).ready(function () {
     });
 
     $("#end").change(function () {
+        reactToEndTimeChange();
+    });
 
+    $("#soll").change(function () {
+        calculate();
+    });
+
+    function reactToEndTimeChange(){
         if (isValidTime(timeValues.endTime)) {
             calculate();
             setGleitzeit();
@@ -182,11 +189,7 @@ $(document).ready(function () {
             setCountdown();
             uploadGleitzeit();
         }
-    });
-
-    $("#soll").change(function () {
-        calculate();
-    });
+    }
 
     function setCountdown() {
         const currHour = new Date().getHours();
@@ -244,6 +247,11 @@ $(document).ready(function () {
 
     function setEnd() {
         let [endHours, endMins] = timeValues.normalEnd;
+        $("#end").val(endHours + ":" + formatMins(endMins));
+    }
+
+    function setEndTime(endTime) {
+        let [endHours, endMins] = endTime;
         $("#end").val(endHours + ":" + formatMins(endMins));
     }
 
@@ -447,6 +455,7 @@ $(document).ready(function () {
         setIstTime();
         setCountdown();
         optimizeEnd();
+        updateEndTimeAfterWorkIsOver();
     } else {
         resetCookies();
         setCookieUntilMidnight("modus", "7h06m");
@@ -455,8 +464,6 @@ $(document).ready(function () {
     }
 
     function floatValueCheck() {
-        // TODO when work, remove old code
-        //const float = $("#float").val();
         const float = timeValues.floatTime;
 
         if (float == null || float === "") {
@@ -495,6 +502,37 @@ $(document).ready(function () {
         switchModeIfIsAllowed();
     }
 
+    function swapCurrentOverTimeIcon() {
+        const overTimeAutomaticActive = getBooleanCookie("overTimeAutomaticActive");
+
+        if (overTimeAutomaticActive){
+            document.getElementById("overTimeAutomaticIcon").alt = "overTimeAutomaticOff";
+            document.getElementById("overTimeAutomaticIcon").src = "pictures/icons/automaticOff.png";
+            setCookieForever("overTimeAutomaticActive", false);
+            return;
+        }
+
+        document.getElementById("overTimeAutomaticIcon").alt = "overTimeAutomaticOn";
+        document.getElementById("overTimeAutomaticIcon").src = "pictures/icons/automaticOn.png";
+        setCookieForever("overTimeAutomaticActive", true);
+    }
+
+    function updateEndTimeAfterWorkIsOver() {
+        const overTimeAutomaticActive = getBooleanCookie("overTimeAutomaticActive");
+
+        if (overTimeAutomaticActive) {
+            const currentTime = getCurrentTime();
+            const laterTime = getLaterTime(timeValues.endTime, currentTime);
+
+            if (laterTime === currentTime) {
+                alert("Deine Arbeitszeit ist vorbei")
+                setEndTime(currentTime);
+                reactToEndTimeChange();
+                setFloatValue(increaseFloat());
+            }
+        }
+    }
+
     document
         .getElementById("float")
         .addEventListener("keydown", function (event) {
@@ -511,12 +549,30 @@ $(document).ready(function () {
             setFloatValue(changedValue);
         });
 
-    document.getElementById("addBetterDefaultFloat").addEventListener("click", function (event) {
+    document.getElementById("addBetterDefaultFloat").addEventListener("click", () => {
         const floatFourteenMinutes = [0, 14];
         setFloatValue(floatFourteenMinutes);
-    })
+    });
 
-    document.addEventListener('keydown', function (event) {
+    document.getElementById("overTimeAutomatic").addEventListener("click", () => {
+        swapCurrentOverTimeIcon();
+    });
+
+    document.getElementById("currentStatsMessageButton").addEventListener("click", () => {
+        const currentStart = timeValues.startTime;
+        const currentTime = getCurrentTime();
+        const currentPause = timeValues.pauseTime;
+        openCurrentStatsMessageWithValues(currentStart, currentTime, currentPause);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'F1') {
+            event.preventDefault();
+            resetToDefault();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
         if (event.key === 'F2') {
             event.preventDefault();
             openOrCloseDevOptionsFromButton();

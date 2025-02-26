@@ -7,8 +7,8 @@
     <meta name="description" content="Arbeitszeitrechner">
     <link rel="icon" href="favicon.ico">
 
-    <meta name="Version" content="2.5.7">
-    <meta name="VersionName" content="FlexOffice-Zeitrechner">
+    <meta name="Version" content="v2.5.8">
+    <meta name="VersionName" content="new File structure, overTimeAutomatic, currentStats und KeyboardControl">
     <meta name="GitHub" content="https://github.com/LukasDano/arbeitszeitrechner">
 
     <title>Arbeitszeitrechner</title>
@@ -45,6 +45,13 @@
             </li>
             <div id="flexOfficeCalculator"></div>
 
+            <li class="nav-item">
+                <button class="nav-link" id="currentStatsMessageButton">
+                    <img class="icon" src="pictures/icons/earlier.png" alt="CurrentStatsMessage">
+                </button>
+            </li>
+            <div id="currentStatsMessage"></div>
+
             <div class="devOption">
                 <li class="nav-item">
                     <a class="nav-link"
@@ -67,6 +74,14 @@
                 <li class="nav-item">
                     <button class="nav-link" id="addBetterDefaultFloat">
                         <img class="icon" src="pictures/icons/plusFourteen.png" alt="+0.14">
+                    </button>
+                </li>
+            </div>
+
+            <div class="devOption">
+                <li class="nav-item">
+                    <button class="nav-link" id="overTimeAutomatic">
+                        <img id="overTimeAutomaticIcon" class="icon" src="pictures/icons/automaticOff.png" alt="overTimeAutomaticOff">
                     </button>
                 </li>
             </div>
@@ -112,9 +127,9 @@
                 </li>
             </div>
 
-            <div class="devOption"><div class="customDevOption One"></div></div>
-            <div class="devOption"><div class="customDevOption Two"></div></div>
-            <div class="devOption"><div class="customDevOption Three"></div></div>
+            <div class="devOption"><div id="customDevOptionOne" class="customDevOption One"></div></div>
+            <div class="devOption"><div id="customDevOptionTwo" class="customDevOption Two"></div></div>
+            <div class="devOption"><div id="customDevOptionThree" class="customDevOption Three"></div></div>
             <div id="devOptionSettings"></div>
         </ul>
 
@@ -276,12 +291,25 @@
 <script src="js/custom/flexOffice.js" defer></script>
 <script src="js/custom/weekTimeUtils.js" defer></script>
 <script src="js/custom/weekTime.js" defer></script>
+<script src="js/custom/currentStatsMessage.js" defer></script>
 <script defer>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
+        setUpWeekTime();
+        setUpFlexOffice();
+        setUpDevOptions();
+        setUpCurrentStatsMessageOverlay();
+
+        refreshDevOptionCookies();
+        disableHTMLElements();
+
         checkForDevOptions();
         removeCustomButtonParameters();
         updateForeverCookies();
-    })
+    });
+
+    window.onload = () => {
+        activateDevOptionsFromURL();
+    };
 </script>
 
 

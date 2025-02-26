@@ -1,7 +1,3 @@
-window.onload = function () {
-    activateDevOptionsFromURL();
-};
-
 /**
  * Prüft, ob die DevOptions aktiv sein sollen und stellt die Buttons dann da
  */

@@ -16,3 +16,12 @@ function getDaysInMonth() {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
 }
+
+/**
+ * Gibt die aktuelle Zeit als Time Wert aus
+ *
+ * @return {Time} Die aktuelle Uhrzeit in Stunden und Minuten
+ */
+function getCurrentTime(){
+    return [new Date().getHours(), new Date().getMinutes()];
+}

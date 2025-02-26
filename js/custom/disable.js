@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+function disableHTMLElements() {
     const disabledDivs = document.querySelectorAll(".disabled");
 
     disabledDivs.forEach(function (div) {
@@ -10,4 +10,4 @@ document.addEventListener("DOMContentLoaded", function () {
             element.setAttribute("tabindex", "-1");
         });
     });
-});
+}

@@ -68,7 +68,10 @@ function listAllCustomDevOptionButtons() {
     return classNames;
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+/**
+ * Lädt alle Funktionalitäten und Daten zu den DevOptions
+ */
+function setUpDevOptions() {
     refreshDevOptionCookies();
     const options = getAllDevOptions();
 
@@ -90,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-});
+}
 
 /**
  * Guckt welche Cookies für die DevOptions existieren und setzt diese dann neu.
@@ -203,7 +206,7 @@ function devOptionSettings() {
                 <input type="text" id="url" name="url" placeholder="URL eingeben" required>
 
                 <div class="btn-container">
-                    <button class="btn" onclick="submitForm()">Save</button>
+                    <button class="btn" onclick="saveCustomButton()">Save</button>
                     <button class="btn" onclick="deleteCustomButton()">Delete</button>
                 </div>
             </form>
@@ -236,6 +239,25 @@ async function openDevOptionsForm() {
     updateDropdownValue(urlElementId, ulrPlaceHolderText);
 
     updateValues();
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeDevOptionsForm();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            saveCustomButton();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Delete') {
+            deleteCustomButton();
+        }
+    });
 }
 
 /**
@@ -247,17 +269,26 @@ function closeDevOptionsForm() {
     deleteCookie("settingsOpen");
 }
 
-function submitForm() {
+function saveCustomButton() {
     const customButtonName = document.getElementById("devOptionButtonDropDown").value;
     const name = document.getElementById("name").value;
     const icon = document.getElementById("iconDropDown").value;
     const url = document.getElementById("url").value;
 
     addDevOptionFromModal(customButtonName, url, name, icon);
-    closeForm();
 
     removeCustomButtonParameters();
     window.location.href = "";
+}
+
+function deleteCustomButton() {
+    const selectedCustomDevOptionsButton = document.getElementById("devOptionButtonDropDown").value;
+    deleteForeverCookie(selectedCustomDevOptionsButton);
+    deleteForeverCookie(selectedCustomDevOptionsButton + "Icon");
+    deleteForeverCookie(selectedCustomDevOptionsButton + "AltName");
+
+    closeDevOptionsForm();
+    document.getElementById(selectedCustomDevOptionsButton).style.display = "none";
 }
 
 /**
@@ -343,11 +374,4 @@ async function updateValues() {
             iconDropDown.value = getJSONIconNameCookie("customDevOptionThreeIcon") || defaultIconText;
             break;
     }
-}
-
-function deleteCustomButton() {
-    const selectedCustomDevOptionsButton = document.getElementById("devOptionButtonDropDown").value;
-    deleteForeverCookie(selectedCustomDevOptionsButton);
-    deleteForeverCookie(selectedCustomDevOptionsButton + "Icon");
-    deleteForeverCookie(selectedCustomDevOptionsButton + "AltName");
 }

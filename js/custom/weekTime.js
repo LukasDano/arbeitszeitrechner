@@ -61,12 +61,19 @@ function openWeekTimeCalculator() {
     document.getElementById("floatDays").style.display = "none";
 
     const fields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-    fields.forEach(field => setInitialValue(field));
+    fields.forEach(field => setInitialWeekTimeValue(field));
     fields.forEach(field => getDayFieldValueAndUpdateCookie(field));
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             calculateWeekTime();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeWeekTimeCalculator();
         }
     });
 
@@ -86,7 +93,7 @@ function closeWeekTimeCalculator() {
  *
  * @param {string} field Name des Feldes und des Cookies
  */
-function setInitialValue(field){
+function setInitialWeekTimeValue(field){
     const fieldValue = getCookie(field);
 
     if (document.getElementById(field).type === "number"){
@@ -127,9 +134,10 @@ function calculateWeekTime() {
 
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    refreshDevOptionCookies();
-
+/**
+ * Lädt alle Funktionalitäten und Daten zur Wochenzeitrechnung
+ */
+function setUpWeekTime() {
     const settingsContainer = document.getElementById("weekTimeCalculator");
     settingsContainer.innerHTML = weekTimeCalculator();
-});
+}
