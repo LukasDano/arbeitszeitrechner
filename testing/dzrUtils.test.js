@@ -2,13 +2,11 @@ const {
     calculateStartEndeTimeDiff,
     calculateIstSollTimeDiff,
     calculateWorkTime,
-    formatTime,
     calculateNormalEnd,
     calculateIstTime,
     calculateGleitzeit,
     roundStart,
     roundEnd,
-    formateMins,
     calculateEndForFloat,
     calculateTimeToAddForEndWithPositiveFloat,
     calculateTimeToAddForEndWithNegativeFloat,
@@ -20,8 +18,7 @@ const {
     createGleitzeitAusgabeFromFloat,
     validateFloat,
     isValidTime,
-    getLaterTime
-} = require("../js/dzrUtils");
+} = require("../js/custom/dzrUtils");
 
 describe("calculateStartEndeTimeDiff", () => {
     test("should return the correct difference when end time is after start time", () => {
@@ -89,22 +86,6 @@ describe("calculateWorkTime", () => {
         const pauseTime = [0, 30];
         const result = calculateWorkTime(diffTime, pauseTime);
         expect(result).toEqual([7, 6]);
-    });
-});
-
-describe("formatTime", () => {
-    test("correct when less then 10 mins", () => {
-        const hours = 7;
-        const mins = 6;
-        const result = formatTime(hours, mins);
-        expect(result).toEqual("7.06");
-    });
-
-    test("correct when more then 10 mins", () => {
-        const hours = 7;
-        const mins = 36;
-        const result = formatTime(hours, mins);
-        expect(result).toEqual("7.36");
     });
 });
 
@@ -191,20 +172,6 @@ describe("roundEnd", () => {
         const startTime = [15, 25];
         const result = roundEnd(startTime);
         expect(result).toEqual([15, 25]);
-    });
-});
-
-describe("formateMins", () => {
-    test("return correct with less than 10", () => {
-        const gleitMins = 4;
-        const result = formateMins(gleitMins);
-        expect(result).toEqual("04");
-    });
-
-    test("return correct with more than 10", () => {
-        const istTime = 12;
-        const result = formateMins(istTime);
-        expect(result).toEqual("12");
     });
 });
 
@@ -460,29 +427,5 @@ describe("isValidTime", () => {
         const time = [12, undefined];
         const result = isValidTime(time);
         expect(result).toEqual(false);
-    });
-});
-
-describe("getLaterTime", () => {
-
-    test("correct with timeTwo beeing bigger", () => {
-        const timeOne = [12,21];
-        const timeTwo = [14,51];
-        const result = getLaterTime(timeOne, timeTwo);
-        expect(result).toEqual(timeTwo);
-    });
-
-    test("correct with timeOne beeing bigger", () => {
-        const timeOne = [15,1];
-        const timeTwo = [14,51];
-        const result = getLaterTime(timeOne, timeTwo);
-        expect(result).toEqual(timeOne);
-    });
-
-    test("correct with timeOne and timeTwo beeing equal", () => {
-        const timeOne = [13,20];
-        const timeTwo = [13,20];
-        const result = getLaterTime(timeOne, timeTwo);
-        expect(result).toEqual(timeOne);
     });
 });

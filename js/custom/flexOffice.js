@@ -70,7 +70,7 @@ function flexOfficeCalculator() {
  *
  * @param {string} field Name des Feldes und des Cookies
  */
-function setInitialValue(field){
+function setInitialFlexOfficeValue(field){
     let cookieValue = getIntCookie(field);
     if (!cookieValue) {
         cookieValue = 0;
@@ -90,13 +90,7 @@ function openFlexOfficeCalculator() {
     const [workHoursPerMonth, workMinutesPerMonth] = getWorkTimePerMonth();
 
     const fields = ["daysOff", "flexHours", "flexMinutes"];
-    fields.forEach(field => {setInitialValue(field)});
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            calculateFlexOffice();
-        }
-    });
+    fields.forEach(field => {setInitialFlexOfficeValue(field)});
 
     document.getElementById("daysOff").addEventListener('change', () => {
         const daysOff = getNumberFromElement("daysOff");
@@ -126,6 +120,19 @@ function openFlexOfficeCalculator() {
         }
         if (flexMinutes < 0){
             document.getElementById("flexMinutes").value = 0;
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            calculateFlexOffice();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeFlexOfficeCalculator();
         }
     });
 }
@@ -162,13 +169,14 @@ function calculateFlexOffice() {
 
     document.getElementById("currentMonth").textContent = getValidCurrentMonthOutPut();
     document.getElementById("workDaysCurrentMonth").textContent = getWorkDaysInMonth();
-    document.getElementById("restFlexTime").textContent = formatTimeValueToString(restFlexTimeThisMonth);
+    document.getElementById("restFlexTime").textContent = formatTime(restFlexTimeThisMonth);
 
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    refreshDevOptionCookies();
-
+/**
+ * Lädt alle Funktionalitäten und Daten zum Flex Office
+ */
+function setUpFlexOffice() {
     const settingsContainer = document.getElementById("flexOfficeCalculator");
     settingsContainer.innerHTML = flexOfficeCalculator();
-});
+}

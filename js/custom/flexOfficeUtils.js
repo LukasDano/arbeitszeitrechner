@@ -86,7 +86,7 @@ function getWorkDaysInMonth() {
 /**
  * Liefert die Anzahl der Arbeitstage des laufenden Monats
  *
- * @deprecated The Function funktioniert aktuell nicht, und wird zu einem späteren Zeitpunkt eingebunden
+ * @deprecated Die Funktion funktioniert aktuell nicht, und wird zu einem späteren Zeitpunkt eingebunden
  * @returns {Promise<number>} Arbeitstage des aktuellen Monats
  */
 async function getWorkDaysInMonthFromAPI() {
@@ -117,19 +117,6 @@ async function getWorkDaysInMonthFromAPI() {
     }
 
     return workDays;
-}
-
-/**
- * Konvertiert Minuten in Stunden und Minuten
- *
- * @param {number} minutes Die Minuten, die konvertiert werden sollen
- * @returns {Time} Die Minuten im Time Format
- */
-function minutesToTime(minutes) {
-    const hours = Math.floor(minutes / 60);
-    const remainingMinutes = minutes % 60;
-
-    return [hours, remainingMinutes];
 }
 
 /**
@@ -205,16 +192,6 @@ function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote) {
 }
 
 /**
- * Gibt die Tage des aktuellen Monats aus
- *
- * @returns {number} Tage des aktuellen Monats
- */
-function getDaysInMonth() {
-    const today = new Date();
-    return new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-}
-
-/**
  * Gibt den aktuellen Monat mit einer 0 davor aus, sofern die Zahl einstellig ist
  *
  * @returns {string} Eine schönere Ausgabe für die Monatszahl
@@ -227,22 +204,6 @@ function getValidCurrentMonthOutPut() {
     } else {
         return currentMonthNumber.toString();
     }
-}
-
-/**
- * Formatiert ein Time Value zu einem schöneren String
- *
- * @param {Time} time Die Zeit, die formatiert werden soll
- * @returns {string} Die Zeit nach dem Format: h.mm oder hh.mm
- */
-function formatTimeValueToString(time) {
-    const [hours, mins] = time;
-
-    if (mins < 10) {
-        return hours + ".0" + mins;
-    }
-
-    return hours + "." + mins;
 }
 
 /**
@@ -264,9 +225,7 @@ function checkIfTimeIsBelowZero(time) {
 }
 
 module.exports = {
-    minutesToTime,
     calculatePercentage,
     timeLeftToReachPercentage,
-    formatTimeValueToString,
     checkIfTimeIsBelowZero
 };
