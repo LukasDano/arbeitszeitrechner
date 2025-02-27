@@ -347,6 +347,10 @@ section {
     transition: transform 0.2s ease;
 }
 
+.icon.noneDevOption{
+    filter: invert(100%);
+}
+
 .icon.animation,
 .icon.reAnimation {
     transition: transform 0.5s ease;
@@ -403,6 +407,7 @@ section {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
     backdrop-filter: blur(5px); /* Blur effect on the background */
+    z-index: 999;
 }
 
 .flexOfficeOverlay {
@@ -414,6 +419,7 @@ section {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
     backdrop-filter: blur(5px); /* Blur effect on the background */
+    z-index: 999;
 }
 
 .weekTimeOverlay {
@@ -425,6 +431,7 @@ section {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
     backdrop-filter: blur(5px); /* Blur effect on the background */
+    z-index: 999;
 }
 
 /* Popup container */
