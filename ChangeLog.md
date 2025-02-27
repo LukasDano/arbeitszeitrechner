@@ -150,6 +150,7 @@
 - Neue Cookie Funktionen: man kann jetzt welche bis zum Ende des Monats und bis zum Ende der Woche speichern und alle vorhanden Cookies löschen
 - Wochenzeitrechner als Modal umgesetzt und die extra HTML Seite entfernt
   - Aktuell funktioniert ist aber nur die Wochenarbeitszeit umgesetzt, die Gleitzeit kommt zu einem späteren Zeitpunkt wieder
+- ReDesign: Die nicht DevOption Icons sind jetzt weiß (bzw. ihre Farbe wird invertiert)
 
 #### v2.5.8 - new File structure, overTimeAutomatic, currentStats und KeyboardControl
 - Bugfix: es wird maximal 10 Minuten gespeichert, das ein Modal geöffnet ist
@@ -157,11 +158,11 @@
 - utility und dateUtility erstellt: für übergreifende Funktionen, die an mehreren Stellen genutzt werden können
 - Bugfix: Die CustomDevOptions werden jetzt beim neuladen der Seite wieder direkt angezeigt
   - Alle DOMContentLoaded Funktionen in einer zusammengefasst, jetzt wird nur noch die einmal aufgerufen (so ist es einfacher die Reihenfolge zu bestimmen)
-- Bugfix: Die Flex Office Zeiten lassen sich jetzt wieder berechnen und die Eigegeben Daten werden gespeichert und geladen
+- Bugfix: Die Flex Office Zeiten lassen sich jetzt wieder berechnen und die Ei gegeben Daten werden gespeichert und geladen
 - Neues Feature: Man kann jetzt per DevOptions einen Modus aktivieren, bei dem das Arbeitsende immer weiter aufgeschoben wird, sodass man es beim neu laden nicht per Hand ändern muss
   - Standardmäßig ist das Feature deaktiviert, und es lässt sich NUR über die DevOptions aktivieren
-- Neues Feature: Man kann sich anzeigen lassen wie viel Plus oder Minus man machen würde, wenn man jetzt in den Feieraben gehen würde
+- Neues Feature: Man kann sich anzeigen lassen wie viel Plus oder Minus man machen würde, wenn man jetzt in den Feie raben gehen würde
   - Keine DevOption, ist für alle verfügbar
-- Neues Feature: Die Modals sind jetzt per Button steuerbar, Enter zum eingeben, Delete zum löschen und Escape zum schließen
+- Neues Feature: Die Modals sind jetzt per Button steuerbar, Enter zum Eingeben, Delete zum Löschen und Escape zum Schließen
 - Bugfix: Wenn man eine CustomDevOption löscht, merkt der User das nun auch
 - Neues Feature: Man kann jetzt per Tastendruck die Seite zurücksetzen (Reset), dafür muss man F1 drücken
