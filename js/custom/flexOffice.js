@@ -168,7 +168,7 @@ function calculateFlexOffice() {
 
 
     document.getElementById("currentMonth").textContent = getValidCurrentMonthOutPut();
-    document.getElementById("workDaysCurrentMonth").textContent = getWorkDaysInMonth();
+    document.getElementById("workDaysCurrentMonth").textContent = getWorkDaysInMonth() - daysOff;
     document.getElementById("restFlexTime").textContent = formatTime(restFlexTimeThisMonth);
 
 }
