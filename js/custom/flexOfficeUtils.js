@@ -57,13 +57,13 @@ function getHamburgHolidays(year) {
 /**
  * Berechnet die Anzahl der Arbeitstage für den aktuellen Monat
  *
+ * @param {number} month Monat für den gerechnet werden soll
+ * @param {number} year Jahr für das gerechnet werden soll
  * @returns {number} Die Anzahl der Arbeitstage für den aktuellen Monat
  */
-function getWorkDaysInMonth() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const lastDay = new Date(year, month + 1, 0).getDate();
+function getWorkDaysInMonth(month,year) {
+    const today = new Date()
+    const lastDay = new Date(year, month, 0).getDate();
 
     const holidays = getHamburgHolidays(year);
     const holidayDates = new Set(Object.values(holidays));
@@ -158,12 +158,14 @@ function timeLeftToReachPercentage(currentPercentage, targetPercentage, workTime
  *  Gibt die Arbeitszeit, die diesen Monat erbracht werden muss
  *
  * @param {number} daysOff Tage die diesen Monat nicht gearbeitet wurde
+ * @param {number} month Monat für den gerechnet werden soll
+ * @param {number} year Jahr für das gerechnet werden soll
  * @returns {Time} Arbeitszeit des aktuellen Monats
  */
-function getWorkTimePerMonth(daysOff) {
+function getWorkTimePerMonth(daysOff, month, year) {
     const workTimePerDay = [7, 6];
     const [workHoursTimePerDay, workMinsTimePerDay] = workTimePerDay;
-    const workDaysInCurrentMonth = getWorkDaysInMonth();
+    const workDaysInCurrentMonth = getWorkDaysInMonth(month, year);
 
     const countingDaysForCurrentMonth = workDaysInCurrentMonth - daysOff
     let workHours = workHoursTimePerDay * countingDaysForCurrentMonth;
@@ -182,10 +184,12 @@ function getWorkTimePerMonth(daysOff) {
  * @param {number} daysOff Tage die diesen Monat nicht gearbeitet wurde
  * @param {Time} flexTime Zeit die diesen Monat schon im Flex office gearbeitet wurde
  * @param {number} flexOfficeQuote Die maximale Quote, die im Flex office gearbeitet werden darf
+ * @param {number} month Monat für den gerechnet werden soll
+ * @param {number} year Jahr für das gerechnet werden soll
  * @returns {Promise<Time>} Die restliche Flex office Arbeitszeit diesen Monat
  */
-function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote) {
-    const workTimeMonth = getWorkTimePerMonth(daysOff);
+function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, month, year) {
+    const workTimeMonth = getWorkTimePerMonth(daysOff, month, year);
     const percent = calculatePercentage(flexTime, workTimeMonth);
     const timeLeft = timeLeftToReachPercentage(percent, flexOfficeQuote, workTimeMonth);
     return timeLeft;
@@ -222,6 +226,58 @@ function checkIfTimeIsBelowZero(time) {
     }
 
     return time;
+}
+
+/**
+ * Wenn der Monat dieser oder einer der nächsten 5 ist, wird das Jahr für das nächste Mal gesucht,
+ * ist der Monat in den letzten 6 enthalten ist wird das Jahr vom letzten Mal ausgegeben.
+ *
+ * @param {number} month Der Monat zu dem das Jahr gesucht ist
+ * @return {number} Das Jahr
+ */
+function getYearForMonthWithSixMonthRange(month){
+    const currentYear = new Date().getFullYear();
+    const currentMonth = getCurrentMonth();
+
+    let nextSixMonths = [];
+    let lastSixMonths = [];
+
+    for (let i = 0; i <= 5; i++) {
+
+        if (currentMonth + i > 12){
+            nextSixMonths.push((currentMonth + i) - 1);
+        }
+
+        nextSixMonths.push(currentMonth + i);
+    }
+
+    for (let i = 6; i > 0; i--) {
+        let lastMonth = currentMonth - i;
+
+        if (lastMonth < 1) {
+            lastMonth += 12;
+        }
+
+        lastSixMonths.push(lastMonth);
+    }
+
+    if (nextSixMonths.includes(month)){
+        return getYearForNextTimeMonth(month);
+    }
+
+    if (lastSixMonths.includes(month)){
+        return getYearForLastTimeMonth(month);
+    }
+}
+
+/**
+ * Die Funktion dient nur zu test Zwecken
+ * @deprecated
+ */
+function testYear() {
+    const months= [1,2,3,4,5,6,7,8,9,10,11,12];
+
+    months.forEach(month => console.log("Der Monat: " + month  + "hat folgenden Wert ergeben: " +  getYearForMonthWithSixMonthRange(month)));
 }
 
 module.exports = {

@@ -136,7 +136,7 @@
       automatisch neu eingespeichert werden und somit nie verloren gehen
 - Wochenzeitrechner ist jetzt ein Icon
 - Neues Feature:
-    - Man kann sich jetzt durch die Eingabe von Flexoffice-Quote, Abwesenheitstagen sowie der Zeit, die diesen Monat schon im Flexoffice erbracht wurde, die Zeit ausrechnen, die man diesen Monat noch im Flexoffice machen kann
+    - Man kann sich jetzt durch die Eingabe von FlexOffice-Quote, Abwesenheitstagen sowie der Zeit, die diesen Monat schon im FlexOffice erbracht wurde, die Zeit ausrechnen, die man diesen Monat noch im FlexOffice machen kann
     - Die Eingaben werden bei jeder Berechnung gespeichert, sodass man seine Werte immer nur erhöhen muss
       - Die gespeicherten Daten werden immer am Ende des Monats gelöscht
     - Für die neuen Funktionen wurden Teilweise tests geschrieben
@@ -166,3 +166,10 @@
 - Neues Feature: Die Modals sind jetzt per Button steuerbar, Enter zum Eingeben, Delete zum Löschen und Escape zum Schließen
 - Bugfix: Wenn man eine CustomDevOption löscht, merkt der User das nun auch
 - Neues Feature: Man kann jetzt per Tastendruck die Seite zurücksetzen (Reset), dafür muss man F1 drücken
+- Anpassung: Es werden jetzt nicht mehr die Arbeitstage im Monat, sondern die Arbeitstage abzüglich der Abwesenheitstage angezeigt
+  - Jetzt werden sowohl die gearbeiteten Tage angezeigt als auch die Arbeitstage des jeweiligen Monats
+- Neues Feature: Man kann jetzt auch für vergangene Monate sich die FlexOffice Zeiten ausrechnen (jeweils 6 Monte in die Zukunft und 6 Monate in die Vergangenheit)
+- Das Design des FlexOffice Rechners wurde angepasst, damit die zusätzlichen Felder jetzt alle aufs Modal passen
+- Die FlexOffice Quote wird jetzt auch gespeichert und ausgelesen
+- Bugfix: Der AutoOverTimeButton zeigt jetzt auch nach dem neuladen der Seite den richtigen Wert an
+- Der Wochenzeitrechner wurde vom Design her an den FlexOffice rechner angepasst und ist übersichtlicher geworden 

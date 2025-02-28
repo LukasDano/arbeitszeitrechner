@@ -25,3 +25,46 @@ function getDaysInMonth() {
 function getCurrentTime(){
     return [new Date().getHours(), new Date().getMinutes()];
 }
+
+/**
+ * Gibt den Aktuellen Monat aus
+ *
+ * @return {number} Die Nummer des aktuellen Monats
+ */
+function getCurrentMonth(){
+    return new Date().getMonth() + 1;
+}
+
+/**
+ * Welches Jahr hatten wir als es das letzte mal dieser Monat war
+ *
+ * @param {number} month Der fragliche Monat
+ * @return {number} Das Jahr
+ */
+function getYearForLastTimeMonth(month){
+    const currentYear = new Date().getFullYear();
+    const currentMonth = getCurrentMonth();
+
+    if (currentMonth < month) {
+        return currentYear - 1;
+    }
+
+    return currentYear;
+}
+
+/**
+ * Welches Jahr haben wir es das nächste mal dieser Monat ist
+ *
+ * @param {number} month Der fragliche Monat
+ * @return {number} Das Jahr
+ */
+function getYearForNextTimeMonth(month){
+    const currentYear = new Date().getFullYear();
+    const currentMonth = getCurrentMonth();
+
+    if (currentMonth > month) {
+        return currentYear - 1;
+    }
+
+    return currentYear;
+}
