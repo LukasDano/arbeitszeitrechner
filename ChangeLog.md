@@ -166,3 +166,4 @@
 - Neues Feature: Die Modals sind jetzt per Button steuerbar, Enter zum Eingeben, Delete zum Löschen und Escape zum Schließen
 - Bugfix: Wenn man eine CustomDevOption löscht, merkt der User das nun auch
 - Neues Feature: Man kann jetzt per Tastendruck die Seite zurücksetzen (Reset), dafür muss man F1 drücken
+- Anpassung: Es werden jetzt nicht mehr die Arbeitstage im Monat, sonder die Arbeitstage abzüglich der Abwesenheitstage angezeigt
