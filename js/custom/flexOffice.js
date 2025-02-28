@@ -43,7 +43,7 @@ function flexOfficeCalculator() {
                         </div>
     
                         <div class="col text-center">
-                            <label for="workDaysCurrentMonth">Arbeitstage</label>
+                            <label for="workDaysCurrentMonth">Gearbeitete Tage</label>
                             <p class="display-5" id="workDaysCurrentMonth"></p>
                         </div>
     
@@ -168,7 +168,7 @@ function calculateFlexOffice() {
 
 
     document.getElementById("currentMonth").textContent = getValidCurrentMonthOutPut();
-    document.getElementById("workDaysCurrentMonth").textContent = getWorkDaysInMonth();
+    document.getElementById("workDaysCurrentMonth").textContent = getWorkDaysInMonth() - daysOff;
     document.getElementById("restFlexTime").textContent = formatTime(restFlexTimeThisMonth);
 
 }
