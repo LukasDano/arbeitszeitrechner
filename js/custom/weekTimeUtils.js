@@ -25,11 +25,10 @@ function getWeekWorkTime(weekTime) {
 /**
  * Rechnet die Gleitzeit für diese Woche aus (Kann nicht getestet werden)
  *
- * @param {number} floatDaysThisWeek Die Anzahl der Gleittage diese Woche
  * @param {Time} weekWorkTime Gesamt Arbeitszeit einer Woche
  * @returns Die Überstunden der gesamten Woche in Stunden und Minuten
  */
-function calculateWeekOverTime(floatDaysThisWeek, weekWorkTime) {
+function calculateWeekOverTime(weekWorkTime) {
 
     const shouldHours = 35;
     const shouldMins = 30;

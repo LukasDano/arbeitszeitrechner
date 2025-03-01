@@ -40,8 +40,8 @@ function flexOfficeCalculator() {
                 <div class="text-center" id="flexOfficeResult">
                     <div class="row container row-adaption">
                         <div class="col text-center">
-                            <label for="currentMonth">Aktueller Monat</label>
-                            <p class="display-5" id="currentMonth"></p>
+                            <label for="calculatedMonth">Berechneter Monat</label>
+                            <p class="display-5" id="calculatedMonth"></p>
                         </div>
                         
                        <div class="col text-center">
@@ -240,7 +240,7 @@ function calculateFlexOffice() {
     restFlexTimeThisMonth = checkIfTimeIsBelowZero(restFlexTimeThisMonth)
 
 
-    document.getElementById("currentMonth").textContent = getValidCurrentMonthOutPut();
+    document.getElementById("calculatedMonth").textContent = formatNumber(selectedMonth);
     document.getElementById("workDaysCurrentMonth").textContent = workDaysInMonth
     document.getElementById("workedDaysCurrentMonth").textContent = workDaysInMonth - daysOff;
     document.getElementById("restFlexTime").textContent = formatTime(restFlexTimeThisMonth);

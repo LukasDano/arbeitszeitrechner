@@ -1,7 +1,7 @@
 const {
     getLaterTime,
     formatTime,
-    formatMins,
+    formatNumber,
     minutesToTime,
 } = require("../js/custom/utility");
 
@@ -43,22 +43,22 @@ describe("formatTime", () => {
     });
 });
 
-describe("formatMins", () => {
+describe("formatNumber", () => {
     test("return correct with less than 10", () => {
         const mins = 4;
-        const result = formatMins(mins);
+        const result = formatNumber(mins);
         expect(result).toEqual("04");
     });
 
     test("return correct with more than 10", () => {
         const mins = 12;
-        const result = formatMins(mins);
+        const result = formatNumber(mins);
         expect(result).toEqual("12");
     });
 
     test("return correct with broder value", () => {
         const mins = 9;
-        const result = formatMins(mins);
+        const result = formatNumber(mins);
         expect(result).toEqual("09");
     });
 });

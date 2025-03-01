@@ -247,17 +247,17 @@ $(document).ready(function () {
 
     function setEnd() {
         let [endHours, endMins] = timeValues.normalEnd;
-        $("#end").val(endHours + ":" + formatMins(endMins));
+        $("#end").val(endHours + ":" + formatNumber(endMins));
     }
 
     function setEndTime(endTime) {
         let [endHours, endMins] = endTime;
-        $("#end").val(endHours + ":" + formatMins(endMins));
+        $("#end").val(endHours + ":" + formatNumber(endMins));
     }
 
     function setStartTime(startTime) {
         const [startHours, startMins] = startTime;
-        $("#start").val(startHours + ":" + formatMins(startMins));
+        $("#start").val(startHours + ":" + formatNumber(startMins));
     }
 
     $("#start_Tour").click(function () {

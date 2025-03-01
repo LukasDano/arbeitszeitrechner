@@ -540,11 +540,11 @@ function createGleitzeitAusgabeFromFloat(float) {
     let [gleitHours, gleitMins] = float;
 
     if (typeof jest !== "undefined") {
-        var formatMins = require("./utility.js").formatMins;
+        var formatNumber = require("./utility.js").formatNumber;
     }
 
     // Funktion für die Formatierung definieren, falls nicht vorhanden
-    formatMins = formatMins || ((mins) => String(mins).padStart(2, "0"));
+    formatNumber = formatNumber || ((mins) => String(mins).padStart(2, "0"));
 
     // Vorzeichen ermitteln
     let sign = (gleitHours < 0 || gleitMins < 0) ? "-" : "+";
@@ -553,7 +553,7 @@ function createGleitzeitAusgabeFromFloat(float) {
     gleitHours = Math.abs(gleitHours);
     gleitMins = Math.abs(gleitMins);
 
-    return sign + gleitHours + "." + formatMins(gleitMins);
+    return sign + gleitHours + "." + formatNumber(gleitMins);
 }
 
 /**

@@ -196,21 +196,6 @@ function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, month, yea
 }
 
 /**
- * Gibt den aktuellen Monat mit einer 0 davor aus, sofern die Zahl einstellig ist
- *
- * @returns {string} Eine schönere Ausgabe für die Monatszahl
- */
-function getValidCurrentMonthOutPut() {
-    const currentMonthNumber = new Date().getMonth() + 1;
-
-    if (currentMonthNumber < 10) {
-        return "0" + currentMonthNumber;
-    } else {
-        return currentMonthNumber.toString();
-    }
-}
-
-/**
  * Prüft, ob ein Time Value unter 0 ist.
  * Wenn der Wert nicht unter 0 ist, wird die Zeit einfach wieder zurückgegeben.
  * Wenn der Wert unter 0 ist, wird der Wert für 0 Stunden und 0 Minuten zurückgegeben.
@@ -230,13 +215,12 @@ function checkIfTimeIsBelowZero(time) {
 
 /**
  * Wenn der Monat dieser oder einer der nächsten 5 ist, wird das Jahr für das nächste Mal gesucht,
- * ist der Monat in den letzten 6 enthalten ist wird das Jahr vom letzten Mal ausgegeben.
+ * ist der Monat in den letzten 6 enthalten ist, wird das Jahr vom letzten Mal ausgegeben.
  *
  * @param {number} month Der Monat zu dem das Jahr gesucht ist
  * @return {number} Das Jahr
  */
 function getYearForMonthWithSixMonthRange(month){
-    const currentYear = new Date().getFullYear();
     const currentMonth = getCurrentMonth();
 
     let nextSixMonths = [];
@@ -271,10 +255,11 @@ function getYearForMonthWithSixMonthRange(month){
 }
 
 /**
- * Die Funktion dient nur zu test Zwecken
+ * Die Funktion testet "getYearForMonthWithSixMonthRange" mit allen 12 Monaten durch.
+ * Durch den Aufbau der Funktion, werden immer die letzten 6, der aktuelle und die nächsten 5 Monate verwendet.
  * @deprecated
  */
-function testYear() {
+function testGetYearForMonthWithSixMonthRangeWithCurrentMonthRange() {
     const months= [1,2,3,4,5,6,7,8,9,10,11,12];
 
     months.forEach(month => console.log("Der Monat: " + month  + "hat folgenden Wert ergeben: " +  getYearForMonthWithSixMonthRange(month)));

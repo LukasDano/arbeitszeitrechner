@@ -172,4 +172,7 @@
 - Das Design des FlexOffice Rechners wurde angepasst, damit die zusätzlichen Felder jetzt alle aufs Modal passen
 - Die FlexOffice Quote wird jetzt auch gespeichert und ausgelesen
 - Bugfix: Der AutoOverTimeButton zeigt jetzt auch nach dem neuladen der Seite den richtigen Wert an
-- Der Wochenzeitrechner wurde vom Design her an den FlexOffice rechner angepasst und ist übersichtlicher geworden 
+- Der Wochenzeitrechner wurde vom Design her an den FlexOffice rechner angepasst und ist übersichtlicher geworden
+- Die Gleitzeitwochen Funktion angepasst (überflüssigen Parameter entfernt)
+- Bugfix: Es wird jetzt nicht immer nur der aktuelle Monat angezeigt, sondern der mit dem gerechnet wurde
+- Refactoring: Die Funktion "formatMins" wurde auf formatNumber umgestellt (selbe Funktion, einheitlicherer Name)

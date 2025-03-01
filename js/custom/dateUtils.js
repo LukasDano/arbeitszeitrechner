@@ -27,7 +27,7 @@ function getCurrentTime(){
 }
 
 /**
- * Gibt den Aktuellen Monat aus
+ * Gibt den aktuellen Monat aus
  *
  * @return {number} Die Nummer des aktuellen Monats
  */
@@ -36,7 +36,7 @@ function getCurrentMonth(){
 }
 
 /**
- * Welches Jahr hatten wir als es das letzte mal dieser Monat war
+ * Welches Jahr hatten wir als es das letzte Mal dieser Monat war
  *
  * @param {number} month Der fragliche Monat
  * @return {number} Das Jahr
@@ -53,7 +53,7 @@ function getYearForLastTimeMonth(month){
 }
 
 /**
- * Welches Jahr haben wir es das nächste mal dieser Monat ist
+ * Welches Jahr haben wir es das nächste Mal dieser Monat ist
  *
  * @param {number} month Der fragliche Monat
  * @return {number} Das Jahr
