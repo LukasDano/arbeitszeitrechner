@@ -43,7 +43,6 @@ function flexOfficeCalculator() {
                             <label for="calculatedMonth">Berechneter Monat</label>
                             <p class="display-5" id="calculatedMonth"></p>
                         </div>
-                        
                        <div class="col text-center">
                             <label for="workDaysCurrentMonth">Arbeitstage</label>
                             <p class="display-5" id="workDaysCurrentMonth"></p>
