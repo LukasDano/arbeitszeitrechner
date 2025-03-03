@@ -62,7 +62,9 @@ function getHamburgHolidays(year) {
  * @returns {number} Die Anzahl der Arbeitstage für den aktuellen Monat
  */
 function getWorkDaysInMonth(month,year) {
-    getWorkDaysInMonthFromAPI(month, year).then(r => {return r});
+    //TODO testen ob das auch über GitHack geht, wenn ja => umstellung
+    let test;
+    getWorkDaysInMonthFromAPI(month, year).then(r => {test = r});
     const today = new Date()
     const lastDay = new Date(year, month, 0).getDate();
 
@@ -81,7 +83,8 @@ function getWorkDaysInMonth(month,year) {
         }
     }
 
-    return workDays;
+    // return workDays;
+    return test;
 }
 
 /**
