@@ -351,7 +351,7 @@ function calculateTimeToAddForEndWithNegativeFloat(float) {
  * Erstellt ein FloatTime Value aus einem String,
  * wenn kein Wert übergeben wird, wird die UI zurück gesetz und nichts zurückgegeben
  *
- * @param {string[]} float Die Gleitzeit als String Array
+ * @param {string} float Die Gleitzeit als String Array
  * @return {FloatTime|void} Die Gleitzeit als FloatTime Value oder nichts, wenn der Parameter ungültig ist
  */
 function getFloatValueFromText(float) {
@@ -559,7 +559,7 @@ function createGleitzeitAusgabeFromFloat(float) {
 /**
  * Prüft ob der eingegeben Floatwert nur gültige Zeichen enthält
  *
- * @param {string} float
+ * @param {string} float Der zu prüfende Float Wert
  * @return {boolean} Ob die Eingabe valide ist
  */
 function validateFloat(float) {

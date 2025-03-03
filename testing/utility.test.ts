@@ -1,9 +1,9 @@
-const {
+import {
     getLaterTime,
     formatTime,
     formatNumber,
-    minutesToTime,
-} = require("../js/custom/utility");
+    minutesToTime
+} from "../js/custom/utility";
 
 describe("getLaterTime", () => {
 

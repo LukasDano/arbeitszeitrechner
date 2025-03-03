@@ -1,12 +1,10 @@
-const {
-    getWeekWorkTime,
+import {getWeekWorkTime,
     calculateWeekOverTime,
-    formatWeekTime,
-} = require("../js/custom/weekTimeUtils");
+    formatWeekTime} from "../js/custom/weekTimeUtils";
 
 describe("getWeekWorkTime", () => {
-    global.setCookie = jest.fn();
-    global.prompt = jest.fn();
+    (globalThis as any).setCookie = jest.fn();
+    (globalThis as any).prompt = jest.fn();
 
     test("correct with normal default work hours for each day", () => {
         const weekTime = {
@@ -34,15 +32,14 @@ describe("getWeekWorkTime", () => {
 });
 
 describe("calculateWeekOverTime", () => {
-    global.setCookie = jest.fn();
-    global.deleteCookie = jest.fn();
-    global.getIntCookie = jest.fn();
+    (globalThis as any).setCookie = jest.fn();
+    (globalThis as any).deleteCookie = jest.fn();
+    (globalThis as any).getIntCookie = jest.fn();
 
     beforeEach(() => {
-        global.getIntCookie.mockClear();
+        (globalThis as any).getIntCookie.mockClear();
 
-        // Set default mock return values
-        global.getIntCookie.mockImplementation((cookieName) => {
+        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
             if (cookieName === "gleittage") return 0;
             if (cookieName === "workedDays") return 5;
             return 0;
@@ -72,7 +69,7 @@ describe("calculateWeekOverTime", () => {
     });
 
     test("correct with gleittag", () => {
-        global.getIntCookie.mockImplementation((cookieName) => {
+        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
             if (cookieName === "gleittage") return 1;
             if (cookieName === "workedDays") return 4;
             return 0;
@@ -83,7 +80,7 @@ describe("calculateWeekOverTime", () => {
     });
 
     test("correct with gleittag", () => {
-        global.getIntCookie.mockImplementation((cookieName) => {
+        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
             if (cookieName === "gleittage") return 0;
             if (cookieName === "workedDays") return 4;
             return 0;

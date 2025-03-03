@@ -1,8 +1,8 @@
-const {
+import {
     calculatePercentage,
     timeLeftToReachPercentage,
     checkIfTimeIsBelowZero
-} = require("../js/custom/flexOfficeUtils");
+} from "../js/custom/flexOfficeUtils";
 
 
 describe("calculatePercentage", () => {

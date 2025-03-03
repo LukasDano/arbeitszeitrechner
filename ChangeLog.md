@@ -189,3 +189,6 @@
 - Bugfix: Die Arbeitstage werden jetzt korrekt berechnet
 - Refactoring: funktionalitäten ausgelagert, Feiertags API eingebunden (mit der anderen Methode als fallback)
 - hotfix: Wenn die Endzeit eine Null enthält, führt das jetzt nicht mehr zu seltsamen Fehlern
+
+#### v2.5.10 - Typescript Testing
+- Die Jest Tests wurden von JS auf TS umgestellt
