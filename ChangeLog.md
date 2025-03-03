@@ -176,3 +176,4 @@
 - Die Gleitzeitwochen Funktion angepasst (überflüssigen Parameter entfernt)
 - Bugfix: Es wird jetzt nicht immer nur der aktuelle Monat angezeigt, sondern der mit dem gerechnet wurde
 - Refactoring: Die Funktion "formatMins" wurde auf formatNumber umgestellt (selbe Funktion, einheitlicherer Name)
+- hotfix: Wenn die Endzeit eine Null enthält, führt das jetzt nicht mehr zu seltsamen Fehlern
