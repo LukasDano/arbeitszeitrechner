@@ -115,9 +115,6 @@ function openFlexOfficeCalculator() {
 
     document.getElementById("flexMinutes").addEventListener('change', () => {
         const flexMinutes = getNumberFromElement("flexMinutes");
-        if (flexMinutes > workMinutesPerMonth) {
-            document.getElementById("flexMinutes").value = workMinutesPerMonth;
-        }
         if (flexMinutes < 0){
             document.getElementById("flexMinutes").value = 0;
         }
