@@ -188,3 +188,4 @@
 - Neue Funktion, Cookies können jetzt für ein Jahr gespeichert werden
 - Bugfix: Die Arbeitstage werden jetzt korrekt berechnet
 - Refactoring: funktionalitäten ausgelagert, Feiertags API eingebunden (mit der anderen Methode als fallback)
+- hotfix: Wenn die Endzeit eine Null enthält, führt das jetzt nicht mehr zu seltsamen Fehlern

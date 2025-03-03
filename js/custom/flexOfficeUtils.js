@@ -80,7 +80,7 @@ function getWorkDaysInMonthOffline(month,year) {
 }
 
 /**
- * Prüft ob ein übergebenes Datum ein Arbeitstag ist
+ * Prüft, ob ein übergebenes Datum ein Arbeitstag ist
  *
  * @param {number} day Das Tages Datum
  * @param {number} month Der Monat
