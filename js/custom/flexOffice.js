@@ -11,40 +11,46 @@ function flexOfficeCalculator() {
             <form class="form-container">
                 <span class="close" onclick="closeFlexOfficeCalculator()">&times;</span>
                 <h1>FlexOffice Calculator</h1>
-
-                <label for="flexOfficeQuote">FlexOffice-Quote:</label>
-                <select id="flexOfficeQuote">
-                    <option value="10">10%</option>
-                    <option value="20">20%</option>
-                    <option value="30">30%</option>
-                    <option value="40">40%</option>
-                    <option value="50" selected>50%</option>
-                    <option value="60">60%</option>
-                    <option value="70">70%</option>
-                    <option value="80">80%</option>
-                    <option value="90">90%</option>
-                    <option value="100">100%</option>
-                </select>
+                
+                <div class="row justify-content-center">
+                    <div class="col-sm-6 col-12">
+                        <div id="quoteSelector"></div>
+                    </div>
+    
+                    <div class="col-sm-6 col-12">
+                        <div id="monthSelector"></div>
+                    </div>
+                </div>
 
                 <label for="daysOff">Abwesenheitstage:</label>
                 <input type="number" id="daysOff" name="daysOff" required>
                 
-                <label for="flexTime">FlexOffice Stunden diesen Monat:</label>
-                <input type="number" id="flexHours" name="flexHours" required>
-                
-                <label for="flexTime">FlexOffice Minuten diesen Monat:</label>
-                <input type="number" id="flexMinutes" name="flexMinutes" required>
+                <div class="row justify-content-center">
+                    <div class="col-sm-6 col-12">
+                        <label for="flexTime">FlexOffice Stunden:</label>
+                        <input type="number" id="flexHours" name="flexHours" min="0" step="1" required>
+                    </div>
+    
+                    <div class="col-sm-6 col-12">
+                        <label for="flexTime">FlexOffice Minuten:</label>
+                        <input type="number" id="flexMinutes" name="flexMinutes" min="0" max="59" step="1" required>
+                    </div>
+                </div>
                 
                 <div class="text-center" id="flexOfficeResult">
                     <div class="row container row-adaption">
                         <div class="col text-center">
-                            <label for="currentMonth">Aktueller Monat</label>
-                            <p class="display-5" id="currentMonth"></p>
+                            <label for="calculatedMonth">Berechneter Monat</label>
+                            <p class="display-5" id="calculatedMonth"></p>
+                        </div>
+                       <div class="col text-center">
+                            <label for="workDaysCurrentMonth">Arbeitstage</label>
+                            <p class="display-5" id="workDaysCurrentMonth"></p>
                         </div>
     
                         <div class="col text-center">
-                            <label for="workDaysCurrentMonth">Gearbeitete Tage</label>
-                            <p class="display-5" id="workDaysCurrentMonth"></p>
+                            <label for="workedDaysCurrentMonth">Gearbeitete Tage</label>
+                            <p class="display-5" id="workedDaysCurrentMonth"></p>
                         </div>
     
                         <div class="col text-center">
@@ -64,33 +70,148 @@ function flexOfficeCalculator() {
     `;
 }
 
+function quoteSelector() {
+    return `
+        <label for="flexOfficeQuote">FlexOffice-Quote:</label>
+        <select id="flexOfficeQuote"/>
+        `;
+}
+
+function monthSelector() {
+   return `
+        <label for=selectedMonth">Monat:</label>
+        <select id="selectedMonth"/>
+        `;
+}
+
 /**
- * Setzt den Wert des Feldes auf den Wert des gleichnamigen Cookies.
- * Wenn der Cookie nicht existiert bzw. einen ungültigen Wert zurückgibt, wird der Wert auf 0 gesetzt.
+ * Erstellt die Optionen für das Quoten-Selectorelement
  *
- * @param {string} field Name des Feldes und des Cookies
+ * @param {string} elementName Die ID des HTML Elements
  */
-function setInitialFlexOfficeValue(field){
-    let cookieValue = getIntCookie(field);
-    if (!cookieValue) {
-        cookieValue = 0;
+function createOptionsForQuoteSelector(elementName){
+    const quoten = [
+        "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"
+    ];
+    const quoteSelectElement = document.getElementById(elementName);
+
+    quoten.forEach(value => {
+        const option = document.createElement("option");
+
+        option.value = ((quoten.indexOf(value) + 1) * 10).toString();
+        option.text = value;
+        quoteSelectElement.appendChild(option);
+    });
+}
+
+/**
+ * Erstellt die Optionen für das Monat-Selectorelement
+ *
+ * @param {string} elementName Die ID des HTML Elements
+ */
+function createOptionsForMonthSelector(elementName){
+    const months = getMonthNamesAsList();
+    const monthSelectElement = document.getElementById(elementName);
+
+    months.forEach(month => {
+        const option = document.createElement("option");
+        const monthNumber = months.indexOf(month) + 1;
+        const monthShortName = month.substring(0, 3)
+
+        option.value = monthNumber.toString();
+        option.text = monthShortName + " (" + getYearForMonthWithSixMonthRange(monthNumber) + ")";
+        monthSelectElement.appendChild(option);
+    });
+}
+
+function addDynamicComponents(){
+    const quoteSelectorElement = document.getElementById("quoteSelector");
+    quoteSelectorElement.innerHTML = quoteSelector();
+    createOptionsForQuoteSelector("flexOfficeQuote");
+    document.getElementById("flexOfficeQuote").value = getIntCookie("flexOfficeQuote") ?? 50;
+
+    const monthSelectorElement = document.getElementById("monthSelector");
+    monthSelectorElement.innerHTML = monthSelector();
+    createOptionsForMonthSelector("selectedMonth");
+    document.getElementById("selectedMonth").value = getCurrentMonth();
+}
+
+function getValuesAsList(){
+    const daysOff = getNumberFromElement("daysOff");
+    const month = getNumberFromElement("selectedMonth");
+    const year = getYearForMonthWithSixMonthRange(month);
+    return [daysOff, month, year];
+}
+
+/**
+ * Setzt den Wert des Feldes auf den Wert aus dem Objekt
+ * Wenn kein gültiger Wert gefunden wird, wird der Wert für das Feld auf 0 gesetzt.
+ *
+ * @param {number} month Die Nummer des Monats zu dem die Daten gesetzt werden sollen
+ * @param {string} field Name des Feldes und des Attributs aus dem Objekt
+ */
+function loadFlexOfficeValuesForMonthFromCookie(month, field) {
+    const flexMonth = getMonthValuesFromCookie(month);
+
+    if (flexMonth) {
+
+        switch (field) {
+            case "daysOff":
+                document.getElementById(field).value = flexMonth.daysOff
+                break;
+
+            case "flexHours":
+                document.getElementById(field).value = flexMonth.flexHours
+                break;
+
+            case "flexMinutes":
+                document.getElementById(field).value = flexMonth.flexMins
+                break;
+
+            default:
+                document.getElementById(field).value = 0
+        }
+    } else {
+        document.getElementById(field).value = 0;
     }
-    document.getElementById(field).value = cookieValue;
+
+}
+
+/**
+ * Setzt die Flexoffice Werte zu einem übergebenen Monat
+ *
+ * @param {number} month Die Zahl des Monats für den die Werte gesetzt werden sollen
+ */
+function setFlexOfficeFieldValuesForMonth(month){
+    const fields = ["daysOff", "flexHours", "flexMinutes"];
+    fields.forEach(field => {loadFlexOfficeValuesForMonthFromCookie(month ,field)});
 }
 
 /**
  * Öffnet das FlexOffice Modal
  */
-function openFlexOfficeCalculator() {
+async function openFlexOfficeCalculator() {
     setCookieFor10Minutes("settingsOpen", true);
-    document.getElementById("flexOfficeForm").style.display = "block"; // Show the form
-    document.getElementById("flexOfficeOverlay").style.display = "block"; // Show the overlay
+    document.getElementById("flexOfficeForm").style.display = "block";
+    document.getElementById("flexOfficeOverlay").style.display = "block";
+
+    addDynamicComponents();
     document.getElementById("flexOfficeResult").style.display = "none";
     document.getElementById("daysOff").max = getDaysInMonth();
-    const [workHoursPerMonth, workMinutesPerMonth] = getWorkTimePerMonth();
 
-    const fields = ["daysOff", "flexHours", "flexMinutes"];
-    fields.forEach(field => {setInitialFlexOfficeValue(field)});
+    const currentMonth = getCurrentMonth();
+    setFlexOfficeFieldValuesForMonth(currentMonth);
+
+    let [daysOff, month, year] = getValuesAsList();
+    let [workHoursPerMonth, workMinutesPerMonth] = await getWorkTimePerMonth(daysOff, month, year);
+
+    document.getElementById("selectedMonth").addEventListener('change', () => {
+        document.getElementById("flexOfficeResult").style.display = "none";
+        const selectedMonth = getNumberFromElement("selectedMonth");
+        setFlexOfficeFieldValuesForMonth(selectedMonth);
+        [daysOff, month, year] = getValuesAsList();
+        [workHoursPerMonth, workMinutesPerMonth] = getWorkTimePerMonth(daysOff, month, year);
+    });
 
     document.getElementById("daysOff").addEventListener('change', () => {
         const daysOff = getNumberFromElement("daysOff");
@@ -145,29 +266,28 @@ function closeFlexOfficeCalculator() {
 
 const getNumberFromElement = (element) => parseInt(document.getElementById(element).value, 10);
 
-function calculateFlexOffice() {
+async function calculateFlexOffice() {
     document.getElementById("flexOfficeResult").style.display = "block";
+
     const flexOfficeQuote = getNumberFromElement("flexOfficeQuote");
-
+    const selectedMonth = getNumberFromElement("selectedMonth");
     const daysOff = getNumberFromElement("daysOff");
-    setCookieUntilEndOfMonth("daysOff", daysOff);
-
     const flexHours = getNumberFromElement("flexHours");
-    setCookieUntilEndOfMonth("flexHours", flexHours);
-
     const flexMinutes = getNumberFromElement("flexMinutes");
-    setCookieUntilEndOfMonth("flexMinutes", flexMinutes);
-
     const flexTime = [flexHours, flexMinutes];
 
-    let restFlexTimeThisMonth = calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote);
+    setCookieUntilEndOfMonth("flexOfficeQuote", flexOfficeQuote);
+    setMonthValuesAsCookie(selectedMonth, daysOff, flexTime);
+    const year = getYearForMonthWithSixMonthRange(selectedMonth);
+
+    const workDaysInMonth = await getWorkDaysInMonthFromAPI(selectedMonth, year);
+    let restFlexTimeThisMonth = await calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, selectedMonth, year);
     restFlexTimeThisMonth = checkIfTimeIsBelowZero(restFlexTimeThisMonth)
 
-
-    document.getElementById("currentMonth").textContent = getValidCurrentMonthOutPut();
-    document.getElementById("workDaysCurrentMonth").textContent = getWorkDaysInMonth() - daysOff;
+    document.getElementById("calculatedMonth").textContent = formatNumber(selectedMonth);
+    document.getElementById("workDaysCurrentMonth").textContent = workDaysInMonth
+    document.getElementById("workedDaysCurrentMonth").textContent = workDaysInMonth - daysOff;
     document.getElementById("restFlexTime").textContent = formatTime(restFlexTimeThisMonth);
-
 }
 
 /**

@@ -24,22 +24,22 @@ function getLaterTime(timeOne, timeTwo) {
  */
 function formatTime(time) {
     const [hours, mins] = time;
-    const formattedMins = formatMins(mins);
+    const formattedMins = formatNumber(mins);
     return `${hours}.${formattedMins}`;
 }
 
 /**
- * Fügt eine 0 hinzu, wenn die Minuten einstellig sind
+ * Gibt die übergebene Zahl mit einer 0 davor aus, sofern die Zahl einstellig ist
  *
- * @param {number} mins Minuten
- * @return {string} Eine zweistellige Zahl als String
+ * @param number Die Zahl
+ * @returns {string} Eine schönere Darstellung der Zahl
  */
-function formatMins(mins) {
-    if (mins <= 9 && mins >= 0) {
-        return "0" + mins;
+function formatNumber(number) {
+    if (number < 10 && number >= 0) {
+        return "0" + number;
+    } else {
+        return number.toString();
     }
-
-    return mins.toString();
 }
 
 /**
@@ -62,6 +62,6 @@ function minutesToTime(minutes) {
 module.exports = {
     getLaterTime,
     formatTime,
-    formatMins,
+    formatNumber,
     minutesToTime
 };

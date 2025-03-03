@@ -40,3 +40,10 @@
  * @property {Date} ErsterWeihnachtsfeiertag
  * @property {Date} ZweiterWeihnachtsfeiertag
  */
+
+/**
+ * @typedef {Object} FlexMonth
+ * @property {number} daysOff
+ * @property {number} flexHours
+ * @property {number} flexMins
+ */

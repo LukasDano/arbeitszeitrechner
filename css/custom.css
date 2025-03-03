@@ -495,6 +495,11 @@ input, select {
     border-radius: 6px;
 }
 
+#weekTimeResult{
+    background-color: #E9ECEF;
+    border-radius: 6px;
+}
+
 .form-container {
     padding: 20px;
 }

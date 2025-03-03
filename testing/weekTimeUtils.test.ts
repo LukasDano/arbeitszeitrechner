@@ -1,12 +1,11 @@
-const {
-    getWeekWorkTime,
+import {Time} from "../ts/types";
+import {getWeekWorkTime,
     calculateWeekOverTime,
-    formatWeekTime,
-} = require("../js/custom/weekTimeUtils");
+    formatWeekTime} from "../js/custom/weekTimeUtils";
 
 describe("getWeekWorkTime", () => {
-    global.setCookie = jest.fn();
-    global.prompt = jest.fn();
+    (globalThis as any).setCookie = jest.fn();
+    (globalThis as any).prompt = jest.fn();
 
     test("correct with normal default work hours for each day", () => {
         const weekTime = {
@@ -34,15 +33,14 @@ describe("getWeekWorkTime", () => {
 });
 
 describe("calculateWeekOverTime", () => {
-    global.setCookie = jest.fn();
-    global.deleteCookie = jest.fn();
-    global.getIntCookie = jest.fn();
+    (globalThis as any).setCookie = jest.fn();
+    (globalThis as any).deleteCookie = jest.fn();
+    (globalThis as any).getIntCookie = jest.fn();
 
     beforeEach(() => {
-        global.getIntCookie.mockClear();
+        (globalThis as any).getIntCookie.mockClear();
 
-        // Set default mock return values
-        global.getIntCookie.mockImplementation((cookieName) => {
+        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
             if (cookieName === "gleittage") return 0;
             if (cookieName === "workedDays") return 5;
             return 0;
@@ -54,73 +52,68 @@ describe("calculateWeekOverTime", () => {
     });
 
     test("correct with normal default values", () => {
-        const gleitagGenommen = false;
-        const weekTime = [35, 50];
-        const result = calculateWeekOverTime(gleitagGenommen, weekTime);
+        const weekTime: Time = [35, 50];
+        const result = calculateWeekOverTime(weekTime);
         expect(result).toEqual([0, 20]);
     });
 
     test("correct with a realistic week", () => {
-        const gleitagGenommen = false;
-        const weekTime = [36, 25];
-        const result = calculateWeekOverTime(gleitagGenommen, weekTime);
+        const weekTime: Time = [36, 25];
+        const result = calculateWeekOverTime(weekTime);
         expect(result).toEqual([0, 55]);
     });
 
     test("correct with negativ values", () => {
-        const gleitagGenommen = false;
-        const weekTime = [27, 30];
-        const result = calculateWeekOverTime(gleitagGenommen, weekTime);
+        const weekTime: Time = [27, 30];
+        const result = calculateWeekOverTime(weekTime);
         expect(result).toEqual([-8, 0]);
     });
 
     test("correct with gleittag", () => {
-        global.getIntCookie.mockImplementation((cookieName) => {
+        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
             if (cookieName === "gleittage") return 1;
             if (cookieName === "workedDays") return 4;
             return 0;
         });
-        const gleitagGenommen = true;
-        const weekTime = [27, 50];
-        const result = calculateWeekOverTime(gleitagGenommen, weekTime);
+        const weekTime: Time = [27, 50];
+        const result = calculateWeekOverTime(weekTime);
         expect(result).toEqual([-7, -40]);
     });
 
     test("correct with gleittag", () => {
-        global.getIntCookie.mockImplementation((cookieName) => {
+        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
             if (cookieName === "gleittage") return 0;
             if (cookieName === "workedDays") return 4;
             return 0;
         });
         jest.spyOn(global, "prompt").mockReturnValue("1");
-        const gleitagGenommen = true;
-        const weekTime = [30, 15];
-        const result = calculateWeekOverTime(gleitagGenommen, weekTime);
+        const weekTime: Time = [30, 15];
+        const result = calculateWeekOverTime(weekTime);
         expect(result).toEqual([-5, -15]);
     });
 });
 
 describe("formatWeekTime", () => {
     test("correct with positiv values", () => {
-        const weekTime = [0, 20];
+        const weekTime: Time = [0, 20];
         const result = formatWeekTime(weekTime);
         expect(result).toEqual("+0.20 h");
     });
 
     test("correct with negativ values", () => {
-        const weekTime = [-1, -20];
+        const weekTime: Time = [-1, -20];
         const result = formatWeekTime(weekTime);
         expect(result).toEqual("-1.20 h");
     });
 
     test("correct with negativ hours", () => {
-        const weekTime = [-1, 0];
+        const weekTime: Time = [-1, 0];
         const result = formatWeekTime(weekTime);
         expect(result).toEqual("-1.0 h");
     });
 
     test("correct with negativ minutes", () => {
-        const weekTime = [0, -20];
+        const weekTime: Time = [0, -20];
         const result = formatWeekTime(weekTime);
         expect(result).toEqual("-0.20 h");
     });

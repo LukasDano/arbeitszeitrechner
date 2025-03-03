@@ -247,17 +247,17 @@ $(document).ready(function () {
 
     function setEnd() {
         let [endHours, endMins] = timeValues.normalEnd;
-        $("#end").val(endHours + ":" + formatMins(endMins));
+        $("#end").val(endHours + ":" + formatNumber(endMins));
     }
 
     function setEndTime(endTime) {
         let [endHours, endMins] = endTime;
-        $("#end").val(endHours + ":" + formatMins(endMins));
+        $("#end").val(endHours + ":" + formatNumber(endMins));
     }
 
     function setStartTime(startTime) {
         const [startHours, startMins] = startTime;
-        $("#start").val(startHours + ":" + formatMins(startMins));
+        $("#start").val(startHours + ":" + formatNumber(startMins));
     }
 
     $("#start_Tour").click(function () {
@@ -456,6 +456,7 @@ $(document).ready(function () {
         setCountdown();
         optimizeEnd();
         updateEndTimeAfterWorkIsOver();
+        setOverTimeIconToCookieValue();
     } else {
         resetCookies();
         setCookieUntilMidnight("modus", "7h06m");
@@ -500,6 +501,19 @@ $(document).ready(function () {
         $("#float").val(gleitAusgabe);
         applyFloatChanges();
         switchModeIfIsAllowed();
+    }
+
+    function setOverTimeIconToCookieValue() {
+        const overTimeAutomaticActive = getBooleanCookie("overTimeAutomaticActive");
+
+        if (overTimeAutomaticActive){
+            document.getElementById("overTimeAutomaticIcon").alt = "overTimeAutomaticOn";
+            document.getElementById("overTimeAutomaticIcon").src = "pictures/icons/automaticOn.png";
+            return;
+        }
+
+        document.getElementById("overTimeAutomaticIcon").alt = "overTimeAutomaticOff";
+        document.getElementById("overTimeAutomaticIcon").src = "pictures/icons/automaticOff.png";
     }
 
     function swapCurrentOverTimeIcon() {
