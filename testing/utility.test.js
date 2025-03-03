@@ -61,6 +61,12 @@ describe("formatNumber", () => {
         const result = formatNumber(mins);
         expect(result).toEqual("09");
     });
+
+    test("with a 0", () => {
+        const mins = 0;
+        const result = formatNumber(mins);
+        expect(result).toEqual("00");
+    });
 });
 
 describe("minutesToTime", () => {

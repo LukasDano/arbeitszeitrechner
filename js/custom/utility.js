@@ -36,7 +36,7 @@ function formatTime(time) {
  */
 function formatNumber(number) {
 
-    if (number < 10 && number > 0) {
+    if (number < 10 && number >= 0) {
         return "0" + number;
     } else {
         return number.toString();

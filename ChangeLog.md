@@ -166,6 +166,8 @@
 - Neues Feature: Die Modals sind jetzt per Button steuerbar, Enter zum Eingeben, Delete zum Löschen und Escape zum Schließen
 - Bugfix: Wenn man eine CustomDevOption löscht, merkt der User das nun auch
 - Neues Feature: Man kann jetzt per Tastendruck die Seite zurücksetzen (Reset), dafür muss man F1 drücken
+
+#### v2.5.9 - Refactoring, Redesign und weitere Verbesserungen
 - Anpassung: Es werden jetzt nicht mehr die Arbeitstage im Monat, sondern die Arbeitstage abzüglich der Abwesenheitstage angezeigt
   - Jetzt werden sowohl die gearbeiteten Tage angezeigt als auch die Arbeitstage des jeweiligen Monats
 - Neues Feature: Man kann jetzt auch für vergangene Monate sich die FlexOffice Zeiten ausrechnen (jeweils 6 Monte in die Zukunft und 6 Monate in die Vergangenheit)
@@ -176,3 +178,13 @@
 - Die Gleitzeitwochen Funktion angepasst (überflüssigen Parameter entfernt)
 - Bugfix: Es wird jetzt nicht immer nur der aktuelle Monat angezeigt, sondern der mit dem gerechnet wurde
 - Refactoring: Die Funktion "formatMins" wurde auf formatNumber umgestellt (selbe Funktion, einheitlicherer Name)
+- hotfix: Wenn die Endzeit eine Null enthält, führt das jetzt nicht mehr zu seltsamen Fehlern
+- Improvement: In der Monatsauswahl wird jetzt angezeigt, welchen Monat man genau auswählt (es wird das dazugehörige Jahr angezeigt)
+  - Die Monatsnamen sind jetzt nur noch Abkürzungen (bzw. ihre ersten 3 Buchstaben)
+- Refactoring: Die Options Werte für die Quoten und die Monate werden jetzt per JS aus Listen generiert
+- Refactoring: Die API für Feiertage eigebunden (vlt.)
+- hotfix: Die Minuten bei der FlexOffice berechnung, haben jetzt kein Limit mehr, machte Fachlich gesehen keinen Sinn und hat zu Fehlern/komischen Eingaben geführt
+- Neues Feature/Improvment: Die Daten für die FlexOffice Monate werden jetzt bis zum letzten Tag des Vormonats gespeichert
+- Neue Funktion, Cookies können jetzt für ein Jahr gespeichert werden
+- Bugfix: Die Arbeitstage werden jetzt korrekt berechnet
+- Refactoring: funktionalitäten ausgelagert, Feiertags API eingebunden (mit der anderen Methode als fallback)

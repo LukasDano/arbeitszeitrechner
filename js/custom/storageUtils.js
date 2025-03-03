@@ -167,6 +167,41 @@ function setCookieUntilEndOfMonth(name, value) {
 }
 
 /**
+ * Setzt einen Cookie für ein Jahr ab dem aktuellen Datum
+ *
+ * @param {string} name Name des Cookies
+ * @param {string} value Wert des Cookies
+ */
+function setCookieForOneYear(name, value) {
+    const cookiePath = getCurrentPath();
+    const now = new Date();
+    const oneYearFromNow = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate(), 23, 59, 59);
+    const expires = "; expires=" + oneYearFromNow.toUTCString();
+    document.cookie =
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
+}
+
+/**
+ * Setzt einen Cookie bis zum letzten Tag eines bestimmten Monats
+ *
+ * @param {string} name Name des Cookies
+ * @param {string} value Wert des Cookies
+ * @param {number} month Monat (1-12)
+ */
+function setCookieUntilEndOfGivenMonth(name, value, month) {
+    const cookiePath = getCurrentPath();
+    const year = new Date().getFullYear();
+
+    month = Math.max(1, Math.min(12, month));
+    const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59);
+
+    const expires = "; expires=" + lastDayOfMonth.toUTCString();
+    document.cookie =
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
+}
+
+
+/**
  * Setzt das Ablaufdatum des Cookies auf in 366 Tagen
  *
  * @param {string} name Name unter dem der Cookie gespeichert wird
@@ -328,4 +363,60 @@ function deleteAllCookies() {
         const [name, value] = cookie.trim().split('=');
         deleteCookie(name);
     }
+}
+
+/**
+ * Aktualisiert den gespeicherten Cookie für die Monate
+ *
+ * @param {number} month Die Nummer des Monats, der neue Werte bekommt
+ * @param {number} offDays Die Abwesenheitstage
+ * @param {Time} flexTime Die bereits erbrachte Flexoffice Zeit
+ */
+function setMonthValuesAsCookie(month, offDays, flexTime){
+    const [flexHours, flexMins] = flexTime;
+    const valuesForMonth = {
+            "daysOff": offDays,
+            "flexHours": flexHours,
+            "flexMins": flexMins
+    }
+
+    const months = getMonthNamesAsList();
+    const monthName = months[month - 1];
+    const valueForCookie = JSON.stringify(valuesForMonth);
+    let monthPreviousToTarget = month - 1;
+
+    if (monthPreviousToTarget === -1) {
+        monthPreviousToTarget = 12;
+    }
+
+    setCookieUntilEndOfGivenMonth(monthName, valueForCookie, monthPreviousToTarget);
+}
+
+/**
+ * Liest den gespeicherten Cookie für einen bestimmten Monat aus
+ * und gibt die Werte als FlexMonth aus
+ *
+ * @param {number} month Die Nummer des Monats, dessen Werte ausgelesen werden sollen
+ * @returns {FlexMonth | null} Ein Objekt mit den Werten für den Monat oder null, wenn kein Cookie gefunden wurde
+ */
+function getMonthValuesFromCookie(month) {
+    const months = getMonthNamesAsList();
+    const monthName = months[month - 1];
+
+    const cookieValue = getCookie(monthName);
+
+    if (cookieValue) {
+        try {
+            const parsedValue = JSON.parse(decodeURIComponent(cookieValue));
+            return {
+                daysOff: parsedValue.daysOff,
+                flexHours: parsedValue.flexHours,
+                flexMins: parsedValue.flexMins
+            };
+        } catch (error) {
+            console.error("Fehler beim Parsen des Cookie-Werts:", error);
+            return null;
+        }
+    }
+    return null;
 }

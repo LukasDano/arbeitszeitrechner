@@ -57,12 +57,13 @@ function getHamburgHolidays(year) {
 /**
  * Berechnet die Anzahl der Arbeitstage für den aktuellen Monat
  *
+ * @deprecated Vlt. kann doch die andere Funktion mit der API genutzt werden?!
+ *
  * @param {number} month Monat für den gerechnet werden soll
  * @param {number} year Jahr für das gerechnet werden soll
  * @returns {number} Die Anzahl der Arbeitstage für den aktuellen Monat
  */
-function getWorkDaysInMonth(month,year) {
-    const today = new Date()
+function getWorkDaysInMonthOffline(month,year) {
     const lastDay = new Date(year, month, 0).getDate();
 
     const holidays = getHamburgHolidays(year);
@@ -71,31 +72,60 @@ function getWorkDaysInMonth(month,year) {
     let workDays = 0;
 
     for (let day = 1; day <= lastDay; day++) {
-        const date = new Date(year, month, day);
-        const dayOfWeek = date.getDay();
-        const dateString = date.toISOString().split('T')[0];
-
-        if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidayDates.has(dateString)) {
+        if(isWorkDay(day, month, year, holidayDates)){
             workDays++;
         }
     }
-
     return workDays;
+}
+
+/**
+ * Prüft ob ein übergebenes Datum ein Arbeitstag ist
+ *
+ * @param {number} day Das Tages Datum
+ * @param {number} month Der Monat
+ * @param {number} year Das Jahr
+ * @param {Set} holidayDates Feiertage des jeweiligen Monats
+ * @return {boolean}
+ */
+function isWorkDay(day, month, year, holidayDates){
+    const correctJSDateMonth = month - 1;
+    const date = new Date(year, correctJSDateMonth, day);
+    const dayOfWeek = date.getDay();
+    const dateString = getValidDateString(date);
+    const dayIsNotOnWeekend = dayOfWeek !== 0 && dayOfWeek !== 6
+
+    if (dayIsNotOnWeekend&& !holidayDates.has(dateString)) {
+        return true;
+    }
+}
+
+/**
+ * Gibt zusätzliche gewünschte Feiertage zurück
+ *
+ * @param {number} year Das Jahr in dem die Feiertage stattfinden
+ * @return Ein Objekt mit allen hinterlegten Feiertagen
+ */
+function getAdditionalHolidays(year){
+    return {
+        "Heiligabend": new Date(Date.UTC(year, 11, 24)),
+        "Silvester": new Date(Date.UTC(year, 11, 31))
+    };
 }
 
 /**
  * Liefert die Anzahl der Arbeitstage des laufenden Monats
  *
- * @deprecated Die Funktion funktioniert aktuell nicht, und wird zu einem späteren Zeitpunkt eingebunden
+ * @param {number} month Monat für den gerechnet werden soll
+ * @param {number} year Jahr für das gerechnet werden soll
  * @returns {Promise<number>} Arbeitstage des aktuellen Monats
  */
-async function getWorkDaysInMonthFromAPI() {
-    const month = new Date().getMonth();
-    const year = new Date().getFullYear();
-    const lastDay = new Date(year, month + 1, 0).getDate();
+async function getWorkDaysInMonthFromAPI(month, year) {
+    const lastDay = new Date(year, month, 0).getDate();
+    const additionalHolidays = getAdditionalHolidays(year);
     let workDays = 0;
 
-    const publicHolidaysUrl = `https://openholidaysapi.org/PublicHolidays?countryIsoCode=DE&subdivisionCode=DE-HH&validFrom=${year}-${month + 1}-01&validTo=${year}-${month + 1}-${lastDay}`;
+    const publicHolidaysUrl = `https://openholidaysapi.org/PublicHolidays?countryIsoCode=DE&subdivisionCode=DE-HH&validFrom=${year}-${month}-01&validTo=${year}-${month}-${lastDay}`;
 
     try {
         const response = await fetch(publicHolidaysUrl);
@@ -103,17 +133,20 @@ async function getWorkDaysInMonthFromAPI() {
 
         const holidayDates = new Set(publicHolidays.map(h => h.startDate.split('T')[0]));
 
-        for (let day = 1; day <= lastDay; day++) {
-            const date = new Date(year, month, day);
-            const dayOfWeek = date.getDay();
-            const dateString = date.toISOString().split('T')[0];
+        for (const holidayName in additionalHolidays) {
+            const holidayDate = additionalHolidays[holidayName];
+            const holidayDateString = holidayDate.toISOString().split('T')[0];
+            holidayDates.add(holidayDateString);
+        }
 
-            if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidayDates.has(dateString)) {
+        for (let day = 1; day <= lastDay; day++) {
+            if(isWorkDay(day, month, year, holidayDates)){
                 workDays++;
             }
         }
     } catch (error) {
         console.error('Error fetching holiday data:', error);
+        return getWorkDaysInMonthOffline(month, year);
     }
 
     return workDays;
@@ -162,10 +195,10 @@ function timeLeftToReachPercentage(currentPercentage, targetPercentage, workTime
  * @param {number} year Jahr für das gerechnet werden soll
  * @returns {Time} Arbeitszeit des aktuellen Monats
  */
-function getWorkTimePerMonth(daysOff, month, year) {
+async function getWorkTimePerMonth(daysOff, month, year) {
     const workTimePerDay = [7, 6];
     const [workHoursTimePerDay, workMinsTimePerDay] = workTimePerDay;
-    const workDaysInCurrentMonth = getWorkDaysInMonth(month, year);
+    const workDaysInCurrentMonth = await getWorkDaysInMonthFromAPI(month, year);
 
     const countingDaysForCurrentMonth = workDaysInCurrentMonth - daysOff
     let workHours = workHoursTimePerDay * countingDaysForCurrentMonth;
@@ -188,8 +221,8 @@ function getWorkTimePerMonth(daysOff, month, year) {
  * @param {number} year Jahr für das gerechnet werden soll
  * @returns {Promise<Time>} Die restliche Flex office Arbeitszeit diesen Monat
  */
-function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, month, year) {
-    const workTimeMonth = getWorkTimePerMonth(daysOff, month, year);
+async function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, month, year) {
+    const workTimeMonth = await getWorkTimePerMonth(daysOff, month, year);
     const percent = calculatePercentage(flexTime, workTimeMonth);
     const timeLeft = timeLeftToReachPercentage(percent, flexOfficeQuote, workTimeMonth);
     return timeLeft;

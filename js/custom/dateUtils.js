@@ -68,3 +68,39 @@ function getYearForNextTimeMonth(month){
 
     return currentYear;
 }
+
+/**
+ * Gibt die deutschen Namen der Monate als Liste aus
+ *
+ * @return {string[]} Die Liste
+ */
+function getMonthNamesAsList(){
+    return [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember"
+    ];
+}
+
+/**
+ * Konvertiert ein Datum in ein validen String
+ *
+ * @param {Date} date Das zu konvertierende Datum
+ * @return {string} Die Liste
+ */
+function getValidDateString(date){
+    const correctedMonth = formatNumber(date.getMonth() + 1);
+    const correctedDate = formatNumber(date.getDate());
+    // const correctedDate = date.getDate();
+
+    return date.getFullYear() + "-" + correctedMonth + "-" + correctedDate;
+}
