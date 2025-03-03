@@ -192,3 +192,4 @@
 
 #### v2.5.10 - Typescript Testing
 - Die Jest Tests wurden von JS auf TS umgestellt
+- Typen in den Tests ergänzt

@@ -1,3 +1,4 @@
+import {Time} from "../ts/types";
 import {
     getLaterTime,
     formatTime,
@@ -8,22 +9,22 @@ import {
 describe("getLaterTime", () => {
 
     test("correct with timeTwo beeing bigger", () => {
-        const timeOne = [12, 21];
-        const timeTwo = [14, 51];
+        const timeOne: Time = [12, 21];
+        const timeTwo: Time = [14, 51];
         const result = getLaterTime(timeOne, timeTwo);
         expect(result).toEqual(timeTwo);
     });
 
     test("correct with timeOne beeing bigger", () => {
-        const timeOne = [15, 1];
-        const timeTwo = [14, 51];
+        const timeOne: Time = [15, 1];
+        const timeTwo: Time = [14, 51];
         const result = getLaterTime(timeOne, timeTwo);
         expect(result).toEqual(timeOne);
     });
 
     test("correct with timeOne and timeTwo beeing equal", () => {
-        const timeOne = [13, 20];
-        const timeTwo = [13, 20];
+        const timeOne: Time = [13, 20];
+        const timeTwo: Time = [13, 20];
         const result = getLaterTime(timeOne, timeTwo);
         expect(result).toEqual(timeOne);
     });
@@ -31,13 +32,13 @@ describe("getLaterTime", () => {
 
 describe("formatTime", () => {
     test("correct when less then 10 mins", () => {
-        const time = [7, 6];
+        const time: Time = [7, 6];
         const result = formatTime(time);
         expect(result).toEqual("7.06");
     });
 
     test("correct when more then 10 mins", () => {
-        const time = [7, 36];
+        const time: Time = [7, 36];
         const result = formatTime(time);
         expect(result).toEqual("7.36");
     });

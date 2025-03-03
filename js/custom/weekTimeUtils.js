@@ -26,7 +26,7 @@ function getWeekWorkTime(weekTime) {
  * Rechnet die Gleitzeit für diese Woche aus (Kann nicht getestet werden)
  *
  * @param {Time} weekWorkTime Gesamt Arbeitszeit einer Woche
- * @returns Die Überstunden der gesamten Woche in Stunden und Minuten
+ * @returns {Time} Die Überstunden der gesamten Woche in Stunden und Minuten
  */
 function calculateWeekOverTime(weekWorkTime) {
 
