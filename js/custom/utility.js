@@ -35,7 +35,7 @@ function formatTime(time) {
  * @return {string} Eine zweistellige Zahl als String
  */
 function formatMins(mins) {
-    if (mins <= 9 && mins > 0) {
+    if (mins <= 9 && mins >= 0) {
         return "0" + mins;
     }
 
