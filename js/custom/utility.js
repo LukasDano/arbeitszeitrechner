@@ -35,7 +35,6 @@ function formatTime(time) {
  * @returns {string} Eine schönere Darstellung der Zahl
  */
 function formatNumber(number) {
-
     if (number < 10 && number >= 0) {
         return "0" + number;
     } else {
