@@ -519,16 +519,12 @@ $(document).ready(function () {
     function swapCurrentOverTimeIcon() {
         const overTimeAutomaticActive = getBooleanCookie("overTimeAutomaticActive");
 
-        if (overTimeAutomaticActive){
-            document.getElementById("overTimeAutomaticIcon").alt = "overTimeAutomaticOff";
-            document.getElementById("overTimeAutomaticIcon").src = "pictures/icons/automaticOff.png";
+        if (overTimeAutomaticActive) {
             setCookieForever("overTimeAutomaticActive", false);
-            return;
+        } else {
+            setCookieForever("overTimeAutomaticActive", true);
         }
-
-        document.getElementById("overTimeAutomaticIcon").alt = "overTimeAutomaticOn";
-        document.getElementById("overTimeAutomaticIcon").src = "pictures/icons/automaticOn.png";
-        setCookieForever("overTimeAutomaticActive", true);
+        setOverTimeIconToCookieValue();
     }
 
     function updateEndTimeAfterWorkIsOver() {
@@ -575,7 +571,13 @@ $(document).ready(function () {
     document.getElementById("currentStatsMessageButton").addEventListener("click", () => {
         const currentStart = timeValues.startTime;
         const currentTime = getCurrentTime();
-        const currentPause = timeValues.pauseTime;
+        const [diffHours, diffMins] = calculateStartEndeTimeDiff(currentStart, currentTime);
+        let currentPause = timeValues.pauseTime;
+
+        if (diffHours < 6) {
+            currentPause = [0, 0];
+        }
+
         openCurrentStatsMessageWithValues(currentStart, currentTime, currentPause);
     });
 

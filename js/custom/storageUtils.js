@@ -1,6 +1,6 @@
 /**
  * Gibt den Wert des Cookies als String zurück.
- * Wenn der Cookie nicht existiert, wird ein leer String **""** zurück gegeben.
+ * Wenn der Cookie nicht existiert, wird ein leer String **""** zurückgegeben.
  *
  * @param {string} name Name unter dem der Cookie gespeichert wurde
  * @returns {string} Der Wert des Cookies
@@ -17,7 +17,7 @@ function getCookie(name) {
 
 /**
  * Gibt den Wert eines Cookies als boolean zurück.
- * Es wird auch **false** zurück gegeben, wenn der Cookie nicht existiert
+ * Es wird auch **false** zurückgegeben, wenn der Cookie nicht existiert
  *
  * @param {string} name Name unter dem der Cookie gespeichert wurde
  * @returns {boolean} Den Wert des Cookies
@@ -167,6 +167,30 @@ function setCookieUntilEndOfMonth(name, value) {
 }
 
 /**
+ * Setzt einen Cookie bis zum letzten Tag eines bestimmten Monats
+ *
+ * @param {string} name Name des Cookies
+ * @param {string} value Wert des Cookies
+ * @param {number} month Monat (1-12)
+ */
+function setCookieUntilEndOfGivenMonth(name, value, month) {
+    const cookiePath = getCurrentPath();
+    let year = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+
+    if (month <= currentMonth) {
+        year++;
+    }
+
+    month = Math.max(1, Math.min(12, month));
+    const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59);
+
+    const expires = "; expires=" + lastDayOfMonth.toUTCString();
+    document.cookie =
+        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
+}
+
+/**
  * Setzt einen Cookie für ein Jahr ab dem aktuellen Datum
  *
  * @param {string} name Name des Cookies
@@ -180,26 +204,6 @@ function setCookieForOneYear(name, value) {
     document.cookie =
         name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
 }
-
-/**
- * Setzt einen Cookie bis zum letzten Tag eines bestimmten Monats
- *
- * @param {string} name Name des Cookies
- * @param {string} value Wert des Cookies
- * @param {number} month Monat (1-12)
- */
-function setCookieUntilEndOfGivenMonth(name, value, month) {
-    const cookiePath = getCurrentPath();
-    const year = new Date().getFullYear();
-
-    month = Math.max(1, Math.min(12, month));
-    const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59);
-
-    const expires = "; expires=" + lastDayOfMonth.toUTCString();
-    document.cookie =
-        name + "=" + encodeURIComponent(value) + expires + "; path=" + cookiePath;
-}
-
 
 /**
  * Setzt das Ablaufdatum des Cookies auf in 366 Tagen
@@ -383,13 +387,14 @@ function setMonthValuesAsCookie(month, offDays, flexTime){
     const months = getMonthNamesAsList();
     const monthName = months[month - 1];
     const valueForCookie = JSON.stringify(valuesForMonth);
-    let monthPreviousToTarget = month - 1;
+    const currentJSDateMonth = month - 1;
+    let monthPreviousToTargetForJSDate = currentJSDateMonth - 1;
 
-    if (monthPreviousToTarget === -1) {
-        monthPreviousToTarget = 12;
+    if (monthPreviousToTargetForJSDate === -1) {
+        monthPreviousToTargetForJSDate = 12;
     }
 
-    setCookieUntilEndOfGivenMonth(monthName, valueForCookie, monthPreviousToTarget);
+    setCookieUntilEndOfGivenMonth(monthName, valueForCookie, monthPreviousToTargetForJSDate);
 }
 
 /**
