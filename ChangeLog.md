@@ -196,3 +196,5 @@
 - Frühzeitiger Feierabend Rechnung verbessert
 - Bugfix: Cookies bis zum Ende eines Monats werden jetzt richtig gestate und gelöscht
 - Refactoring: Die overTimeAutomatic on/off funktion wurde vereinfacht
+- Animation für die Overtimeautomatic hinzugefügt
+- Das offDays Feld wird immer auf die Tage des Monats limitiert

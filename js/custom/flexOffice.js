@@ -21,9 +21,10 @@ function flexOfficeCalculator() {
                         <div id="monthSelector"></div>
                     </div>
                 </div>
+                
 
                 <label for="daysOff">Abwesenheitstage:</label>
-                <input type="number" id="daysOff" name="daysOff" required>
+                <input type="number" id="daysOff" name="daysOff" min="0" required>
                 
                 <div class="row justify-content-center">
                     <div class="col-sm-6 col-12">
@@ -144,10 +145,10 @@ function getValuesAsList(){
 }
 
 /**
- * Setzt den Wert des Feldes auf den Wert aus dem Objekt
- * Wenn kein gültiger Wert gefunden wird, wird der Wert für das Feld auf 0 gesetzt.
+ * Setzt den Wert des Feldes auf den Wert aus dem Objekt,
+ * wenn kein gültiger Wert gefunden wird, wird der Wert für das Feld auf 0 gesetzt.
  *
- * @param {number} month Die Nummer des Monats zu dem die Daten gesetzt werden sollen
+ * @param {number} month Die Nummer des Monats, zu dem die Daten gesetzt werden sollen
  * @param {string} field Name des Feldes und des Attributs aus dem Objekt
  */
 function loadFlexOfficeValuesForMonthFromCookie(month, field) {
@@ -185,6 +186,8 @@ function loadFlexOfficeValuesForMonthFromCookie(month, field) {
 function setFlexOfficeFieldValuesForMonth(month){
     const fields = ["daysOff", "flexHours", "flexMinutes"];
     fields.forEach(field => {loadFlexOfficeValuesForMonthFromCookie(month ,field)});
+
+
 }
 
 /**
@@ -197,7 +200,6 @@ async function openFlexOfficeCalculator() {
 
     addDynamicComponents();
     document.getElementById("flexOfficeResult").style.display = "none";
-    document.getElementById("daysOff").max = getDaysInMonth();
 
     const currentMonth = getCurrentMonth();
     setFlexOfficeFieldValuesForMonth(currentMonth);
@@ -205,17 +207,20 @@ async function openFlexOfficeCalculator() {
     let [daysOff, month, year] = getValuesAsList();
     let [workHoursPerMonth, workMinutesPerMonth] = await getWorkTimePerMonth(daysOff, month, year);
 
+    document.getElementById("daysOff").max = getDaysForMonthInYear(month, year);
+
     document.getElementById("selectedMonth").addEventListener('change', () => {
         document.getElementById("flexOfficeResult").style.display = "none";
         const selectedMonth = getNumberFromElement("selectedMonth");
         setFlexOfficeFieldValuesForMonth(selectedMonth);
         [daysOff, month, year] = getValuesAsList();
+        document.getElementById("daysOff").max = getDaysForMonthInYear(month, year);
         [workHoursPerMonth, workMinutesPerMonth] = getWorkTimePerMonth(daysOff, month, year);
     });
 
     document.getElementById("daysOff").addEventListener('change', () => {
         const daysOff = getNumberFromElement("daysOff");
-        const daysInMonth = getDaysInMonth();
+        const daysInMonth = getDaysInCurrentMonth();
         if (daysOff > daysInMonth) {
             document.getElementById("daysOff").value = daysInMonth;
         }
