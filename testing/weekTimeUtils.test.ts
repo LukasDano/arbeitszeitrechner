@@ -104,7 +104,7 @@ describe("formatWeekTime", () => {
     test("with values under 10", () => {
         const weekTime: Time = [7, 6];
         const result = formatWeekTime(weekTime);
-        expect(result).toEqual("07.06 h");
+        expect(result).toEqual("7.06 h");
     });
 
     test("with one value under 10", () => {
@@ -116,7 +116,7 @@ describe("formatWeekTime", () => {
     test("with the other value under 10", () => {
         const weekTime: Time = [7, 12];
         const result = formatWeekTime(weekTime);
-        expect(result).toEqual("07.12 h");
+        expect(result).toEqual("7.12 h");
     });
 
 });
