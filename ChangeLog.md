@@ -200,3 +200,5 @@
 - Das offDays Feld wird immer auf die Tage des Monats limitiert
 - Die Wochengleitzeit wird jetzt wieder berechnet
 - Bugfix: Das Flexoffice Stunden Feld wird jetzt beim Monatswechsel begrenzen
+
+### v2.6 - Manuelles Austragen

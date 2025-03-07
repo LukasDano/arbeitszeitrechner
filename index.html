@@ -7,8 +7,8 @@
     <meta name="description" content="Arbeitszeitrechner">
     <link rel="icon" href="favicon.ico">
 
-    <meta name="Version" content="v2.5.10">
-    <meta name="VersionName" content="Typescript Testing">
+    <meta name="Version" content="v2.6">
+    <meta name="VersionName" content="Manuelles Austragen">
     <meta name="GitHub" content="https://github.com/LukasDano/arbeitszeitrechner">
 
     <title>Arbeitszeitrechner</title>
@@ -44,6 +44,13 @@
                 </button>
             </li>
             <div id="flexOfficeCalculator"></div>
+
+            <li class="nav-item">
+                <button class="nav-link" onclick="openManualBreak()">
+                    <img class="icon noneDevOption" src="pictures/icons/split.png" id="manualBreakIcon" alt="ManualBreak">
+                </button>
+            </li>
+            <div id="manualBreak"></div>
 
             <li class="nav-item">
                 <button class="nav-link" id="currentStatsMessageButton">
@@ -292,11 +299,14 @@
 <script src="js/custom/weekTimeUtils.js" defer></script>
 <script src="js/custom/weekTime.js" defer></script>
 <script src="js/custom/currentStatsMessage.js" defer></script>
+<script src="js/custom/manualBreak.js" defer></script>
+<script src="js/custom/manualBreakUtils.js" defer></script>
 <script defer>
     document.addEventListener('DOMContentLoaded', () => {
         setUpWeekTime();
         setUpFlexOffice();
         setUpDevOptions();
+        setUpManualBreak();
         setUpCurrentStatsMessageOverlay();
 
         refreshDevOptionCookies();
