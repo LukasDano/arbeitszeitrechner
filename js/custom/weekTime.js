@@ -46,9 +46,14 @@ function weekTimeCalculator() {
                 
                 <div class="text-center" id="weekTimeResult">
                     <div class="row container row-adaption">
-                    <div class="col text-center">
+                        <div class="col text-center">
                             <label for="weekWorkTime">Wochenarbeitszeit</label>
                             <p class="display-5" id="weekWorkTime"></p>
+                        </div>
+                        
+                        <div class="col text-center">
+                            <label for="weekOverTime">Wochengleitzeit</label>
+                            <p class="display-5" id="weekOverTime"></p>
                         </div>
                     </div>
                 </div>
@@ -141,10 +146,14 @@ function calculateWeekTime() {
     document.getElementById("weekTimeResult").style.display = "block";
     const weekTime = getTimeForWeek();
 
-    let weekWorkTime = getWeekWorkTime(weekTime);
-    weekWorkTime = formatWeekTime(weekWorkTime, true);
+    const weekWorkTime = getWeekWorkTime(weekTime);
+    const weekOverTime = calculateWeekOverTime(weekWorkTime);
 
-    document.getElementById("weekWorkTime").textContent = weekWorkTime;
+    const weekWorkTimeString = formatWeekTime(weekWorkTime);
+    const weekOverTimeString = formatWeekOverTime(weekOverTime);
+
+    document.getElementById("weekWorkTime").textContent = weekWorkTimeString;
+    document.getElementById("weekOverTime").textContent = weekOverTimeString;
 
 }
 

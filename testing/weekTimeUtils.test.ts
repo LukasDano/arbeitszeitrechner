@@ -1,7 +1,8 @@
 import {Time} from "../ts/types";
 import {getWeekWorkTime,
     calculateWeekOverTime,
-    formatWeekTime} from "../js/custom/weekTimeUtils";
+    formatWeekTime,
+    formatWeekOverTime} from "../js/custom/weekTimeUtils";
 
 describe("getWeekWorkTime", () => {
     (globalThis as any).setCookie = jest.fn();
@@ -94,27 +95,54 @@ describe("calculateWeekOverTime", () => {
 });
 
 describe("formatWeekTime", () => {
+    test("default values", () => {
+        const weekTime: Time = [35, 30];
+        const result = formatWeekTime(weekTime);
+        expect(result).toEqual("35.30 h");
+    });
+
+    test("with values under 10", () => {
+        const weekTime: Time = [7, 6];
+        const result = formatWeekTime(weekTime);
+        expect(result).toEqual("07.06 h");
+    });
+
+    test("with one value under 10", () => {
+        const weekTime: Time = [14, 6];
+        const result = formatWeekTime(weekTime);
+        expect(result).toEqual("14.06 h");
+    });
+
+    test("with the other value under 10", () => {
+        const weekTime: Time = [7, 12];
+        const result = formatWeekTime(weekTime);
+        expect(result).toEqual("07.12 h");
+    });
+
+});
+
+describe("formatWeekOverTime", () => {
     test("correct with positiv values", () => {
         const weekTime: Time = [0, 20];
-        const result = formatWeekTime(weekTime);
+        const result = formatWeekOverTime(weekTime);
         expect(result).toEqual("+0.20 h");
     });
 
     test("correct with negativ values", () => {
         const weekTime: Time = [-1, -20];
-        const result = formatWeekTime(weekTime);
+        const result = formatWeekOverTime(weekTime);
         expect(result).toEqual("-1.20 h");
     });
 
     test("correct with negativ hours", () => {
         const weekTime: Time = [-1, 0];
-        const result = formatWeekTime(weekTime);
+        const result = formatWeekOverTime(weekTime);
         expect(result).toEqual("-1.0 h");
     });
 
     test("correct with negativ minutes", () => {
         const weekTime: Time = [0, -20];
-        const result = formatWeekTime(weekTime);
+        const result = formatWeekOverTime(weekTime);
         expect(result).toEqual("-0.20 h");
     });
 });

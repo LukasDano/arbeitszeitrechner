@@ -25,6 +25,8 @@
   "reload": "png",
   "repository": "png",
   "scanTime": "png",
+  "split": "png",
+  "splitArrows": "png",
   "stopwatchPerson": "png",
   "timeStoper": "png",
   "week": "png"

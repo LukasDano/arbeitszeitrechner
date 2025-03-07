@@ -190,6 +190,21 @@ function setFlexOfficeFieldValuesForMonth(month){
 
 }
 
+async function setUpKeyBoardControlForFlexOfficeCalculator() {
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            calculateFlexOffice();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeFlexOfficeCalculator();
+        }
+    });
+}
+
 /**
  * Öffnet das FlexOffice Modal
  */
@@ -209,13 +224,14 @@ async function openFlexOfficeCalculator() {
 
     document.getElementById("daysOff").max = getDaysForMonthInYear(month, year);
 
-    document.getElementById("selectedMonth").addEventListener('change', () => {
+    document.getElementById("selectedMonth").addEventListener('change', async () => {
         document.getElementById("flexOfficeResult").style.display = "none";
         const selectedMonth = getNumberFromElement("selectedMonth");
         setFlexOfficeFieldValuesForMonth(selectedMonth);
+
         [daysOff, month, year] = getValuesAsList();
         document.getElementById("daysOff").max = getDaysForMonthInYear(month, year);
-        [workHoursPerMonth, workMinutesPerMonth] = getWorkTimePerMonth(daysOff, month, year);
+        [workHoursPerMonth, workMinutesPerMonth] = await getWorkTimePerMonth(daysOff, month, year);
     });
 
     document.getElementById("daysOff").addEventListener('change', () => {
@@ -246,18 +262,7 @@ async function openFlexOfficeCalculator() {
         }
     });
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            calculateFlexOffice();
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            event.preventDefault();
-            closeFlexOfficeCalculator();
-        }
-    });
+    await setUpKeyBoardControlForFlexOfficeCalculator();
 }
 
 /**

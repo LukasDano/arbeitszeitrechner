@@ -12,11 +12,11 @@ function calculateStartEndeTimeDiff(startTime, endTime) {
     let diffHours = endHours - startHours;
     let diffMins = endMins - startMins;
 
-    // Bei negativer Differenz: + 60 min & -1h
     if (diffMins < 0) {
         diffHours--;
         diffMins = diffMins + 60;
     }
+
     return [diffHours, diffMins];
 }
 
