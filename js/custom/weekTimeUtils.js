@@ -1,4 +1,6 @@
-﻿/**
+﻿const {formatNumber} = require("./utility");
+
+/**
  * Liefert die Arbeitszeit für die Woche
  *
  * @param {WeekTime} weekTime Ein Objekt mit "hours" und "mins" Werten für jeden Wochentag
@@ -66,7 +68,7 @@ function formatWeekTime(weekTime) {
         weekHours = Math.abs(weekHours);
         weekMins = Math.abs(weekMins);
 
-        weekTimeAusgabe = weekHours + "." + weekMins + " h";
+        weekTimeAusgabe = weekHours + "." + formatNumber(weekMins) + " h";
     } else {
         weekTimeAusgabe = "0.0 h";
     }
