@@ -203,3 +203,5 @@
 - UI Utilitys erstellt und eingebunden
 - currentStatsMassage braucht keine Parameter mehr
 - Cookies sollen jetzt einmal alle sauber gelöscht werden
+
+### v2.6 - Manuelles Austragen

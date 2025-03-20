@@ -443,6 +443,19 @@ section {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
     backdrop-filter: blur(5px); /* Blur effect on the background */
+    z-index: 999;
+}
+
+.manualBreakOverlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Blur effect on the background */
+    z-index: 999;
 }
 
 /* Popup container */
@@ -543,4 +556,14 @@ input, select {
 
 .close:hover {
     color: #000; /* Change color on hover */
+}
+
+.red-image {
+    filter: brightness(1000%) grayscale(100%)
+    opacity(0.1)
+    drop-shadow(0 0 0 red)
+    drop-shadow(0 0 0 red)
+    drop-shadow(0 0 0 red)
+    drop-shadow(0 0 0 red)
+    drop-shadow(0 0 0 red);
 }
