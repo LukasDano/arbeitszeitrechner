@@ -59,9 +59,7 @@ function weekTimeCalculator() {
                 </div>
 
                 <div class="btn-container">
-                    <button type="button" class="btn" onclick="calculateWeekTime()">
-                        <img class="icon" src="pictures/icons/calculator.png" alt="Enter"/>
-                    </button
+                    <button type="button" class="btn" onclick="calculateWeekTime()">Berechnen</button>
                 </div>
             </form>
         </div>

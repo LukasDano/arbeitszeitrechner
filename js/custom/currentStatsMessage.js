@@ -34,8 +34,18 @@ function currentStatsMessage() {
 /**
  * Öffnet das CurrentStatsMassage Modal
  */
-function openCurrentStatsMessageWithValues(currentStart, currentTime, currentPause) {
+function openCurrentStatsMessageWithValues() {
     setCookieFor10Minutes("settingsOpen", true);
+
+    const currentTime = getCurrentTime();
+    const currentStart = getTimeFromFieldById("start");
+    let currentPause = getTimeFromFieldById("pause");
+    const [diffHours, diffMins] = calculateStartEndeTimeDiff(currentStart, currentTime);
+
+    if (diffHours < 6) {
+        currentPause = [0, 0];
+    }
+
     document.getElementById("currentStatsMessageOverlay").style.display = "block";
     document.getElementById("currentStatsMessageForm").style.display = "block";
     document.getElementById("currentTimeStatsResult").style.display = "block";
