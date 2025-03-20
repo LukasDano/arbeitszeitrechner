@@ -69,8 +69,7 @@ $(document).ready(function () {
      * @returns {Time} Die Startzeit
      */
     function getStartTime() {
-        const [hours, mins] = $("#start").val().toString().split(":").map(Number);
-        return [hours, mins];
+        return getTimeFromFieldById("start");
     }
 
     /**
@@ -78,8 +77,7 @@ $(document).ready(function () {
      * @returns {Time} Die Pausenzeit
      */
     function getPauseTime() {
-        const [hours, mins] = $("#pause").val().toString().split(":").map(Number);
-        return [hours, mins];
+        return getTimeFromFieldById("pause");
     }
 
     /**
@@ -87,8 +85,7 @@ $(document).ready(function () {
      * @returns {Time} Die Endzeit
      */
     function getEndTime() {
-        const [hours, mins] = $("#end").val().toString().split(":").map(Number);
-        return [hours, mins];
+        return getTimeFromFieldById("end");
     }
 
     /**
@@ -96,8 +93,7 @@ $(document).ready(function () {
      * @returns {Time} Die Sollzeit
      */
     function getSollTime() {
-        const [hours, mins] = $("#soll").val().toString().split(":").map(Number);
-        return [hours, mins];
+        return getTimeFromFieldById("soll");
     }
 
     /**
@@ -566,19 +562,6 @@ $(document).ready(function () {
 
     document.getElementById("overTimeAutomatic").addEventListener("click", () => {
         swapCurrentOverTimeIcon();
-    });
-
-    document.getElementById("currentStatsMessageButton").addEventListener("click", () => {
-        const currentStart = timeValues.startTime;
-        const currentTime = getCurrentTime();
-        const [diffHours, diffMins] = calculateStartEndeTimeDiff(currentStart, currentTime);
-        let currentPause = timeValues.pauseTime;
-
-        if (diffHours < 6) {
-            currentPause = [0, 0];
-        }
-
-        openCurrentStatsMessageWithValues(currentStart, currentTime, currentPause);
     });
 
     document.addEventListener('keydown', (event) => {

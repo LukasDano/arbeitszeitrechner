@@ -62,9 +62,7 @@ function flexOfficeCalculator() {
                 </div>
 
                 <div class="btn-container">
-                    <button type="button" class="btn" onclick="calculateFlexOffice()">
-                        <img class="icon" src="pictures/icons/calculator.png" alt="Enter"/>
-                    </button
+                    <button type="button" class="btn" onclick="calculateFlexOffice()">Berechnen</button>
                 </div>
             </form>
         </div>
@@ -273,8 +271,6 @@ function closeFlexOfficeCalculator() {
     document.getElementById("flexOfficeOverlay").style.display = "none"; // Hide the overlay
     deleteCookie("settingsOpen");
 }
-
-const getNumberFromElement = (element) => parseInt(document.getElementById(element).value, 10);
 
 async function calculateFlexOffice() {
     document.getElementById("flexOfficeResult").style.display = "block";

@@ -200,3 +200,6 @@
 - Das offDays Feld wird immer auf die Tage des Monats limitiert
 - Die Wochengleitzeit wird jetzt wieder berechnet
 - Bugfix: Das Flexoffice Stunden Feld wird jetzt beim Monatswechsel begrenzen
+- UI Utilitys erstellt und eingebunden
+- currentStatsMassage braucht keine Parameter mehr
+- Cookies sollen jetzt einmal alle sauber gelöscht werden

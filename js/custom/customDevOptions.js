@@ -232,11 +232,11 @@ async function openDevOptionsForm() {
 
     const nameElementId = "name";
     const namePlaceHolderText = getCookie("customDevOptionOneAltName");
-    updateDropdownValue(nameElementId, namePlaceHolderText);
+    setHTMLTextValueForElement(nameElementId, namePlaceHolderText);
 
     const urlElementId = "url";
     const ulrPlaceHolderText = getCookie("customDevOptionOne");
-    updateDropdownValue(urlElementId, ulrPlaceHolderText);
+    setHTMLTextValueForElement(urlElementId, ulrPlaceHolderText);
 
     updateValues();
 
@@ -292,14 +292,6 @@ function deleteCustomButton() {
 }
 
 /**
- * Löscht die komischen Parameter, die in die URL gesetzt werden
- */
-function removeCustomButtonParameters() {
-    const urlWithoutParams = window.location.href.split('?')[0];
-    history.pushState({}, '', urlWithoutParams);
-}
-
-/**
  * Schreibt Daten aus einem Objekt oder einer Liste in ein DropDownMenu mit der angegebenen ID.
  *
  * @param {string} dropDownId Die ID des DropDownMenu HTML-Elements
@@ -328,17 +320,6 @@ function populateDropdown(dropDownId, optionsList) {
 
         }
     }
-}
-
-/**
- * Setzt den Placeholder für ein entsprechendes HTML-Element
- *
- * @param {string} elementId Die ID des Elements
- * @param {string} valueText Text der in den Placeholder gesetzt wird
- */
-function updateDropdownValue(elementId, valueText) {
-    const htmlElement = document.getElementById(elementId);
-    htmlElement.value = valueText;
 }
 
 /**
