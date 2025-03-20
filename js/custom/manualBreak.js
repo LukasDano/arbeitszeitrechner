@@ -13,14 +13,12 @@ function manualBreak() {
                 <h1>Manuell Austragen</h1>
                 
                 <label for="numberOfManualBreaks">Anzahl der manuellen Pausen:</label>
-                <input type="number" id="numberOfManualBreaks" min="1" value="1" required>
+                <input type="number" id="numberOfManualBreaks" min="1" max="3" value="1" required>
                 
                 <div id="manualBreaks"></div>
 
                 <div class="btn-container">
-                    <button type="button" class="btn" onclick="calculateTimeWithManualBreak()">
-                        <img class="icon" src="pictures/icons/calculator.png" alt="Enter"/>
-                    </button
+                    <button type="button" class="btn" onclick="calculateTimeWithManualBreak()">Berechnen</button>
                 </div>
             </form>
         </div>
@@ -46,7 +44,7 @@ function beginAndEndOfManualBreak(numberOfFieldPair) {
 /**
  * Erstellt die benötigte Anzahl von Beginn und Ende Feldern
  *
- * @param {number} requiredFieldPairs Die Zahl der benötigten Feldern
+ * @param {number} requiredFieldPairs Die Zahl den benötigten Feldern
  */
 function addBeginAndEndFieldsDynamic(requiredFieldPairs){
 
@@ -79,24 +77,6 @@ function setUpKeyBoardControlForManualBreak() {
             calculateTimeWithManualBreak();
         }
     });
-
-    document.addEventListener('wheel', (event) => {
-        event.preventDefault();
-        const numberOfManualBreaksField = document.getElementById("numberOfManualBreaks");
-        const requiredFieldPairs = parseInt (numberOfManualBreaksField.value, 10);
-        const increasedValue = requiredFieldPairs + 1;
-        const decreasedValue = Math.max(requiredFieldPairs - 1, 1);
-
-        if (event.deltaY > 0) {
-            document.getElementById("numberOfManualBreaks").value = decreasedValue;
-        } else {
-            document.getElementById("numberOfManualBreaks").value = increasedValue;
-        }
-
-        const changeEvent = new Event('change', { bubbles: true });
-        numberOfManualBreaksField.dispatchEvent(changeEvent);
-
-    }, { passive: false });
 }
 
 function updateBeginAndEndFields(){
