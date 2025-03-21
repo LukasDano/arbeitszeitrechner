@@ -425,16 +425,3 @@ function getMonthValuesFromCookie(month) {
     }
     return null;
 }
-
-function deleteCookiesIfNotDoneAlready(){
-    const cookiesDeleted = localStorage.getItem("cookiesDeleted");
-
-    if (!cookiesDeleted){
-        deleteAllCookies();
-    }
-}
-
-const clearLocalStorage  = () => {localStorage.clear()};
-
-// TODO Nächstes Update: deleteCookiesIfNotDoneAlready() löschen, clearLocalStorage() einbinden (nur bis zum dann nächsten Update)
-deleteCookiesIfNotDoneAlready();
