@@ -116,12 +116,12 @@ function formatWeekOverTime(weekOverTime) {
  * @return {DayTime} Die Arbeitszeiten eines Tages
  */
 function getTimeForDay(day){
-    const [hours, mins] =  getDayFieldValueAndUpdateCookie(day).toString().split(":").map((time) => parseInt(time, 10));
+    const [hours, mins] =  getDayFieldValue(day).toString().split(":").map((time) => parseInt(time, 10));
     return {hours, mins};
 }
 
 /**
- * Gibt die Arbeitszeiten der gesamnten Woche zurück
+ * Gibt die Arbeitszeiten der gesamten Woche zurück
  *
  * @return {WeekTime} Die Arbeitszeiten jedes Wochentages zusammengefasst
  */

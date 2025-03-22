@@ -1,3 +1,5 @@
+const dayFields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+
 /**
  * Gibt den HTML-Code für das WochenZeit Modal zurück
  *
@@ -77,9 +79,8 @@ function openWeekTimeCalculator() {
     document.getElementById("floatDaysLabel").style.display = "none";
     document.getElementById("floatDays").style.display = "none";
 
-    const fields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-    fields.forEach(field => setInitialWeekTimeValue(field));
-    fields.forEach(field => getDayFieldValueAndUpdateCookie(field));
+    dayFields.forEach(field => setInitialWeekTimeValue(field));
+    dayFields.forEach(field => getDayFieldValue(field));
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
@@ -130,10 +131,18 @@ function setInitialWeekTimeValue(field){
  * @param {string} day ElementID eines Tages Feldes
  * @return {string} Die Arbeitszeiten eines Tages
  */
-function getDayFieldValueAndUpdateCookie(day) {
+function getDayFieldValue(day) {
+    return document.getElementById(day).value;
+}
+
+/**
+ * Updated den zum Feld gehörigen Cookie
+ *
+ * @param {string} day ElementID eines Tages Feldes
+ */
+function updateFieldValueCookie(day) {
     const dayValue = document.getElementById(day).value;
     setCookieUntilEndOfWeek(day, dayValue);
-    return dayValue;
 
 }
 
@@ -141,7 +150,7 @@ function getDayFieldValueAndUpdateCookie(day) {
  * Berechnet die Wochenzeiten
  */
 function calculateWeekTime() {
-    document.getElementById("weekTimeResult").style.display = "block";
+    dayFields.forEach(day => updateFieldValueCookie(day));
     const weekTime = getTimeForWeek();
 
     const weekWorkTime = getWeekWorkTime(weekTime);
@@ -150,6 +159,7 @@ function calculateWeekTime() {
     const weekWorkTimeString = formatWeekTime(weekWorkTime);
     const weekOverTimeString = formatWeekOverTime(weekOverTime);
 
+    document.getElementById("weekTimeResult").style.display = "block";
     document.getElementById("weekWorkTime").textContent = weekWorkTimeString;
     document.getElementById("weekOverTime").textContent = weekOverTimeString;
 
