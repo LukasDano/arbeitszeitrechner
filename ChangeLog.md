@@ -205,3 +205,4 @@
 - Cookies sollen jetzt einmal alle sauber gelöscht werden
 
 ### v2.6 - Manuelles Austragen
+- bugfixes: Tastatur Bedienung für FlexOffice gefixt und Wochenzeitrechnung

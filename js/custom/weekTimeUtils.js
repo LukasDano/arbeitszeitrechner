@@ -1,6 +1,4 @@
-﻿const {formatNumber} = require("./utility");
-
-/**
+﻿/**
  * Liefert die Arbeitszeit für die Woche
  *
  * @param {WeekTime} weekTime Ein Objekt mit "hours" und "mins" Werten für jeden Wochentag

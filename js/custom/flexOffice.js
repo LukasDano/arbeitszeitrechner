@@ -21,7 +21,6 @@ function flexOfficeCalculator() {
                         <div id="monthSelector"></div>
                     </div>
                 </div>
-                
 
                 <label for="daysOff">Abwesenheitstage:</label>
                 <input type="number" id="daysOff" name="daysOff" min="0" required>
@@ -210,9 +209,10 @@ async function openFlexOfficeCalculator() {
     setCookieFor10Minutes("settingsOpen", true);
     document.getElementById("flexOfficeForm").style.display = "block";
     document.getElementById("flexOfficeOverlay").style.display = "block";
+    document.getElementById("flexOfficeResult").style.display = "none";
 
     addDynamicComponents();
-    document.getElementById("flexOfficeResult").style.display = "none";
+    document.getElementById("daysOff").max = getDaysInCurrentMonth();
 
     const currentMonth = getCurrentMonth();
     setFlexOfficeFieldValuesForMonth(currentMonth);

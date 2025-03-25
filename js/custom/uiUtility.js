@@ -52,7 +52,7 @@ function setHTMLTextValueForElement(elementId, text) {
  * @return {number} Den Wert als Nummer
  */
 function getNumberFromElement(elementId) {
-    const elementValue = document.getElementById(element).value;
+    const elementValue = document.getElementById(elementId).value;
     const valueAsNumber = parseInt(elementValue, 10);
     return valueAsNumber;
 }
