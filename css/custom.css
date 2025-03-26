@@ -474,6 +474,33 @@ section {
     display: none;
 }
 
+.form-flexOffice {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 90%;
+    max-width: 700px;
+    display: none;
+}
+
+#flexOfficeInputFields {
+    max-width: 300px;
+}
+
+.flexOfficeResultLabel {
+    margin-top: 10px;
+}
+
+.flexOfficeResultLabel.OneRow {
+    margin-bottom: 25px;
+}
+
 .form-container {
     display: flex;
     flex-direction: column;

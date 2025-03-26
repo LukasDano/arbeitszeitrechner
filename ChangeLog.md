@@ -206,3 +206,4 @@
 
 ### v2.6 - Manuelles Austragen
 - bugfixes: Tastatur Bedienung für FlexOffice gefixt und Wochenzeitrechnung
+- bessere Darstellung im FlexOffice Modal

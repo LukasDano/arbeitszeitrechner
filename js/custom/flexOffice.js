@@ -7,54 +7,58 @@ function flexOfficeCalculator() {
 
     return `
         <div class="flexOfficeOverlay" id="flexOfficeOverlay"></div>
-        <div class="form-popup" id="flexOfficeForm">
+        <div class="form-flexOffice" id="flexOfficeForm">
             <form class="form-container">
                 <span class="close" onclick="closeFlexOfficeCalculator()">&times;</span>
                 <h1>FlexOffice Calculator</h1>
-                
-                <div class="row justify-content-center">
-                    <div class="col-sm-6 col-12">
-                        <div id="quoteSelector"></div>
-                    </div>
-    
-                    <div class="col-sm-6 col-12">
-                        <div id="monthSelector"></div>
-                    </div>
-                </div>
 
-                <label for="daysOff">Abwesenheitstage:</label>
-                <input type="number" id="daysOff" name="daysOff" min="0" required>
+                <div id="flexOfficeInputFields">
                 
-                <div class="row justify-content-center">
-                    <div class="col-sm-6 col-12">
-                        <label for="flexTime">FlexOffice Stunden:</label>
-                        <input type="number" id="flexHours" name="flexHours" min="0" step="1" required>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 col-12">
+                            <div id="quoteSelector"></div>
+                        </div>
+        
+                        <div class="col-sm-6 col-12">
+                            <div id="monthSelector"></div>
+                        </div>
                     </div>
-    
-                    <div class="col-sm-6 col-12">
-                        <label for="flexTime">FlexOffice Minuten:</label>
-                        <input type="number" id="flexMinutes" name="flexMinutes" min="0" max="59" step="1" required>
+                
+                    <label for="daysOff">Abwesenheitstage:</label>
+                    <input type="number" id="daysOff" name="daysOff" min="0" required>
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 col-12">
+                            <label for="flexTime">FlexOffice Stunden:</label>
+                            <input type="number" id="flexHours" name="flexHours" min="0" step="1" required>
+                        </div>
+        
+                        <div class="col-sm-6 col-12">
+                            <label for="flexTime">FlexOffice Minuten:</label>
+                            <input type="number" id="flexMinutes" name="flexMinutes" min="0" max="59" step="1" required>
+                        </div>
                     </div>
+                
                 </div>
                 
                 <div class="text-center" id="flexOfficeResult">
                     <div class="row container row-adaption">
                         <div class="col text-center">
-                            <label for="calculatedMonth">Berechneter Monat</label>
+                            <label for="calculatedMonth" class="flexOfficeResultLabel">Berechneter Monat</label>
                             <p class="display-5" id="calculatedMonth"></p>
                         </div>
                        <div class="col text-center">
-                            <label for="workDaysCurrentMonth">Arbeitstage</label>
+                            <label for="workDaysCurrentMonth" class="flexOfficeResultLabel OneRow">Arbeitstage</label>
                             <p class="display-5" id="workDaysCurrentMonth"></p>
                         </div>
     
                         <div class="col text-center">
-                            <label for="workedDaysCurrentMonth">Gearbeitete Tage</label>
+                            <label for="workedDaysCurrentMonth" class="flexOfficeResultLabel OneRow">Gearbeitete Tage</label>
                             <p class="display-5" id="workedDaysCurrentMonth"></p>
                         </div>
     
                         <div class="col text-center">
-                            <label for="restFlexTime">Restliche FlexOffice Zeit</label>
+                            <label for="restFlexTime" class="flexOfficeResultLabel">Restliche FlexOffice Zeit</label>
                             <p class="display-5" id="restFlexTime"></p>
                         </div>
                     </div>
