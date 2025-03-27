@@ -204,6 +204,10 @@ async function setUpKeyBoardControlForFlexOfficeCalculator() {
             closeFlexOfficeCalculator();
         }
     });
+
+    document.getElementById("flexOfficeOverlay").addEventListener("click", () => {
+        closeFlexOfficeCalculator();
+    });
 }
 
 /**

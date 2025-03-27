@@ -94,6 +94,10 @@ function openWeekTimeCalculator() {
         }
     });
 
+    document.getElementById("weekTimeOverlay").addEventListener('click', () => {
+        closeWeekTimeCalculator();
+    });
+
 }
 
 /**

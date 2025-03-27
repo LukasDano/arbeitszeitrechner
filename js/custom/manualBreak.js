@@ -106,6 +106,10 @@ function openManualBreak() {
         updateBeginAndEndFields();
     });
 
+    document.getElementById("manualBreakOverlay").addEventListener("click", () => {
+        closeManualBreak();
+    });
+
 }
 
 function closeManualBreak() {

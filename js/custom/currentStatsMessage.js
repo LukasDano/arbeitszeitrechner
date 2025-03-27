@@ -62,6 +62,10 @@ function openCurrentStatsMessageWithValues() {
 
     document.getElementById("currentWorkTime").textContent = formatTime(currentIst);
     document.getElementById("currentFloatTime").textContent = createGleitzeitAusgabeFromFloat(currentFloat);
+
+    document.getElementById("currentStatsMessageOverlay").addEventListener("click", () => {
+        closeCurrentStatsMessage();
+    });
 }
 
 /**
