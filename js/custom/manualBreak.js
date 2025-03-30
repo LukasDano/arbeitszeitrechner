@@ -19,6 +19,7 @@ function manualBreak() {
 
                 <div class="btn-container">
                     <button type="button" class="btn" onclick="calculateTimeWithManualBreak()">Berechnen</button>
+                    <button type="button" class="btn" onclick="deactivateManualBreak()">Reset</button>
                 </div>
             </form>
         </div>
@@ -43,23 +44,89 @@ function beginAndEndOfManualBreak(numberOfFieldPair) {
 
 /**
  * Erstellt die benötigte Anzahl von Beginn und Ende Feldern
- *
- * @param {number} requiredFieldPairs Die Zahl den benötigten Feldern
  */
-function addBeginAndEndFieldsDynamic(requiredFieldPairs){
+function addBeginAndEndFieldsDynamic(){
 
+    const maximumFieldPairs = 3;
+    const requiredFieldPairs = getNumberFromElement("numberOfManualBreaks");
     const manualBreaksHTMLElement = document.getElementById("manualBreaks");
-    //TODO vlt. kann man das auch anders lösen
     manualBreaksHTMLElement.innerHTML = "";
 
-    for (let i = 0; i < requiredFieldPairs; i++) {
+    for (let i = 0; i < maximumFieldPairs; i++) {
         let numberID = i + 1;
         numberID = formatNumber(numberID);
 
         const divElement = document.createElement("div");
         divElement.innerHTML = beginAndEndOfManualBreak(numberID);
+
+        if (numberID > requiredFieldPairs) {
+            divElement.style.display = "none";
+        }
+
         manualBreaksHTMLElement.appendChild(divElement);
     }
+}
+
+function getBeginAndEndFieldIds() {
+    const fieldNumbers = ["01", "02", "03"];
+
+    let startIds = [];
+    let endIds = [];
+
+    fieldNumbers.forEach(number => {
+
+        const startId = "beginn" + number;
+        const endId = "end" + number;
+
+        startIds.push(startId);
+        endIds.push(endId);
+    });
+
+    return {startIds: startIds, endIds: endIds};
+}
+
+function setUpFields(){
+
+    const startIds = getBeginAndEndFieldIds().startIds;
+    const endIds = getBeginAndEndFieldIds().endIds;
+
+    startIds.forEach(id => {
+        addEventListenerAndValueToElement(id);
+    });
+
+    endIds.forEach(id => {
+        addEventListenerAndValueToElement(id);
+    });
+}
+
+/**
+ * Die Zahl der ElementId des Feldes
+ * @param {string} id Die ID in dem Format "nn"
+ */
+function addEventListenerAndValueToElement(id){
+    const element = document.getElementById(id);
+    setValuesAndSafeThem(id);
+
+    element.addEventListener("change", () => {
+        setValuesAndSafeThem(id);
+    });
+}
+
+/**
+ * Die Zahl der ElementId des zu speichernden Feldes
+ *
+ * @param {string} elementId Die ID in dem Format "nn"
+ */
+function setValuesAndSafeThem(elementId) {
+
+    let elementValue = getCookie(elementId);
+
+    if (!elementValue) {
+        elementValue = document.getElementById(elementId).value;
+        setCookieUntilMidnight(elementId, elementValue);
+    }
+
+    document.getElementById(elementId).value = elementValue;
 }
 
 function setUpKeyBoardControlForManualBreak() {
@@ -79,11 +146,6 @@ function setUpKeyBoardControlForManualBreak() {
     });
 }
 
-function updateBeginAndEndFields(){
-    const requiredFieldPairs = document.getElementById("numberOfManualBreaks").value;
-    addBeginAndEndFieldsDynamic(requiredFieldPairs);
-}
-
 function getTimeFromFieldById(fieldId) {
     const [hours, mins] = document.getElementById(fieldId).value.toString().split(":").map(Number);
     return [hours, mins];
@@ -100,10 +162,12 @@ function openManualBreak() {
     document.getElementById("manualBreakOverlay").style.display = "block";
     document.getElementById("manualBreakForm").style.display = "block";
     setUpKeyBoardControlForManualBreak();
-    updateBeginAndEndFields();
+    addBeginAndEndFieldsDynamic();
+    setUpFields();
 
     document.getElementById("numberOfManualBreaks").addEventListener("change", () => {
-        updateBeginAndEndFields();
+        addBeginAndEndFieldsDynamic();
+        setUpFields();
     });
 
     document.getElementById("manualBreakOverlay").addEventListener("click", () => {
@@ -130,6 +194,12 @@ function calculateTimeWithManualBreak() {
     const manualBreakIcon = document.getElementById("manualBreakIcon")
     manualBreakIcon.classList.remove("noneDevOption");
     manualBreakIcon.classList.add('red-image');
+}
+
+function deactivateManualBreak() {
+    const manualBreakIcon = document.getElementById("manualBreakIcon")
+    manualBreakIcon.classList.remove("red-image");
+    manualBreakIcon.classList.add('noneDevOption');
 }
 
 function setUpManualBreak() {
