@@ -52,7 +52,7 @@ function minutesToTime(minutes) {
     let hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
 
-    if (remainingMinutes < 0 ) {
+    if (remainingMinutes < 0) {
         hours++;
     }
 

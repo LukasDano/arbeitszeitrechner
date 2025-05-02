@@ -7,62 +7,65 @@ function flexOfficeCalculator() {
 
     return `
         <div class="flexOfficeOverlay" id="flexOfficeOverlay"></div>
-        <div class="form-popup" id="flexOfficeForm">
+        <div class="form-flexOffice" id="flexOfficeForm">
             <form class="form-container">
                 <span class="close" onclick="closeFlexOfficeCalculator()">&times;</span>
                 <h1>FlexOffice Calculator</h1>
-                
-                <div class="row justify-content-center">
-                    <div class="col-sm-6 col-12">
-                        <div id="quoteSelector"></div>
-                    </div>
-    
-                    <div class="col-sm-6 col-12">
-                        <div id="monthSelector"></div>
-                    </div>
-                </div>
-                
 
-                <label for="daysOff">Abwesenheitstage:</label>
-                <input type="number" id="daysOff" name="daysOff" min="0" required>
+                <div id="flexOfficeInputFields">
                 
-                <div class="row justify-content-center">
-                    <div class="col-sm-6 col-12">
-                        <label for="flexTime">FlexOffice Stunden:</label>
-                        <input type="number" id="flexHours" name="flexHours" min="0" step="1" required>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 col-12">
+                            <div id="quoteSelector"></div>
+                        </div>
+        
+                        <div class="col-sm-6 col-12">
+                            <div id="monthSelector"></div>
+                        </div>
                     </div>
-    
-                    <div class="col-sm-6 col-12">
-                        <label for="flexTime">FlexOffice Minuten:</label>
-                        <input type="number" id="flexMinutes" name="flexMinutes" min="0" max="59" step="1" required>
+                
+                    <label for="daysOff">Abwesenheitstage:</label>
+                    <input type="number" id="daysOff" name="daysOff" min="0" required>
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 col-12">
+                            <label for="flexTime">FlexOffice Stunden:</label>
+                            <input type="number" id="flexHours" name="flexHours" min="0" step="1" required>
+                        </div>
+        
+                        <div class="col-sm-6 col-12">
+                            <label for="flexTime">FlexOffice Minuten:</label>
+                            <input type="number" id="flexMinutes" name="flexMinutes" min="0" max="59" step="1" required>
+                        </div>
                     </div>
+                
                 </div>
                 
                 <div class="text-center" id="flexOfficeResult">
                     <div class="row container row-adaption">
                         <div class="col text-center">
-                            <label for="calculatedMonth">Berechneter Monat</label>
+                            <label for="calculatedMonth" class="flexOfficeResultLabel">Berechneter Monat</label>
                             <p class="display-5" id="calculatedMonth"></p>
                         </div>
                        <div class="col text-center">
-                            <label for="workDaysCurrentMonth">Arbeitstage</label>
+                            <label for="workDaysCurrentMonth" class="flexOfficeResultLabel OneRow">Arbeitstage</label>
                             <p class="display-5" id="workDaysCurrentMonth"></p>
                         </div>
     
                         <div class="col text-center">
-                            <label for="workedDaysCurrentMonth">Gearbeitete Tage</label>
+                            <label for="workedDaysCurrentMonth" class="flexOfficeResultLabel OneRow">Gearbeitete Tage</label>
                             <p class="display-5" id="workedDaysCurrentMonth"></p>
                         </div>
     
                         <div class="col text-center">
-                            <label for="restFlexTime">Restliche FlexOffice Zeit</label>
+                            <label for="restFlexTime" class="flexOfficeResultLabel">Restliche FlexOffice Zeit</label>
                             <p class="display-5" id="restFlexTime"></p>
                         </div>
                     </div>
                 </div>
 
                 <div class="btn-container">
-                    <button type="button" class="btn" onclick="calculateFlexOffice()">Berechnen</button>
+                    <button type="button" class="btn" id="calculateFlexOfficeButton" onclick="calculateFlexOffice()">Berechnen</button>
                 </div>
             </form>
         </div>
@@ -77,7 +80,7 @@ function quoteSelector() {
 }
 
 function monthSelector() {
-   return `
+    return `
         <label for=selectedMonth">Monat:</label>
         <select id="selectedMonth"/>
         `;
@@ -88,7 +91,7 @@ function monthSelector() {
  *
  * @param {string} elementName Die ID des HTML Elements
  */
-function createOptionsForQuoteSelector(elementName){
+function createOptionsForQuoteSelector(elementName) {
     const quoten = [
         "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"
     ];
@@ -108,7 +111,7 @@ function createOptionsForQuoteSelector(elementName){
  *
  * @param {string} elementName Die ID des HTML Elements
  */
-function createOptionsForMonthSelector(elementName){
+function createOptionsForMonthSelector(elementName) {
     const months = getMonthNamesAsList();
     const monthSelectElement = document.getElementById(elementName);
 
@@ -123,7 +126,7 @@ function createOptionsForMonthSelector(elementName){
     });
 }
 
-function addDynamicComponents(){
+function addDynamicComponents() {
     const quoteSelectorElement = document.getElementById("quoteSelector");
     quoteSelectorElement.innerHTML = quoteSelector();
     createOptionsForQuoteSelector("flexOfficeQuote");
@@ -135,7 +138,7 @@ function addDynamicComponents(){
     document.getElementById("selectedMonth").value = getCurrentMonth();
 }
 
-function getValuesAsList(){
+function getValuesAsList() {
     const daysOff = getNumberFromElement("daysOff");
     const month = getNumberFromElement("selectedMonth");
     const year = getYearForMonthWithSixMonthRange(month);
@@ -181,9 +184,9 @@ function loadFlexOfficeValuesForMonthFromCookie(month, field) {
  *
  * @param {number} month Die Zahl des Monats für den die Werte gesetzt werden sollen
  */
-function setFlexOfficeFieldValuesForMonth(month){
+function setFlexOfficeFieldValuesForMonth(month) {
     const fields = ["daysOff", "flexHours", "flexMinutes"];
-    fields.forEach(field => {loadFlexOfficeValuesForMonthFromCookie(month ,field)});
+    fields.forEach(field => { loadFlexOfficeValuesForMonthFromCookie(month, field) });
 
 
 }
@@ -201,6 +204,10 @@ async function setUpKeyBoardControlForFlexOfficeCalculator() {
             closeFlexOfficeCalculator();
         }
     });
+
+    document.getElementById("flexOfficeOverlay").addEventListener("click", () => {
+        closeFlexOfficeCalculator();
+    });
 }
 
 /**
@@ -210,9 +217,13 @@ async function openFlexOfficeCalculator() {
     setCookieFor10Minutes("settingsOpen", true);
     document.getElementById("flexOfficeForm").style.display = "block";
     document.getElementById("flexOfficeOverlay").style.display = "block";
+    document.getElementById("flexOfficeResult").style.display = "none";
+
+    const calculateFlexOfficeButton = document.getElementById("calculateFlexOfficeButton");
+    makeReactButton(calculateFlexOfficeButton, "primary");
 
     addDynamicComponents();
-    document.getElementById("flexOfficeResult").style.display = "none";
+    document.getElementById("daysOff").max = getDaysInCurrentMonth();
 
     const currentMonth = getCurrentMonth();
     setFlexOfficeFieldValuesForMonth(currentMonth);
@@ -238,7 +249,7 @@ async function openFlexOfficeCalculator() {
         if (daysOff > daysInMonth) {
             document.getElementById("daysOff").value = daysInMonth;
         }
-        if (daysOff < 0){
+        if (daysOff < 0) {
             document.getElementById("daysOff").value = 0;
         }
     });
@@ -248,16 +259,20 @@ async function openFlexOfficeCalculator() {
         if (flexHours > workHoursPerMonth) {
             document.getElementById("flexHours").value = workHoursPerMonth;
         }
-        if (flexHours < 0){
+        if (flexHours < 0) {
             document.getElementById("flexHours").value = 0;
         }
     });
 
     document.getElementById("flexMinutes").addEventListener('change', () => {
         const flexMinutes = getNumberFromElement("flexMinutes");
-        if (flexMinutes < 0){
+        if (flexMinutes < 0) {
             document.getElementById("flexMinutes").value = 0;
         }
+    });
+
+    document.getElementById("flexOfficeOverlay").addEventListener("pointerdown", () => {
+        closeFlexOfficeCalculator();
     });
 
     await setUpKeyBoardControlForFlexOfficeCalculator();
@@ -267,8 +282,8 @@ async function openFlexOfficeCalculator() {
  * Schließt das FlexOffice Modal
  */
 function closeFlexOfficeCalculator() {
-    document.getElementById("flexOfficeForm").style.display = "none"; // Hide the form
-    document.getElementById("flexOfficeOverlay").style.display = "none"; // Hide the overlay
+    document.getElementById("flexOfficeForm").style.display = "none";
+    document.getElementById("flexOfficeOverlay").style.display = "none";
     deleteCookie("settingsOpen");
 }
 

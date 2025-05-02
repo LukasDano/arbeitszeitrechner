@@ -1,20 +1,20 @@
-$(document).ready(function () {
-    $("#00min").click(function () {
+$(document).ready(() => {
+    $("#00min").click(() => {
         setNoPause();
     });
-    $("#30min").click(function () {
+    $("#30min").click(() => {
         setThirtyMinutesPause();
     });
-    $("#45min").click(function () {
+    $("#45min").click(() => {
         setFourtyFiveMinutesPause();
     });
 
-    $("#6h00m").click(function () {
+    $("#6h00m").click(() => {
         setNoPause();
         setSixHourMode();
     });
 
-    $("#7h06m").click(function () {
+    $("#7h06m").click(() => {
         setThirtyMinutesPause();
         setSevenHourMode();
     });
@@ -147,7 +147,7 @@ $(document).ready(function () {
         },
     };
 
-    $("#start").change(function () {
+    $("#start").change(() => {
         setEnd();
         setGleitzeit();
         setIstTime();
@@ -156,22 +156,22 @@ $(document).ready(function () {
         uploadStartTime();
     });
 
-    $("#pause").change(function () {
+    $("#pause").change(() => {
         setGleitzeit();
         setIstTime();
         calculate();
         setCountdown();
     });
 
-    $("#end").change(function () {
+    $("#end").change(() => {
         reactToEndTimeChange();
     });
 
-    $("#soll").change(function () {
+    $("#soll").change(() => {
         calculate();
     });
 
-    function reactToEndTimeChange(){
+    function reactToEndTimeChange() {
         if (isValidTime(timeValues.endTime)) {
             calculate();
             setGleitzeit();
@@ -256,13 +256,11 @@ $(document).ready(function () {
         $("#start").val(startHours + ":" + formatNumber(startMins));
     }
 
-    $("#start_Tour").click(function () {
+    $("#start_Tour").click(() => {
         $(".introjs-relativePosition").addClass("introjs-showElement");
         introJs().refresh();
         introJs().start();
     });
-
-    // Ab hier selbstgeschrieben
 
     function activateChanges() {
         calculate();
@@ -329,16 +327,16 @@ $(document).ready(function () {
         uploadGleitzeit();
     }
 
-    $("#reset").click(function () {
+    $("#reset").click(() => {
         resetToDefault();
     });
 
-    $("#float").change(function () {
+    $("#float").change(() => {
         applyFloatChanges();
         switchModeIfIsAllowed();
     });
 
-    $("#float").focusin(function () {
+    $("#float").focusin(() => {
         optimizeEnd();
     });
 
@@ -468,12 +466,12 @@ $(document).ready(function () {
         }
     }
 
-    $("#float").blur(function () {
+    $("#float").blur(() => {
         setGleitzeit();
         floatValueCheck();
     });
 
-    document.addEventListener("visibilitychange", function () {
+    document.addEventListener("visibilitychange", () => {
         const settingsOpen = getBooleanCookie("settingsOpen");
         if (document.visibilityState === "visible" && !settingsOpen) {
             location.reload();
@@ -502,7 +500,7 @@ $(document).ready(function () {
     function setOverTimeIconToCookieValue() {
         const overTimeAutomaticActive = getBooleanCookie("overTimeAutomaticActive");
 
-        if (overTimeAutomaticActive){
+        if (overTimeAutomaticActive) {
             document.getElementById("overTimeAutomaticIcon").alt = "overTimeAutomaticOn";
             document.getElementById("overTimeAutomaticIcon").src = "pictures/icons/automaticOn.png";
             return;
@@ -539,9 +537,14 @@ $(document).ready(function () {
         }
     }
 
+    function set14MinutesOverTime() {
+        const floatFourteenMinutes = [0, 14];
+        setFloatValue(floatFourteenMinutes);
+    }
+
     document
         .getElementById("float")
-        .addEventListener("keydown", function (event) {
+        .addEventListener("keydown", (event) => {
             let changedValue;
 
             if (event.key === "ArrowUp") {
@@ -555,26 +558,44 @@ $(document).ready(function () {
             setFloatValue(changedValue);
         });
 
-    document.getElementById("addBetterDefaultFloat").addEventListener("click", () => {
-        const floatFourteenMinutes = [0, 14];
-        setFloatValue(floatFourteenMinutes);
+    document.getElementById("addBetterDefaultFloat").addEventListener("pointerdown", () => {
+        set14MinutesOverTime();
     });
 
-    document.getElementById("overTimeAutomatic").addEventListener("click", () => {
+    document.getElementById("overTimeAutomatic").addEventListener("pointerdown", () => {
         swapCurrentOverTimeIcon();
     });
 
+    // Keyboardcontrol
+
     document.addEventListener('keydown', (event) => {
+        // Reset Page
         if (event.key === 'F1') {
             event.preventDefault();
             resetToDefault();
+            return;
         }
-    });
 
-    document.addEventListener('keydown', (event) => {
+        // Open DevOptions
         if (event.key === 'F2') {
             event.preventDefault();
             openOrCloseDevOptionsFromButton();
+            return;
+        }
+
+        // Six-Hour-Mode
+        if (event.key === 'F3') {
+            event.preventDefault();
+            setNoPause();
+            setSixHourMode();
+            return;
+        }
+
+        // +14 min Overtime
+        if (event.key === 'F4') {
+            event.preventDefault();
+            set14MinutesOverTime();
+            return;
         }
     });
 

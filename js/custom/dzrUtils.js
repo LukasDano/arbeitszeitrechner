@@ -599,6 +599,16 @@ function isValidTime(numberList) {
     );
 }
 
+/**
+ * Gibt alle Tastatureingaben aus, und was diese bewirken
+ */
+function getKeyboardControls() {
+    Object.entries(keyboardControl).forEach(item => {
+        const [key, value] = item;
+        console.log(key + ": " + value);
+    });
+}
+
 module.exports = {
     calculateStartEndeTimeDiff,
     calculateIstSollTimeDiff,

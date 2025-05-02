@@ -376,12 +376,12 @@ function deleteAllCookies() {
  * @param {number} offDays Die Abwesenheitstage
  * @param {Time} flexTime Die bereits erbrachte Flexoffice Zeit
  */
-function setMonthValuesAsCookie(month, offDays, flexTime){
+function setMonthValuesAsCookie(month, offDays, flexTime) {
     const [flexHours, flexMins] = flexTime;
     const valuesForMonth = {
-            "daysOff": offDays,
-            "flexHours": flexHours,
-            "flexMins": flexMins
+        "daysOff": offDays,
+        "flexHours": flexHours,
+        "flexMins": flexMins
     }
 
     const months = getMonthNamesAsList();
@@ -434,16 +434,18 @@ function deleteAllCookiesAtOnce() {
 }
 
 
-function deleteCookiesIfNotDoneAlready(){
+function deleteCookiesIfNotDoneAlready() {
     const cookiesDeleted = localStorage.getItem("cookiesDeleted");
 
-    if (!cookiesDeleted){
+    if (!cookiesDeleted) {
         deleteAllCookiesAtOnce();
         localStorage.setItem("cookiesDeleted", true);
     }
 }
 
-const clearLocalStorage  = () => {localStorage.clear()};
+const clearLocalStorage = () => localStorage.clear();
 
-// TODO Nächstes Update: deleteCookiesIfNotDoneAlready() löschen, clearLocalStorage() einbinden (nur bis zum dann nächsten Update)
+//TODO Nächstes Update:
+// 1. deleteCookiesIfNotDoneAlready()
+// 2. clearLocalStorage() einbinden (nur bis zum dann nächsten Update)
 deleteCookiesIfNotDoneAlready();

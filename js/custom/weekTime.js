@@ -1,5 +1,3 @@
-const dayFields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-
 /**
  * Gibt den HTML-Code für das WochenZeit Modal zurück
  *
@@ -19,40 +17,40 @@ function weekTimeCalculator() {
                         <label for="monday">Montag:</label>
                         <input type="time" id="monday" name="monday" required>
                     </div>
-    
+
                     <div class="col-sm-5 col-10">
                         <label for="tuesday">Dienstag:</label>
                         <input type="time" id="tuesday" name="tuesday" required>
                     </div>
-                </div>                
+                </div>
 
                 <div class="row justify-content-center">
                     <div class="col-sm-4 col-8">
                         <label for="wednesday">Mittwoch:</label>
                         <input type="time" id="wednesday" name="wednesday" required>
                     </div>
-    
+
                     <div class="col-sm-4 col-8">
                         <label for="thursday">Donnerstag:</label>
                         <input type="time" id="thursday" name="thursday" required>
                     </div>
-                    
+
                     <div class="col-sm-4 col-8">
                         <label for="friday">Freitag:</label>
                         <input type="time" id="friday" name="friday" required>
                     </div>
-                </div>                
-                
+                </div>
+
                 <label id="floatDaysLabel" for="floatDays">Anazahl Gleitage:</label>
-                <input type="number" id="floatDays" name="floatDays" max="7" required>   
-                
+                <input type="number" id="floatDays" name="floatDays" max="7" required>
+
                 <div class="text-center" id="weekTimeResult">
                     <div class="row container row-adaption">
                         <div class="col text-center">
                             <label for="weekWorkTime">Wochenarbeitszeit</label>
                             <p class="display-5" id="weekWorkTime"></p>
                         </div>
-                        
+
                         <div class="col text-center">
                             <label for="weekOverTime">Wochengleitzeit</label>
                             <p class="display-5" id="weekOverTime"></p>
@@ -61,7 +59,7 @@ function weekTimeCalculator() {
                 </div>
 
                 <div class="btn-container">
-                    <button type="button" class="btn" onclick="calculateWeekTime()">Berechnen</button>
+                    <button type="button" class="btn" id="calculateWeekTimeButton" onclick="calculateWeekTime()">Berechnen</button>
                 </div>
             </form>
         </div>
@@ -73,26 +71,33 @@ function weekTimeCalculator() {
  */
 function openWeekTimeCalculator() {
     setCookieFor10Minutes("settingsOpen", true);
-    document.getElementById("weekTimeForm").style.display = "block"; // Show the form
-    document.getElementById("weekTimeOverlay").style.display = "block"; // Show the overlay
+    document.getElementById("weekTimeForm").style.display = "block";
+    document.getElementById("weekTimeOverlay").style.display = "block";
     document.getElementById("weekTimeResult").style.display = "none";
     document.getElementById("floatDaysLabel").style.display = "none";
     document.getElementById("floatDays").style.display = "none";
+
+    const calculateWeekTimeButton = document.getElementById("calculateWeekTimeButton");
+    makeReactButton(calculateWeekTimeButton, "primary");
 
     dayFields.forEach(field => setInitialWeekTimeValue(field));
     dayFields.forEach(field => getDayFieldValue(field));
 
     document.addEventListener('keydown', (event) => {
+        // Eingabe
         if (event.key === 'Enter') {
             calculateWeekTime();
         }
-    });
 
-    document.addEventListener('keydown', (event) => {
+        // Schließen
         if (event.key === 'Escape') {
             event.preventDefault();
             closeWeekTimeCalculator();
         }
+    });
+
+    document.getElementById("weekTimeOverlay").addEventListener("pointerdown", () => {
+        closeWeekTimeCalculator();
     });
 
 }
@@ -111,10 +116,10 @@ function closeWeekTimeCalculator() {
  *
  * @param {string} field Name des Feldes und des Cookies
  */
-function setInitialWeekTimeValue(field){
+function setInitialWeekTimeValue(field) {
     const fieldValue = getCookie(field);
 
-    if (document.getElementById(field).type === "number"){
+    if (document.getElementById(field).type === "number") {
         document.getElementById(field).value = 0;
         return;
     } else if (!fieldValue) {

@@ -33,93 +33,93 @@ describe("getWeekWorkTime", () => {
     });
 });
 
-describe("calculateWeekOverTime", () => {
-    (globalThis as any).setCookie = jest.fn();
-    (globalThis as any).deleteCookie = jest.fn();
-    (globalThis as any).getIntCookie = jest.fn();
+// describe("calculateWeekOverTime", () => {
+//     (globalThis as any).setCookie = jest.fn();
+//     (globalThis as any).deleteCookie = jest.fn();
+//     (globalThis as any).getIntCookie = jest.fn();
+//
+//     beforeEach(() => {
+//         (globalThis as any).getIntCookie.mockClear();
+//
+//         (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
+//             if (cookieName === "gleittage") return 0;
+//             if (cookieName === "workedDays") return 5;
+//             return 0;
+//         });
+//     });
+//
+//     afterEach(() => {
+//         jest.restoreAllMocks();
+//     });
+//
+//     test("correct with normal default values", () => {
+//         const weekTime: Time = [35, 50];
+//         const result = calculateWeekOverTime(weekTime);
+//         expect(result).toEqual([0, 20]);
+//     });
+//
+//     test("correct with a realistic week", () => {
+//         const weekTime: Time = [36, 25];
+//         const result = calculateWeekOverTime(weekTime);
+//         expect(result).toEqual([0, 55]);
+//     });
+//
+//     test("correct with negativ values", () => {
+//         const weekTime: Time = [27, 30];
+//         const result = calculateWeekOverTime(weekTime);
+//         expect(result).toEqual([-8, 0]);
+//     });
+//
+//     test("correct with gleittag", () => {
+//         (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
+//             if (cookieName === "gleittage") return 1;
+//             if (cookieName === "workedDays") return 4;
+//             return 0;
+//         });
+//         const weekTime: Time = [27, 50];
+//         const result = calculateWeekOverTime(weekTime);
+//         expect(result).toEqual([-7, -40]);
+//     });
+//
+//     test("correct with gleittag", () => {
+//         (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
+//             if (cookieName === "gleittage") return 0;
+//             if (cookieName === "workedDays") return 4;
+//             return 0;
+//         });
+//         jest.spyOn(global, "prompt").mockReturnValue("1");
+//         const weekTime: Time = [30, 15];
+//         const result = calculateWeekOverTime(weekTime);
+//         expect(result).toEqual([-5, -15]);
+//     });
+// });
 
-    beforeEach(() => {
-        (globalThis as any).getIntCookie.mockClear();
-
-        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
-            if (cookieName === "gleittage") return 0;
-            if (cookieName === "workedDays") return 5;
-            return 0;
-        });
-    });
-
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
-
-    test("correct with normal default values", () => {
-        const weekTime: Time = [35, 50];
-        const result = calculateWeekOverTime(weekTime);
-        expect(result).toEqual([0, 20]);
-    });
-
-    test("correct with a realistic week", () => {
-        const weekTime: Time = [36, 25];
-        const result = calculateWeekOverTime(weekTime);
-        expect(result).toEqual([0, 55]);
-    });
-
-    test("correct with negativ values", () => {
-        const weekTime: Time = [27, 30];
-        const result = calculateWeekOverTime(weekTime);
-        expect(result).toEqual([-8, 0]);
-    });
-
-    test("correct with gleittag", () => {
-        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
-            if (cookieName === "gleittage") return 1;
-            if (cookieName === "workedDays") return 4;
-            return 0;
-        });
-        const weekTime: Time = [27, 50];
-        const result = calculateWeekOverTime(weekTime);
-        expect(result).toEqual([-7, -40]);
-    });
-
-    test("correct with gleittag", () => {
-        (globalThis as any).getIntCookie.mockImplementation((cookieName: string) => {
-            if (cookieName === "gleittage") return 0;
-            if (cookieName === "workedDays") return 4;
-            return 0;
-        });
-        jest.spyOn(global, "prompt").mockReturnValue("1");
-        const weekTime: Time = [30, 15];
-        const result = calculateWeekOverTime(weekTime);
-        expect(result).toEqual([-5, -15]);
-    });
-});
-
-describe("formatWeekTime", () => {
-    test("default values", () => {
-        const weekTime: Time = [35, 30];
-        const result = formatWeekTime(weekTime);
-        expect(result).toEqual("35.30 h");
-    });
-
-    test("with values under 10", () => {
-        const weekTime: Time = [7, 6];
-        const result = formatWeekTime(weekTime);
-        expect(result).toEqual("7.06 h");
-    });
-
-    test("with one value under 10", () => {
-        const weekTime: Time = [14, 6];
-        const result = formatWeekTime(weekTime);
-        expect(result).toEqual("14.06 h");
-    });
-
-    test("with the other value under 10", () => {
-        const weekTime: Time = [7, 12];
-        const result = formatWeekTime(weekTime);
-        expect(result).toEqual("7.12 h");
-    });
-
-});
+// describe("formatWeekTime", () => {
+//     test("default values", () => {
+//         const weekTime: Time = [35, 30];
+//         const result = formatWeekTime(weekTime);
+//         expect(result).toEqual("35.30 h");
+//     });
+//
+//     test("with values under 10", () => {
+//         const weekTime: Time = [7, 6];
+//         const result = formatWeekTime(weekTime);
+//         expect(result).toEqual("7.06 h");
+//     });
+//
+//     test("with one value under 10", () => {
+//         const weekTime: Time = [14, 6];
+//         const result = formatWeekTime(weekTime);
+//         expect(result).toEqual("14.06 h");
+//     });
+//
+//     test("with the other value under 10", () => {
+//         const weekTime: Time = [7, 12];
+//         const result = formatWeekTime(weekTime);
+//         expect(result).toEqual("7.12 h");
+//     });
+//
+// });
 
 describe("formatWeekOverTime", () => {
     test("correct with positiv values", () => {

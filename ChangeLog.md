@@ -203,3 +203,16 @@
 - UI Utilitys erstellt und eingebunden
 - currentStatsMassage braucht keine Parameter mehr
 - Cookies sollen jetzt einmal alle sauber gelöscht werden
+- Anleitung für Keyboard control eingebaut
+- Event listener "click" durch "pointerdown" ersetzt
+- Tastensteuerung für +14 und den 6er-Modus
+- Sortierung der Skripte im HTML (mit Anmerkungen wofür sie sind)
+- Wochenzeit Berechnung funktioniert wieder (dafür gehen die tests aber nicht)
+- constants.js eingeführt
+- Tägliche Arbeitszeit wird bis zum Ende der Woche gespeichert
+- better placing in flexOffice UI
+- Schließen der Modals jetzt per klick auf das Overlay möglich
+- Alle Buttons mit Icons haben jetzt einen Tooltip/Title
+- Bei den CustomDevOptions gibt es jetzt keine Doppelungen mehr (in den Dropdowns)
+- Buttons können jetzt zu Reactbuttons gemacht werden
+  - Die Buttons in den Modals wurden entsprechend angepasst

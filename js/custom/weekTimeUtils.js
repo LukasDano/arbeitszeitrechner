@@ -1,6 +1,4 @@
-﻿const {formatNumber} = require("./utility");
-
-/**
+﻿/**
  * Liefert die Arbeitszeit für die Woche
  *
  * @param {WeekTime} weekTime Ein Objekt mit "hours" und "mins" Werten für jeden Wochentag
@@ -64,7 +62,7 @@ function formatWeekTime(weekTime) {
         weekMins = "0" + weekMins;
     }
 
-    if (weekHours && weekMins ) {
+    if (weekHours && weekMins) {
         weekHours = Math.abs(weekHours);
         weekMins = Math.abs(weekMins);
 
@@ -115,9 +113,9 @@ function formatWeekOverTime(weekOverTime) {
  * @param {string} day ElementID eines Tages Feldes
  * @return {DayTime} Die Arbeitszeiten eines Tages
  */
-function getTimeForDay(day){
-    const [hours, mins] =  getDayFieldValue(day).toString().split(":").map((time) => parseInt(time, 10));
-    return {hours, mins};
+function getTimeForDay(day) {
+    const [hours, mins] = getDayFieldValue(day).toString().split(":").map((time) => parseInt(time, 10));
+    return { hours, mins };
 }
 
 /**
