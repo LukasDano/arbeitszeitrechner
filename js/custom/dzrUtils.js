@@ -12,11 +12,11 @@ function calculateStartEndeTimeDiff(startTime, endTime) {
     let diffHours = endHours - startHours;
     let diffMins = endMins - startMins;
 
-    // Bei negativer Differenz: + 60 min & -1h
     if (diffMins < 0) {
         diffHours--;
         diffMins = diffMins + 60;
     }
+
     return [diffHours, diffMins];
 }
 
@@ -597,6 +597,16 @@ function isValidTime(numberList) {
         minutes >= 0 &&
         minutes < 60
     );
+}
+
+/**
+ * Gibt alle Tastatureingaben aus, und was diese bewirken
+ */
+function getKeyboardControls() {
+    Object.entries(keyboardControl).forEach(item => {
+        const [key, value] = item;
+        console.log(key + ": " + value);
+    });
 }
 
 module.exports = {

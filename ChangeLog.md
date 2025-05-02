@@ -182,9 +182,9 @@
 - Improvement: In der Monatsauswahl wird jetzt angezeigt, welchen Monat man genau auswählt (es wird das dazugehörige Jahr angezeigt)
   - Die Monatsnamen sind jetzt nur noch Abkürzungen (bzw. ihre ersten 3 Buchstaben)
 - Refactoring: Die Options Werte für die Quoten und die Monate werden jetzt per JS aus Listen generiert
-- Refactoring: Die API für Feiertage eigebunden (vlt.)
+- Refactoring: Die API für Feiertage eigenbunden (vlt.)
 - hotfix: Die Minuten bei der FlexOffice berechnung, haben jetzt kein Limit mehr, machte Fachlich gesehen keinen Sinn und hat zu Fehlern/komischen Eingaben geführt
-- Neues Feature/Improvment: Die Daten für die FlexOffice Monate werden jetzt bis zum letzten Tag des Vormonats gespeichert
+- Neues Feature/Improvement: Die Daten für die FlexOffice Monate werden jetzt bis zum letzten Tag des Vormonats gespeichert
 - Neue Funktion, Cookies können jetzt für ein Jahr gespeichert werden
 - Bugfix: Die Arbeitstage werden jetzt korrekt berechnet
 - Refactoring: funktionalitäten ausgelagert, Feiertags API eingebunden (mit der anderen Methode als fallback)
@@ -193,3 +193,26 @@
 #### v2.5.10 - Typescript Testing
 - Die Jest Tests wurden von JS auf TS umgestellt
 - Typen in den Tests ergänzt
+- Frühzeitiger Feierabend Rechnung verbessert
+- Bugfix: Cookies bis zum Ende eines Monats werden jetzt richtig gestate und gelöscht
+- Refactoring: Die overTimeAutomatic on/off funktion wurde vereinfacht
+- Animation für die Overtimeautomatic hinzugefügt
+- Das offDays Feld wird immer auf die Tage des Monats limitiert
+- Die Wochengleitzeit wird jetzt wieder berechnet
+- Bugfix: Das Flexoffice Stunden Feld wird jetzt beim Monatswechsel begrenzen
+- UI Utilitys erstellt und eingebunden
+- currentStatsMassage braucht keine Parameter mehr
+- Cookies sollen jetzt einmal alle sauber gelöscht werden
+- Anleitung für Keyboard control eingebaut
+- Event listener "click" durch "pointerdown" ersetzt
+- Tastensteuerung für +14 und den 6er-Modus
+- Sortierung der Skripte im HTML (mit Anmerkungen wofür sie sind)
+- Wochenzeit Berechnung funktioniert wieder (dafür gehen die tests aber nicht)
+- constants.js eingeführt
+- Tägliche Arbeitszeit wird bis zum Ende der Woche gespeichert
+- better placing in flexOffice UI
+- Schließen der Modals jetzt per klick auf das Overlay möglich
+- Alle Buttons mit Icons haben jetzt einen Tooltip/Title
+- Bei den CustomDevOptions gibt es jetzt keine Doppelungen mehr (in den Dropdowns)
+- Buttons können jetzt zu Reactbuttons gemacht werden
+  - Die Buttons in den Modals wurden entsprechend angepasst

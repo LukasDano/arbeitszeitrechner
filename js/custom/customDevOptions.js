@@ -28,8 +28,7 @@ function addDevOptionFromModal(customDevOption, url, cookieAltName, iconName) {
 }
 
 /**
- * Gibt alle existierenden Files aus
- * @return {string[]} Eine Liste aller Icon File Namen
+ * @return {string[]} Eine Liste aller existierenden Icon-File-Namen
  */
 async function listAllIcons() {
     const jsonPath = 'database/icons/icons.json';
@@ -49,9 +48,7 @@ async function listAllIcons() {
 }
 
 /**
- * Gibt alle im HTML Dokument existierenden CustomDevOptionsButtonNamen als Liste zurück
- *
- * @return {string[]} Die Namen zu allen existierenden CustomDevOptionsButtons
+ * @return {string[]} Die Namen zu allen existierenden CustomDevOptionsButtons als Liste
  */
 function listAllCustomDevOptionButtons() {
     const devOptions = document.querySelectorAll('.devOption');
@@ -79,7 +76,7 @@ function setUpDevOptions() {
     settingsContainer.innerHTML = devOptionSettings();
 
     options.forEach(option => {
-        const {cookiePrefix, id} = option;
+        const { cookiePrefix, id } = option;
         const targetUrl = getCookie(cookiePrefix);
         const devOptionIcon = getCookie(`${cookiePrefix}Icon`);
         const devOptionAltName = getCookie(`${cookiePrefix}AltName`);
@@ -116,8 +113,8 @@ function refreshDevOptionCookies() {
 /**
  * Prüft, ob ein String einem vorher übergebenen Schema entspricht
  *
- * @param inputString
- * @return {boolean}
+ * @param {string} inputString Der zu prüfende String
+ * @return {boolean} true: Passt zu dem Schema, false: Passt nicht zum Schema
  */
 function isValidSpeiseplanURL(inputString) {
     const lunchURLVerificator = getCookie("lunchURLVerificator");
@@ -143,18 +140,14 @@ function updateLink(cookieURL, devOptionsButtonName) {
 }
 
 /**
- * Gibt alle CustomDevOption Namen zurück
- *
- * @returns Alle CustomDevOptions
+ * @returns Alle CustomDevOptions Namen
  */
 function getAllDevOptions() {
-    const options = [
+    return [
         {id: 'One', cookiePrefix: 'customDevOptionOne'},
         {id: 'Two', cookiePrefix: 'customDevOptionTwo'},
         {id: 'Three', cookiePrefix: 'customDevOptionThree'}
     ];
-
-    return options;
 }
 
 /**
@@ -171,7 +164,7 @@ function customDevOption(targetUrl, devOptionIcon, devOptionAltName) {
     return `
         <div class="devOption">
             <li class="nav-item">
-                <a class="nav-link" href="${targetUrl}" target="_blank">
+                <a class="nav-link" href="${targetUrl}" target="_blank" title="${devOptionAltName}">
                     <img class="icon" src="${devOptionIcon || defaultIcon}" alt="${devOptionAltName}">
                 </a>
             </li>
@@ -206,8 +199,8 @@ function devOptionSettings() {
                 <input type="text" id="url" name="url" placeholder="URL eingeben" required>
 
                 <div class="btn-container">
-                    <button class="btn" onclick="saveCustomButton()">Save</button>
-                    <button class="btn" onclick="deleteCustomButton()">Delete</button>
+                    <button class="btn" id="weekTimeSave" onclick="saveCustomButton()">Save</button>
+                    <button class="btn" id="weekTimeDelete" onclick="deleteCustomButton()">Delete</button>
                 </div>
             </form>
         </div>
@@ -219,8 +212,14 @@ function devOptionSettings() {
  */
 async function openDevOptionsForm() {
     setCookieFor10Minutes("settingsOpen", true);
-    document.getElementById("devOptionsForm").style.display = "block"; // Show the form
-    document.getElementById("devOptionsOverlay").style.display = "block"; // Show the overlay
+    document.getElementById("devOptionsForm").style.display = "block";
+    document.getElementById("devOptionsOverlay").style.display = "block";
+
+    const weekTimeSave = document.getElementById("weekTimeSave");
+    const weekTimeDelete = document.getElementById("weekTimeDelete");
+
+    makeReactButton(weekTimeSave, "success");
+    makeReactButton(weekTimeDelete, "danger");
 
     const iconDropDownId = "iconDropDown";
     const allIconsList = await listAllIcons();
@@ -232,31 +231,34 @@ async function openDevOptionsForm() {
 
     const nameElementId = "name";
     const namePlaceHolderText = getCookie("customDevOptionOneAltName");
-    updateDropdownValue(nameElementId, namePlaceHolderText);
+    setHTMLTextValueForElement(nameElementId, namePlaceHolderText);
 
     const urlElementId = "url";
     const ulrPlaceHolderText = getCookie("customDevOptionOne");
-    updateDropdownValue(urlElementId, ulrPlaceHolderText);
+    setHTMLTextValueForElement(urlElementId, ulrPlaceHolderText);
 
     updateValues();
 
     document.addEventListener('keydown', (event) => {
+        // Beenden
         if (event.key === 'Escape') {
             event.preventDefault();
             closeDevOptionsForm();
         }
-    });
 
-    document.addEventListener('keydown', (event) => {
+        // Eingabe
         if (event.key === 'Enter') {
             saveCustomButton();
         }
-    });
 
-    document.addEventListener('keydown', (event) => {
+        // Löschen
         if (event.key === 'Delete') {
             deleteCustomButton();
         }
+    });
+
+    document.getElementById("devOptionsOverlay").addEventListener("pointerdown", () => {
+        closeDevOptionsForm();
     });
 }
 
@@ -264,8 +266,8 @@ async function openDevOptionsForm() {
  * Schließt das SettingsModal
  */
 function closeDevOptionsForm() {
-    document.getElementById("devOptionsForm").style.display = "none"; // Hide the form
-    document.getElementById("devOptionsOverlay").style.display = "none"; // Hide the overlay
+    document.getElementById("devOptionsForm").style.display = "none";
+    document.getElementById("devOptionsOverlay").style.display = "none";
     deleteCookie("settingsOpen");
 }
 
@@ -292,21 +294,15 @@ function deleteCustomButton() {
 }
 
 /**
- * Löscht die komischen Parameter, die in die URL gesetzt werden
- */
-function removeCustomButtonParameters() {
-    const urlWithoutParams = window.location.href.split('?')[0];
-    history.pushState({}, '', urlWithoutParams);
-}
-
-/**
  * Schreibt Daten aus einem Objekt oder einer Liste in ein DropDownMenu mit der angegebenen ID.
  *
  * @param {string} dropDownId Die ID des DropDownMenu HTML-Elements
- * @param {[]|{}} optionsList Die Liste/ das Objekt mit den Daten
+ * @param {[]|{}} optionsList Die Liste/das Objekt mit den Daten
  */
 function populateDropdown(dropDownId, optionsList) {
     const dropdown = document.getElementById(dropDownId);
+
+    dropdown.innerHTML = '';
 
     if (Array.isArray(optionsList)) {
         optionsList.forEach(option => {
@@ -328,17 +324,6 @@ function populateDropdown(dropDownId, optionsList) {
 
         }
     }
-}
-
-/**
- * Setzt den Placeholder für ein entsprechendes HTML-Element
- *
- * @param {string} elementId Die ID des Elements
- * @param {string} valueText Text der in den Placeholder gesetzt wird
- */
-function updateDropdownValue(elementId, valueText) {
-    const htmlElement = document.getElementById(elementId);
-    htmlElement.value = valueText;
 }
 
 /**

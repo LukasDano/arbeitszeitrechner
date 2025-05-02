@@ -52,16 +52,39 @@ function minutesToTime(minutes) {
     let hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
 
-    if (remainingMinutes < 0 ) {
+    if (remainingMinutes < 0) {
         hours++;
     }
 
     return [hours, remainingMinutes];
 }
 
+/**
+ * Zieht zwei Time Values voneinander ab
+ *
+ * @param {Time} minuend Die Zahl von der etwas abgezogen wird
+ * @param {Time} subtrahend Die Zahl, zu der etwas addiert wird
+ * @return {Time} Die Differnz der beiden Zeiten
+ */
+function subtractTimeValues(minuend, subtrahend) {
+    const [oneHours, oneMins] = minuend;
+    const [twoHours, twoMins] = subtrahend;
+
+    let differenzHours = oneHours - twoHours;
+    let differenzmins = oneMins - twoMins;
+
+    const [remainingHours, remainingMinutes] = minutesToTime(differenzmins);
+
+    differenzHours = differenzHours + remainingHours;
+    differenzmins = remainingMinutes;
+
+    return [differenzHours, differenzmins]
+}
+
 module.exports = {
     getLaterTime,
     formatTime,
     formatNumber,
-    minutesToTime
+    minutesToTime,
+    subtractTimeValues
 };

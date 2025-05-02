@@ -196,19 +196,17 @@ function timeLeftToReachPercentage(currentPercentage, targetPercentage, workTime
  * @returns {Time} Arbeitszeit des aktuellen Monats
  */
 async function getWorkTimePerMonth(daysOff, month, year) {
-    const workTimePerDay = [7, 6];
-    const [workHoursTimePerDay, workMinsTimePerDay] = workTimePerDay;
+    const [workHoursTimePerDay, workMinsTimePerDay] = [7, 6];
     const workDaysInCurrentMonth = await getWorkDaysInMonthFromAPI(month, year);
 
     const countingDaysForCurrentMonth = workDaysInCurrentMonth - daysOff
     let workHours = workHoursTimePerDay * countingDaysForCurrentMonth;
-    let workMins = workMinsTimePerDay * countingDaysForCurrentMonth;
+    const workMins = workMinsTimePerDay * countingDaysForCurrentMonth;
 
     const [hoursFromMinutes, remainingMinutes] = minutesToTime(workMins);
     workHours = workHours + hoursFromMinutes;
-    workMins = remainingMinutes;
 
-    return [workHours, workMins];
+    return [workHours, remainingMinutes];
 }
 
 /**

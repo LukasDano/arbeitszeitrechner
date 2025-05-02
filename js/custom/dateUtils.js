@@ -12,7 +12,7 @@ function getCurrentKW() {
  *
  * @returns {number} Tage des aktuellen Monats
  */
-function getDaysInMonth() {
+function getDaysInCurrentMonth() {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
 }
@@ -100,7 +100,17 @@ function getMonthNamesAsList(){
 function getValidDateString(date){
     const correctedMonth = formatNumber(date.getMonth() + 1);
     const correctedDate = formatNumber(date.getDate());
-    // const correctedDate = date.getDate();
 
     return date.getFullYear() + "-" + correctedMonth + "-" + correctedDate;
+}
+
+/**
+ * Gibt aus wie viele Tage ein Monat in einem bestimmten Jahr hatte
+ *
+ * @param month Der Monat
+ * @param year Das Jahr in dem der Monat war
+ * @returns {number}
+ */
+function getDaysForMonthInYear(month, year) {
+    return new Date(year, month, 0).getDate();
 }

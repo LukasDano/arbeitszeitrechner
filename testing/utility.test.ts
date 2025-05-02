@@ -3,7 +3,8 @@ import {
     getLaterTime,
     formatTime,
     formatNumber,
-    minutesToTime
+    minutesToTime,
+    subtractTimeValues
 } from "../js/custom/utility";
 
 describe("getLaterTime", () => {
@@ -118,4 +119,14 @@ describe("minutesToTime", () => {
         const result = minutesToTime(minutes);
         expect(result).toEqual([-2, -0]);
     });
+});
+
+describe("subtractTimeValues", () => {
+    test("default", () => {
+        const minuend: Time = [12,30];
+        const subtrahend: Time = [12,30];
+        const result = subtractTimeValues(minuend, subtrahend);
+        expect(result).toEqual([0,0]);
+    });
+
 });
