@@ -107,8 +107,12 @@ function addEventListenerAndValueToElement(id){
     const element = document.getElementById(id);
     setValuesAndSafeThem(id);
 
+    //TODO hier wird nicht richtig der Wert für das entsprechende Feld gesetzt
     element.addEventListener("change", () => {
-        setValuesAndSafeThem(id);
+        const timeValue = getTimeFromFieldById(id);
+        if (timeValue !== undefined) {
+            setCookieUntilMidnight(id, timeValue);
+        }
     });
 }
 
@@ -144,11 +148,6 @@ function setUpKeyBoardControlForManualBreak() {
             calculateTimeWithManualBreak();
         }
     });
-}
-
-function getTimeFromFieldById(fieldId) {
-    const [hours, mins] = document.getElementById(fieldId).value.toString().split(":").map(Number);
-    return [hours, mins];
 }
 
 function setResultsInMainView(countedworktime, trueworktime, gleitzeit) {
