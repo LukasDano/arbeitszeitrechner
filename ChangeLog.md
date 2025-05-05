@@ -216,3 +216,12 @@
 - Bei den CustomDevOptions gibt es jetzt keine Doppelungen mehr (in den Dropdowns)
 - Buttons können jetzt zu Reactbuttons gemacht werden
   - Die Buttons in den Modals wurden entsprechend angepasst
+
+#### v2.5.11 - GitHub Actions, Test and UI Improvements
+- GitHub Actions um Tests zu Automatisieren
+- WeekTime Modal angepasst
+  - mehr Breite weniger Höhe, bessere Verteilung der Komponenten
+- bugfix: Wochenzeit Berechnung ging nicht, wenn Minuten und Stunden nicht dasselbe Vorzeichen haben
+- fixing tests
+  - Type benennung angepasst
+  - funktion in andere datei verschoben

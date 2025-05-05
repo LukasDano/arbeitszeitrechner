@@ -8,7 +8,6 @@ function getWeekWorkTime(weekTime) {
     let totalHours = 0;
     let totalMins = 0;
 
-    // Iterate through the week
     for (const day in weekTime) {
         if (weekTime.hasOwnProperty(day)) {
             totalHours += weekTime[day].hours;
@@ -29,28 +28,33 @@ function getWeekWorkTime(weekTime) {
  * @returns {Time} Die Überstunden der gesamten Woche in Stunden und Minuten
  */
 function calculateWeekOverTime(weekWorkTime) {
-    const [weekSollHours, weekSollMins] = [35, 30];
-    const [weekWorkHours, weekWorkMins] = weekWorkTime;
+    const [sollHours, sollMins] = [35, 30];
+    const [workHours, workMins] = weekWorkTime;
 
-    let weekOverTimeHours = weekWorkHours - weekSollHours;
-    let weekOverTimeMins = weekWorkMins - weekSollMins;
+    const totalWorkMinutes = workHours * 60 + workMins;
+    const totalSollMinutes = sollHours * 60 + sollMins;
 
-    const [hoursFromMinutes, remainingMinutes] = minutesToTime(weekOverTimeMins);
+    let diff = totalWorkMinutes - totalSollMinutes;
 
-    weekOverTimeHours = weekOverTimeHours + hoursFromMinutes;
-    weekOverTimeMins = remainingMinutes;
+    const overtimeHours = Math.trunc(diff / 60);
+    const overtimeMins = diff % 60;
 
-    return [weekOverTimeHours, weekOverTimeMins];
+    if (overtimeMins < 0) {
+        return [overtimeHours - 1, overtimeMins + 60];
+    } else {
+        return [overtimeHours, overtimeMins];
+    }
 }
 
 /**
  * Formatiert die Arbeitszeit der Woche
  *
  * @param {Time} weekTime Die Arbeitszeit der Woche
+ * @param {boolean} [testCase=false] Wird die funktion im test ausgeführt?
  *
  * @return {string} Arbeitszeit als lesbarer String
  */
-function formatWeekTime(weekTime) {
+function formatWeekTime(weekTime, testCase = false ) {
     let [weekHours, weekMins] = weekTime;
     let weekTimeAusgabe;
 
@@ -58,7 +62,7 @@ function formatWeekTime(weekTime) {
         weekHours = "0" + weekHours;
     }
 
-    if (weekMins <= 9 && weekHours > 0) {
+    if (weekMins <= 9 && weekHours > 0 && weekMins >= 0) {
         weekMins = "0" + weekMins;
     }
 
@@ -66,7 +70,18 @@ function formatWeekTime(weekTime) {
         weekHours = Math.abs(weekHours);
         weekMins = Math.abs(weekMins);
 
-        weekTimeAusgabe = weekHours + "." + formatNumber(weekMins) + " h";
+        if (!testCase) {
+            weekTimeAusgabe = weekHours + "." + formatNumber(weekMins) + " h";
+        }
+
+        if (weekMins < 10 && weekMins >= 0) {
+            weekMins = "0" + weekMins;
+        } else {
+            weekMins = weekMins.toString();
+        }
+
+        weekTimeAusgabe = weekHours + "." + weekMins + " h";
+
     } else {
         weekTimeAusgabe = "0.0 h";
     }

@@ -14,17 +14,17 @@
 
 /**
  * @typedef {Object} DayTime
- * @property {Hours} dayHours - Stunden des Tages
- * @property {Mins} dayMins - Minuten des Tages
+ * @property {Hours} hours - Stunden des Tages
+ * @property {Mins} mins - Minuten des Tages
  */
 
 /**
  * @typedef {Object} WeekTime
- * @property {DayTime} montag - Zeiten für Montag
- * @property {DayTime} dienstag - Zeiten für Dienstag
- * @property {DayTime} mittwoch - Zeiten für Mittwoch
- * @property {DayTime} donnerstag - Zeiten für Donnerstag
- * @property {DayTime} freitag - Zeiten für Freitag
+ * @property {DayTime} monday - Zeiten für Montag
+ * @property {DayTime} tuesday - Zeiten für Dienstag
+ * @property {DayTime} wednesday - Zeiten für Mittwoch
+ * @property {DayTime} thursday - Zeiten für Donnerstag
+ * @property {DayTime} friday - Zeiten für Freitag
  */
 
 /**

@@ -2,9 +2,7 @@ import {Time} from "../ts/types";
 import {
     calculatePercentage,
     timeLeftToReachPercentage,
-    checkIfTimeIsBelowZero
 } from "../js/custom/flexOfficeUtils";
-
 
 describe("calculatePercentage", () => {
     test("default", () => {
@@ -88,43 +86,5 @@ describe("timeLeftToReachPercentage", () => {
         const workTimeMonth: Time = [127, 48];
         const result = timeLeftToReachPercentage(currentPercentage, targetPercentage, workTimeMonth);
         expect(result).toEqual([63, 54]);
-    });
-});
-
-describe("checkIfTimeIsBelowZero", () => {
-    test("default", () => {
-        const time: Time = [7, 50];
-        const result = checkIfTimeIsBelowZero(time);
-        expect(result).toEqual([7, 50]);
-    });
-
-    test("einstellige Minuten", () => {
-        const time: Time = [7, 6];
-        const result = checkIfTimeIsBelowZero(time);
-        expect(result).toEqual([7, 6]);
-    });
-
-    test("0h, 0m", () => {
-        const time: Time = [0, 0];
-        const result = checkIfTimeIsBelowZero(time);
-        expect(result).toEqual([0, 0]);
-    });
-
-    test("minus Stunden", () => {
-        const time: Time = [-1, 0];
-        const result = checkIfTimeIsBelowZero(time);
-        expect(result).toEqual([0, 0]);
-    });
-
-    test("minus Minuten", () => {
-        const time: Time = [0, -14];
-        const result = checkIfTimeIsBelowZero(time);
-        expect(result).toEqual([0, 0]);
-    });
-
-    test("minus Stunden und Minuten", () => {
-        const time: Time = [-1, -14];
-        const result = checkIfTimeIsBelowZero(time);
-        expect(result).toEqual([0, 0]);
     });
 });

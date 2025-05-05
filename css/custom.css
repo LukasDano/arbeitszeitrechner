@@ -489,6 +489,21 @@ section {
     display: none;
 }
 
+.form-weekTime {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 90%;
+    max-width: 600px;
+    display: none;
+}
+
 #flexOfficeInputFields {
     max-width: 300px;
 }
@@ -538,6 +553,8 @@ input, select {
 #weekTimeResult{
     background-color: #E9ECEF;
     border-radius: 6px;
+    width: 450px;
+    margin-top: 10px;
 }
 
 .form-container {

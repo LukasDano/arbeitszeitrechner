@@ -6,8 +6,14 @@ export type Time = [Hours, Mins];
 export type InValidTime = [Hours, Mins|null|undefined];
 export type FloatTime = [Vorzeichen, Hours, Mins];
 
-export type DayTime = { dayHours: Hours, dayMins: Mins };
-export type WeekTime = { montag: DayTime, dienstag: DayTime, mittwoch: DayTime, donnerstag: DayTime, freitag: DayTime };
+export type DayTime = { hours: Hours, mins: Mins };
+export type WeekTime = {
+    monday: DayTime,
+    tuesday: DayTime,
+    wednesday: DayTime,
+    thursday: DayTime,
+    friday: DayTime
+};
 
 export type FeiertageHamburg = {
     Neujahr: Date,
