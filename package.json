@@ -10,14 +10,6 @@
   "scripts": {
     "tests": "jest"
   },
-  "husky": {
-    "hook": {
-      "pre-commit": [
-        "npm tests",
-        "npm updateIconJSON"
-      ]
-    }
-  },
   "dependencies": {
     "js": "^0.1.0"
   }

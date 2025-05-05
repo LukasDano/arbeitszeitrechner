@@ -4,7 +4,8 @@ import {
     formatTime,
     formatNumber,
     minutesToTime,
-    subtractTimeValues
+    subtractTimeValues,
+    checkIfTimeIsBelowZero
 } from "../js/custom/utility";
 
 describe("getLaterTime", () => {
@@ -127,6 +128,45 @@ describe("subtractTimeValues", () => {
         const subtrahend: Time = [12,30];
         const result = subtractTimeValues(minuend, subtrahend);
         expect(result).toEqual([0,0]);
+    });
+
+});
+
+describe("checkIfTimeIsBelowZero", () => {
+    test("default", () => {
+        const time: Time = [7, 50];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([7, 50]);
+    });
+
+    test("einstellige Minuten", () => {
+        const time: Time = [7, 6];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([7, 6]);
+    });
+
+    test("0h, 0m", () => {
+        const time: Time = [0, 0];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([0, 0]);
+    });
+
+    test("minus Stunden", () => {
+        const time: Time = [-1, 0];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([0, 0]);
+    });
+
+    test("minus Minuten", () => {
+        const time: Time = [0, -14];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([0, 0]);
+    });
+
+    test("minus Stunden und Minuten", () => {
+        const time: Time = [-1, -14];
+        const result = checkIfTimeIsBelowZero(time);
+        expect(result).toEqual([0, 0]);
     });
 
 });

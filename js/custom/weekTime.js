@@ -7,39 +7,40 @@ function weekTimeCalculator() {
 
     return `
         <div class="weekTimeOverlay" id="weekTimeOverlay"></div>
-        <div class="form-popup" id="weekTimeForm">
+        <div class="form-weekTime" id="weekTimeForm">
             <form class="form-container">
                 <span class="close" onclick="closeWeekTimeCalculator()">&times;</span>
                 <h1>Wochenzeitrechner</h1>
 
                 <div class="row justify-content-center">
-                    <div class="col-sm-5 col-10">
+                    <div class="col-auto">
                         <label for="monday">Montag:</label>
                         <input type="time" id="monday" name="monday" required>
                     </div>
-
-                    <div class="col-sm-5 col-10">
+                    
+                    <div class="col-auto">
                         <label for="tuesday">Dienstag:</label>
                         <input type="time" id="tuesday" name="tuesday" required>
                     </div>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-sm-4 col-8">
+                    
+                    <div class="col-auto">
                         <label for="wednesday">Mittwoch:</label>
                         <input type="time" id="wednesday" name="wednesday" required>
                     </div>
-
-                    <div class="col-sm-4 col-8">
+                </div>
+                    
+                <div class="row justify-content-center">
+                    <div class="col-auto">
                         <label for="thursday">Donnerstag:</label>
                         <input type="time" id="thursday" name="thursday" required>
                     </div>
-
-                    <div class="col-sm-4 col-8">
+                    
+                    <div class="col-auto">
                         <label for="friday">Freitag:</label>
                         <input type="time" id="friday" name="friday" required>
                     </div>
                 </div>
+                    
 
                 <label id="floatDaysLabel" for="floatDays">Anazahl Gleitage:</label>
                 <input type="number" id="floatDays" name="floatDays" max="7" required>

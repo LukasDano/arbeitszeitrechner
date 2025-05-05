@@ -188,7 +188,7 @@ function timeLeftToReachPercentage(currentPercentage, targetPercentage, workTime
 }
 
 /**
- *  Gibt die Arbeitszeit, die diesen Monat erbracht werden muss
+ *  Gibt die Arbeitszeit, die diesen Monat erbracht werden muss zurück
  *
  * @param {number} daysOff Tage die diesen Monat nicht gearbeitet wurde
  * @param {number} month Monat für den gerechnet werden soll
@@ -217,31 +217,12 @@ async function getWorkTimePerMonth(daysOff, month, year) {
  * @param {number} flexOfficeQuote Die maximale Quote, die im Flex office gearbeitet werden darf
  * @param {number} month Monat für den gerechnet werden soll
  * @param {number} year Jahr für das gerechnet werden soll
- * @returns {Promise<Time>} Die restliche Flex office Arbeitszeit diesen Monat
+ * @returns {Time} Die restliche Flex office Arbeitszeit diesen Monat
  */
-async function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, month, year) {
-    const workTimeMonth = await getWorkTimePerMonth(daysOff, month, year);
+function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, month, year) {
+    const workTimeMonth = getWorkTimePerMonth(daysOff, month, year);
     const percent = calculatePercentage(flexTime, workTimeMonth);
-    const timeLeft = timeLeftToReachPercentage(percent, flexOfficeQuote, workTimeMonth);
-    return timeLeft;
-}
-
-/**
- * Prüft, ob ein Time Value unter 0 ist.
- * Wenn der Wert nicht unter 0 ist, wird die Zeit einfach wieder zurückgegeben.
- * Wenn der Wert unter 0 ist, wird der Wert für 0 Stunden und 0 Minuten zurückgegeben.
- *
- * @param {Time} time Die Zeit, die geprüft werden soll
- * @returns {Time} "time" oder 0 Stunden und 0 Minuten
- */
-function checkIfTimeIsBelowZero(time) {
-    const [hours, mins] = time;
-
-    if (hours < 0 || mins < 0) {
-        return [0,0]
-    }
-
-    return time;
+    return timeLeftToReachPercentage(percent, flexOfficeQuote, workTimeMonth);
 }
 
 /**
@@ -298,6 +279,5 @@ function testGetYearForMonthWithSixMonthRangeWithCurrentMonthRange() {
 
 module.exports = {
     calculatePercentage,
-    timeLeftToReachPercentage,
-    checkIfTimeIsBelowZero
+    timeLeftToReachPercentage
 };

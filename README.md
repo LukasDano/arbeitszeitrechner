@@ -15,14 +15,10 @@ Hier gehts zum [Repository](https://github.com/neoascetic/rawgithack) des Tools.
 Vorschläge werden gerne entgegenkommen und nach Möglichkeit auch umgesetzt. Wer das Tool eigenständig weiter entwickeln möchte, kann das gerne tun.
 Dann aber bitte auf dieses oder das Original verweisen. Oder einfach Fork erstellen, sodass gleich zu erkennen ist, woher der Code eigentlich kommt.
 
-## Dependencies
+## SetUp
 
 ```
-npm install --save-dev jest
-```
-
-```
-npm install --save-dev husky
+npm install
 ```
 
 ## old versions
