@@ -193,7 +193,7 @@ function timeLeftToReachPercentage(currentPercentage, targetPercentage, workTime
  * @param {number} daysOff Tage die diesen Monat nicht gearbeitet wurde
  * @param {number} month Monat für den gerechnet werden soll
  * @param {number} year Jahr für das gerechnet werden soll
- * @returns {Time} Arbeitszeit des aktuellen Monats
+ * @returns {Promise<Time>} Arbeitszeit des aktuellen Monats
  */
 async function getWorkTimePerMonth(daysOff, month, year) {
     const [workHoursTimePerDay, workMinsTimePerDay] = [7, 6];
@@ -217,10 +217,10 @@ async function getWorkTimePerMonth(daysOff, month, year) {
  * @param {number} flexOfficeQuote Die maximale Quote, die im Flex office gearbeitet werden darf
  * @param {number} month Monat für den gerechnet werden soll
  * @param {number} year Jahr für das gerechnet werden soll
- * @returns {Time} Die restliche Flex office Arbeitszeit diesen Monat
+ * @returns {Promise<Time>} Die restliche Flex office Arbeitszeit diesen Monat
  */
-function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, month, year) {
-    const workTimeMonth = getWorkTimePerMonth(daysOff, month, year);
+async function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, month, year) {
+    const workTimeMonth = await getWorkTimePerMonth(daysOff, month, year);
     const percent = calculatePercentage(flexTime, workTimeMonth);
     return timeLeftToReachPercentage(percent, flexOfficeQuote, workTimeMonth);
 }

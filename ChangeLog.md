@@ -223,5 +223,6 @@
   - mehr Breite weniger Höhe, bessere Verteilung der Komponenten
 - bugfix: Wochenzeit Berechnung ging nicht, wenn Minuten und Stunden nicht dasselbe Vorzeichen haben
 - fixing tests
-  - Type benennung angepasst
-  - funktion in andere datei verschoben
+  - Type Benennung angepasst
+  - Funktion in andere Datei verschoben
+- bugfix: restliche FlexOffice Zeit diesen Monat
