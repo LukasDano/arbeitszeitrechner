@@ -327,13 +327,10 @@
             disableHTMLElements();
 
             checkForDevOptions();
-            removeCustomButtonParameters();
-            updateForeverCookies();
-        });
-
-        window.onload = () => {
             activateDevOptionsFromURL();
-        };
+            updateForeverCookies();
+            removeCustomButtonParameters();
+        });
     </script>
 
 
