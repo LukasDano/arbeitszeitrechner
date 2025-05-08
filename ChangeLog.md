@@ -226,3 +226,4 @@
   - Type Benennung angepasst
   - Funktion in andere Datei verschoben
 - bugfix: restliche FlexOffice Zeit diesen Monat
+- bugfix: Die DevOptions können jetzt wieder über eine bestimmte URL automatisch gestartet werden
