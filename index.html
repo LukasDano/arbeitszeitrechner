@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico">
 
     <meta name="Version" content="v2.5.11">
-    <meta name="VersionName" content="GitHub Actions, Test and UI Improvements">
+    <meta name="VersionName" content="GitHub Actions und Keyboard Control Improvements">
     <meta name="GitHub" content="https://github.com/LukasDano/arbeitszeitrechner">
 
     <title>Arbeitszeitrechner</title>
@@ -32,14 +32,14 @@
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item">
-                <button class="nav-link" onclick="openWeekTimeCalculator()" title="Wochenzeitrechner">
+                <button class="nav-link" onclick="openWeekTimeCalculator()" title="Wochenzeitrechner [Alt + w]">
                     <img class="icon noneDevOption" src="pictures/icons/week.png" alt="Wochenzeitrechner">
                 </button>
             </li>
             <div id="weekTimeCalculator"></div>
 
             <li class="nav-item">
-                <button class="nav-link" onclick="openFlexOfficeCalculator()" title="FlexOffice">
+                <button class="nav-link" onclick="openFlexOfficeCalculator()" title="FlexOffice [Alt + f]">
                     <img class="icon noneDevOption" src="pictures/icons/homeoffice.png" alt="FlexOffice">
                 </button>
             </li>
@@ -47,7 +47,7 @@
 
             <li class="nav-item">
                 <button class="nav-link" onclick="openCurrentStatsMessageWithValues()"
-                        title="Zeigt die Werte an, wenn jetzt die Arbeit beendet wird">
+                        title="Zeigt die Werte an, wenn jetzt die Arbeit beendet wird [Alt + c]">
                     <img class="icon noneDevOption" src="pictures/icons/earlier.png" alt="CurrentStatsMessage">
                 </button>
             </li>
@@ -95,7 +95,7 @@
 
             <div class="devOption">
                 <li class="nav-item">
-                    <button class="nav-link" id="addBetterDefaultFloat" title="Setzt die Gleitzeit auf +0.14">
+                    <button class="nav-link" id="addBetterDefaultFloat" title="Setzt die Gleitzeit auf +0.14 [F3]">
                         <img class="icon" src="pictures/icons/plusFourteen.png" alt="+0.14">
                     </button>
                 </li>
@@ -103,7 +103,7 @@
 
             <div class="devOption">
                 <li class="nav-item">
-                    <button class="nav-link" id="overTimeAutomatic" title="OverTimeAutomatic an/aus">
+                    <button class="nav-link" id="overTimeAutomatic" title="OverTimeAutomatic an/aus [F4]">
                         <img id="overTimeAutomaticIcon" class="icon animation" src="pictures/icons/automaticOff.png"
                              alt="overTimeAutomaticOff">
                     </button>
@@ -113,7 +113,7 @@
             <div class="devOption">
                 <li class="nav-item">
                     <button class="nav-link" onclick="resetPage()"
-                            title="Seitenreset">
+                            title="Seite zurücksetzten [F2]">
                         <img class="icon animation" src="pictures/icons/reload.png" alt="Reset">
                     </button>
                 </li>
@@ -122,7 +122,7 @@
             <div class="devOption">
                 <li class="nav-item">
                     <button class="nav-link" onclick="disableDevOptions()"
-                            title="DevOptions schließen [F2]">
+                            title="DevOptions schließen [F1]">
                         <img class="icon" src="pictures/icons/close.png" alt="Exit">
                     </button>
                 </li>
@@ -131,7 +131,7 @@
             <div class="devOption">
                 <li class="nav-item">
                     <button class="nav-link" onclick="openDevOptionsForm()"
-                            title="CustomDevOptions Konfiguration">
+                            title="CustomDevOptions Konfiguration [Alt + d]">
                         <img class="icon" src="pictures/icons/add.png" alt="Add DevOption">
                     </button>
                 </li>
@@ -233,7 +233,7 @@
                         <div class="text-center">
                             <label for="float">Gleitzeit</label>
                         </div>
-                        <input type="float" id="float" value="0.00"
+                        <input id="float" value="0.00"
                             class="input-lg center-block form-control input-time introjs-relativePosition" data-step="5"
                             data-inro="Gleitzeit kann eingetragen werden">
                     </div>

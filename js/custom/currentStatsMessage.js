@@ -10,7 +10,7 @@ function currentStatsMessage() {
         <div class="form-popup" id="currentStatsMessageForm">
             <form class="form-container">
                 <span class="close" onclick="closeCurrentStatsMessage()">&times;</span>
-                <h1>Daten bei frühem Arbeitsende</h1>
+                <h1>Aktuelle Übersicht der Arbeitszeit</h1>
 
                 <div class="text-center" id="currentTimeStatsResult">
                     <div class="row container row-adaption">

@@ -217,7 +217,7 @@
 - Buttons können jetzt zu Reactbuttons gemacht werden
   - Die Buttons in den Modals wurden entsprechend angepasst
 
-#### v2.5.11 - GitHub Actions, Test and UI Improvements
+#### v2.5.11 - GitHub Actions und Keyboard Control Improvements
 - GitHub Actions um Tests zu Automatisieren
 - WeekTime Modal angepasst
   - mehr Breite weniger Höhe, bessere Verteilung der Komponenten
@@ -227,3 +227,16 @@
   - Funktion in andere Datei verschoben
 - bugfix: restliche FlexOffice Zeit diesen Monat
 - bugfix: Die DevOptions können jetzt wieder über eine bestimmte URL automatisch gestartet werden
+- type float entfernt (css wird ist jetzt an die id gebunden)
+- besserer Text bei der CurrentStatsMessageWithValues
+- bessere Keyboard Control (Beschreibung entsprechen angepasst)
+  - F1 und F2 getauscht
+  - F3: +14 Min Gleitzeit
+  - F4: OverTimeAutomatic on/off
+  - Shift + G: zum Gleitzeitfeld fokussieren
+  - Shift + S: Six-Hour-Mode aktivieren
+  - Alt + w: WeekTimeCalculator öffnen
+  - Alt + f: FlexOfficeCalculator öffnen
+  - Alt + c: CurrentStatsMessageWithValues öffnen
+  - Alt + d: DevOptionsForm öffnen
+  - F3, F4 und Alt + d funktionieren nur noch wenn die DevOptions aktiv sind
