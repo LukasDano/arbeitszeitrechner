@@ -60,6 +60,30 @@ function minutesToTime(minutes) {
 }
 
 /**
+ * Addiert zwei Time Values miteinander
+ *
+ * @param {Time} firstValue
+ * @param {Time} secondValue
+ * @return {Time} Die Summe der beiden Zahlen
+ */
+function addTimeValues(firstValue, secondValue) {
+    const [oneHours, oneMins] = firstValue;
+    const [twoHours, twoMins] = secondValue;
+
+    let sumHours = oneHours + twoHours;
+    let sumMins = oneMins + twoMins;
+
+    // Minuten in Stunden umwandeln, falls >= 60
+    if (sumMins >= 60) {
+        sumHours += Math.floor(sumMins / 60);
+        sumMins = sumMins % 60;
+    }
+
+    return [sumHours, sumMins];
+}
+
+
+/**
  * Zieht zwei Time Values voneinander ab
  *
  * @param {Time} minuend Die Zahl von der etwas abgezogen wird
@@ -67,18 +91,15 @@ function minutesToTime(minutes) {
  * @return {Time} Die Differnz der beiden Zeiten
  */
 function subtractTimeValues(minuend, subtrahend) {
-    const [oneHours, oneMins] = minuend;
-    const [twoHours, twoMins] = subtrahend;
+    const totalMinuend = minuend[0] * 60 + minuend[1];
+    const totalSubtrahend = subtrahend[0] * 60 + subtrahend[1];
 
-    let differenzHours = oneHours - twoHours;
-    let differenzmins = oneMins - twoMins;
+    const diffInMinutes = totalMinuend - totalSubtrahend;
 
-    const [remainingHours, remainingMinutes] = minutesToTime(differenzmins);
+    const hours = Math.trunc(diffInMinutes / 60);
+    const minutes = diffInMinutes % 60;
 
-    differenzHours = differenzHours + remainingHours;
-    differenzmins = remainingMinutes;
-
-    return [differenzHours, differenzmins]
+    return [hours, minutes];
 }
 
 /**
@@ -93,10 +114,44 @@ function checkIfTimeIsBelowZero(time) {
     const [hours, mins] = time;
 
     if (hours < 0 || mins < 0) {
-        return [0,0]
+        return [0, 0]
     }
 
     return time;
+}
+
+/**
+ * Generiert aus Array mit zwei string Werten einen Time Value
+ *
+ * @param {[string, string]} timeAsString Der Time Value aber mit Strings
+ * @returns {Time}
+ */
+function timeFromStringArray(timeAsString) {
+    const [hoursString, minutesString] = timeAsString;
+    const hours = parseInt(hoursString, 10);
+    const minutes = parseInt(minutesString, 10);
+
+    return [hours, minutes];
+}
+
+/**
+ * Erzeugt aus dem keyboardControl Value die Action und Condition
+ * Wenn keine condition vorhanden ist, wird "-" gesetzt
+ *
+ * @param {string} value Der value aus keyboardControl
+ * @returns {[string, string]} [action, condition]
+ */
+function generateActionAndShortcut(value) {
+    let action = value;
+    let condition = "-";
+
+    let match = value.match(/^([^(]+)\s*\(([^)]+)\)/);
+    if (match) {
+        action = match[1].trim();
+        condition = match[2].trim();
+    }
+
+    return [action, condition];
 }
 
 module.exports = {
@@ -104,6 +159,8 @@ module.exports = {
     formatTime,
     formatNumber,
     minutesToTime,
+    addTimeValues,
     subtractTimeValues,
-    checkIfTimeIsBelowZero
+    checkIfTimeIsBelowZero,
+    timeFromStringArray
 };

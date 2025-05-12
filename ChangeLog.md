@@ -240,3 +240,12 @@
   - Alt + c: CurrentStatsMessageWithValues öffnen
   - Alt + d: DevOptionsForm öffnen
   - F3, F4 und Alt + d funktionieren nur noch wenn die DevOptions aktiv sind
+- new Utility Function (addTimeValues())
+    - entsprechende Tests
+    - Test für subtractTimeValues() verbessert
+- Zeit hinzufügen Button bei FlexOffice eingebaut, damit man einfach Zeiten ergänzen kann
+- getNumberFromFloat() gefixt, falls "" als Wert gefunden wird
+- Man kann jetzt FlexOffice Zeit auf einem extra Modal hinzufügen
+- bessere und mehr Testcases
+- Help Page eingebaut (alle Shortcuts werden aufgelistet)
+    - In einer Tabelle mit Shortcut, Action und Condition

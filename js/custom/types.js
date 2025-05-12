@@ -47,3 +47,17 @@
  * @property {number} flexHours
  * @property {number} flexMins
  */
+
+/**
+ * @typedef {number} Milliseconds
+ */
+
+/**
+ * @typedef {Object} NotificationConfiguration
+ * @property {Milliseconds} timer
+ * @property {boolean} confirmMessage
+ * @property {string} bgColor
+ * @property {string} text
+ * @property {string} headline
+ * @property {string} textColor
+ */

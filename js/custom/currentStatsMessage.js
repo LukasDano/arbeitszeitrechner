@@ -81,7 +81,7 @@ function closeCurrentStatsMessage() {
 /**
  * Lädt alle Funktionalitäten und Daten zum CurrentStatsMassage Modal
  */
-function setUpCurrentStatsMessageOverlay() {
+function setUpCurrentStatsMessage() {
     const settingsContainer = document.getElementById("currentStatsMessage");
     settingsContainer.innerHTML = currentStatsMessage();
 }

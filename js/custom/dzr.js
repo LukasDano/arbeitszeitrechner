@@ -635,6 +635,12 @@ $(document).ready(() => {
             openDevOptionsForm();
             return;
         }
+
+        if (event.altKey && event.key === 'h' && getBooleanCookie("devOptions")) {
+            event.preventDefault();
+            openShortcutInformation();
+            return;
+        }
     });
 
 });

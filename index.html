@@ -24,133 +24,144 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div id="notification"></div>
 
-    <a class="navbar-brand" href="">Arbeitszeitrechner</a>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="">Arbeitszeitrechner</a>
 
-            <li class="nav-item">
-                <button class="nav-link" onclick="openWeekTimeCalculator()" title="Wochenzeitrechner [Alt + w]">
-                    <img class="icon noneDevOption" src="pictures/icons/week.png" alt="Wochenzeitrechner">
-                </button>
-            </li>
-            <div id="weekTimeCalculator"></div>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item">
-                <button class="nav-link" onclick="openFlexOfficeCalculator()" title="FlexOffice [Alt + f]">
-                    <img class="icon noneDevOption" src="pictures/icons/homeoffice.png" alt="FlexOffice">
-                </button>
-            </li>
-            <div id="flexOfficeCalculator"></div>
+                <li class="nav-item">
+                    <button class="nav-link" onclick="openWeekTimeCalculator()" title="Wochenzeitrechner [Alt + w]">
+                        <img class="icon noneDevOption" src="pictures/icons/week.png" alt="Wochenzeitrechner">
+                    </button>
+                </li>
+                <div id="weekTimeCalculator"></div>
 
-            <li class="nav-item">
-                <button class="nav-link" onclick="openCurrentStatsMessageWithValues()"
+                <li class="nav-item">
+                    <button class="nav-link" onclick="openFlexOfficeCalculator()" title="FlexOffice [Alt + f]">
+                        <img class="icon noneDevOption" src="pictures/icons/homeoffice.png" alt="FlexOffice">
+                    </button>
+                </li>
+                <div id="flexOfficeCalculator"></div>
+
+                <li class="nav-item">
+                    <button class="nav-link" onclick="openCurrentStatsMessageWithValues()"
                         title="Zeigt die Werte an, wenn jetzt die Arbeit beendet wird [Alt + c]">
-                    <img class="icon noneDevOption" src="pictures/icons/earlier.png" alt="CurrentStatsMessage">
-                </button>
-            </li>
-            <div id="currentStatsMessage"></div>
-
-            <div class="devOption">
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html?param1=devOptions&param2=true"
-                       target="_blank" title="Die aktuelle Hauptversion">
-                        <img class="icon" src="pictures/icons/calendar.png" alt="Aktuelle Version">
-                    </a>
-                </li>
-            </div>
-
-            <div class="devOption">
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="https://raw.githack.com/LukasDano/arbeitszeitrechner/bugfix/index.html?param1=devOptions&param2=true"
-                       target="_blank" title="Die aktuelle Testversion">
-                        <img class="icon small reAnimation" src="pictures/icons/process.png" alt="Testversion">
-                    </a>
-                </li>
-            </div>
-
-
-            <div class="devOption">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/LukasDano/arbeitszeitrechner" target="_blank"
-                       title="Das Repository zur Anwendung">
-                        <img class="icon" src="pictures/icons/repository.png" alt="Repository">
-                    </a>
-                </li>
-            </div>
-
-            <div class="devOption">
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="https://github.com/LukasDano/arbeitszeitrechner/blob/bugfix/ChangeLog.md"
-                       target="_blank" title="Das ChangeLog zur Anwendung">
-                        <img class="icon" src="pictures/icons/log.png" alt="ChangeLog">
-                    </a>
-                </li>
-            </div>
-
-            <div class="devOption">
-                <li class="nav-item">
-                    <button class="nav-link" id="addBetterDefaultFloat" title="Setzt die Gleitzeit auf +0.14 [F3]">
-                        <img class="icon" src="pictures/icons/plusFourteen.png" alt="+0.14">
+                        <img class="icon noneDevOption" src="pictures/icons/earlier.png" alt="CurrentStatsMessage">
                     </button>
                 </li>
-            </div>
+                <div id="currentStatsMessage"></div>
 
-            <div class="devOption">
-                <li class="nav-item">
-                    <button class="nav-link" id="overTimeAutomatic" title="OverTimeAutomatic an/aus [F4]">
-                        <img id="overTimeAutomaticIcon" class="icon animation" src="pictures/icons/automaticOff.png"
-                             alt="overTimeAutomaticOff">
-                    </button>
-                </li>
-            </div>
+                <div class="devOption">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="https://raw.githack.com/LukasDano/arbeitszeitrechner/main/index.html?param1=devOptions&param2=true"
+                            target="_blank" title="Die aktuelle Hauptversion">
+                            <img class="icon" src="pictures/icons/calendar.png" alt="Aktuelle Version">
+                        </a>
+                    </li>
+                </div>
 
-            <div class="devOption">
-                <li class="nav-item">
-                    <button class="nav-link" onclick="resetPage()"
-                            title="Seite zurücksetzten [F2]">
-                        <img class="icon animation" src="pictures/icons/reload.png" alt="Reset">
-                    </button>
-                </li>
-            </div>
+                <div class="devOption">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="https://raw.githack.com/LukasDano/arbeitszeitrechner/bugfix/index.html?param1=devOptions&param2=true"
+                            target="_blank" title="Die aktuelle Testversion">
+                            <img class="icon small reAnimation" src="pictures/icons/process.png" alt="Testversion">
+                        </a>
+                    </li>
+                </div>
 
-            <div class="devOption">
-                <li class="nav-item">
-                    <button class="nav-link" onclick="disableDevOptions()"
-                            title="DevOptions schließen [F1]">
-                        <img class="icon" src="pictures/icons/close.png" alt="Exit">
-                    </button>
-                </li>
-            </div>
 
-            <div class="devOption">
-                <li class="nav-item">
-                    <button class="nav-link" onclick="openDevOptionsForm()"
+                <div class="devOption">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/LukasDano/arbeitszeitrechner" target="_blank"
+                            title="Das Repository zur Anwendung">
+                            <img class="icon" src="pictures/icons/repository.png" alt="Repository">
+                        </a>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="https://github.com/LukasDano/arbeitszeitrechner/blob/bugfix/ChangeLog.md"
+                            target="_blank" title="Das ChangeLog zur Anwendung">
+                            <img class="icon" src="pictures/icons/log.png" alt="ChangeLog">
+                        </a>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" id="addBetterDefaultFloat" title="Setzt die Gleitzeit auf +0.14 [F3]">
+                            <img class="icon" src="pictures/icons/plusFourteen.png" alt="+0.14">
+                        </button>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" id="overTimeAutomatic" title="OverTimeAutomatic an/aus [F4]">
+                            <img id="overTimeAutomaticIcon" class="icon animation" src="pictures/icons/automaticOff.png"
+                                alt="overTimeAutomaticOff">
+                        </button>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" onclick="openShortcutInformation()" id="shortcutInformationButton"
+                            title="Shortcut information [Alt + h]">
+                            <img id="shortcutInformationIcon" class="icon" src="pictures/icons/information.png"
+                                alt="ShortcutInformation">
+                        </button>
+                    </li>
+                </div>
+                <div id="shortcutInformation"></div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" onclick="resetPage()" title="Seite zurücksetzten [F2]">
+                            <img class="icon animation" src="pictures/icons/reload.png" alt="Reset">
+                        </button>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" onclick="disableDevOptions()" title="DevOptions schließen [F1]">
+                            <img class="icon" src="pictures/icons/close.png" alt="Exit">
+                        </button>
+                    </li>
+                </div>
+
+                <div class="devOption">
+                    <li class="nav-item">
+                        <button class="nav-link" onclick="openDevOptionsForm()"
                             title="CustomDevOptions Konfiguration [Alt + d]">
-                        <img class="icon" src="pictures/icons/add.png" alt="Add DevOption">
-                    </button>
-                </li>
-            </div>
+                            <img class="icon" src="pictures/icons/add.png" alt="Add DevOption">
+                        </button>
+                    </li>
+                </div>
 
-            <div class="devOption">
-                <div id="customDevOptionOne" class="customDevOption One"></div>
-            </div>
-            <div class="devOption">
-                <div id="customDevOptionTwo" class="customDevOption Two"></div>
-            </div>
-            <div class="devOption">
-                <div id="customDevOptionThree" class="customDevOption Three"></div>
-            </div>
-            <div id="devOptionSettings"></div>
-        </ul>
+                <div class="devOption">
+                    <div id="customDevOptionOne" class="customDevOption One"></div>
+                </div>
+                <div class="devOption">
+                    <div id="customDevOptionTwo" class="customDevOption Two"></div>
+                </div>
+                <div class="devOption">
+                    <div id="customDevOptionThree" class="customDevOption Three"></div>
+                </div>
+                <div id="devOptionSettings"></div>
+            </ul>
 
-    </div>
-</nav>
+        </div>
+    </nav>
 
     <main role="main" class="container">
         <div class="starter-template">
@@ -309,6 +320,8 @@
     <!-- Addons and Modals -->
     <script src="js/custom/customDevOptions.js" defer></script>
     <script src="js/custom/currentStatsMessage.js" defer></script>
+    <script src="js/custom/shortcutInformation.js" defer></script>
+    <script src="js/custom/notification.js" defer></script>
 
     <script src="js/custom/flexOfficeUtils.js" defer></script>
     <script src="js/custom/flexOffice.js" defer></script>
@@ -321,7 +334,9 @@
             setUpWeekTime();
             setUpFlexOffice();
             setUpDevOptions();
-            setUpCurrentStatsMessageOverlay();
+            setUpCurrentStatsMessage();
+            setUpShortcutInformation();
+            setUpNotification();
 
             refreshDevOptionCookies();
             disableHTMLElements();

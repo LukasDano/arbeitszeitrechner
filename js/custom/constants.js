@@ -1,6 +1,7 @@
 ﻿const conditions = {
-    "FloatFoucs": " (Im Gleitzeitfled)",
-    "DevOptionsActive": " (Wenn die DevOptions aktiv sind)"
+    "FloatFoucs": " (Gleitzeitfeld muss aktiv sein)",
+    "DevOptionsActive": " (DevOptions müssen aktiv sein)",
+    "InFlexOfficeModal": " (In der FlexOffice Anwendung)"
 }
 
 const keyboardControl = {
@@ -14,10 +15,30 @@ const keyboardControl = {
     "Alt + f": "Open FlexOfficeCalculator",
     "Alt + c": "Open CurrentStatsMessageWithValues",
     "Alt + d": "Open DevOptionsForm" + conditions.DevOptionsActive,
+    "Alt + a": "Open TimeAdder" + conditions.InFlexOfficeModal,
+    "Alt + h": "Open HelpPage" + conditions.DevOptionsActive,
     "ArrowUp": "Erhöht die Gleitzeit nach erlaubten Interwallen" + conditions.FloatFoucs,
-    "ArrowDown": "Verringert die Gleitzeit nach erlaubten Interwallen" +  + conditions.FloatFoucs,
+    "ArrowDown": "Verringert die Gleitzeit nach erlaubten Interwallen" + + conditions.FloatFoucs,
     "Esc": "Modal schließen (funktioniert bei allen)",
     "Enter": "Eingabe beim Modal (funktioniert bei allen)"
 };
 
 const dayFields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+
+const timer = {
+    "SEC_3": 3000,
+    "SEC_5": 5000,
+    "SEC_10": 10000,
+};
+
+/**
+ * @type {NotificationConfiguration}
+ */
+const defaultButtonConfig = {
+    timer: timer.SEC_3,
+    confirmMessage: false,
+    textColor: "#fff",
+    bgColor: "#ccc",
+    headline: "",
+    text: "Hello World"
+};
