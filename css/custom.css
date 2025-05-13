@@ -36,11 +36,11 @@ body {
 
 /* Not required for template or sticky footer method. */
 
-body > .container {
+body>.container {
     padding: 60px 15px 0;
 }
 
-.footer > .container {
+.footer>.container {
     padding-right: 15px;
     padding-left: 15px;
     white-space: nowrap;
@@ -78,12 +78,12 @@ body {
     margin-bottom: 1rem;
 }
 
-.form-label-group > input,
-.form-label-group > label {
+.form-label-group>input,
+.form-label-group>label {
     padding: var(--input-padding-y) var(--input-padding-x);
 }
 
-.form-label-group > label {
+.form-label-group>label {
     position: absolute;
     top: 0;
     left: 0;
@@ -123,7 +123,7 @@ body {
     padding-bottom: calc(var(--input-padding-y) / 3);
 }
 
-.form-label-group input:not(:placeholder-shown) ~ label {
+.form-label-group input:not(:placeholder-shown)~label {
     padding-top: calc(var(--input-padding-y) / 3);
     padding-bottom: calc(var(--input-padding-y) / 3);
     font-size: 12px;
@@ -185,14 +185,14 @@ a:not([href]):not([tabindex]):focus {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-.flex-equal > * {
+.flex-equal>* {
     -ms-flex: 1;
     -webkit-box-flex: 1;
     flex: 1;
 }
 
 @media (min-width: 768px) {
-    .flex-md-equal > * {
+    .flex-md-equal>* {
         -ms-flex: 1;
         -webkit-box-flex: 1;
         flex: 1;
@@ -325,7 +325,7 @@ section {
     height: 8rem
 }
 
-.no-flex{
+.no-flex {
     flex-grow: 0 !important;
     margin: auto;
 }
@@ -336,7 +336,7 @@ section {
     opacity: 0.9;
 }
 
-.devOption{
+.devOption {
     display: none;
     background-color: #404a57;
 }
@@ -347,7 +347,7 @@ section {
     transition: transform 0.2s ease;
 }
 
-.icon.noneDevOption{
+.icon.noneDevOption {
     filter: invert(100%);
 }
 
@@ -375,86 +375,144 @@ section {
 
 /* Used to Display buttons in the nav-tabs as all other nav-link items */
 .nav-link {
-    display: block; /* Makes it behave like a block element */
-    padding: 0.5rem 1rem; /* Adjust padding to match Bootstrap */
-    color: #007bff; /* Bootstrap link color */
-    text-align: left; /* Align text to the left */
-    text-decoration: none; /* Remove underline */
-    background: none; /* Remove default button background */
-    border: none; /* Remove default button border */
-    cursor: pointer; /* Change cursor to pointer */
+    display: block;
+    /* Makes it behave like a block element */
+    padding: 0.5rem 1rem;
+    /* Adjust padding to match Bootstrap */
+    color: #007bff;
+    /* Bootstrap link color */
+    text-align: left;
+    /* Align text to the left */
+    text-decoration: none;
+    /* Remove underline */
+    background: none;
+    /* Remove default button background */
+    border: none;
+    /* Remove default button border */
+    cursor: pointer;
+    /* Change cursor to pointer */
 }
 
 .nav-link:hover {
-    color: #0056b3; /* Darker color on hover */
-    text-decoration: underline; /* Optional: underline on hover */
+    color: #0056b3;
+    /* Darker color on hover */
+    text-decoration: underline;
+    /* Optional: underline on hover */
 }
 
 .nav-link:focus,
 .nav-link:active {
-    outline: none; /* Remove the focus outline */
-    box-shadow: none; /* Remove any box-shadow */
-    border: none; /* Ensure border is not shown */
+    outline: none;
+    /* Remove the focus outline */
+    box-shadow: none;
+    /* Remove any box-shadow */
+    border: none;
+    /* Ensure border is not shown */
 }
 
 /*PopUp Window*/
 .devOptionsOverlay {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-    backdrop-filter: blur(5px); /* Blur effect on the background */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    /* Blur effect on the background */
     z-index: 999;
 }
 
 .flexOfficeOverlay {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-    backdrop-filter: blur(5px); /* Blur effect on the background */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    /* Blur effect on the background */
+    z-index: 999;
+}
+
+.timeAdderOverlay {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    /* Blur effect on the background */
     z-index: 999;
 }
 
 .weekTimeOverlay {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-    backdrop-filter: blur(5px); /* Blur effect on the background */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    /* Blur effect on the background */
     z-index: 999;
 }
 
 .currentStatsMessageOverlay {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-    backdrop-filter: blur(5px); /* Blur effect on the background */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    /* Blur effect on the background */
     z-index: 999;
 }
 
 .manualBreakOverlay {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-    backdrop-filter: blur(5px); /* Blur effect on the background */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    /* Blur effect on the background */
+    z-index: 999;
+}
+
+.shortcutInformationOverlay {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    /* Blur effect on the background */
     z-index: 999;
 }
 
@@ -500,8 +558,36 @@ section {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     width: 90%;
+    max-width: 750px;
+    display: none;
+}
+
+.form-shortcutInformation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 90%;
     max-width: 600px;
     display: none;
+}
+
+.form-notification {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 60px;
+    margin: 0 auto;
+    width: 200px;
+    border-radius: 12px;
+    display: none;
+    padding: 20px;
+    z-index: 9999;
 }
 
 #flexOfficeInputFields {
@@ -519,7 +605,8 @@ section {
 .form-container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Zentriert horizontal */
+    justify-content: center;
+    /* Zentriert horizontal */
     align-items: center;
     gap: 12px;
 }
@@ -537,7 +624,8 @@ label {
 }
 
 /* Inputs and select */
-input, select {
+input,
+select {
     width: 100%;
     padding: 10px;
     font-size: 14px;
@@ -545,12 +633,12 @@ input, select {
     border-radius: 6px;
 }
 
-#flexOfficeResult{
+#flexOfficeResult {
     background-color: #E9ECEF;
     border-radius: 6px;
 }
 
-#weekTimeResult{
+#weekTimeResult {
     background-color: #E9ECEF;
     border-radius: 6px;
     width: 450px;
@@ -571,7 +659,8 @@ input, select {
 
 .form-container input[type=text],
 .form-container select {
-    width: calc(100% - 20px); /* Full width minus padding */
+    width: calc(100% - 20px);
+    /* Full width minus padding */
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 8px;
@@ -579,13 +668,17 @@ input, select {
 }
 
 .btn-container {
-    display: flex; /* Use flexbox for alignment */
-    justify-content: center; /* Center buttons horizontally */
-    gap: 10px; /* Space between buttons */
+    display: flex;
+    /* Use flexbox for alignment */
+    justify-content: center;
+    /* Center buttons horizontally */
+    gap: 10px;
+    /* Space between buttons */
 }
 
 .btn-save {
-    background-color: #007bff; /* Button color */
+    background-color: #007bff;
+    /* Button color */
 }
 
 .close {
@@ -599,17 +692,12 @@ input, select {
 }
 
 .close:hover {
-    color: #000; /* Change color on hover */
+    color: #000;
+    /* Change color on hover */
 }
 
 .red-image {
-    filter: brightness(1000%) grayscale(100%)
-    opacity(0.1)
-    drop-shadow(0 0 0 red)
-    drop-shadow(0 0 0 red)
-    drop-shadow(0 0 0 red)
-    drop-shadow(0 0 0 red)
-    drop-shadow(0 0 0 red);
+    filter: brightness(1000%) grayscale(100%) opacity(0.1) drop-shadow(0 0 0 red) drop-shadow(0 0 0 red) drop-shadow(0 0 0 red) drop-shadow(0 0 0 red) drop-shadow(0 0 0 red);
 }
 
 .react-button {
@@ -642,4 +730,27 @@ input, select {
 .react-button:active {
     background-color: var(--btn-active-bg);
     border-color: var(--btn-active-bg);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.scrollable {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #000;
+    padding: 10px;
 }

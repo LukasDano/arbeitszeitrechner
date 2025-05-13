@@ -316,7 +316,7 @@ input[type="month"] {
     /*edited*/
 }
 
-input[type="float"] {
+#float {
     appearance: listbox;
     -webkit-appearance: listbox;
     width: 77px;

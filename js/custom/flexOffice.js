@@ -4,43 +4,43 @@
  * @return {string} Den HTML Code Abschnitt für das Settings Modal
  */
 function flexOfficeCalculator() {
-
     return `
         <div class="flexOfficeOverlay" id="flexOfficeOverlay"></div>
+        <div id="timeAdder"></div>
         <div class="form-flexOffice" id="flexOfficeForm">
             <form class="form-container">
                 <span class="close" onclick="closeFlexOfficeCalculator()">&times;</span>
                 <h1>FlexOffice Calculator</h1>
 
                 <div id="flexOfficeInputFields">
-                
+
                     <div class="row justify-content-center">
                         <div class="col-sm-6 col-12">
                             <div id="quoteSelector"></div>
                         </div>
-        
+
                         <div class="col-sm-6 col-12">
                             <div id="monthSelector"></div>
                         </div>
                     </div>
-                
+
                     <label for="daysOff">Abwesenheitstage:</label>
                     <input type="number" id="daysOff" name="daysOff" min="0" required>
-                    
+
                     <div class="row justify-content-center">
                         <div class="col-sm-6 col-12">
                             <label for="flexTime">FlexOffice Stunden:</label>
                             <input type="number" id="flexHours" name="flexHours" min="0" step="1" required>
                         </div>
-        
+
                         <div class="col-sm-6 col-12">
                             <label for="flexTime">FlexOffice Minuten:</label>
                             <input type="number" id="flexMinutes" name="flexMinutes" min="0" max="59" step="1" required>
                         </div>
                     </div>
-                
+
                 </div>
-                
+
                 <div class="text-center" id="flexOfficeResult">
                     <div class="row container row-adaption">
                         <div class="col text-center">
@@ -51,12 +51,12 @@ function flexOfficeCalculator() {
                             <label for="workDaysCurrentMonth" class="flexOfficeResultLabel OneRow">Arbeitstage</label>
                             <p class="display-5" id="workDaysCurrentMonth"></p>
                         </div>
-    
+
                         <div class="col text-center">
                             <label for="workedDaysCurrentMonth" class="flexOfficeResultLabel OneRow">Gearbeitete Tage</label>
                             <p class="display-5" id="workedDaysCurrentMonth"></p>
                         </div>
-    
+
                         <div class="col text-center">
                             <label for="restFlexTime" class="flexOfficeResultLabel">Restliche FlexOffice Zeit</label>
                             <p class="display-5" id="restFlexTime"></p>
@@ -66,6 +66,7 @@ function flexOfficeCalculator() {
 
                 <div class="btn-container">
                     <button type="button" class="btn" id="calculateFlexOfficeButton" onclick="calculateFlexOffice()">Berechnen</button>
+                    <button type="button" class="btn" id="openTimeAdderButton" onclick="openTimeAdder()">Zeit hinuzfügen</button>
                 </div>
             </form>
         </div>
@@ -84,6 +85,35 @@ function monthSelector() {
         <label for=selectedMonth">Monat:</label>
         <select id="selectedMonth"/>
         `;
+}
+
+function timeAdder() {
+    return `
+        <div class="timeAdderOverlay" id="timeAdderOverlay"></div>
+        <div class="form-popup" id="timeAdderForm">
+            <form class="form-container">
+                <span class="close" onclick="closeTimeAdder()">&times;</span>
+                <h1>FlexOffice Zeit hinzufügen</h1>
+
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 col-12">
+                            <label for="addHours">Stunden:</label>
+                            <input type="number" id="addHours" name="addHours" min="0" step="1" required>
+                        </div>
+
+                        <div class="col-sm-6 col-12">
+                            <label for="addMinutes">Minuten:</label>
+                            <input type="number" id="addMinutes" name="addMinutes" min="0" max="59" step="1" required>
+                        </div>
+                    </div>
+
+                <div class="btn-container">
+                    <button type="button" class="btn" id="addFlexTimeButton" onclick="addFlexTime()">Hinzufügen</button>
+                    <button type="button" class="btn" id="cancelAddingFlexTimeButton" onclick="closeTimeAdder()">Abbrechen</button>
+                </div>
+            </form>
+        </div>
+    `;
 }
 
 /**
@@ -136,13 +166,6 @@ function addDynamicComponents() {
     monthSelectorElement.innerHTML = monthSelector();
     createOptionsForMonthSelector("selectedMonth");
     document.getElementById("selectedMonth").value = getCurrentMonth();
-}
-
-function getValuesAsList() {
-    const daysOff = getNumberFromElement("daysOff");
-    const month = getNumberFromElement("selectedMonth");
-    const year = getYearForMonthWithSixMonthRange(month);
-    return [daysOff, month, year];
 }
 
 /**
@@ -205,14 +228,25 @@ async function setUpKeyBoardControlForFlexOfficeCalculator() {
         }
     });
 
+    document.addEventListener('keydown', (event) => {
+        if (event.altKey && event.key === 'a') {
+            event.preventDefault();
+            openTimeAdder();
+        }
+    });
+
     document.getElementById("flexOfficeOverlay").addEventListener("click", () => {
         closeFlexOfficeCalculator();
     });
 }
 
-/**
- * Öffnet das FlexOffice Modal
- */
+function getValuesAsList() {
+    const daysOff = getNumberFromElement("daysOff");
+    const month = getNumberFromElement("selectedMonth");
+    const year = getYearForMonthWithSixMonthRange(month);
+    return [daysOff, month, year];
+}
+
 async function openFlexOfficeCalculator() {
     setCookieFor10Minutes("settingsOpen", true);
     document.getElementById("flexOfficeForm").style.display = "block";
@@ -221,6 +255,9 @@ async function openFlexOfficeCalculator() {
 
     const calculateFlexOfficeButton = document.getElementById("calculateFlexOfficeButton");
     makeReactButton(calculateFlexOfficeButton, "primary");
+
+    const openTimeAdderButton = document.getElementById("openTimeAdderButton");
+    makeReactButton(openTimeAdderButton, "dark");
 
     addDynamicComponents();
     document.getElementById("daysOff").max = getDaysInCurrentMonth();
@@ -275,16 +312,53 @@ async function openFlexOfficeCalculator() {
         closeFlexOfficeCalculator();
     });
 
+    const timeAdderContainer = document.getElementById("timeAdder");
+    timeAdderContainer.innerHTML = timeAdder();
+
     await setUpKeyBoardControlForFlexOfficeCalculator();
 }
 
-/**
- * Schließt das FlexOffice Modal
- */
 function closeFlexOfficeCalculator() {
     document.getElementById("flexOfficeForm").style.display = "none";
     document.getElementById("flexOfficeOverlay").style.display = "none";
     deleteCookie("settingsOpen");
+}
+
+async function openTimeAdder() {
+    closeFlexOfficeCalculator();
+
+    setCookieFor10Minutes("settingsOpen", true);
+    document.getElementById("timeAdderForm").style.display = "block";
+    document.getElementById("timeAdderOverlay").style.display = "block";
+
+    document.getElementById("addHours").value = 0;
+    document.getElementById("addMinutes").value = 0;
+
+    const addFlexTimeButton = document.getElementById("addFlexTimeButton");
+    makeReactButton(addFlexTimeButton, "success");
+
+    const cancelAddingFlexTimeButton = document.getElementById("cancelAddingFlexTimeButton");
+    makeReactButton(cancelAddingFlexTimeButton, "danger");
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            addFlexTime();
+        }
+
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeTimeAdder();
+        }
+    });
+}
+
+function closeTimeAdder() {
+    // Order is important for a clean transition
+    document.getElementById("timeAdderForm").style.display = "none";
+    openFlexOfficeCalculator();
+    document.getElementById("timeAdderOverlay").style.display = "none";
+
 }
 
 async function calculateFlexOffice() {
@@ -309,6 +383,27 @@ async function calculateFlexOffice() {
     document.getElementById("workDaysCurrentMonth").textContent = workDaysInMonth
     document.getElementById("workedDaysCurrentMonth").textContent = workDaysInMonth - daysOff;
     document.getElementById("restFlexTime").textContent = formatTime(restFlexTimeThisMonth);
+}
+
+/**
+ * Fügt die Zeit aus den TimeAdder in zur normalen FlexZeit hin zu
+ * Achtung: Die Änderung wird erst mit dem erneuten berechnen gespeichert
+ */
+function addFlexTime() {
+    const addHours = getNumberFromElement("addHours");
+    const addMinutes = getNumberFromElement("addMinutes");
+    const addTime = timeFromStringArray([addHours, addMinutes]);
+
+    const flexHours = getNumberFromElement("flexHours");
+    const flexMinutes = getNumberFromElement("flexMinutes");
+    const flexTime = [flexHours, flexMinutes];
+
+    const [sumHours, sumMins] = addTimeValues(addTime, flexTime);
+
+    closeTimeAdder();
+
+    document.getElementById("flexHours").value = sumHours;
+    document.getElementById("flexMinutes").value = sumMins;
 }
 
 /**

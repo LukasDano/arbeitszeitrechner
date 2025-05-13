@@ -30,4 +30,4 @@ npm install
 
 ## Vorschau
 
-![v2.5.7](pictures/v2.5.7.png)
+![v2.5.11](pictures/v2.5.11.png)

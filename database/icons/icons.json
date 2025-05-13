@@ -1,6 +1,6 @@
 {
   "add": "png",
-  "ariveAtWork": "png",
+  "arriveAtWork": "png",
   "automaticOff": "png",
   "automaticOn": "png",
   "bag": "png",
@@ -13,7 +13,9 @@
   "earlier": "png",
   "enter": "png",
   "file": "png",
+  "help": "png",
   "homeoffice": "png",
+  "information": "png",
   "kanban": "png",
   "log": "png",
   "lunchbox": "png",

@@ -510,7 +510,7 @@ $(document).ready(() => {
         document.getElementById("overTimeAutomaticIcon").src = "pictures/icons/automaticOff.png";
     }
 
-    function swapCurrentOverTimeIcon() {
+    function switchCurrentOverTimeMode() {
         const overTimeAutomaticActive = getBooleanCookie("overTimeAutomaticActive");
 
         if (overTimeAutomaticActive) {
@@ -563,38 +563,82 @@ $(document).ready(() => {
     });
 
     document.getElementById("overTimeAutomatic").addEventListener("pointerdown", () => {
-        swapCurrentOverTimeIcon();
+        switchCurrentOverTimeMode();
     });
 
     // Keyboardcontrol
 
     document.addEventListener('keydown', (event) => {
-        // Reset Page
-        if (event.key === 'F1') {
-            event.preventDefault();
-            resetToDefault();
-            return;
-        }
-
         // Open DevOptions
-        if (event.key === 'F2') {
+        if (event.key === 'F1') {
             event.preventDefault();
             openOrCloseDevOptionsFromButton();
             return;
         }
 
+        // Reset Page
+        if (event.key === 'F2') {
+            event.preventDefault();
+            resetToDefault();
+            return;
+        }
+
+        // +14 min Overtime
+        if (event.key === 'F3' && getBooleanCookie("devOptions")) {
+            event.preventDefault();
+            set14MinutesOverTime();
+            return;
+        }
+
+        // +14 OvertimeAutomatic on/off
+        if (event.key === 'F4' && getBooleanCookie("devOptions")) {
+            event.preventDefault();
+            switchCurrentOverTimeMode();
+            return;
+        }
+
         // Six-Hour-Mode
-        if (event.key === 'F3') {
+        if (event.shiftKey && event.key === 'S') {
             event.preventDefault();
             setNoPause();
             setSixHourMode();
             return;
         }
 
-        // +14 min Overtime
-        if (event.key === 'F4') {
+        // Spring automatisch in das Gleitzeitfeld
+        if (event.shiftKey && event.key === 'G') {
             event.preventDefault();
-            set14MinutesOverTime();
+            document.getElementById("float").focus();
+            return;
+        }
+
+        if (event.altKey && event.key === 'w') {
+            event.preventDefault();
+            openWeekTimeCalculator();
+            return;
+        }
+
+        if (event.altKey && event.key === 'f') {
+            event.preventDefault();
+            openFlexOfficeCalculator();
+            return;
+        }
+
+        if (event.altKey && event.key === 'c') {
+            event.preventDefault();
+            openCurrentStatsMessageWithValues();
+            return;
+        }
+
+        if (event.altKey && event.key === 'd' && getBooleanCookie("devOptions")) {
+            event.preventDefault();
+            openDevOptionsForm();
+            return;
+        }
+
+        if (event.altKey && event.key === 'h' && getBooleanCookie("devOptions")) {
+            event.preventDefault();
+            openShortcutInformation();
             return;
         }
     });
