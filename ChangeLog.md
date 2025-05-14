@@ -249,3 +249,4 @@
 - bessere und mehr Testcases
 - Help Page eingebaut (alle Shortcuts werden aufgelistet)
     - In einer Tabelle mit Shortcut, Action und Condition
+- alle Felder im Haupt Fenster per Esc verlassen

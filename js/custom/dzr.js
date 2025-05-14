@@ -568,6 +568,25 @@ $(document).ready(() => {
 
     // Keyboardcontrol
 
+    mainPageFieldIds.forEach(fieldId => {
+        const fieldElement = document.getElementById(fieldId);
+
+        fieldElement.addEventListener("keydown", (event) => {
+
+            if (event.key === "Escape") {
+                event.preventDefault();
+                fieldElement.blur();
+            }
+
+            if (fieldId === "float") {
+                if (event.shiftKey && event.key === 'G') {
+                    event.preventDefault();
+                    fieldElement.blur();
+                }
+            }
+        });
+    });
+
     document.addEventListener('keydown', (event) => {
         // Open DevOptions
         if (event.key === 'F1') {
@@ -642,5 +661,7 @@ $(document).ready(() => {
             return;
         }
     });
+
+
 
 });

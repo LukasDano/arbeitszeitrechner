@@ -42,3 +42,5 @@ const defaultButtonConfig = {
     headline: "",
     text: "Hello World"
 };
+
+const mainPageFieldIds = ["start", "pause", "end", "soll", "float"];
