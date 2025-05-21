@@ -572,17 +572,9 @@ $(document).ready(() => {
         const fieldElement = document.getElementById(fieldId);
 
         fieldElement.addEventListener("keydown", (event) => {
-
             if (event.key === "Escape") {
                 event.preventDefault();
                 fieldElement.blur();
-            }
-
-            if (fieldId === "float") {
-                if (event.shiftKey && event.key === 'G') {
-                    event.preventDefault();
-                    fieldElement.blur();
-                }
             }
         });
     });
@@ -624,10 +616,17 @@ $(document).ready(() => {
             return;
         }
 
-        // Spring automatisch in das Gleitzeitfeld
+        // Enter/Exit Gleitzeitfeld
         if (event.shiftKey && event.key === 'G') {
             event.preventDefault();
-            document.getElementById("float").focus();
+            
+            const floatField = document.getElementById("float");
+            
+            if (document.activeElement === floatField) {
+                floatField.blur();
+            } else {
+                floatField.focus();
+            }
             return;
         }
 
