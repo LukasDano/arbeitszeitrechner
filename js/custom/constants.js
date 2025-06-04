@@ -1,7 +1,8 @@
 ﻿const conditions = {
     "FloatFoucs": " (Gleitzeitfeld muss aktiv sein)",
     "DevOptionsActive": " (DevOptions müssen aktiv sein)",
-    "InFlexOfficeModal": " (In der FlexOffice Anwendung)"
+    "InFlexOfficeModal": " (In der FlexOffice Anwendung)",
+    "ModalIsOpen": " (Ein Modal muss geöffnet sein)"
 }
 
 const keyboardControl = {
@@ -19,8 +20,8 @@ const keyboardControl = {
     "Alt + h": "Open HelpPage" + conditions.DevOptionsActive,
     "ArrowUp": "Erhöht die Gleitzeit nach erlaubten Interwallen" + conditions.FloatFoucs,
     "ArrowDown": "Verringert die Gleitzeit nach erlaubten Interwallen" + + conditions.FloatFoucs,
-    "Esc": "Modal schließen (funktioniert bei allen)",
-    "Enter": "Eingabe beim Modal (funktioniert bei allen)"
+    "Esc": "Modal schließen" + conditions.ModalIsOpen,
+    "Enter": "Eingabe beim Modal" + conditions.ModalIsOpen
 };
 
 const dayFields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
