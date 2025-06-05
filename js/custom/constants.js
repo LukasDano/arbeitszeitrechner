@@ -26,6 +26,17 @@ const keyboardControl = {
 
 const dayFields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
 
+const colorVariants = {
+    primary: "primary",
+    secondary: "secondary",
+    success: "success",
+    danger: "danger",
+    warning: "warning",
+    info: "info",
+    light: "light",
+    dark: "dark",
+};
+
 const timer = {
     "SEC_3": 3000,
     "SEC_5": 5000,

@@ -62,12 +62,11 @@ function getNumberFromElement(elementId) {
 /**
  * Macht aus einem normalen Button einen Reactbutton eines bestimmten Types
  * @param {HTMLButtonElement} buttonElement Der Button, der zum Reactbutton werden soll
- * @param {string} variant Die Button Variante in lowerCase
+ * @param {ColorVariant} variant Die React Button Farb Variante
  */
 function makeReactButton(buttonElement, variant) {
     buttonElement.classList.add('react-button');
 
-    // Standard-Farbzuweisungen basierend auf Bootstrap-Button-Farben
     const colors = {
         primary: { bg: "#0d6efd", hover: "#0b5ed7", active: "#0a58ca", text: "#fff" },
         secondary: { bg: "#6c757d", hover: "#5c636a", active: "#4d545a", text: "#fff" },
@@ -84,42 +83,37 @@ function makeReactButton(buttonElement, variant) {
         variant = 'primary';
     }
 
-    const { bg, hover, active, text } = colors[variant];
-
-    applyButtonStyles(buttonElement, text, bg, hover, active);
+    applyButtonStyles(buttonElement, colors[variant]);
 }
 
 /**
  * Setzt die Farben für um einen Button zu einem Reactbutton zu machen
  * @param {HTMLButtonElement} buttonElement Der Button
- * @param {string} textColor Die Farbe des Textes
- * @param {string} backgroundColor Die Hintergrundfarbe des Buttons
- * @param {string} hoverColor Die Farbe des Buttons beim Hovern
- * @param {string} activeColor Die Farbe des Buttons, wenn er auslöst
+ * @param {ButtonColor} buttonColors Ein Objekt mit Angaben zu den Farben des Buttons
  */
-function applyButtonStyles(buttonElement, textColor, backgroundColor, hoverColor, activeColor) {
+function applyButtonStyles(buttonElement, buttonColors) {
     buttonElement.className = "react-button";
-    buttonElement.style.color = textColor;
-    buttonElement.style.backgroundColor = backgroundColor;
-    buttonElement.style.borderColor = backgroundColor;
+    buttonElement.style.color = buttonColors.text;
+    buttonElement.style.backgroundColor = buttonColors.bg;
+    buttonElement.style.borderColor = buttonColors.bg;
 
     buttonElement.addEventListener('mouseover', () => {
-        buttonElement.style.backgroundColor = hoverColor;
-        buttonElement.style.borderColor = hoverColor;
+        buttonElement.style.backgroundColor = buttonColors.hover;
+        buttonElement.style.borderColor = buttonColors.hover;
     });
 
     buttonElement.addEventListener('mouseout', () => {
-        buttonElement.style.backgroundColor = backgroundColor;
-        buttonElement.style.borderColor = backgroundColor;
+        buttonElement.style.backgroundColor = buttonColors.bg;
+        buttonElement.style.borderColor = buttonColors.bg;
     });
 
     buttonElement.addEventListener('mousedown', () => {
-        buttonElement.style.backgroundColor = activeColor;
-        buttonElement.style.borderColor = activeColor;
+        buttonElement.style.backgroundColor = buttonColors.active;
+        buttonElement.style.borderColor = buttonColors.active;
     });
 
     buttonElement.addEventListener('mouseup', () => {
-        buttonElement.style.backgroundColor = hoverColor;
-        buttonElement.style.borderColor = hoverColor;
+        buttonElement.style.backgroundColor = buttonColors.hover;
+        buttonElement.style.borderColor = buttonColors.hover;
     });
 }

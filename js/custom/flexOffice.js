@@ -254,10 +254,10 @@ async function openFlexOfficeCalculator() {
     document.getElementById("flexOfficeResult").style.display = "none";
 
     const calculateFlexOfficeButton = document.getElementById("calculateFlexOfficeButton");
-    makeReactButton(calculateFlexOfficeButton, "primary");
+    makeReactButton(calculateFlexOfficeButton, colorVariants.primary);
 
     const openTimeAdderButton = document.getElementById("openTimeAdderButton");
-    makeReactButton(openTimeAdderButton, "dark");
+    makeReactButton(openTimeAdderButton, colorVariants.dark);
 
     addDynamicComponents();
     document.getElementById("daysOff").max = getDaysInCurrentMonth();
@@ -335,10 +335,10 @@ async function openTimeAdder() {
     document.getElementById("addMinutes").value = 0;
 
     const addFlexTimeButton = document.getElementById("addFlexTimeButton");
-    makeReactButton(addFlexTimeButton, "success");
+    makeReactButton(addFlexTimeButton, colorVariants.success);
 
     const cancelAddingFlexTimeButton = document.getElementById("cancelAddingFlexTimeButton");
-    makeReactButton(cancelAddingFlexTimeButton, "danger");
+    makeReactButton(cancelAddingFlexTimeButton, colorVariants.danger);
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {

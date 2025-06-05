@@ -61,3 +61,15 @@
  * @property {string} headline
  * @property {string} textColor
  */
+
+/**
+ * @typedef {Object} ButtonColor
+ * @property {string} text
+ * @property {string} background
+ * @property {string} hover
+ * @property {string} active
+ */
+
+/**
+ * @typedef {'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'light'|'dark'} ColorVariant
+ */

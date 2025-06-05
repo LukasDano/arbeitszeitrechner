@@ -144,9 +144,9 @@ function updateLink(cookieURL, devOptionsButtonName) {
  */
 function getAllDevOptions() {
     return [
-        {id: 'One', cookiePrefix: 'customDevOptionOne'},
-        {id: 'Two', cookiePrefix: 'customDevOptionTwo'},
-        {id: 'Three', cookiePrefix: 'customDevOptionThree'}
+        { id: 'One', cookiePrefix: 'customDevOptionOne' },
+        { id: 'Two', cookiePrefix: 'customDevOptionTwo' },
+        { id: 'Three', cookiePrefix: 'customDevOptionThree' }
     ];
 }
 
@@ -218,8 +218,8 @@ async function openDevOptionsForm() {
     const weekTimeSave = document.getElementById("weekTimeSave");
     const weekTimeDelete = document.getElementById("weekTimeDelete");
 
-    makeReactButton(weekTimeSave, "success");
-    makeReactButton(weekTimeDelete, "danger");
+    makeReactButton(weekTimeSave, colorVariants.success);
+    makeReactButton(weekTimeDelete, colorVariants.danger);
 
     const iconDropDownId = "iconDropDown";
     const allIconsList = await listAllIcons();
