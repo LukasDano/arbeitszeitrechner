@@ -1,3 +1,5 @@
+/** @import {Time} from ./../../ts/types.ts */
+
 $(document).ready(() => {
     $("#00min").click(() => {
         setNoPause();
@@ -154,6 +156,7 @@ $(document).ready(() => {
         calculate();
         setCountdown();
         uploadStartTime();
+        swichtToActiveMode();
     });
 
     $("#pause").change(() => {
@@ -396,6 +399,18 @@ $(document).ready(() => {
         setCookieUntilMidnight("pauseTime", "00:30");
     }
 
+    function swichtToActiveMode() {
+        const activeMode = getCookie("modus");
+
+        if (activeMode === "6h00m") {
+            setNoPause();
+            setSixHourMode();
+        } else {
+            setThirtyMinutesPause();
+            setSevenHourMode();
+        }
+    }
+
     function uploadStartTime() {
         const startTime = $("#start").val()?.toString();
         setCookieUntilMidnight("start", startTime);
@@ -619,9 +634,9 @@ $(document).ready(() => {
         // Enter/Exit Gleitzeitfeld
         if (event.shiftKey && event.key === 'G') {
             event.preventDefault();
-            
+
             const floatField = document.getElementById("float");
-            
+
             if (document.activeElement === floatField) {
                 floatField.blur();
             } else {

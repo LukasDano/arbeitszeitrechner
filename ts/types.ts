@@ -3,10 +3,14 @@ export type Hours = number;
 export type Mins = number;
 
 export type Time = [Hours, Mins];
-export type InValidTime = [Hours, Mins|null|undefined];
+export type InValidTime = [Hours, Mins | null | undefined];
 export type FloatTime = [Vorzeichen, Hours, Mins];
 
-export type DayTime = { hours: Hours, mins: Mins };
+export type DayTime = {
+    hours: Hours,
+    mins: Mins
+};
+
 export type WeekTime = {
     monday: DayTime,
     tuesday: DayTime,
@@ -28,4 +32,28 @@ export type FeiertageHamburg = {
     ZweiterWeihnachtsfeiertag: Date
 };
 
-export type FlexMonth = { daysOff: number, flexHours: Hours, flexMins: Mins };
+export type FlexMonth = {
+    daysOff: number;
+    flexHours: Hours;
+    flexMins: Mins;
+};
+
+export type Milliseconds = number;
+
+export type NotificationConfiguration = {
+    timer: Milliseconds;
+    confirmMessage: boolean;
+    bgColor: string;
+    text: string;
+    headline: string;
+    textColor: string;
+};
+
+export type ButtonColor = {
+    text: string;
+    bg: string;
+    hover: string;
+    active: string;
+};
+
+export type ColorVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'

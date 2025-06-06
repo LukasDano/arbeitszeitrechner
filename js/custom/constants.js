@@ -1,4 +1,6 @@
-﻿const conditions = {
+﻿/** @import {NotificationConfiguration} from ./../../ts/types.ts */
+
+const conditions = {
     "FloatFoucs": " (Gleitzeitfeld muss aktiv sein)",
     "DevOptionsActive": " (DevOptions müssen aktiv sein)",
     "InFlexOfficeModal": " (In der FlexOffice Anwendung)",

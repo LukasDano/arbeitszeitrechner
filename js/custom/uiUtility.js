@@ -1,3 +1,5 @@
+/** @import {Time, ColorVariant, ButtonColor} from ./../../ts/types.ts */
+
 /**
  * Setzte alle HTML Element mit der Class "disabled" auf den entsprechenden Status
  */
@@ -62,7 +64,7 @@ function getNumberFromElement(elementId) {
 /**
  * Macht aus einem normalen Button einen Reactbutton eines bestimmten Types
  * @param {HTMLButtonElement} buttonElement Der Button, der zum Reactbutton werden soll
- * @param {ColorVariant} variant Die React Button Farb Variante
+ * @param {ColorVariant} variant Die React Button Farbvariante
  */
 function makeReactButton(buttonElement, variant) {
     buttonElement.classList.add('react-button');

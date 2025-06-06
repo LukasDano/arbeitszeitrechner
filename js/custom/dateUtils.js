@@ -1,3 +1,5 @@
+/** @import {Time} from ./../../ts/types.ts */
+
 /**
  * Gibt die aktuelle Kalenderwoche zurück
  *
@@ -22,7 +24,7 @@ function getDaysInCurrentMonth() {
  *
  * @return {Time} Die aktuelle Uhrzeit in Stunden und Minuten
  */
-function getCurrentTime(){
+function getCurrentTime() {
     return [new Date().getHours(), new Date().getMinutes()];
 }
 
@@ -31,7 +33,7 @@ function getCurrentTime(){
  *
  * @return {number} Die Nummer des aktuellen Monats
  */
-function getCurrentMonth(){
+function getCurrentMonth() {
     return new Date().getMonth() + 1;
 }
 
@@ -41,7 +43,7 @@ function getCurrentMonth(){
  * @param {number} month Der fragliche Monat
  * @return {number} Das Jahr
  */
-function getYearForLastTimeMonth(month){
+function getYearForLastTimeMonth(month) {
     const currentYear = new Date().getFullYear();
     const currentMonth = getCurrentMonth();
 
@@ -58,7 +60,7 @@ function getYearForLastTimeMonth(month){
  * @param {number} month Der fragliche Monat
  * @return {number} Das Jahr
  */
-function getYearForNextTimeMonth(month){
+function getYearForNextTimeMonth(month) {
     const currentYear = new Date().getFullYear();
     const currentMonth = getCurrentMonth();
 
@@ -74,7 +76,7 @@ function getYearForNextTimeMonth(month){
  *
  * @return {string[]} Die Liste
  */
-function getMonthNamesAsList(){
+function getMonthNamesAsList() {
     return [
         "Januar",
         "Februar",
@@ -97,7 +99,7 @@ function getMonthNamesAsList(){
  * @param {Date} date Das zu konvertierende Datum
  * @return {string} Die Liste
  */
-function getValidDateString(date){
+function getValidDateString(date) {
     const correctedMonth = formatNumber(date.getMonth() + 1);
     const correctedDate = formatNumber(date.getDate());
 
