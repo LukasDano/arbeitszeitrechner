@@ -1,3 +1,5 @@
+/** @import {FeiertageHamburg, Time} from ./../../ts/types.ts */
+
 /**
  * Berechnet das Osterdatum zu einem gegebenen Jahr
  *
@@ -63,7 +65,7 @@ function getHamburgHolidays(year) {
  * @param {number} year Jahr für das gerechnet werden soll
  * @returns {number} Die Anzahl der Arbeitstage für den aktuellen Monat
  */
-function getWorkDaysInMonthOffline(month,year) {
+function getWorkDaysInMonthOffline(month, year) {
     const lastDay = new Date(year, month, 0).getDate();
 
     const holidays = getHamburgHolidays(year);
@@ -72,7 +74,7 @@ function getWorkDaysInMonthOffline(month,year) {
     let workDays = 0;
 
     for (let day = 1; day <= lastDay; day++) {
-        if(isWorkDay(day, month, year, holidayDates)){
+        if (isWorkDay(day, month, year, holidayDates)) {
             workDays++;
         }
     }
@@ -88,14 +90,14 @@ function getWorkDaysInMonthOffline(month,year) {
  * @param {Set} holidayDates Feiertage des jeweiligen Monats
  * @return {boolean}
  */
-function isWorkDay(day, month, year, holidayDates){
+function isWorkDay(day, month, year, holidayDates) {
     const correctJSDateMonth = month - 1;
     const date = new Date(year, correctJSDateMonth, day);
     const dayOfWeek = date.getDay();
     const dateString = getValidDateString(date);
     const dayIsNotOnWeekend = dayOfWeek !== 0 && dayOfWeek !== 6
 
-    if (dayIsNotOnWeekend&& !holidayDates.has(dateString)) {
+    if (dayIsNotOnWeekend && !holidayDates.has(dateString)) {
         return true;
     }
 }
@@ -106,7 +108,7 @@ function isWorkDay(day, month, year, holidayDates){
  * @param {number} year Das Jahr in dem die Feiertage stattfinden
  * @return Ein Objekt mit allen hinterlegten Feiertagen
  */
-function getAdditionalHolidays(year){
+function getAdditionalHolidays(year) {
     return {
         "Heiligabend": new Date(Date.UTC(year, 11, 24)),
         "Silvester": new Date(Date.UTC(year, 11, 31))
@@ -140,7 +142,7 @@ async function getWorkDaysInMonthFromAPI(month, year) {
         }
 
         for (let day = 1; day <= lastDay; day++) {
-            if(isWorkDay(day, month, year, holidayDates)){
+            if (isWorkDay(day, month, year, holidayDates)) {
                 workDays++;
             }
         }
@@ -232,7 +234,7 @@ async function calculateFlexOfficeStats(daysOff, flexTime, flexOfficeQuote, mont
  * @param {number} month Der Monat zu dem das Jahr gesucht ist
  * @return {number} Das Jahr
  */
-function getYearForMonthWithSixMonthRange(month){
+function getYearForMonthWithSixMonthRange(month) {
     const currentMonth = getCurrentMonth();
 
     let nextSixMonths = [];
@@ -240,7 +242,7 @@ function getYearForMonthWithSixMonthRange(month){
 
     for (let i = 0; i <= 5; i++) {
 
-        if (currentMonth + i > 12){
+        if (currentMonth + i > 12) {
             nextSixMonths.push((currentMonth + i) - 1);
         }
 
@@ -257,11 +259,11 @@ function getYearForMonthWithSixMonthRange(month){
         lastSixMonths.push(lastMonth);
     }
 
-    if (nextSixMonths.includes(month)){
+    if (nextSixMonths.includes(month)) {
         return getYearForNextTimeMonth(month);
     }
 
-    if (lastSixMonths.includes(month)){
+    if (lastSixMonths.includes(month)) {
         return getYearForLastTimeMonth(month);
     }
 }
@@ -272,9 +274,9 @@ function getYearForMonthWithSixMonthRange(month){
  * @deprecated
  */
 function testGetYearForMonthWithSixMonthRangeWithCurrentMonthRange() {
-    const months= [1,2,3,4,5,6,7,8,9,10,11,12];
+    const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-    months.forEach(month => console.log("Der Monat: " + month  + "hat folgenden Wert ergeben: " +  getYearForMonthWithSixMonthRange(month)));
+    months.forEach(month => console.log("Der Monat: " + month + "hat folgenden Wert ergeben: " + getYearForMonthWithSixMonthRange(month)));
 }
 
 module.exports = {

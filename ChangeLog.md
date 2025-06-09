@@ -249,3 +249,8 @@
 - bessere und mehr Testcases
 - Help Page eingebaut (alle Shortcuts werden aufgelistet)
     - In einer Tabelle mit Shortcut, Action und Condition
+- alle Felder im Haupt Fenster per Esc verlassen
+- CurrentStatsMessage lässt sich nur noch öffnen, wenn der Rechner aktiv ist
+- Bessere Typ Sicherheit
+- TS Types werden für JSDoc verwendet
+- Der verwendete Modus wird jetzt nicht mehr durch eine neue Startzeit ersetzt

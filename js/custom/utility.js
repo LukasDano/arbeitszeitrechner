@@ -1,3 +1,5 @@
+/** @import {Time} from ./../../ts/types.ts */
+
 /**
  * Vergleicht zwei Time Werte miteinander und gibt den späteren zurück.
  * Wenn, beide übereinstimmen wird der erste timeOne zurückgegeben.

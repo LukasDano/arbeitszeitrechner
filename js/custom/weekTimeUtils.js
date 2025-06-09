@@ -1,4 +1,6 @@
-﻿/**
+﻿/** @import {Time, DayTime, WeekTime} from ./../../ts/types.ts */
+
+/**
  * Liefert die Arbeitszeit für die Woche
  *
  * @param {WeekTime} weekTime Ein Objekt mit "hours" und "mins" Werten für jeden Wochentag
@@ -54,7 +56,7 @@ function calculateWeekOverTime(weekWorkTime) {
  *
  * @return {string} Arbeitszeit als lesbarer String
  */
-function formatWeekTime(weekTime, testCase = false ) {
+function formatWeekTime(weekTime, testCase = false) {
     let [weekHours, weekMins] = weekTime;
     let weekTimeAusgabe;
 

@@ -1,3 +1,5 @@
+/** @import {Time, FloatTime} from ./../../ts/types.ts */
+
 /**
  * Gibt die Differenz zwischen Start und Ende zurück
  *

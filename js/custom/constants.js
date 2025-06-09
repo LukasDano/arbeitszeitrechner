@@ -1,7 +1,10 @@
-﻿const conditions = {
+﻿/** @import {NotificationConfiguration} from ./../../ts/types.ts */
+
+const conditions = {
     "FloatFoucs": " (Gleitzeitfeld muss aktiv sein)",
     "DevOptionsActive": " (DevOptions müssen aktiv sein)",
-    "InFlexOfficeModal": " (In der FlexOffice Anwendung)"
+    "InFlexOfficeModal": " (In der FlexOffice Anwendung)",
+    "ModalIsOpen": " (Ein Modal muss geöffnet sein)"
 }
 
 const keyboardControl = {
@@ -19,11 +22,22 @@ const keyboardControl = {
     "Alt + h": "Open HelpPage" + conditions.DevOptionsActive,
     "ArrowUp": "Erhöht die Gleitzeit nach erlaubten Interwallen" + conditions.FloatFoucs,
     "ArrowDown": "Verringert die Gleitzeit nach erlaubten Interwallen" + + conditions.FloatFoucs,
-    "Esc": "Modal schließen (funktioniert bei allen)",
-    "Enter": "Eingabe beim Modal (funktioniert bei allen)"
+    "Esc": "Modal schließen" + conditions.ModalIsOpen,
+    "Enter": "Eingabe beim Modal" + conditions.ModalIsOpen
 };
 
 const dayFields = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+
+const colorVariants = {
+    primary: "primary",
+    secondary: "secondary",
+    success: "success",
+    danger: "danger",
+    warning: "warning",
+    info: "info",
+    light: "light",
+    dark: "dark",
+};
 
 const timer = {
     "SEC_3": 3000,
@@ -42,3 +56,5 @@ const defaultButtonConfig = {
     headline: "",
     text: "Hello World"
 };
+
+const mainPageFieldIds = ["start", "pause", "end", "soll", "float"];
