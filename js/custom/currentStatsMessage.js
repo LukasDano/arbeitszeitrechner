@@ -1,10 +1,9 @@
+/** @import {Time} from ./../../ts/types.ts */
+
 /**
- * Gibt den HTML-Code für das CurrentStatsMassage Modal zurück
- *
  * @return {string} Den HTML Code Abschnitt für das Message Modal
  */
 function currentStatsMessage() {
-
     return `
         <div class="currentStatsMessageOverlay" id="currentStatsMessageOverlay"></div>
         <div class="form-popup" id="currentStatsMessageForm">
@@ -32,20 +31,23 @@ function currentStatsMessage() {
 }
 
 /**
- * Öffnet das CurrentStatsMassage Modal
+ * @param {number} diffMins Die Differenz in Minuten zwischen Start und aktueller Zeit
+ * @returns {boolean}
  */
-function openCurrentStatsMessageWithValues() {
+function canStatsBeOpend(diffMins) {
+    if (!isNaN(diffMins)) return true;
 
+    alert("Noch keine Zeiten eingetragen");
+    return false;
+}
+
+function openCurrentStatsMessageWithValues() {
     const currentTime = getCurrentTime();
     const currentStart = getTimeFromFieldById("start");
     let currentPause = getTimeFromFieldById("pause");
     const [diffHours, diffMins] = calculateStartEndeTimeDiff(currentStart, currentTime);
 
-    if (isNaN(diffMins)) {
-        alert("Noch keine Zeiten eingetragen");
-        return;
-    }
-
+    if (!canStatsBeOpend(diffMins)) return;
     if (diffHours < 6) currentPause = [0, 0];
 
     setCookieFor10Minutes("settingsOpen", true);
@@ -71,9 +73,6 @@ function openCurrentStatsMessageWithValues() {
     });
 }
 
-/**
- * Schließt das CurrentStatsMassage Modal
- */
 function closeCurrentStatsMessage() {
     document.getElementById("currentStatsMessageOverlay").style.display = "none";
     document.getElementById("currentStatsMessageForm").style.display = "none";
@@ -81,9 +80,6 @@ function closeCurrentStatsMessage() {
     deleteCookie("settingsOpen");
 }
 
-/**
- * Lädt alle Funktionalitäten und Daten zum CurrentStatsMassage Modal
- */
 function setUpCurrentStatsMessage() {
     const settingsContainer = document.getElementById("currentStatsMessage");
     settingsContainer.innerHTML = currentStatsMessage();

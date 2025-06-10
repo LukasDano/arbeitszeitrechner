@@ -5,7 +5,7 @@ const conditions = {
     "DevOptionsActive": " (DevOptions müssen aktiv sein)",
     "InFlexOfficeModal": " (In der FlexOffice Anwendung)",
     "ModalIsOpen": " (Ein Modal muss geöffnet sein)"
-}
+};
 
 const keyboardControl = {
     "F1": "Open DevOptions",

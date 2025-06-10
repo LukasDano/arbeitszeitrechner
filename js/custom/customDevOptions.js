@@ -8,22 +8,20 @@ function customDevOptionAdvice() {
 }
 
 /**
- * Startet den Prozess eigene DevOptions hinzuzufügen.
- * Man kann immer nur eine zurzeit hinzufügen.
- * Ist auf insgesamt 3 beschränkt, diese können aber überschrieben werden.
- *
+ * Startet den Prozess eigene DevOptions hinzuzufügen,
+ * es kann immer nur eine zurzeit hinzufügt werden.
+ * Insgesamt auf 3 beschränkt, diese können aber überschrieben werden.
  * @param {string} customDevOption Die DevOption die man setzten möchte (1,2,3)
  * @param {string} url Der Link zu dem der neue Button führen soll
  * @param {string} cookieAltName Der Name der Angezeigt wird, wenn die Icons nicht richtig geladen werden
  * @param {string} iconName Der Name des Icons ohne ".png"
  */
 function addDevOptionFromModal(customDevOption, url, cookieAltName, iconName) {
-
     setCookieForever(customDevOption, url);
     setCookieForever(customDevOption + "AltName", cookieAltName);
 
     const iconFileName = iconName + ".png"
-    const iconFilePath = `pictures/icons/${iconFileName}`
+    const iconFilePath = "pictures/icons/" + iconFileName;
     setCookieForever(customDevOption + "Icon", iconFilePath);
 }
 
@@ -36,10 +34,9 @@ async function listAllIcons() {
 
     try {
         const response = await fetch(jsonPath);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok)  throw new Error(`HTTP error! status: ${response.status}`);
         icons = await response.json();
+
     } catch (error) {
         console.error('Failed to fetch icon list:', error);
     }
@@ -83,6 +80,7 @@ function setUpDevOptions() {
 
         if (typeof devOptionAltName !== "undefined") {
             const devOptionContainer = document.querySelector(`.customDevOption.${id}`);
+
             if (devOptionContainer) {
                 devOptionContainer.innerHTML = customDevOption(targetUrl, devOptionIcon, devOptionAltName);
             } else {
@@ -96,9 +94,7 @@ function setUpDevOptions() {
  * Guckt welche Cookies für die DevOptions existieren und setzt diese dann neu.
  */
 function refreshDevOptionCookies() {
-    const options = getAllDevOptions();
-
-    options.forEach(option => {
+    getAllDevOptions().forEach(option => {
         const targetUrl = getCookie(`${option.cookiePrefix}`);
         const devOptionIcon = getCookie(`${option.cookiePrefix}Icon`);
         const devOptionAltName = getCookie(`${option.cookiePrefix}AltName`);
@@ -111,10 +107,8 @@ function refreshDevOptionCookies() {
 }
 
 /**
- * Prüft, ob ein String einem vorher übergebenen Schema entspricht
- *
  * @param {string} inputString Der zu prüfende String
- * @return {boolean} true: Passt zu dem Schema, false: Passt nicht zum Schema
+ * @return {boolean}
  */
 function isValidSpeiseplanURL(inputString) {
     const lunchURLVerificator = getCookie("lunchURLVerificator");
@@ -127,20 +121,19 @@ function isValidSpeiseplanURL(inputString) {
 
 /**
  * Updated den Speiseplanlink auf die aktuelle Woche
- *
  * @param {string} cookieURL Die in den Cookies gespeicherte URL
  * @param {string} devOptionsButtonName den Namen, unter dem der Cookie gespeichert wurde
  */
 function updateLink(cookieURL, devOptionsButtonName) {
-    if (isValidSpeiseplanURL(cookieURL)) {
-        const speisePlanURL = cookieURL.substring(0, cookieURL.lastIndexOf('-') + 1);
-        const currentSpeisePlanURL = speisePlanURL + getCurrentKW() + ".pdf";
-        setCookieForever(devOptionsButtonName, currentSpeisePlanURL);
-    }
+    if (isValidSpeiseplanURL(cookieURL));
+
+    const speisePlanURL = cookieURL.substring(0, cookieURL.lastIndexOf('-') + 1);
+    const currentSpeisePlanURL = speisePlanURL + getCurrentKW() + ".pdf";
+    setCookieForever(devOptionsButtonName, currentSpeisePlanURL);
 }
 
 /**
- * @returns Alle CustomDevOptions Namen
+ * @return {{id: string, cookiePrefix: string}[]} Alle CustomDevOptions Namen
  */
 function getAllDevOptions() {
     return [
@@ -152,11 +145,10 @@ function getAllDevOptions() {
 
 /**
  * Gibt den HTML-Code für eine DevOption als String zurück
- *
  * @param {string} targetUrl Die Ziel führende URL
  * @param {string} devOptionIcon Der Pfad zu dem Icon, welches gesetzt werden soll
  * @param {string} devOptionAltName Der Alternativename, der angezeigt werden soll, wenn das Icon nicht geladen werden kann
- * @returns Den HTML Code Abschnitt für die neue DevOption
+ * @return {string} Den HTML Code Abschnitt für die neue DevOption
  */
 function customDevOption(targetUrl, devOptionIcon, devOptionAltName) {
     const defaultIcon = "pictures/icons/close.png";
@@ -174,11 +166,9 @@ function customDevOption(targetUrl, devOptionIcon, devOptionAltName) {
 
 /**
  * Gibt den HTML-Code für das DevOptionSettingsModal zurück
- *
  * @return {string} Den HTML Code Abschnitt für das Settings Modal
  */
 function devOptionSettings() {
-
     return `
         <div class="devOptionsOverlay" id="devOptionsOverlay"></div>
         <div class="form-popup" id="devOptionsForm">
@@ -207,9 +197,6 @@ function devOptionSettings() {
     `;
 }
 
-/**
- * Öffnet das SettingsModal
- */
 async function openDevOptionsForm() {
     setCookieFor10Minutes("settingsOpen", true);
     document.getElementById("devOptionsForm").style.display = "block";
@@ -262,15 +249,16 @@ async function openDevOptionsForm() {
     });
 }
 
-/**
- * Schließt das SettingsModal
- */
 function closeDevOptionsForm() {
     document.getElementById("devOptionsForm").style.display = "none";
     document.getElementById("devOptionsOverlay").style.display = "none";
     deleteCookie("settingsOpen");
 }
 
+/**
+ * Speichet den CutsomButton
+ * und lädt die Seite neu
+ */
 function saveCustomButton() {
     const customButtonName = document.getElementById("devOptionButtonDropDown").value;
     const name = document.getElementById("name").value;
@@ -283,6 +271,9 @@ function saveCustomButton() {
     window.location.href = "";
 }
 
+/**
+ * Löscht einen CutsomButton
+ */
 function deleteCustomButton() {
     const selectedCustomDevOptionsButton = document.getElementById("devOptionButtonDropDown").value;
     deleteForeverCookie(selectedCustomDevOptionsButton);
@@ -294,10 +285,9 @@ function deleteCustomButton() {
 }
 
 /**
- * Schreibt Daten aus einem Objekt oder einer Liste in ein DropDownMenu mit der angegebenen ID.
- *
+ * Schreibt Daten aus einem Objekt oder einer Liste in ein DropDownMenu mit der angegebenen ID
  * @param {string} dropDownId Die ID des DropDownMenu HTML-Elements
- * @param {[]|{}} optionsList Die Liste/das Objekt mit den Daten
+ * @param {[] | {}} optionsList Die Liste/das Objekt mit den Daten
  */
 function populateDropdown(dropDownId, optionsList) {
     const dropdown = document.getElementById(dropDownId);
@@ -313,22 +303,19 @@ function populateDropdown(dropDownId, optionsList) {
             dropdown.appendChild(opt);
         });
     } else if (typeof optionsList === "object") {
-        for (const key in optionsList) {
-            if (optionsList.hasOwnProperty(key)) {
+        optionsList.forEach(option => {
+            if (optionsList.hasOwnProperty(option)) {
                 const opt = document.createElement('option');
-                opt.value = key;
-                opt.textContent = key;
-
+                opt.value = option;
+                opt.textContent = option;
                 dropdown.appendChild(opt);
             }
-
-        }
+        });
     }
 }
 
 /**
  * Updateted die Anzegeigten Werte im SettingsModal, wenn der Button, der bearbeitet wird sich ändert
- *
  * @returns {Promise<void>}
  */
 async function updateValues() {
