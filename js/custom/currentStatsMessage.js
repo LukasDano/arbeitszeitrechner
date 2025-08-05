@@ -37,7 +37,7 @@ function currentStatsMessage() {
 function canStatsBeOpend(diffMins) {
     if (!isNaN(diffMins)) return true;
 
-    alert("Noch keine Zeiten eingetragen");
+    sendWarningNotification("Noch keine Zeiten eingetragen");
     return false;
 }
 

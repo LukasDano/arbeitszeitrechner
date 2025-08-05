@@ -38,17 +38,6 @@ export type FlexMonth = {
     flexMins: Mins;
 };
 
-export type Milliseconds = number;
-
-export type NotificationConfiguration = {
-    timer: Milliseconds;
-    confirmMessage: boolean;
-    bgColor: string;
-    text: string;
-    headline: string;
-    textColor: string;
-};
-
 export type ButtonColor = {
     text: string;
     bg: string;
@@ -56,4 +45,11 @@ export type ButtonColor = {
     active: string;
 };
 
-export type ColorVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+export type ColorVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+
+export type NotificationType = "info" | "waring" | "error" | "success";
+
+type NotificationConfig = {
+    type: NotificationType;
+    text: string;
+};

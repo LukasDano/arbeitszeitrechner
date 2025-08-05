@@ -556,7 +556,7 @@ $(document).ready(() => {
             const laterTime = getLaterTime(timeValues.endTime, currentTime);
 
             if (laterTime === currentTime) {
-                alert("Deine Arbeitszeit ist vorbei")
+                sendInfoNotification("Deine Arbeitszeit ist vorbei")
                 setEndTime(currentTime);
                 reactToEndTimeChange();
                 setFloatValue(increaseFloat());
