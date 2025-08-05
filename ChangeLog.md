@@ -254,3 +254,9 @@
 - Bessere Typ Sicherheit
 - TS Types werden für JSDoc verwendet
 - Der verwendete Modus wird jetzt nicht mehr durch eine neue Startzeit ersetzt
+
+#### v2.5.12 - Notifications
+- CSS Imports umsortiert
+- Keine Alerts mehr Benachrichtigungen werden jetzt ordentlich angezeigt
+- Externe Libraries in die ReadMe aufgenommen
+- Loggen der VersionsNr und des Versionsnamens beim Seitenaufruf

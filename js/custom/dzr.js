@@ -455,6 +455,14 @@ $(document).ready(() => {
         }
     }
 
+    function setOverTimeAutomaticIcon() {
+        const iconFileName = getBooleanCookie("overTimeAutomaticActive") ? "automaticOn" : "automaticOff";
+        const overTimeAutomaticIconImg = document.getElementById("overTimeAutomaticIcon");
+        
+        overTimeAutomaticIconImg.src = "pictures/icons/" + iconFileName + ".png";
+        overTimeAutomaticIconImg.alt = iconFileName;
+    }
+
     if (getCookie("windowInitLoaded") && getCookie("start") != null) {
         readSollAnPauseFromLocalStorageAndSetInFields();
         readStartAndFloatFromLocalStorageAndSetInFields();
@@ -465,11 +473,12 @@ $(document).ready(() => {
         setCountdown();
         optimizeEnd();
         updateEndTimeAfterWorkIsOver();
-        setOverTimeIconToCookieValue();
+        setOverTimeAutomaticIcon();
     } else {
         resetCookies();
         setCookieUntilMidnight("modus", "7h06m");
         setCookieUntilMidnight("windowInitLoaded", "true");
+        setOverTimeAutomaticIcon();
         $("#start").focus();
     }
 
@@ -512,6 +521,9 @@ $(document).ready(() => {
         switchModeIfIsAllowed();
     }
 
+    /**
+    * @Deprecated stattdessen wenn möglich lieber setOverTimeAutomaticIcon() benutzen (namen vlt. noch tauschen)
+    */
     function setOverTimeIconToCookieValue() {
         const overTimeAutomaticActive = getBooleanCookie("overTimeAutomaticActive");
 
@@ -544,7 +556,7 @@ $(document).ready(() => {
             const laterTime = getLaterTime(timeValues.endTime, currentTime);
 
             if (laterTime === currentTime) {
-                alert("Deine Arbeitszeit ist vorbei")
+                sendInfoNotification("Deine Arbeitszeit ist vorbei")
                 setEndTime(currentTime);
                 reactToEndTimeChange();
                 setFloatValue(increaseFloat());

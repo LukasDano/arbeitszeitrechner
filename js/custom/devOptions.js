@@ -50,16 +50,12 @@ function activateDevOptionsFromURL() {
     const url = new URL(window.location.href);
     const key = url.searchParams.get("param1");
     const value = url.searchParams.get("param2");
-
-    if (key && value) {
-        activateDevMode(url, key, value);
-    }
+    if (key && value) activateDevMode(url, key, value);
 }
 
 /**
  * Aktiviert den DevMode.
  * Löscht die Parameter aus der URL und lädt die Seite neu
- *
  * @param {string} url Die gesamte URL
  * @param {string} key Der Key zu dem der Cookie gesetzt wird
  * @param {string} value Der Wert der in den Cookie gestezt wird

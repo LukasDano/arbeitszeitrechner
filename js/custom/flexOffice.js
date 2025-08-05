@@ -1,6 +1,5 @@
 /**
  * Gibt den HTML-Code für das FlexOffice Modal zurück
- *
  * @return {string} Den HTML Code Abschnitt für das Settings Modal
  */
 function flexOfficeCalculator() {
@@ -118,7 +117,6 @@ function timeAdder() {
 
 /**
  * Erstellt die Optionen für das Quoten-Selectorelement
- *
  * @param {string} elementName Die ID des HTML Elements
  */
 function createOptionsForQuoteSelector(elementName) {
@@ -171,47 +169,43 @@ function addDynamicComponents() {
 /**
  * Setzt den Wert des Feldes auf den Wert aus dem Objekt,
  * wenn kein gültiger Wert gefunden wird, wird der Wert für das Feld auf 0 gesetzt.
- *
  * @param {number} month Die Nummer des Monats, zu dem die Daten gesetzt werden sollen
  * @param {string} field Name des Feldes und des Attributs aus dem Objekt
  */
 function loadFlexOfficeValuesForMonthFromCookie(month, field) {
     const flexMonth = getMonthValuesFromCookie(month);
 
-    if (flexMonth) {
-
-        switch (field) {
-            case "daysOff":
-                document.getElementById(field).value = flexMonth.daysOff
-                break;
-
-            case "flexHours":
-                document.getElementById(field).value = flexMonth.flexHours
-                break;
-
-            case "flexMinutes":
-                document.getElementById(field).value = flexMonth.flexMins
-                break;
-
-            default:
-                document.getElementById(field).value = 0
-        }
-    } else {
+    if (!flexMonth) {
         document.getElementById(field).value = 0;
+        return;
+    }
+
+    switch (field) {
+        case "daysOff":
+            document.getElementById(field).value = flexMonth.daysOff
+            break;
+
+        case "flexHours":
+            document.getElementById(field).value = flexMonth.flexHours
+            break;
+
+        case "flexMinutes":
+            document.getElementById(field).value = flexMonth.flexMins
+            break;
+
+        default:
+            document.getElementById(field).value = 0
     }
 
 }
 
 /**
  * Setzt die Flexoffice Werte zu einem übergebenen Monat
- *
  * @param {number} month Die Zahl des Monats für den die Werte gesetzt werden sollen
  */
 function setFlexOfficeFieldValuesForMonth(month) {
     const fields = ["daysOff", "flexHours", "flexMinutes"];
     fields.forEach(field => { loadFlexOfficeValuesForMonthFromCookie(month, field) });
-
-
 }
 
 async function setUpKeyBoardControlForFlexOfficeCalculator() {
@@ -283,29 +277,20 @@ async function openFlexOfficeCalculator() {
     document.getElementById("daysOff").addEventListener('change', () => {
         const daysOff = getNumberFromElement("daysOff");
         const daysInMonth = getDaysInCurrentMonth();
-        if (daysOff > daysInMonth) {
-            document.getElementById("daysOff").value = daysInMonth;
-        }
-        if (daysOff < 0) {
-            document.getElementById("daysOff").value = 0;
-        }
+
+        if (daysOff > daysInMonth) document.getElementById("daysOff").value = daysInMonth;
+        if (daysOff < 0) document.getElementById("daysOff").value = 0;
     });
 
     document.getElementById("flexHours").addEventListener('change', () => {
         const flexHours = getNumberFromElement("flexHours");
-        if (flexHours > workHoursPerMonth) {
-            document.getElementById("flexHours").value = workHoursPerMonth;
-        }
-        if (flexHours < 0) {
-            document.getElementById("flexHours").value = 0;
-        }
+        if (flexHours > workHoursPerMonth) document.getElementById("flexHours").value = workHoursPerMonth;
+        if (flexHours < 0) document.getElementById("flexHours").value = 0;
     });
 
     document.getElementById("flexMinutes").addEventListener('change', () => {
         const flexMinutes = getNumberFromElement("flexMinutes");
-        if (flexMinutes < 0) {
-            document.getElementById("flexMinutes").value = 0;
-        }
+        if (flexMinutes < 0) document.getElementById("flexMinutes").value = 0;
     });
 
     document.getElementById("flexOfficeOverlay").addEventListener("pointerdown", () => {

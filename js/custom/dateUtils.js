@@ -2,7 +2,6 @@
 
 /**
  * Gibt die aktuelle Kalenderwoche zurück
- *
  * @return {number} Die Aktuelle KW
  */
 function getCurrentKW() {
@@ -11,8 +10,7 @@ function getCurrentKW() {
 
 /**
  * Gibt die Tage des aktuellen Monats aus
- *
- * @returns {number} Tage des aktuellen Monats
+ * @return {number} Tage des aktuellen Monats
  */
 function getDaysInCurrentMonth() {
     const today = new Date();
@@ -21,7 +19,6 @@ function getDaysInCurrentMonth() {
 
 /**
  * Gibt die aktuelle Zeit als Time Wert aus
- *
  * @return {Time} Die aktuelle Uhrzeit in Stunden und Minuten
  */
 function getCurrentTime() {
@@ -30,8 +27,7 @@ function getCurrentTime() {
 
 /**
  * Gibt den aktuellen Monat aus
- *
- * @return {number} Die Nummer des aktuellen Monats
+ * @return {number} Die Kalendernummer des aktuellen Monats
  */
 function getCurrentMonth() {
     return new Date().getMonth() + 1;
@@ -39,24 +35,19 @@ function getCurrentMonth() {
 
 /**
  * Welches Jahr hatten wir als es das letzte Mal dieser Monat war
- *
  * @param {number} month Der fragliche Monat
- * @return {number} Das Jahr
+ * @return {number} Das gesuchte Jahr
  */
 function getYearForLastTimeMonth(month) {
     const currentYear = new Date().getFullYear();
     const currentMonth = getCurrentMonth();
 
-    if (currentMonth < month) {
-        return currentYear - 1;
-    }
-
+    if (currentMonth < month) return currentYear - 1;
     return currentYear;
 }
 
 /**
  * Welches Jahr haben wir es das nächste Mal dieser Monat ist
- *
  * @param {number} month Der fragliche Monat
  * @return {number} Das Jahr
  */
@@ -64,17 +55,12 @@ function getYearForNextTimeMonth(month) {
     const currentYear = new Date().getFullYear();
     const currentMonth = getCurrentMonth();
 
-    if (currentMonth > month) {
-        return currentYear - 1;
-    }
-
+    if (currentMonth > month) return currentYear - 1;
     return currentYear;
 }
 
 /**
- * Gibt die deutschen Namen der Monate als Liste aus
- *
- * @return {string[]} Die Liste
+ * @return {string[]} Alle deutschen Namen der Monate
  */
 function getMonthNamesAsList() {
     return [
@@ -94,24 +80,19 @@ function getMonthNamesAsList() {
 }
 
 /**
- * Konvertiert ein Datum in ein validen String
- *
  * @param {Date} date Das zu konvertierende Datum
- * @return {string} Die Liste
+ * @return {string} Das Datum als validen String
  */
 function getValidDateString(date) {
     const correctedMonth = formatNumber(date.getMonth() + 1);
     const correctedDate = formatNumber(date.getDate());
-
     return date.getFullYear() + "-" + correctedMonth + "-" + correctedDate;
 }
 
 /**
- * Gibt aus wie viele Tage ein Monat in einem bestimmten Jahr hatte
- *
- * @param month Der Monat
- * @param year Das Jahr in dem der Monat war
- * @returns {number}
+ * @param {number} month Der Monat
+ * @param {number} year Das Jahr in dem der Monat war
+ * @return {number} Wie viele Tage hatte ein Monat in einem bestimmten Jahr?
  */
 function getDaysForMonthInYear(month, year) {
     return new Date(year, month, 0).getDate();

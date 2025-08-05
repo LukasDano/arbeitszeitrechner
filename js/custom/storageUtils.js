@@ -425,27 +425,3 @@ function getMonthValuesFromCookie(month) {
     }
     return null;
 }
-
-function deleteAllCookiesAtOnce() {
-    document.cookie.split(";").forEach((cookie) => {
-        let [name] = cookie.split("=");
-        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    });
-}
-
-
-function deleteCookiesIfNotDoneAlready() {
-    const cookiesDeleted = localStorage.getItem("cookiesDeleted");
-
-    if (!cookiesDeleted) {
-        deleteAllCookiesAtOnce();
-        localStorage.setItem("cookiesDeleted", true);
-    }
-}
-
-const clearLocalStorage = () => localStorage.clear();
-
-//TODO Nächstes Update:
-// 1. deleteCookiesIfNotDoneAlready()
-// 2. clearLocalStorage() einbinden (nur bis zum dann nächsten Update)
-deleteCookiesIfNotDoneAlready();

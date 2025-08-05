@@ -7,24 +7,27 @@
     <meta name="description" content="Arbeitszeitrechner">
     <link rel="icon" href="favicon.ico">
 
-    <meta name="Version" content="v2.5.11">
-    <meta name="VersionName" content="GitHub Actions und Keyboard Control Improvements">
+    <meta name="Version" content="v2.5.12">
+    <meta name="VersionName" content="Notifications">
     <meta name="GitHub" content="https://github.com/LukasDano/arbeitszeitrechner">
 
     <title>Arbeitszeitrechner</title>
 
-    <!-- Bootstrap core CSS -->
+    <!-- Base CSS Imports -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/introjs.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
     <link href="css/jquery.classycountdown.css" rel="stylesheet" type="text/css">
+    <link href="css/introjs.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- Notifications  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 </head>
 
 <body>
 
-    <div id="notification"></div>
+    <div class="notifications"></div>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
@@ -125,7 +128,7 @@
 
                 <div class="devOption">
                     <li class="nav-item">
-                        <button class="nav-link" onclick="resetPage()" title="Seite zurücksetzten [F2]">
+                        <button class="nav-link" onclick="resetPage()">
                             <img class="icon animation" src="pictures/icons/reload.png" alt="Reset">
                         </button>
                     </li>
@@ -321,7 +324,8 @@
     <script src="js/custom/customDevOptions.js" defer></script>
     <script src="js/custom/currentStatsMessage.js" defer></script>
     <script src="js/custom/shortcutInformation.js" defer></script>
-    <script src="js/custom/notification.js" defer></script>
+    <script src="js/custom/notifications.js" defer></script>
+    <script src="js/custom/management.js" defer></script>
 
     <script src="js/custom/flexOfficeUtils.js" defer></script>
     <script src="js/custom/flexOffice.js" defer></script>
@@ -336,7 +340,6 @@
             setUpDevOptions();
             setUpCurrentStatsMessage();
             setUpShortcutInformation();
-            setUpNotification();
 
             refreshDevOptionCookies();
             disableHTMLElements();
@@ -345,6 +348,7 @@
             activateDevOptionsFromURL();
             updateForeverCookies();
             removeCustomButtonParameters();
+            consoleIntro();
         });
     </script>
 

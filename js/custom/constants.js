@@ -5,7 +5,7 @@ const conditions = {
     "DevOptionsActive": " (DevOptions müssen aktiv sein)",
     "InFlexOfficeModal": " (In der FlexOffice Anwendung)",
     "ModalIsOpen": " (Ein Modal muss geöffnet sein)"
-}
+};
 
 const keyboardControl = {
     "F1": "Open DevOptions",
@@ -37,24 +37,6 @@ const colorVariants = {
     info: "info",
     light: "light",
     dark: "dark",
-};
-
-const timer = {
-    "SEC_3": 3000,
-    "SEC_5": 5000,
-    "SEC_10": 10000,
-};
-
-/**
- * @type {NotificationConfiguration}
- */
-const defaultButtonConfig = {
-    timer: timer.SEC_3,
-    confirmMessage: false,
-    textColor: "#fff",
-    bgColor: "#ccc",
-    headline: "",
-    text: "Hello World"
 };
 
 const mainPageFieldIds = ["start", "pause", "end", "soll", "float"];

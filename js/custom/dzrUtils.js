@@ -2,7 +2,6 @@
 
 /**
  * Gibt die Differenz zwischen Start und Ende zurück
- *
  * @param {Time} startTime Arbeitsbeginn
  * @param {Time} endTime Arbeitsende
  * @return {Time} Die Differenz zwischen Start und Ende
@@ -24,7 +23,6 @@ function calculateStartEndeTimeDiff(startTime, endTime) {
 
 /**
  * Berechnet die Differenz zwischen IST und SOLL
- *
  * @param {Time} workTime Zeit die an dem Tag gearbeitet wird
  * @param {Time} sollTime Die zu erfüllende Arbeitszeit
  * @return {[number, number, boolean]} Die Differenz zwischen Ist und Soll,
@@ -69,7 +67,6 @@ function calculateIstSollTimeDiff(workTime, sollTime) {
 
 /**
  * Berechnet die reine Arbeitszeit (abzüglich Pause)
- *
  * @param {Time} diffTime Zeit von Beginn bis Ende des Arbeitstages
  * @param {Time} pauseTime Pausenzeit
  * @return {Time} Die reine Arbeitszeit
@@ -91,7 +88,6 @@ function calculateWorkTime(diffTime, pauseTime) {
 
 /**
  * Berechnet das Ende aus dem Start, der Pausenzeiten und dem Soll des Tages
- *
  * @param {Time} startTime Arbeitsbeginn
  * @param {Time} pauseTime Pausenzeit
  * @param {Time} sollTime Wie viel Arbeitszeit soll erbracht werden
@@ -105,9 +101,7 @@ function calculateNormalEnd(startTime, pauseTime, sollTime) {
     let endHours = startHours + pauseHours + sollHours;
     let endMins = startMins + pauseMins + sollMins;
 
-    if (endHours >= 24) {
-        endHours = endHours - 24;
-    }
+    if (endHours >= 24) endHours = endHours - 24;
 
     // Wenn Start-Minuten + Pausen-Minuten + Soll-Minuten >= 120 sind
     if (endMins >= 120) {
@@ -126,7 +120,6 @@ function calculateNormalEnd(startTime, pauseTime, sollTime) {
 
 /**
  * Berechnet die gewertete Zeit aus dem gerundeten Start und dem gerundeten Ende
- *
  * @param {Time} startTime Der Arbeitsbeginn
  * @param {Time} endTime Das Arbeitsende
  * @param {Time} pauseTime Die Pausenzeit
@@ -135,7 +128,7 @@ function calculateNormalEnd(startTime, pauseTime, sollTime) {
 function calculateIstTime(startTime, endTime, pauseTime) {
     const [startHours, startMins] = roundStart(startTime);
     const [endHours, endMins] = roundEnd(endTime);
-    const [, pauseMins] = pauseTime;
+    const [_, pauseMins] = pauseTime;
 
     let istHours = endHours - startHours;
     let istMins = endMins - startMins - pauseMins;
@@ -145,16 +138,13 @@ function calculateIstTime(startTime, endTime, pauseTime) {
         istMins = istMins + 60;
     }
 
-    if (istHours >= 12) {
-        istHours = istHours - 2;
-    }
+    if (istHours >= 12) istHours = istHours - 2;
 
     return [istHours, istMins];
 }
 
 /**
  * Gibt einem die Gleitzeit zurück, die man anhand der IstZeit macht
- *
  * @param {Time} istTime Die aktuelle Arbeitszeit des Tages
  * @return {Time} Die Gleitzeit, die man damit macht
  */
@@ -185,7 +175,6 @@ function calculateGleitzeit(istTime) {
 
 /**
  * Arbeitsbeginn auf 10er und 5er abrunden
- *
  * @param {Time} startTime Aktuelle Startzeit
  * @return {Time} Die abgerundete Startzeit
  */
@@ -198,13 +187,8 @@ function roundStart(startTime) {
         tens++;
     }
 
-    if (startMins >= 5) {
-        startMins = 5;
-    }
-
-    if (startMins <= 4) {
-        startMins = 0;
-    }
+    if (startMins >= 5)  startMins = 5;
+    if (startMins <= 4) startMins = 0;
 
     startMins = startMins + tens * 10;
 
@@ -213,7 +197,6 @@ function roundStart(startTime) {
 
 /**
  * Arbeitsende auf 10er und 5er aufrunden
- *
  * @param {Time} endTime Aktuelle Endzeit
  * @return {Time} Das gerundete Ende
  */
@@ -249,7 +232,6 @@ function roundEnd(endTime) {
 
 /**
  * Berechnet das Ende basierend auf dem eigentlichen Ende und der erwünschten Gleitzeit
- *
  * @param {Time} normalEnd Die eigentliche Endzeit
  * @param {FloatTime} float Die gewünschte Gleitzeit
  * @return {Time}  Das Ende zu übergebenen Werten
@@ -277,12 +259,11 @@ function calculateEndForFloat(normalEnd, float) {
 /**
  * Berechnet die Zeit, die dem normalen Ende hinzugefügt werden muss,
  * um die gewünschte Gleitzeit zu bekommen, wenn diese positiv ist
- *
  * @param {FloatTime} float Die gewünschte Gleitzeit
  * @return {Time} Zeit die zum Ende hinzugefügt werden muss
  */
 function calculateTimeToAddForEndWithPositiveFloat(float) {
-    let [, gleitHours, gleitMins] = float;
+    let [_, gleitHours, gleitMins] = float;
     let tens = 0;
 
     if (gleitHours !== 0 && gleitMins === 0) {
@@ -310,7 +291,6 @@ function calculateTimeToAddForEndWithPositiveFloat(float) {
 /**
  * Berechnet die Zeit, die dem normalen Ende hinzugefügt werden muss,
  * um die gewünschte Gleitzeit zu bekommen, wenn diese negative ist
- *
  * @param {FloatTime} float Die gewünschte Gleitzeit
  * @return {Time} Zeit die zum Ende hinzugefügt werden muss
  */
@@ -352,17 +332,14 @@ function calculateTimeToAddForEndWithNegativeFloat(float) {
 /**
  * Erstellt ein FloatTime Value aus einem String,
  * wenn kein Wert übergeben wird, wird die UI zurück gesetz und nichts zurückgegeben
- *
  * @param {string} float Die Gleitzeit als String Array
- * @return {FloatTime|void} Die Gleitzeit als FloatTime Value oder nichts, wenn der Parameter ungültig ist
+ * @return {FloatTime | void} Die Gleitzeit als FloatTime Value oder nichts, wenn der Parameter ungültig ist
  */
 function getFloatValueFromText(float) {
     const floatArray = float.split("");
     let vorzeichen = 1;
 
-    if (floatArray[0] === "-") {
-        vorzeichen = -1;
-    }
+    if (floatArray[0] === "-") vorzeichen = -1;
 
     if (floatArray.length === 5) {
         // Fromat
@@ -384,7 +361,6 @@ function getFloatValueFromText(float) {
 /**
  * Nimmt die aktuelle Endezeit und gibt die Endezeit,
  * mit der die gleiche Menge an Gleitzeit gemacht wird und die am wenigsten Arbeitszeit erfordert
- *
  * @param {Time} endTime Aktuelle Endezeit
  * @return {Time} Das optimierte Ende mit der geringsten Arbeitszeit
  */
@@ -410,17 +386,13 @@ function calculateOptimizedEnd(endTime) {
     }
 
     endMins = 10 * tens + endMins;
-
-    if (endMins <= 9) {
-        endMins = "0" + endMins;
-    }
+    if (endMins <= 9)  endMins = "0" + endMins;
 
     return [endHours, endMins];
 }
 
 /**
  * Rechnet aus dem eigentlichen Ende und der Gleitzeit das Ende für diese Gleitzeit
- *
  * @param {Time} normalEnd Das eigentliche Ende
  * @param {FloatTime} floatTime Die gewünschte Gleitzeit
  * @return {Time} Das Ende, um diese Gleitzeit zu machen
@@ -438,17 +410,13 @@ function roundTimeForFloat(normalEnd, floatTime) {
         endMins = endMins + 60;
     }
 
-    if (endMins < 10) {
-        endMins = "0" + endMins;
-    }
-
+    if (endMins < 10) endMins = "0" + endMins;
     return [endHours, endMins];
 }
 
 /**
  * Gibt die nächst größere valide Gleitzeit zurück
  * zum Beispiel: "+0.04" → "+0.09"
- *
  * @param {FloatTime} float Die aktuelle Gleitzeit
  * @return {Time} Die nächst größere Gleitzeit
  */
@@ -458,9 +426,7 @@ function calculateIncreasedValue(float) {
     floatHours = floatHours * floatVorzeichen;
     floatMins = floatMins * floatVorzeichen;
 
-    if (floatHours === -0) {
-        floatHours = 0;
-    }
+    if (floatHours === -0) floatHours = 0;
 
     if (floatMins === 59) {
         floatHours += 1;
@@ -481,14 +447,12 @@ function calculateIncreasedValue(float) {
     }
 
     floatMins = floatMins + 5;
-
     return [floatHours, floatMins];
 }
 
 /**
  * Gibt die nächst kleinere valide Gleitzeit zurück
  * zum Beispiel: "+0.09" → "+0.04"
- *
  * @param {FloatTime} float Die aktuelle Gleitzeit
  * @return {Time} Die nächst kleinere Gleitzeit
  */
@@ -504,13 +468,10 @@ function calculateDecreasedValue(float) {
     floatHours = floatHours * floatVorzeichen;
     floatMins = floatMins * floatVorzeichen;
 
-    if (floatHours === -0) {
-        floatHours = 0;
-    }
+    if (floatHours === -0) floatHours = 0;
 
     if (floatMins === 4 && floatHours === 0) {
-        floatMins = -1;
-
+        floatMins = -1
         return [floatHours, floatMins];
     }
 
@@ -523,27 +484,22 @@ function calculateDecreasedValue(float) {
     if (floatMins === 4) {
         floatHours -= 1;
         floatMins = 59;
-
         return [floatHours, floatMins];
     }
 
     floatMins = floatMins - 5;
-
     return [floatHours, floatMins];
 }
 
 /**
  * Erzeugt einen lesbareren String, der zur Darstellung genutzt werden kann
- *
  * @param {Time} float Die Gleitzeit, die aktuell in dem Feld steht
  * @return {string} Die Gleitzeit als lesbarer String
  */
 function createGleitzeitAusgabeFromFloat(float) {
     let [gleitHours, gleitMins] = float;
 
-    if (typeof jest !== "undefined") {
-        var formatNumber = require("./utility.js").formatNumber;
-    }
+    if (typeof jest !== "undefined") var formatNumber = require("./utility.js").formatNumber;
 
     // Funktion für die Formatierung definieren, falls nicht vorhanden
     formatNumber = formatNumber || ((mins) => String(mins).padStart(2, "0"));
@@ -560,7 +516,6 @@ function createGleitzeitAusgabeFromFloat(float) {
 
 /**
  * Prüft ob der eingegeben Floatwert nur gültige Zeichen enthält
- *
  * @param {string} float Der zu prüfende Float Wert
  * @return {boolean} Ob die Eingabe valide ist
  */
@@ -582,7 +537,6 @@ function validateFloat(float) {
 
 /**
  * Prüft, ob ein Parameter eine Zeit bestehend aus zwei Zahlen ist.
- *
  * @param {Time} numberList Die Zeit die überprüft werden soll
  * @return {boolean} Ist der Parameter eine Time bestehend aus zwei Zahlen
  */
