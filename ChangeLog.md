@@ -260,3 +260,4 @@
 - Keine Alerts mehr Benachrichtigungen werden jetzt ordentlich angezeigt
 - Externe Libraries in die ReadMe aufgenommen
 - Loggen der VersionsNr und des Versionsnamens beim Seitenaufruf
+- Die Anwendung per GitHub-Actions und externem Repo auf GitHub-Pages hosten
