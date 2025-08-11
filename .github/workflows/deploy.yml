@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages repo
+name: Deploy
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout development repo
+      - name: Checkout dev repo
         uses: actions/checkout@v4
 
       - name: Setup variables
@@ -28,7 +28,7 @@ jobs:
           fi
           echo "DEPLOY_DIR=${DEPLOY_DIR}" >> $GITHUB_ENV
 
-      - name: Checkout pages repo
+      - name: Checkout host repo
         uses: actions/checkout@v4
         with:
           repository: LukasDano/azr
