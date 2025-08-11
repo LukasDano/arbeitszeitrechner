@@ -39,8 +39,7 @@ jobs:
         run: |
           mkdir -p pages-repo/${DEPLOY_DIR}
           rm -rf pages-repo/${DEPLOY_DIR}/*
-          cp -r ./* pages-repo/${DEPLOY_DIR}/
-          # optional: .git Ordner im pages repo nicht löschen
+          rsync -av --exclude 'pages-repo' --exclude '.git' ./ pages-repo/${DEPLOY_DIR}/
           cd pages-repo
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
