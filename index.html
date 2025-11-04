@@ -341,6 +341,31 @@
     <script src="js/custom/weekTimeUtils.js" defer></script>
     <script src="js/custom/weekTime.js" defer></script>
 
+    <script>
+        function handleNewUrl() {
+            const key = "newToUrl";
+            const storageValue = localStorage.getItem(key);
+
+            if (storageValue !== "true") {
+                sendInfoNotification("Wilkommen auf dem neuen link");
+                localStorage.setItem(key, "false");
+            }
+        }
+
+        function redirectToNewUrl() {
+            const url = window.location.href;
+
+            if (url.includes("raw")) {
+                alert("Du nutzt den alten Link. Und wirst jetzt umgeleitet.");
+                window.location.href = "https://lukasdano.github.io/azr/main/";
+            }
+            else if (url.includes("azr")) handleNewUrl();
+
+        }
+
+        redirectToNewUrl();
+    </script>
+    
     <script defer>
         document.addEventListener('DOMContentLoaded', () => {
             setUpWeekTime();
