@@ -686,31 +686,5 @@ $(document).ready(() => {
             openShortcutInformation();
             return;
         }
-
-        function handleNewUrl() {
-            const key = "newToUrl";
-            const storageValue = localStorage.getItem(key);
-
-            if (storageValue !== "true") {
-                sendInfoNotification("Wilkommen auf dem neuen link");
-                localStorage.setItem(key, "false");
-            }
-        }
-
-        function redirectToNewUrl() {
-            const url = window.location.href;
-
-            if (url.includes("raw")) {
-                alert("Du nutzt den alten Link. Und wirst jetzt umgeleitet.");
-                window.location.href = "https://lukasdano.github.io/azr/main/";
-            }
-            else if (url.includes("azr")) handleNewUrl();
-
-        }
-
-        redirectToNewUrl();
     });
-
-
-
 });
