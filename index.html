@@ -58,6 +58,13 @@
                 </li>
                 <div id="currentStatsMessage"></div>
 
+                <li class="nav-item">
+                    <button class="nav-link" onclick="redirectToNewVersion()"
+                        title="Hier gehts zur Beta der neusten Version">
+                        <img class="icon noneDevOption" src="https://cdn.iconscout.com/icon/free/png-256/free-react-logo-icon-svg-download-png-3032257.png" alt="BetaVersion">
+                    </button>
+                </li>
+
                 <div class="devOption">
                     <li class="nav-item">
                         <a class="nav-link"
@@ -342,28 +349,10 @@
     <script src="js/custom/weekTime.js" defer></script>
 
     <script>
-        function handleNewUrl() {
-            const key = "newToUrl";
-            const storageValue = localStorage.getItem(key);
-
-            if (storageValue !== "true") {
-                sendInfoNotification("Wilkommen auf dem neuen link");
-                localStorage.setItem(key, "false");
-            }
+        function redirectToNewVersion() {
+            alert("Es gibt eine neue beta Version [v3] von der Anwendung. Du wirst jetzt weitergeleitet.");
+            open("https://lukasdano.github.io/azr-react/", "_blank");
         }
-
-        function redirectToNewUrl() {
-            const url = window.location.href;
-
-            if (url.includes("raw")) {
-                alert("Du nutzt den alten Link. Und wirst jetzt umgeleitet.");
-                window.location.href = "https://lukasdano.github.io/azr/main/";
-            }
-            else if (url.includes("azr")) handleNewUrl();
-
-        }
-
-        redirectToNewUrl();
     </script>
     
     <script defer>
