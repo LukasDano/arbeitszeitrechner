@@ -26,25 +26,6 @@ function addDevOptionFromModal(customDevOption, url, cookieAltName, iconName) {
 }
 
 /**
- * @return {string[]} Eine Liste aller existierenden Icon-File-Namen
- */
-async function listAllIcons() {
-    const jsonPath = 'database/icons/icons.json';
-    let icons = {};
-
-    try {
-        const response = await fetch(jsonPath);
-        if (!response.ok)  throw new Error(`HTTP error! status: ${response.status}`);
-        icons = await response.json();
-
-    } catch (error) {
-        console.error('Failed to fetch icon list:', error);
-    }
-
-    return icons;
-}
-
-/**
  * @return {string[]} Die Namen zu allen existierenden CustomDevOptionsButtons als Liste
  */
 function listAllCustomDevOptionButtons() {
@@ -209,8 +190,7 @@ async function openDevOptionsForm() {
     makeReactButton(weekTimeDelete, colorVariants.danger);
 
     const iconDropDownId = "iconDropDown";
-    const allIconsList = await listAllIcons();
-    populateDropdown(iconDropDownId, allIconsList);
+    populateDropdown(iconDropDownId, icons);
 
     const devOptionDropDownId = "devOptionButtonDropDown";
     const allDevOptionButtons = listAllCustomDevOptionButtons();
@@ -328,7 +308,7 @@ async function updateValues() {
     const selectedValue = dropdown.value;
     const defaultNameText = "";
     const defaultURLText = "";
-    const defaultIconText = Object.keys(await listAllIcons())[0];
+    const defaultIconText = Object.keys(icons)[0];
 
     switch (selectedValue) {
         case "customDevOptionOne":
